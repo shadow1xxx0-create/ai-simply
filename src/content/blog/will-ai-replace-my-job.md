@@ -6,7 +6,7 @@ updatedDate: 2026-02-27
 heroImage: "../../assets/ai-jobs.jpg"
 category: "future-of-work"
 tags: ["ai jobs", "automation", "future of work", "career"]
-readingTime: "7 min read"
+readingTime: "8 min read"
 faqs:
   - question: "Which jobs are most at risk from AI?"
     answer: "Jobs most at risk involve repetitive processing of information: data entry clerks, telemarketers, certain paralegal tasks, basic copywriting, routine customer service, junior financial analysis, and some accounting functions. These aren't necessarily gone overnight, but they'll employ fewer people as AI tools handle more of the routine volume."

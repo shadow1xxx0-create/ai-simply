@@ -6,7 +6,7 @@ updatedDate: 2026-02-24
 heroImage: "../../assets/ai-agent.jpg"
 category: "ai-explained"
 tags: ["ai agents", "artificial intelligence", "beginners", "explained"]
-readingTime: "6 min read"
+readingTime: "7 min read"
 faqs:
   - question: "What is an AI agent in simple terms?"
     answer: "An AI agent is a program that can take actions on its own to complete a goal — not just answer a question. It's like the difference between a calculator (you push buttons, it gives answers) and a personal assistant (you say 'book me a flight' and it figures out all the steps). An AI agent can browse the web, run code, send emails, and make decisions without you telling it each step."

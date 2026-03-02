@@ -6,7 +6,7 @@ updatedDate: 2026-02-20
 heroImage: "../../assets/machine-learning.jpg"
 category: "how-ai-works"
 tags: ["machine learning", "ai basics", "explained", "how ai works"]
-readingTime: "6 min read"
+readingTime: "7 min read"
 faqs:
   - question: "What is machine learning in one sentence?"
     answer: "Machine learning is when a computer learns from examples rather than being given explicit rules — the same way you learned to recognize dogs by seeing lots of dogs, not by reading a rulebook about dog features."
