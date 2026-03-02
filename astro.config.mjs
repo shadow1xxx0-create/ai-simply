@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-	site: 'https://aisimply.com',
+	site: 'https://getaibriefs.com',
 	integrations: [mdx(), sitemap()],
 	build: {
 		inlineStylesheets: 'auto',
