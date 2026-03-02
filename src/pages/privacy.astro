@@ -1,0 +1,107 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_URL } from '../consts';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title="Privacy Policy"
+		description={`Privacy policy for ${SITE_TITLE}. Learn how we handle your data and protect your privacy.`}
+	/>
+</head>
+<body>
+	<Header />
+	<main>
+		<section class="page-header">
+			<div class="container">
+				<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Privacy Policy' }]} />
+				<h1>Privacy Policy</h1>
+				<p>Last updated: February 28, 2026</p>
+			</div>
+		</section>
+
+		<article class="container policy-content">
+			<h2>Overview</h2>
+			<p>
+				{SITE_TITLE} ("we", "us", or "our") operates <a href={SITE_URL}>{SITE_URL}</a>.
+				This page informs you of our policies regarding the collection, use, and disclosure
+				of personal information when you use our website.
+			</p>
+
+			<h2>Information We Collect</h2>
+			<p>
+				<strong>Email address:</strong> If you voluntarily subscribe to our newsletter,
+				we collect your email address solely for the purpose of sending you our AI newsletter,
+				articles, and updates. You can unsubscribe at any time.
+			</p>
+			<p>
+				<strong>Usage data:</strong> We may collect anonymous usage data such as pages
+				visited, time spent on site, and referring URLs. This data is aggregated and cannot
+				be used to identify you personally.
+			</p>
+
+			<h2>How We Use Your Information</h2>
+			<ul>
+				<li>To send newsletter emails you have subscribed to</li>
+				<li>To understand how visitors use our site so we can improve content</li>
+				<li>To maintain and improve site performance</li>
+			</ul>
+
+			<h2>Cookies</h2>
+			<p>
+				This website is a static site and does not use cookies for tracking or advertising.
+				If we add analytics in the future, we will use privacy-respecting tools that do not
+				require cookies or personal data collection.
+			</p>
+
+			<h2>Third-Party Services</h2>
+			<p>
+				We do not sell, trade, or share your personal information with third parties.
+				Our newsletter may be delivered through a third-party email service provider,
+				which processes your email address solely for the purpose of delivering our emails.
+			</p>
+
+			<h2>Data Security</h2>
+			<p>
+				We take reasonable measures to protect your personal information. However, no method
+				of transmission over the Internet is 100% secure.
+			</p>
+
+			<h2>Changes to This Policy</h2>
+			<p>
+				We may update this privacy policy from time to time. Changes will be posted
+				on this page with an updated revision date.
+			</p>
+
+			</article>
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.policy-content {
+		max-width: 720px;
+		padding: 2.5rem 1.25rem 3rem;
+	}
+
+	.policy-content h2 {
+		margin-top: 2rem;
+		font-size: 1.4rem;
+	}
+
+	.policy-content ul {
+		padding-left: 1.25rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.policy-content li {
+		margin-bottom: 0.6rem;
+		line-height: 1.6;
+	}
+</style>

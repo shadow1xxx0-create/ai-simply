@@ -1,0 +1,88 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { SITE_TITLE } from '../consts';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title="About AI Briefs"
+		description="AI Briefs explains AI news and breakthroughs in plain English. No jargon. No hype. Just what matters, every week."
+	/>
+</head>
+<body>
+	<Header />
+	<main>
+		<section class="page-header">
+			<div class="container">
+				<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]} />
+				<h1>About {SITE_TITLE}</h1>
+			</div>
+		</section>
+
+		<article class="container about-content">
+			<h2>Our Mission</h2>
+			<p>
+				{SITE_TITLE} was built with one goal: to explain AI clearly, for everyone.
+				The AI space moves fast and the coverage is often either too technical or too hype-driven.
+				We cut through both and give you what actually matters.
+			</p>
+			<p>
+				Whether you're a professional trying to stay relevant, a curious person who keeps
+				hearing about AI, or someone who just wants to know what ChatGPT really is — this
+				is the place for you.
+			</p>
+
+			<h2>What We Cover</h2>
+			<ul>
+				<li><strong>AI Explained</strong> &mdash; What is machine learning, what is an AI agent, how does a language model work — without the jargon.</li>
+				<li><strong>Future of Work</strong> &mdash; Will AI affect your job? Which skills matter? Honest, evidence-based analysis.</li>
+				<li><strong>Tool Comparisons</strong> &mdash; ChatGPT vs Claude, the best AI tools for specific tasks — tested practically.</li>
+				<li><strong>How-To Guides</strong> &mdash; How to actually use AI tools to do useful things at work and in everyday life.</li>
+				<li><strong>AI News</strong> &mdash; The most important AI developments, with context.</li>
+			</ul>
+
+			<h2>The Newsletter</h2>
+			<p>
+				We send a free newsletter covering what's actually happening in AI — and more importantly,
+				what it means for your work, your career, and your daily life. No noise, no hype.
+				Just the stuff worth knowing. Free, no spam, unsubscribe anytime.
+			</p>
+			<p>
+				Whether you want to use AI to get more done, understand what your company is adopting,
+				or just not feel lost when everyone around you is talking about it — this is for you.
+			</p>
+		</article>
+
+		<Newsletter />
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.about-content {
+		max-width: 720px;
+		padding: 2.5rem 1.25rem 3rem;
+	}
+
+	.about-content h2 {
+		margin-top: 2rem;
+		font-size: 1.4rem;
+	}
+
+	.about-content ul {
+		padding-left: 1.25rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.about-content li {
+		margin-bottom: 0.6rem;
+		line-height: 1.6;
+	}
+</style>

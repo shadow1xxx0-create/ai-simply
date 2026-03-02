@@ -1,0 +1,146 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { CATEGORY_COLORS } from '../../consts';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title="AI Articles — AI Briefs"
+		description="Browse all AI Briefs articles: AI explained, future of work, tool comparisons, how-to guides. AI made simple for everyone."
+	/>
+</head>
+<body>
+	<Header />
+	<main>
+
+		<!-- Page header -->
+		<section class="page-header">
+			<div class="container">
+				<h1>Latest Articles</h1>
+				<p>AI explained clearly — no jargon, no hype.</p>
+			</div>
+		</section>
+
+		<div class="container articles-section">
+			<div class="post-list">
+				{posts.map((post) => (
+					<a href={`/blog/${post.id}/`} class="post-item">
+						<div class="post-item__img" style={`background:${CATEGORY_COLORS[post.data.category] ?? 'var(--primary-light)'}`}>
+							{post.data.heroImage ? (
+								<Image width={200} height={130} src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+							) : (
+								<span aria-hidden="true">&#129302;</span>
+							)}
+						</div>
+						<div class="post-item__body">
+							<div class="post-item__meta">
+								<span class="badge">{post.data.category.replace(/-/g, ' ')}</span>
+								<span class="meta-date"><FormattedDate date={post.data.pubDate} /></span>
+								{post.data.readingTime && <span class="meta-date">{post.data.readingTime}</span>}
+							</div>
+							<h2 class="post-item__title">{post.data.title}</h2>
+							<p class="post-item__excerpt">{post.data.description}</p>
+						</div>
+					</a>
+				))}
+			</div>
+		</div>
+
+		<Newsletter />
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.articles-section { padding: 2rem 0 3rem; }
+
+	.meta-date {
+		font-size: 0.75rem;
+		color: rgb(var(--gray));
+	}
+
+	.post-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.post-item {
+		display: grid;
+		grid-template-columns: 180px 1fr;
+		gap: 1.25rem;
+		align-items: center;
+		padding: 1.25rem 0;
+		border-bottom: 1px solid var(--border);
+		color: inherit;
+		transition: background 0.15s;
+	}
+
+	.post-item:first-child { border-top: 1px solid var(--border); }
+	.post-item:hover { background: var(--bg-alt); padding-left: 0.75rem; padding-right: 0.75rem; border-radius: var(--radius); }
+
+	.post-item__img {
+		width: 180px;
+		height: 110px;
+		border-radius: var(--radius);
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		font-size: 2rem;
+	}
+
+	.post-item__img img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.post-item__meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 0.4rem;
+		flex-wrap: wrap;
+	}
+
+	.post-item__title {
+		font-size: 1.1rem;
+		line-height: 1.3;
+		color: rgb(var(--black));
+		margin-bottom: 0.35rem;
+	}
+
+	.post-item:hover .post-item__title { color: var(--primary); }
+
+	.post-item__excerpt {
+		font-size: 0.88rem;
+		color: rgb(var(--gray));
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	@media (max-width: 600px) {
+		.post-item { grid-template-columns: 1fr; }
+		.post-item__img { width: 100%; height: 160px; }
+	}
+
+</style>

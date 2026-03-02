@@ -1,0 +1,184 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Newsletter from '../../../components/Newsletter.astro';
+import FormattedDate from '../../../components/FormattedDate.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+const categoryLabels: Record<string, string> = {
+	'ai-explained': 'AI Explained',
+	'future-of-work': 'Future of Work',
+	'how-ai-works': 'How AI Works',
+	'ai-news': 'AI News',
+	'comparisons': 'Comparisons',
+	'guides': 'Guides',
+};
+
+const categoryDescriptions: Record<string, string> = {
+	'ai-explained': 'What is AI, machine learning, neural networks — explained in plain English for everyone.',
+	'future-of-work': 'How AI is changing jobs, careers, and the workplace. What it means for you.',
+	'how-ai-works': 'The technical ideas behind AI made simple. No math, no jargon.',
+	'ai-news': 'The most important AI developments explained in context — what happened and why it matters.',
+	'comparisons': 'ChatGPT vs Claude, best AI tools for specific tasks — tested and explained practically.',
+	'guides': 'Practical how-to guides for using AI tools at work and in everyday life.',
+};
+
+export async function getStaticPaths() {
+	const allPosts = await getCollection('blog');
+	const categories = [...new Set(allPosts.map((post) => post.data.category))];
+
+	return categories.map((category) => ({
+		params: { category },
+		props: {
+			posts: allPosts
+				.filter((post) => post.data.category === category)
+				.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+		},
+	}));
+}
+
+const { category } = Astro.params;
+const { posts } = Astro.props;
+const label = categoryLabels[category] || category;
+const description = categoryDescriptions[category] || `Articles about ${label}.`;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title={`${label} — AI Briefs`}
+		description={description}
+	/>
+</head>
+<body>
+	<Header />
+	<main>
+		<section class="page-header">
+			<div class="container">
+				<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Articles', href: '/blog/' }, { label: label }]} />
+				<h1>{label}</h1>
+				<p>{description}</p>
+			</div>
+		</section>
+
+		<section class="container articles-section">
+			{posts.length > 0 ? (
+				<div class="articles-grid">
+					{posts.map((post) => (
+						<article class="card">
+							<a href={`/blog/${post.id}/`}>
+								<div class="card__img">
+									{post.data.heroImage ? (
+										<Image width={400} height={225} src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+									) : (
+										<div class="card__placeholder" aria-hidden="true">&#129302;</div>
+									)}
+								</div>
+								<div class="card__body">
+									<span class="badge">{post.data.category.replace(/-/g, ' ')}</span>
+									<h2 class="card__title">{post.data.title}</h2>
+									<p class="card__excerpt">{post.data.description}</p>
+									<span class="card__meta">
+										<FormattedDate date={post.data.pubDate} />
+										{post.data.readingTime && <span> &middot; {post.data.readingTime}</span>}
+									</span>
+								</div>
+							</a>
+						</article>
+					))}
+				</div>
+			) : (
+				<p class="no-posts">No articles in this category yet. Check back soon!</p>
+			)}
+		</section>
+
+		<Newsletter />
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.articles-section { padding: 2.5rem 0 3rem; }
+
+	.articles-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	.card {
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		overflow: hidden;
+		transition: box-shadow 0.2s, transform 0.15s;
+	}
+
+	.card:hover {
+		box-shadow: var(--shadow-lg);
+		transform: translateY(-2px);
+	}
+
+	.card a { color: inherit; display: block; }
+
+	.card__img img {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
+
+	.card__placeholder {
+		height: 200px;
+		background: var(--primary-light);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2.5rem;
+		color: var(--primary);
+		opacity: 0.3;
+	}
+
+	.card__body { padding: 1.25rem; }
+
+	.card__title {
+		font-size: 1.1rem;
+		margin: 0.5rem 0 0.4rem;
+		line-height: 1.35;
+		color: rgb(var(--black));
+	}
+
+	.card__excerpt {
+		font-size: 0.88rem;
+		color: rgb(var(--gray));
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		margin-bottom: 0.5rem;
+	}
+
+	.card__meta {
+		font-size: 0.78rem;
+		color: rgb(var(--gray));
+	}
+
+	.no-posts {
+		text-align: center;
+		color: rgb(var(--gray));
+		padding: 3rem 0;
+		font-size: 1.05rem;
+	}
+
+	@media (min-width: 640px) {
+		.articles-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+
+	@media (min-width: 1024px) {
+		.articles-grid { grid-template-columns: repeat(3, 1fr); }
+	}
+</style>

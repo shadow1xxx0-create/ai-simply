@@ -1,0 +1,181 @@
+---
+import { SITE_TITLE } from '../consts';
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header" role="banner">
+	<nav class="site-nav container" aria-label="Main navigation">
+		<a href="/" class="site-logo" aria-label={`${SITE_TITLE} - Home`}>
+			<span class="site-logo__icon" aria-hidden="true">&#129302;</span>
+			<span class="site-logo__text">{SITE_TITLE}</span>
+		</a>
+
+		<button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+			<span class="nav-toggle__bar"></span>
+			<span class="nav-toggle__bar"></span>
+			<span class="nav-toggle__bar"></span>
+		</button>
+
+		<ul class="nav-links">
+			<li><a href="/" class:list={[{ active: pathname === '/' }]}>Home</a></li>
+			<li><a href="/blog/" class:list={[{ active: pathname.startsWith('/blog') }]}>Articles</a></li>
+			<li><a href="/newsletter/" class:list={[{ active: pathname.startsWith('/newsletter') }]}>Newsletter</a></li>
+			<li><a href="/about/" class:list={[{ active: pathname === '/about/' }]}>About</a></li>
+			<li><a href="#newsletter" class="btn btn--primary btn--sm">Subscribe Free</a></li>
+		</ul>
+	</nav>
+</header>
+
+<script>
+	const toggle = document.querySelector('.nav-toggle');
+	const nav = document.querySelector('.nav-links');
+	if (toggle && nav) {
+		function closeNav() {
+			toggle.setAttribute('aria-expanded', 'false');
+			nav.classList.remove('nav-links--open');
+		}
+
+		toggle.addEventListener('click', () => {
+			const expanded = toggle.getAttribute('aria-expanded') === 'true';
+			if (expanded) {
+				closeNav();
+			} else {
+				toggle.setAttribute('aria-expanded', 'true');
+				nav.classList.add('nav-links--open');
+				nav.querySelectorAll('a')[0]?.focus();
+			}
+		});
+
+		document.addEventListener('click', (e) => {
+			if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+				closeNav();
+			}
+		});
+
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') closeNav();
+		});
+
+		nav.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', closeNav);
+		});
+	}
+</script>
+
+<style>
+	.site-header {
+		background: var(--bg);
+		border-bottom: 1px solid var(--border);
+		position: sticky;
+		top: 0;
+		z-index: 100;
+	}
+
+	.site-nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 64px;
+	}
+
+	.site-logo {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+	}
+
+	.site-logo:hover { color: var(--primary); }
+
+	.site-logo__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		background: var(--accent);
+		color: #fff;
+		border-radius: 50%;
+		font-size: 1.1rem;
+	}
+
+	.nav-toggle {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		background: none;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 8px;
+		cursor: pointer;
+	}
+
+	.nav-toggle__bar {
+		display: block;
+		width: 20px;
+		height: 2px;
+		background: rgb(var(--gray-dark));
+		border-radius: 2px;
+		transition: 0.2s;
+	}
+
+	.nav-links {
+		display: none;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.nav-links--open {
+		display: flex;
+		flex-direction: column;
+		position: absolute;
+		top: 64px;
+		left: 0;
+		right: 0;
+		background: var(--bg);
+		border-bottom: 1px solid var(--border);
+		padding: 0.5rem 1.25rem 1rem;
+		box-shadow: var(--shadow-lg);
+	}
+
+	.nav-links a {
+		display: block;
+		padding: 0.6rem 0.75rem;
+		color: rgb(var(--gray-dark));
+		font-weight: 500;
+		border-radius: var(--radius);
+	}
+
+	.nav-links a:hover,
+	.nav-links a.active {
+		color: var(--primary);
+		background: var(--primary-light);
+	}
+
+	.btn--sm {
+		padding: 0.5rem 1rem;
+		font-size: 0.85rem;
+	}
+
+	@media (min-width: 768px) {
+		.nav-toggle { display: none; }
+
+		.nav-links {
+			display: flex;
+			align-items: center;
+			gap: 0.25rem;
+		}
+
+		.nav-links--open {
+			position: static;
+			flex-direction: row;
+			border: none;
+			padding: 0;
+			box-shadow: none;
+		}
+	}
+</style>

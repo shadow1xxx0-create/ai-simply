@@ -1,0 +1,71 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { SITE_TITLE } from '../../consts';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title="Newsletter Archive — AI Briefs"
+		description="Browse past issues of the AI Briefs newsletter. AI news explained in plain English, every week."
+	/>
+</head>
+<body>
+	<Header />
+	<main>
+		<section class="page-header">
+			<div class="container">
+				<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Newsletter' }]} />
+				<h1>Newsletter Archive</h1>
+				<p>Every issue of the AI Briefs newsletter — AI explained simply, every week.</p>
+			</div>
+		</section>
+
+		<section class="container archive-section">
+			<div class="empty-state">
+				<span class="empty-state__icon" aria-hidden="true">&#129302;</span>
+				<h2>First issue coming soon</h2>
+				<p>We're preparing the first issue of AI Briefs. Subscribe below to be the first to receive it — and get AI news explained in plain English every week.</p>
+			</div>
+		</section>
+
+		<Newsletter
+			heading="Get AI News in Plain English — Every Week"
+			text="The most important AI stories, without the noise. Free."
+		/>
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.archive-section { padding: 4rem 1.25rem; }
+
+	.empty-state {
+		text-align: center;
+		max-width: 480px;
+		margin: 0 auto;
+	}
+
+	.empty-state__icon {
+		font-size: 3.5rem;
+		display: block;
+		margin-bottom: 1rem;
+	}
+
+	.empty-state h2 {
+		font-size: 1.4rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.empty-state p {
+		color: rgb(var(--gray));
+		font-size: 1rem;
+		line-height: 1.6;
+	}
+</style>

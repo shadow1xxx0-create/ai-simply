@@ -1,0 +1,494 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Newsletter from '../components/Newsletter.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+</head>
+<body>
+	<Header />
+
+	<main>
+		<!-- Hero — Newsletter First -->
+		<section class="hero" id="newsletter" aria-label="Newsletter signup">
+			<div class="container hero__inner">
+				<div class="hero__content">
+					<span class="hero__tag">Free Weekly Newsletter</span>
+					<h1>AI news in plain English.</h1>
+					<p class="hero__sub">No jargon. No hype. Just what matters.</p>
+
+					<form class="hero__form" id="hero-newsletter-form" action="https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9" method="post" target="_blank">
+						<label for="hero-email" class="sr-only">Email address</label>
+						<input
+							id="hero-email"
+							type="email"
+							name="email"
+							placeholder="Enter your email address"
+							required
+							autocomplete="email"
+						/>
+						<button type="submit" class="hero__btn">Subscribe Free →</button>
+					</form>
+
+					<p class="hero__proof">
+						Join <strong>thousands of readers</strong> who get AI explained simply every week.
+					</p>
+
+					<div class="hero__logos" aria-label="Readers from">
+						<span class="hero__logos-label">Read by people at</span>
+						<div class="hero__logos-row">
+							<span>Google</span>
+							<span>Microsoft</span>
+							<span>Amazon</span>
+							<span>Meta</span>
+							<span>HubSpot</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="hero__preview" aria-hidden="true">
+					<div class="preview-card">
+						<div class="preview-card__header">
+							<span class="preview-card__emoji">&#129302;</span>
+							<div>
+								<strong>AI Briefs</strong>
+								<span class="preview-card__date">This week's issue</span>
+							</div>
+						</div>
+						<div class="preview-card__body">
+							<p class="preview-card__item"><span>&#128640;</span> <strong>Top Story:</strong> The latest AI breakthrough — and what it means for you</p>
+							<p class="preview-card__item"><span>&#129504;</span> <strong>Deep Dive:</strong> Why AI "hallucinations" happen — explained simply</p>
+							<p class="preview-card__item"><span>&#9889;</span> <strong>Quick Links:</strong> 4 AI tools worth trying this week</p>
+							<p class="preview-card__item"><span>&#128736;&#65039;</span> <strong>Tool of the Week:</strong> The one AI tool I'd recommend to a beginner</p>
+						</div>
+						<div class="preview-card__footer">
+							Free newsletter
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Recent Articles -->
+		{posts.length > 0 && (
+			<section class="section section--alt" aria-label="Recent articles">
+				<div class="container">
+					<div class="section-header">
+						<h2 class="section-heading">Latest Explanations</h2>
+						<a href="/blog/" class="section-header__link">View all articles →</a>
+					</div>
+					<div class="articles-grid">
+						{posts.map((post) => (
+							<article class="card">
+								<a href={`/blog/${post.id}/`}>
+									<div class="card__img">
+										{post.data.heroImage ? (
+											<Image width={400} height={225} src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+										) : (
+											<div class="card__placeholder" aria-hidden="true">&#129302;</div>
+										)}
+									</div>
+									<div class="card__body">
+										<span class="badge">{post.data.category.replace(/-/g, ' ')}</span>
+										<h3 class="card__title">{post.data.title}</h3>
+										<p class="card__excerpt">{post.data.description}</p>
+										<span class="card__meta">
+											<FormattedDate date={post.data.pubDate} />
+											{post.data.readingTime && <span> &middot; {post.data.readingTime}</span>}
+										</span>
+									</div>
+								</a>
+							</article>
+						))}
+					</div>
+					<div class="section-cta">
+						<a href="/blog/" class="btn btn--outline">Browse All Articles</a>
+					</div>
+				</div>
+			</section>
+		)}
+
+		<div class="nl-heading">
+			<p class="nl-heading__sub">Free Weekly Newsletter</p>
+			<h2 class="nl-heading__title">Join our newsletter.<br/>Stay updated.</h2>
+		</div>
+
+		<Newsletter
+			heading="Still not subscribed? Here's what you're missing."
+			text="The most important AI stories and tools worth knowing about. No spam ever. Free."
+		/>
+	</main>
+
+	<Footer />
+</body>
+</html>
+
+<style>
+	/* Hero */
+	.hero {
+		padding: 7rem 0 7.5rem;
+		background: linear-gradient(160deg, #f0f0f0 0%, #fafafa 65%);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.hero__inner {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 3rem;
+		align-items: stretch;
+	}
+
+	.hero__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.hero__preview {
+		display: flex;
+		align-items: stretch;
+	}
+
+	.hero__tag {
+		display: inline-block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--primary);
+		background: var(--primary-light);
+		border: 1px solid rgba(0,200,150,0.2);
+		padding: 0.3rem 0.75rem;
+		border-radius: 50px;
+		margin-bottom: 1rem;
+	}
+
+	.hero h1 {
+		font-size: 4rem;
+		line-height: 1.1;
+		margin-bottom: 0.75rem;
+		color: rgb(var(--black));
+	}
+
+	.hero__sub {
+		font-size: 1.15rem;
+		color: rgb(var(--gray));
+		margin-bottom: 1.75rem;
+		line-height: 1.6;
+	}
+
+	.hero__form {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 0.75rem;
+		max-width: 480px;
+		margin-bottom: 1rem;
+	}
+
+	.hero__form input {
+		flex: 1;
+		padding: 0.9rem 1.1rem;
+		border: 2px solid var(--border);
+		border-radius: var(--radius);
+		font-size: 1rem;
+		background: #fff;
+		transition: border-color 0.15s;
+	}
+
+	.hero__form input:focus-visible {
+		border-color: var(--primary);
+		outline: none;
+	}
+
+	.hero__btn {
+		padding: 0.5rem 1rem;
+		background: #111;
+		color: #fff;
+		font-size: 0.85rem;
+		font-weight: 700;
+		border: none;
+		border-radius: var(--radius);
+		cursor: pointer;
+		font-family: inherit;
+		transition: background 0.15s;
+		position: relative;
+		outline: none;
+		overflow: visible;
+		isolation: isolate;
+	}
+
+	.hero__btn::before {
+		content: '';
+		position: absolute;
+		inset: -3px;
+		border-radius: calc(var(--radius) + 3px);
+		background: conic-gradient(
+			from var(--angle, 0deg),
+			transparent 0deg,
+			#00ff99 60deg,
+			#00C896 120deg,
+			transparent 180deg
+		);
+		animation: spin-border 4s linear infinite;
+		z-index: -1;
+	}
+
+	.hero__btn::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: #111;
+		border-radius: var(--radius);
+		z-index: -1;
+	}
+
+	@property --angle {
+		syntax: '<angle>';
+		initial-value: 0deg;
+		inherits: false;
+	}
+
+	@keyframes spin-border {
+		to { --angle: 360deg; }
+	}
+
+	.hero__btn:hover { background: var(--primary-dark); }
+	.hero__btn:hover::after { background: var(--primary-dark); }
+
+	.hero__proof {
+		font-size: 0.88rem;
+		color: rgb(var(--gray));
+		margin-bottom: 1.5rem;
+	}
+
+	.hero__logos {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.hero__logos-label {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: rgb(var(--gray));
+		font-weight: 600;
+	}
+
+	.hero__logos-row {
+		display: flex;
+		gap: 1.25rem;
+		flex-wrap: wrap;
+	}
+
+	.hero__logos-row span {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: rgb(var(--gray-dark));
+	}
+
+	/* Newsletter preview card */
+	.preview-card {
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		box-shadow: var(--shadow-lg);
+		overflow: hidden;
+		width: 100%;
+		max-width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.preview-card__header {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 1rem 1.25rem;
+		border-bottom: 1px solid var(--border);
+		background: var(--bg-alt);
+	}
+
+	.preview-card__emoji {
+		font-size: 1.5rem;
+	}
+
+	.preview-card__header strong {
+		display: block;
+		font-size: 0.95rem;
+	}
+
+	.preview-card__date {
+		font-size: 0.75rem;
+		color: rgb(var(--gray));
+	}
+
+	.preview-card__body {
+		padding: 1.5rem 1.75rem;
+		flex: 1;
+	}
+
+	.preview-card__item {
+		font-size: 0.85rem;
+		color: rgb(var(--gray-dark));
+		margin-bottom: 0.75rem;
+		display: flex;
+		gap: 0.5rem;
+		line-height: 1.4;
+	}
+
+	.preview-card__item:last-child { margin-bottom: 0; }
+
+	.preview-card__footer {
+		padding: 0.75rem 1.25rem;
+		background: var(--bg-alt);
+		border-top: 1px solid var(--border);
+		font-size: 0.78rem;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+
+	/* Sections */
+	.section { padding: 3rem 0; }
+	.section--alt { background: var(--bg-alt); padding: 3rem 0; }
+
+	.section-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 1.5rem;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.section-heading {
+		font-size: 1.5rem;
+		margin: 0;
+	}
+
+	.section-header__link {
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--primary);
+	}
+
+	.section-cta {
+		text-align: center;
+		margin-top: 2rem;
+	}
+
+	/* Article Grid */
+	.articles-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	.card {
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		overflow: hidden;
+		transition: box-shadow 0.2s, transform 0.15s;
+	}
+
+	.card:hover {
+		box-shadow: var(--shadow-lg);
+		transform: translateY(-2px);
+	}
+
+	.card a { color: inherit; display: block; }
+
+	.card__img img {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
+
+	.card__placeholder {
+		height: 200px;
+		background: var(--primary-light);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 3rem;
+	}
+
+	.card__body { padding: 1.25rem; }
+
+	.card__title {
+		font-size: 1.05rem;
+		margin: 0.5rem 0 0.4rem;
+		line-height: 1.35;
+		color: rgb(var(--black));
+	}
+
+	.card__excerpt {
+		font-size: 0.88rem;
+		color: rgb(var(--gray));
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		margin-bottom: 0.5rem;
+	}
+
+	.card__meta {
+		font-size: 0.78rem;
+		color: rgb(var(--gray));
+	}
+
+	@media (min-width: 640px) {
+		.articles-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+
+	@media (min-width: 768px) {
+		.hero h1 { font-size: 3.5rem; }
+	}
+
+	.nl-heading {
+		text-align: center;
+		padding: 4rem 1.25rem 2.5rem;
+	}
+
+	.nl-heading__sub {
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: var(--primary);
+		margin-bottom: 0.75rem;
+	}
+
+	.nl-heading__title {
+		font-size: 2.8rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+		line-height: 1.15;
+		margin: 0;
+		font-family: 'Playfair Display', Georgia, serif;
+	}
+
+	@media (min-width: 960px) {
+		.hero__inner {
+			grid-template-columns: 1fr 1fr;
+			gap: 5rem;
+		}
+		.articles-grid { grid-template-columns: repeat(3, 1fr); }
+	}
+
+</style>

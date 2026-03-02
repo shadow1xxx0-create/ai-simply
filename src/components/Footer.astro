@@ -1,0 +1,124 @@
+---
+import { SITE_TITLE } from '../consts';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" role="contentinfo">
+	<div class="container">
+		<div class="footer-grid">
+			<div>
+				<h4>{SITE_TITLE}</h4>
+				<p>AI news and breakthroughs explained in plain English. No jargon. No hype. Just what matters, every week.</p>
+			</div>
+			<div>
+				<h4>Topics</h4>
+				<ul>
+					<li><a href="/blog/category/ai-explained/">AI Explained</a></li>
+					<li><a href="/blog/category/future-of-work/">Future of Work</a></li>
+					<li><a href="/blog/category/how-ai-works/">How AI Works</a></li>
+					<li><a href="/blog/category/ai-news/">AI News</a></li>
+					<li><a href="/blog/">All Articles</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Resources</h4>
+				<ul>
+					<li><a href="/newsletter/">Newsletter Archive</a></li>
+					<li><a href="/about/">About Us</a></li>
+					<li><a href="/rss.xml">RSS Feed</a></li>
+					<li><a href="/privacy/">Privacy Policy</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4>Get the Newsletter</h4>
+				<p>AI news, no jargon. Free.</p>
+				<a
+					href="https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="footer-subscribe-btn"
+				>Subscribe Free →</a>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>&copy; {year} {SITE_TITLE}. All rights reserved. AI explained simply.</p>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		background: #111111;
+		color: rgba(255,255,255,0.6);
+		padding: 2rem 0 1rem;
+		margin-top: 0;
+	}
+
+	.footer-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.site-footer h4 {
+		color: #fff;
+		font-size: 1rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.site-footer p {
+		font-size: 0.9rem;
+		line-height: 1.6;
+		margin-bottom: 0.75rem;
+	}
+
+	.site-footer ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.site-footer li { margin-bottom: 0.4rem; }
+
+	.site-footer a {
+		color: rgba(255,255,255,0.6);
+		font-size: 0.9rem;
+	}
+
+	.site-footer a:hover { color: #fff; }
+
+	.footer-subscribe-btn {
+		display: inline-block;
+		padding: 0.6rem 1.25rem;
+		background: var(--primary);
+		color: #fff;
+		font-size: 0.9rem;
+		font-weight: 700;
+		border-radius: var(--radius);
+		transition: background 0.15s;
+		margin-top: 0.25rem;
+	}
+
+	.footer-subscribe-btn:hover {
+		background: var(--primary-dark);
+		color: #fff;
+	}
+
+	.footer-bottom {
+		border-top: 1px solid rgba(255,255,255,0.1);
+		padding-top: 1.5rem;
+		text-align: center;
+	}
+
+	.footer-bottom p {
+		font-size: 0.8rem;
+		margin: 0;
+	}
+
+	@media (min-width: 768px) {
+		.footer-grid {
+			grid-template-columns: 2fr 1fr 1fr 1.5fr;
+		}
+	}
+</style>
