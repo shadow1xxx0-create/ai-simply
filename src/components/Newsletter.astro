@@ -1,4 +1,6 @@
 ---
+import { BEEHIIV_FORM_URL } from '../consts';
+
 interface Props {
 	variant?: 'full' | 'inline';
 	heading?: string;
@@ -16,7 +18,7 @@ const {
 	<section class="newsletter" id="newsletter" aria-label="Newsletter signup">
 		<div class="container newsletter__inner">
 			<iframe
-				src="https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9"
+				src={BEEHIIV_FORM_URL}
 				class="beehiiv-embed"
 				data-test-id="beehiiv-embed"
 				frameborder="0"
@@ -30,7 +32,7 @@ const {
 		<h3>{heading}</h3>
 		<p>{text}</p>
 		<iframe
-			src="https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9"
+			src={BEEHIIV_FORM_URL}
 			class="beehiiv-embed"
 			data-test-id="beehiiv-embed"
 			frameborder="0"

@@ -8,7 +8,6 @@ export const CATEGORY_COLORS: Record<string, string> = {
 	'ai-explained':   '#EEF3FF',
 	'future-of-work': '#FFF4E6',
 	'how-ai-works':   '#F0FFF4',
-	'ai-news':        '#FFF0F0',
 	'comparisons':    '#F5F0FF',
 	'guides':         '#F0F9FF',
 };

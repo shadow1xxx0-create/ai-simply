@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, BEEHIIV_FORM_URL } from '../consts';
 const year = new Date().getFullYear();
 ---
 
@@ -16,8 +16,7 @@ const year = new Date().getFullYear();
 					<li><a href="/blog/category/ai-explained/">AI Explained</a></li>
 					<li><a href="/blog/category/future-of-work/">Future of Work</a></li>
 					<li><a href="/blog/category/how-ai-works/">How AI Works</a></li>
-					<li><a href="/blog/category/ai-news/">AI News</a></li>
-					<li><a href="/blog/">All Articles</a></li>
+						<li><a href="/blog/">All Articles</a></li>
 				</ul>
 			</div>
 			<div>
@@ -33,7 +32,7 @@ const year = new Date().getFullYear();
 				<h4>Get the Newsletter</h4>
 				<p>AI news, no jargon. Free.</p>
 				<a
-					href="https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9"
+					href={BEEHIIV_FORM_URL}
 					target="_blank"
 					rel="noopener noreferrer"
 					class="footer-subscribe-btn"
