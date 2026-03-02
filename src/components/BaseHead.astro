@@ -49,6 +49,15 @@ const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 <!-- Beehiiv embed script -->
 <script async src="https://subscribe-forms.beehiiv.com/embed.js" crossorigin="anonymous"></script>
 
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XP68CXTJCM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XP68CXTJCM');
+</script>
+
 <!-- SEO -->
 <link rel="canonical" href={canonicalURL} />
 {noindex && <meta name="robots" content="noindex,nofollow" />}
