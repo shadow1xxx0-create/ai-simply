@@ -64,7 +64,7 @@ Beginners using AI for digital tasks earn £8 to £15 per hour for transcription
 
 Businesses need content but don't want fully AI-generated work. The winning approach combines AI speed with human expertise. Tools like ChatGPT, Claude, and Jasper handle research, first drafts, and formatting, while you provide domain knowledge and editing.
 
-One writer [scaled to $7,200 in four weeks](https://ai.plainenglish.io/10-ai-side-hustles-that-are-actually-making-people-money-in-2026-23c78d0a71ac) producing technical content at $120 per hour effective rate. AI-enhanced freelance writing generates $4,000 to $12,000 monthly, with top earners hitting $100,000 yearly.
+One writer scaled to $7,200 in four weeks producing technical content at $120 per hour effective rate. AI-enhanced freelance writing generates $4,000 to $12,000 monthly, with top earners hitting $100,000 yearly.
 
 The catch: this only works if you have genuine expertise. AI writing without human insight is generic and replaceable. AI writing with real expertise is incredibly valuable.
 
@@ -117,7 +117,7 @@ Your online presence functions as your personal brand. Create a simple website o
 
 ### Find and Attract Your Target Audience
 
-Client acquisition is the hard part. [Most successful practitioners spend 40% of their time on marketing and sales](https://ai.plainenglish.io/10-ai-side-hustles-that-are-actually-making-people-money-in-2026-23c78d0a71ac). Start with freelance platforms like Upwork or Fiverr. Leverage referrals by informing your network about your services. Consistency matters more than tactics.
+Client acquisition is the hard part. Most successful practitioners spend 40% of their time on marketing and sales. Start with freelance platforms like Upwork or Fiverr. Leverage referrals by informing your network about your services. Consistency matters more than tactics.
 
 ## Growing and Maintaining Your AI Side Hustle
 
