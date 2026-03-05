@@ -125,15 +125,6 @@ const faqSchema = faqs && faqs.length > 0 ? {
 				</div>
 			)}
 
-			<!-- Mid-article newsletter CTA (appears before content, reader hits it ~500 words in) -->
-			<div class="mid-cta container">
-				<Newsletter
-					variant="inline"
-					heading="Get AI explained in your inbox every week"
-					text="Join thousands of readers getting AI news without the jargon. Free."
-				/>
-			</div>
-
 			<div class="article-body container" itemprop="articleBody">
 				<slot />
 			</div>
@@ -226,11 +217,6 @@ const faqSchema = faqs && faqs.length > 0 ? {
 		border-radius: var(--radius);
 	}
 
-	.mid-cta {
-		max-width: 750px;
-		padding-top: 1.5rem;
-	}
-
 	.article-body {
 		max-width: 750px;
 		padding-top: 2rem;
@@ -275,7 +261,59 @@ const faqSchema = faqs && faqs.length > 0 ? {
 		color: rgb(var(--gray));
 	}
 
+	.mid-article-nl {
+		background: var(--bg-alt);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 2rem 1.5rem;
+		margin: 2.5rem 0;
+		text-align: center;
+	}
+
+	.mid-article-nl h3 {
+		color: rgb(var(--black));
+		margin-bottom: 0.5rem;
+		font-size: 1.2rem;
+	}
+
+	.mid-article-nl p {
+		font-size: 0.95rem;
+		color: rgb(var(--gray));
+		margin-bottom: 1rem;
+	}
+
 	@media (min-width: 768px) {
 		.article-header h1 { font-size: 2.6rem; }
 	}
 </style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const body = document.querySelector('.article-body');
+		if (!body) return;
+
+		const headings = body.querySelectorAll('h2');
+		if (headings.length === 0) return;
+
+		const midIndex = Math.floor(headings.length / 2);
+		const midHeading = headings[midIndex];
+
+		const nl = document.createElement('aside');
+		nl.className = 'mid-article-nl';
+		nl.setAttribute('aria-label', 'Newsletter signup');
+		nl.innerHTML = `
+			<h3>Enjoying this article?</h3>
+			<p>Get AI news in plain English — free, every week.</p>
+			<iframe
+				src="https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9"
+				class="beehiiv-embed"
+				data-test-id="beehiiv-embed"
+				frameborder="0"
+				scrolling="no"
+				style="width:100%;max-width:100%;height:260px;margin:0;border-radius:6px!important;background-color:transparent;box-shadow:0 0 #0000;"
+			></iframe>
+		`;
+
+		midHeading.parentNode.insertBefore(nl, midHeading);
+	});
+</script>
