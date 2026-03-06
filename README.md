@@ -1,8 +1,8 @@
-# AI Simply
+# AI Briefs
 
 AI news and breakthroughs explained in plain English. No jargon. No hype. Just what matters, every week.
 
-**Live site:** [aisimply.com](https://aisimply.com)
+**Live site:** [getaibriefs.com](https://getaibriefs.com)
 
 ## Tech Stack
 
@@ -29,7 +29,7 @@ src/
 ├── components/      # Astro components (Header, Footer, Newsletter, etc.)
 ├── content/blog/    # Markdown articles with frontmatter schema
 ├── layouts/         # BlogPost layout
-├── pages/           # Routes (index, blog, newsletter, about, privacy, 404, RSS)
+├── pages/           # Routes (index, blog, about, privacy, 404, RSS)
 ├── styles/          # Global CSS
 └── consts.ts        # Site-wide constants
 ```
