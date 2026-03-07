@@ -19,6 +19,13 @@ const posts = (await getCollection('blog'))
 	<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 </head>
 <body>
+	<!-- Product Hunt Badge -->
+	<div class="ph-banner">
+		<a href="https://www.producthunt.com/products/ilham?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-ilham" target="_blank" rel="noopener noreferrer">
+			<img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1091529&theme=light&t=1772870760485" alt="Ilham - Motivational Quotes and reminders of faith. | Product Hunt" width="250" height="54" />
+		</a>
+	</div>
+
 	<Header />
 
 	<main>
@@ -137,6 +144,16 @@ const posts = (await getCollection('blog'))
 </html>
 
 <style>
+	/* Product Hunt Banner */
+	.ph-banner {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0.75rem 1rem;
+		background: #fafafa;
+		border-bottom: 1px solid var(--border);
+	}
+
 	/* Hero */
 	.hero {
 		padding: 7rem 0 7.5rem;
