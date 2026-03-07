@@ -191,3 +191,35 @@ The investment numbers are real — hundreds of billions flowing into data cente
 Whether you're running a business, working in tech, or simply a citizen whose data is being processed by AI systems, sovereign AI determines who controls the intelligence layer of your world.
 
 The race is on. And the decisions being made right now — by governments, companies, and individuals — will determine who owns AI for the next generation.
+
+---
+
+## Sources and Further Reading
+
+**France & Mistral AI**
+- [France Bolsters National AI Strategy With NVIDIA Infrastructure](https://blogs.nvidia.com/blog/france-sovereign-ai-infrastructure/) — NVIDIA Blog
+- [Mistral AI Announces Billion-Dollar AI Infrastructure Push in Sweden](https://www.cnbc.com/2026/02/11/mistral-ai-infrastructure-sweden.html) — CNBC
+- [Mistral AI's $14 Billion Valuation Marks Europe's AI Turning Point](https://cloudsummit.eu/blog/mistral-ai-14-billion-valuation-europe-turning-point) — European AI & Cloud Summit
+- [France Taps Mistral AI for Military Use](https://www.tekedia.com/france-taps-mistral-ai-for-military-use-marking-a-strategic-shift-toward-sovereign-artificial-intelligence/) — Tekedia
+
+**India Sovereign AI**
+- [India Bids to Attract Over $200B in AI Infrastructure Investment by 2028](https://techcrunch.com/2026/02/17/india-bids-to-attract-over-200b-in-ai-infrastructure-investment-by-2028/) — TechCrunch
+- [India AI Impact Summit 2026 Spurs $200B+ Investments](https://www.business-standard.com/markets/capital-market-news/india-ai-impact-summit-2026-spurs-200b-investments-expands-sovereign-compute-with-20-000-new-gpus-126030200533_1.html) — Business Standard
+- [Inside Adani's $100 Billion Bet on Sovereign AI Infrastructure](https://www.businesstoday.in/technology/story/inside-adanis-100-billion-bet-on-sovereign-ai-infrastructure-517666-2026-02-24) — BusinessToday
+- [India Unveils 3 Sovereign AI Models at Delhi Summit](https://www.business-standard.com/technology/tech-news/india-ai-impact-summit-2026-sovereign-models-sarvam-bharatgen-gnani-126021900417_1.html) — Business Standard
+
+**Saudi Arabia & Humain**
+- [Saudi Arabia Launches $100 Billion AI Fund](https://siliconcanals.com/sc-n-saudi-arabia-launches-100-billion-ai-fund-as-gulf-states-race-to-diversify-beyond-oil/) — Silicon Canals
+- [Saudi Arabia Is Making a Massive Bet on Becoming a Global AI Powerhouse](https://www.cnn.com/2025/11/02/tech/saudi-arabia-ai-powerhouse) — CNN Business
+- [Saudi Arabia's AI Co Humain Targets 6.6GW by 2034](https://www.datacenterdynamics.com/en/news/saudi-arabias-ai-co-humain-looking-for-us-data-center-equity-partner-targets-66gw-by-2034-with-subsidized-electricity/) — DataCenterDynamics
+
+**EU AI Act**
+- [EU AI Act Implementation Timeline](https://artificialintelligenceact.eu/implementation-timeline/) — artificialintelligenceact.eu
+- [EU AI Act 2026 Updates: Compliance Requirements and Business Risks](https://www.legalnodes.com/article/eu-ai-act-2026-updates-compliance-requirements-and-business-risks) — LegalNodes
+- [Latest Wave of Obligations Under the EU AI Act Take Effect](https://www.dlapiper.com/en-us/insights/publications/2025/08/latest-wave-of-obligations-under-the-eu-ai-act-take-effect) — DLA Piper
+
+**Market Data & Predictions**
+- [Gartner Predicts 35% of Countries Will Be Locked Into Region-Specific AI Platforms by 2027](https://www.gartner.com/en/newsroom/press-releases/2026-01-29-gartner-predicts-35-percent-of-countries-will-be-locked-into-region-specific-ai-platforms-by-2027) — Gartner
+- [The State of AI in the Enterprise — 2026 AI Report](https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html) — Deloitte
+- [Asia Pacific Firms Plan Bigger Spending on Sovereign AI](https://newsbytes.ph/2026/02/19/asia-pacific-firms-plan-bigger-spending-on-sovereign-ai-study-finds/) — NewsbytesPhilippines
+- [Sovereign AI: Building Ecosystems for Strategic Resilience and Impact](https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/sovereign-ai-building-ecosystems-for-strategic-resilience-and-impact) — McKinsey
