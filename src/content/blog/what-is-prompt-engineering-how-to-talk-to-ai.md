@@ -300,3 +300,18 @@ Prompt engineering is how you turn AI from a frustrating novelty into a genuinel
 The people who get the most value from AI aren't the ones with the fanciest subscriptions or the most technical knowledge. They're the ones who learned to communicate clearly with these tools.
 
 That's a skill anyone can learn. And in a world where AI is embedded in everything from your email to your spreadsheets to your search engine, it's a skill worth learning now.
+
+## Sources and Further Reading
+
+This article draws on official documentation, peer-reviewed research, and verified industry data:
+
+- [Prompt Engineering Guide](https://platform.openai.com/docs/guides/prompt-engineering) — OpenAI's official best practices for prompting GPT models
+- [Prompt Engineering Overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview) — Anthropic's official guide for prompting Claude
+- [Prompt Design Strategies](https://ai.google.dev/gemini-api/docs/prompting-strategies) — Google's official prompting guide for Gemini models
+- [A Systematic Survey of Prompt Engineering in Large Language Models](https://arxiv.org/abs/2402.07927) — Comprehensive academic survey of prompting techniques (arXiv, 2025)
+- [The Prompt Report: A Systematic Survey of Prompting Techniques](https://arxiv.org/abs/2406.06608) — Taxonomy of 58 LLM prompting techniques (arXiv, 2025)
+- [Prompt Engineering Market Forecast 2026-2034](https://www.fortunebusinessinsights.com/prompt-engineering-market-109382) — Market size and growth projections (Fortune Business Insights)
+- [Gartner Predicts 75% of Enterprises Will Use Generative AI by 2026](https://www.gartner.com/en/newsroom/press-releases/2024-02-19-gartner-predicts-search-engine-volume-will-drop-25-percent-by-2026-due-to-ai-chatbots-and-other-virtual-agents) — Enterprise adoption data (Gartner)
+- [Prompt Engineering Salary Guide 2026](https://www.coursera.org/articles/prompt-engineering-salary) — Salary and job market data (Coursera)
+- [The 2026 Guide to Prompt Engineering](https://www.ibm.com/think/prompt-engineering) — Techniques and real-world applications (IBM)
+- [Effective Prompts for AI: The Essentials](https://mitsloanedtech.mit.edu/ai/basics/effective-prompts/) — Research-backed prompting strategies (MIT Sloan)
