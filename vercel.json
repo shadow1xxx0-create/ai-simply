@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "www.getaibriefs.com" }],
+      "destination": "https://getaibriefs.com/:path",
+      "permanent": true
+    }
+  ]
+}
