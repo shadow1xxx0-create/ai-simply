@@ -1,6 +1,6 @@
 ---
 title: "What Is Sovereign AI? The Global Race to Own Artificial Intelligence"
-description: "Countries are pouring hundreds of billions into building their own AI. It's called sovereign AI, and it's reshaping who controls artificial intelligence. Here's what it means, who's winning, and why it matters to you."
+description: "Sovereign AI is reshaping who controls artificial intelligence. What it means, who's winning, and why it matters to you."
 pubDate: 2026-03-07
 updatedDate: 2026-03-07
 heroImage: "../../assets/sovereign-ai.jpg"

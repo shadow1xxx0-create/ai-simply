@@ -1,6 +1,6 @@
 ---
 title: "What Is Prompt Engineering? How to Talk to AI and Actually Get What You Want (2026 Guide)"
-description: "Prompt engineering is the skill of writing better instructions for AI tools like ChatGPT, Claude, and Gemini. Learn the techniques, frameworks, and real examples that get you 10x better results, explained in plain English."
+description: "Prompt engineering lets you get 10x better results from ChatGPT and Claude. Learn the key techniques with real examples."
 pubDate: 2026-03-09
 updatedDate: 2026-03-09
 heroImage: "../../assets/prompt-engineering.jpg"

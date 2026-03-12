@@ -1,6 +1,6 @@
 ---
 title: "What Is an AI Agent? A Plain English Explanation"
-description: "AI agents are everywhere in the news but nobody explains what they actually are. Here's a clear, jargon-free explanation of what an AI agent does, how it works, and why it matters."
+description: "AI agents are everywhere, but what are they really? A clear, jargon-free explanation of how AI agents work and why they matter."
 pubDate: 2026-02-24
 updatedDate: 2026-02-24
 heroImage: "../../assets/ai-agent.jpg"

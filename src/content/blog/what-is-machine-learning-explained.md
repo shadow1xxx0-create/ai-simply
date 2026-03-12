@@ -1,6 +1,6 @@
 ---
 title: "What Is Machine Learning? Explained Like You're 5"
-description: "Machine learning sounds intimidating but the core idea is simple. Here's a plain English explanation of what machine learning is, how it works, and why it's behind everything from Netflix to spam filters."
+description: "Machine learning explained in plain English — what it is, how it works, and why it powers everything from Netflix to spam filters."
 pubDate: 2026-02-20
 updatedDate: 2026-02-20
 heroImage: "../../assets/machine-learning.jpg"

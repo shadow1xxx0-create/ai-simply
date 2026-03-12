@@ -1,6 +1,6 @@
 ---
 title: "Will AI Replace My Job? Here's the Honest Answer"
-description: "Everyone is asking whether AI will take their job. The honest answer is more nuanced than the headlines suggest. Here's what the evidence actually shows, by job type."
+description: "Will AI replace your job? The honest answer is more nuanced than headlines suggest. Here's what evidence shows, by job type."
 pubDate: 2026-02-27
 updatedDate: 2026-02-27
 heroImage: "../../assets/ai-jobs.jpg"

@@ -1,6 +1,6 @@
 ---
 title: "How to Use AI at Work Without Looking Stupid"
-description: "AI tools are everywhere but most people either avoid them or use them badly. Here's a practical guide to actually using AI at work — what to hand off, what to keep, and how to get results that don't embarrass you."
+description: "How to use AI at work the right way — what to hand off, what to keep, and how to get results that don't embarrass you."
 pubDate: 2026-02-17
 updatedDate: 2026-02-17
 heroImage: "../../assets/ai-at-work.jpg"

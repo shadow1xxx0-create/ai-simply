@@ -1,6 +1,6 @@
 ---
 title: "ChatGPT vs Claude: Which One Should You Actually Use?"
-description: "ChatGPT and Claude are the two biggest AI assistants. But they're different in ways that matter. Here's a plain English comparison to help you decide which is worth your time."
+description: "ChatGPT vs Claude — they differ in ways that matter. A plain English comparison to help you pick the right AI assistant."
 pubDate: 2026-03-01
 updatedDate: 2026-03-01
 heroImage: "../../assets/chatgpt-vs-claude.jpg"

@@ -1,6 +1,6 @@
 ---
 title: "Is AI Making Us Dumber? The Deskilling Problem Nobody's Talking About"
-description: "AI tools are making work faster, but they may also be eroding our skills. Research shows doctors, lawyers, students, and office workers are losing abilities they once had. Here's what the science says and how to protect yourself."
+description: "AI deskilling is real — research shows doctors, lawyers, and students are losing key abilities. Here's what the science says."
 pubDate: 2026-03-11
 updatedDate: 2026-03-11
 heroImage: "../../assets/ai-deskilling.jpg"
