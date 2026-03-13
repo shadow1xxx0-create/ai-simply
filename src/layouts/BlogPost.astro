@@ -7,9 +7,22 @@ import Footer from '../components/Footer.astro';
 import Newsletter from '../components/Newsletter.astro';
 import { SITE_TITLE, SITE_URL, SITE_AUTHOR } from '../consts';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { body?: string };
 
-const { title, description, pubDate, updatedDate, heroImage, category, readingTime, tags, faqs } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, category, readingTime, tags, faqs, body } = Astro.props;
+
+function countWords(text: string): number {
+	return text
+		.replace(/```[\s\S]*?```/g, '')
+		.replace(/`[^`]+`/g, '')
+		.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+		.replace(/[#*_~>|`]/g, '')
+		.trim()
+		.split(/\s+/)
+		.filter(w => w.length > 0).length;
+}
+
+const wordCount = body ? countWords(body) : undefined;
 
 const articleSchema = {
 	"@context": "https://schema.org",
@@ -18,8 +31,10 @@ const articleSchema = {
 	"description": description,
 	"datePublished": pubDate.toISOString(),
 	...(updatedDate && { "dateModified": updatedDate.toISOString() }),
+	...(wordCount && { "wordCount": wordCount }),
+	...(category && { "articleSection": category.replace(/-/g, ' ') }),
 	"author": {
-		"@type": "Organization",
+		"@type": "Person",
 		"name": SITE_AUTHOR,
 		"url": SITE_URL,
 	},

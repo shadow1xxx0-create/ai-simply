@@ -5,12 +5,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
 	site: 'https://getaibriefs.com',
-	integrations: [mdx(), sitemap({
-		serialize(item) {
-			item.lastmod = new Date();
-			return item;
-		},
-	})],
+	integrations: [mdx(), sitemap()],
 	build: {
 		inlineStylesheets: 'auto',
 	},
