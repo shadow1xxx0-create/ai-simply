@@ -30,7 +30,7 @@ This guide explains both clearly, compares them honestly, and tells you which on
 
 ## What They Both Are (The Basics)
 
-Both ChatGPT and Claude are **large language model (LLM) assistants** — which is a technical way of saying: AI systems trained on enormous amounts of text that can generate human-like responses to questions and prompts.
+Both ChatGPT and Claude are **[large language model (LLM)](/blog/what-is-generative-ai/) assistants** — which is a technical way of saying: AI systems trained on enormous amounts of text that can generate human-like responses to questions and prompts.
 
 What they're good for:
 - Answering questions and explaining things
@@ -40,7 +40,7 @@ What they're good for:
 - Drafting emails, documents, and social posts
 - Analyzing documents you paste in
 
-Neither is connected to the internet in real-time by default (though both have web-browsing options). Neither is infallible — both can confidently state wrong things. Both get better the more clearly you explain what you want.
+Neither is connected to the internet in real-time by default (though both have web-browsing options). Neither is infallible — both can [confidently state wrong things](/blog/what-are-ai-hallucinations-why-ai-lies-to-you/). Both get better the more clearly you explain what you want.
 
 ## ChatGPT — What You Need to Know
 
@@ -162,7 +162,7 @@ Neither is better objectively — it depends on what you find useful. Many peopl
 
 ### Honestly? Try Both
 
-Both have free tiers. Spending 20 minutes with each on the same problem will tell you more than any comparison article. The one that gives you a better answer to *your* specific question is the right choice.
+Both have free tiers. Spending 20 minutes with each on the same problem will tell you more than any comparison article. The one that gives you a better answer to *your* specific question is the right choice. And remember: [how you write your prompts](/blog/what-is-prompt-engineering-how-to-talk-to-ai/) matters as much as which tool you pick.
 
 Many people who use AI seriously keep accounts with both and use them for different things.
 

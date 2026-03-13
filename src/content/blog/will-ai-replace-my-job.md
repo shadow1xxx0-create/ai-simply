@@ -104,9 +104,9 @@ That leftover stuff is your real value. Protect and develop it.
 
 ### 2. Become the Person Who Uses AI Well
 
-Here's a dynamic that plays out again and again: the people who get displaced aren't replaced by AI — they're replaced by *other people who use AI*. A marketer who uses AI tools to do the work of three people is more valuable than a marketer who doesn't.
+Here's a dynamic that plays out again and again: the people who get displaced aren't replaced by AI — they're replaced by *other people who use AI*. Understanding [what AI agents can now do autonomously](/blog/what-is-an-ai-agent-explained-simply/) makes this urgency concrete. A marketer who uses AI tools to do the work of three people is more valuable than a marketer who doesn't.
 
-Learning to use AI tools in your field — and learning quickly — is the most reliable near-term career hedge.
+Learning to [use AI tools at work](/blog/how-to-use-ai-at-work/) — and learning quickly — is the most reliable near-term career hedge.
 
 ### 3. Specialize in Ways That Matter
 

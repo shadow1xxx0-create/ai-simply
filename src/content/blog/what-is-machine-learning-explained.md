@@ -108,7 +108,7 @@ Machine learning is behind most of the things on your phone and computer that fe
 
 **Navigation**: Google Maps predicting traffic. It learned from millions of trips what patterns predict slowdowns.
 
-And of course: **AI assistants like ChatGPT and Claude** — which use a specific powerful type of machine learning called deep learning on language.
+And of course: **[AI assistants like ChatGPT and Claude](/blog/chatgpt-vs-claude-for-beginners/)** — which use a specific powerful type of machine learning called deep learning on language.
 
 ## Deep Learning: The Powerful Version
 
@@ -144,7 +144,7 @@ Machine learning sounds magical, but it has real limitations:
 
 ## How This Connects to Modern AI
 
-The large language models (LLMs) behind ChatGPT, Claude, Gemini, and others — the ones that can write, code, answer questions, and reason — are machine learning systems. Specifically deep learning applied to text.
+The [large language models (LLMs)](/blog/what-is-generative-ai/) behind ChatGPT, Claude, Gemini, and others — the ones that can write, code, answer questions, and reason — are machine learning systems. Specifically deep learning applied to text.
 
 They were trained on enormous amounts of text from the internet, books, and code. Through training, they learned the patterns of language so well that they can generate coherent, useful responses to almost any prompt.
 

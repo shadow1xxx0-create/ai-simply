@@ -51,8 +51,11 @@ const articleSchema = {
 	...(heroImage && { "image": {
 		"@type": "ImageObject",
 		"url": new URL(heroImage.src, Astro.url).href,
+		"contentUrl": new URL(heroImage.src, Astro.url).href,
 		"width": heroImage.width,
 		"height": heroImage.height,
+		"name": title,
+		"description": description,
 	}}),
 };
 

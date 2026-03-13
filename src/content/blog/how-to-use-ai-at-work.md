@@ -67,7 +67,7 @@ Notice how specific that is. The more you specify — tone, length, purpose, aud
 
 Reading a 40-page report and extracting the 5 things that actually matter to you is one of AI's best skills.
 
-**How to do it:** Paste the document (or a big chunk of it) into Claude or ChatGPT and ask:
+**How to do it:** Paste the document (or a big chunk of it) into [Claude or ChatGPT](/blog/chatgpt-vs-claude-for-beginners/) and ask:
 
 > "Summarize this in 5 bullet points. Focus specifically on [what matters to me]. I'm interested in [your angle]."
 
@@ -118,7 +118,7 @@ Paste in something you wrote and ask for specific improvements:
 
 ## How to Write Prompts That Actually Work
 
-The quality of AI output is directly tied to the quality of your prompt. Here's a simple formula:
+The quality of AI output is directly tied to the quality of your prompt — this is the skill known as [prompt engineering](/blog/what-is-prompt-engineering-how-to-talk-to-ai/). Here's a simple formula:
 
 **[Role] + [Task] + [Context] + [Format] + [Constraints]**
 
@@ -144,7 +144,7 @@ AI output often sounds polished but hollow — correct English, no distinctive v
 
 ### Problem: AI Gets Facts Wrong
 
-It happens. AI can invent statistics, misremember dates, and fabricate citations — confidently. This is called "hallucination."
+It happens. AI can invent statistics, misremember dates, and fabricate citations — confidently. This is called "[hallucination](/blog/what-are-ai-hallucinations-why-ai-lies-to-you/)."
 
 **Fix:** Never publish facts, numbers, or specific claims from AI without checking them. Use AI to understand and draft; use primary sources for facts. If you need a statistic, get it yourself and give it to the AI to include.
 

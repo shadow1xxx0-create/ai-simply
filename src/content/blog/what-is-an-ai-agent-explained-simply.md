@@ -26,7 +26,7 @@ This isn't that. This is a plain English explanation of what an AI agent actuall
 
 ## The Simplest Possible Explanation
 
-An **AI agent** is an AI that can take actions on its own, not just answer questions.
+An **AI agent** is an AI that can take actions on its own, not just answer questions. To understand why this is a big leap, it helps to first understand [how machine learning makes these systems possible](/blog/what-is-machine-learning-explained/).
 
 That's it. That's the core idea.
 
@@ -102,7 +102,7 @@ AI agents are like a good research assistant that never sleeps, never gets tired
 Agents aren't a new concept in computer science — researchers have been building them for decades. What changed recently:
 
 **1. Language models got really good at reasoning.**
-Earlier AI was bad at the "plan" step. It couldn't reliably break a complex task into sensible sub-steps, or recover when something went wrong. Models like GPT-4 and Claude 3 are much better at this.
+Earlier AI was bad at the "plan" step. It couldn't reliably break a complex task into sensible sub-steps, or recover when something went wrong. Models like [GPT-4 and Claude 3](/blog/chatgpt-vs-claude-for-beginners/) are much better at this.
 
 **2. Tool use became practical.**
 OpenAI, Anthropic, and Google have all built proper "function calling" APIs — ways for AI models to reliably use external tools. Earlier attempts were hacky.
@@ -141,7 +141,7 @@ Being realistic: agents are genuinely useful for some things and still unreliabl
 
 This is what most people actually want to know. The honest answer is: it depends on what you do, and how fast companies adopt agents.
 
-For **repetitive information processing jobs** — data entry, basic research, routine customer service, simple writing tasks — agents represent genuine automation risk over the next 5-10 years. These tasks are exactly what agents are best at.
+For **repetitive information processing jobs** — data entry, basic research, routine customer service, simple writing tasks — agents represent genuine automation risk over the next 5-10 years. [The full picture of which jobs are most at risk](/blog/will-ai-replace-my-job/) is more nuanced than most headlines suggest. These tasks are exactly what agents are best at.
 
 For **jobs requiring relationship management, complex judgment, creativity, or physical presence** — the risk is lower, and the more likely scenario is that agents become tools that make you more productive, not replacements.
 
