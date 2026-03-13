@@ -16,13 +16,14 @@ function countWords(text: string): number {
 		.replace(/```[\s\S]*?```/g, '')
 		.replace(/`[^`]+`/g, '')
 		.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
-		.replace(/[#*_~>|`]/g, '')
+		.replace(/[#*_~>|]/g, '')
 		.trim()
 		.split(/\s+/)
 		.filter(w => w.length > 0).length;
 }
 
 const wordCount = body ? countWords(body) : undefined;
+const categoryLabel = category?.replace(/-/g, ' ');
 
 const articleSchema = {
 	"@context": "https://schema.org",
@@ -32,7 +33,7 @@ const articleSchema = {
 	"datePublished": pubDate.toISOString(),
 	...(updatedDate && { "dateModified": updatedDate.toISOString() }),
 	...(wordCount && { "wordCount": wordCount }),
-	...(category && { "articleSection": category.replace(/-/g, ' ') }),
+	...(categoryLabel && { "articleSection": categoryLabel }),
 	"author": {
 		"@type": "Person",
 		"name": SITE_AUTHOR,
@@ -108,7 +109,7 @@ const faqSchema = faqs && faqs.length > 0 ? {
 						<span aria-hidden="true">/</span>
 						<span>{title}</span>
 					</nav>
-					{category && <a href={`/blog/category/${category}/`} class="badge">{category.replace(/-/g, ' ')}</a>}
+					{categoryLabel && <a href={`/blog/category/${category}/`} class="badge">{categoryLabel}</a>}
 					<h1 itemprop="headline">{title}</h1>
 					<p class="article-header__desc" itemprop="description">{description}</p>
 					<div class="article-header__meta">
