@@ -1,6 +1,6 @@
 ---
 title: "What Are Deepfakes? How AI Fakes Reality (And How to Spot One)"
-description: "Deepfakes fooled a company out of $25 million. 1 in 4 Americans got a fake voice call. Here's exactly what deepfakes are, how they're made, and how to spot one."
+description: "Deepfakes cost one company $25 million. Here's exactly what deepfakes are, how AI makes them, and how to spot one before it fools you."
 pubDate: 2026-03-13
 updatedDate: 2026-03-13
 heroImage: "../../assets/deepfakes.jpg"

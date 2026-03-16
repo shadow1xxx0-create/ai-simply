@@ -76,7 +76,7 @@ The result is an asymmetry of information that has no historical precedent. Comp
 
 Everything above describes surveillance as documentation — systems that record and identify. There is a more advanced category that most people have not heard of: predictive AI systems that use surveillance data not just to watch you, but to make judgments about your future behavior.
 
-Traditional surveillance watches what you did. Predictive systems try to forecast what you might do.
+Traditional surveillance watches what you did. [Predictive systems](/blog/predictive-ai-surveillance-stops-watching-starts-deciding/) try to forecast what you might do.
 
 The distinction matters enormously. Surveillance as documentation can be contested — you can argue what the footage shows. But a predictive system flags you based on patterns it associates with risk, not evidence of wrongdoing. You have not done anything. The algorithm has decided you look like someone who might.
 
@@ -85,7 +85,7 @@ This is already operating in high-stakes contexts most people are unaware of:
 - **Criminal sentencing:** Risk assessment algorithms are used in US courts to predict the likelihood of reoffending. Judges receive scores. These scores influence sentences. The algorithm's reasoning is not disclosed.
 - **Child welfare screening:** AI tools flag families for investigation based on behavioral and demographic patterns in government databases — before any abuse has been reported.
 - **Insurance pricing:** Behavioral data from apps, wearables, and data brokers is fed into pricing models. Your habits determine your premium.
-- **Hiring and firing:** AI tools screen job applications and flag employees for termination based on productivity scores, communication patterns, and inferred sentiment.
+- **Hiring and firing:** AI tools screen job applications and flag employees for termination based on productivity scores, communication patterns, and inferred sentiment — directly connected to [which jobs AI is replacing versus augmenting](/blog/will-ai-replace-my-job/).
 - **Credit scoring:** Some systems incorporate non-financial data — social connections, browsing history, purchase patterns — into creditworthiness assessments.
 
 In each case, an algorithm makes a consequential judgment about you based on data you did not knowingly provide, for a purpose you were not told about, using criteria you cannot inspect or appeal.
@@ -94,7 +94,7 @@ In each case, an algorithm makes a consequential judgment about you based on dat
 
 The surveillance state does not stop at the city street. AI monitoring has moved into offices, remote workplaces, and schools.
 
-[60% of companies now use AI-powered monitoring tools](https://stateofsurveillance.org/articles/corporate/workplace-surveillance-bossware/) on their employees — tracking keystrokes, taking random screenshots every few minutes, reading emails and internal messages, and scoring "productivity" in real time. Some tools flag employees who spend too long away from their keyboards, monitor facial expressions via webcam for signs of disengagement, or analyze tone in written communications to detect dissatisfaction. Three in four workers say this surveillance directly decreases job satisfaction.
+[60% of companies now use AI-powered monitoring tools](https://stateofsurveillance.org/articles/corporate/workplace-surveillance-bossware/) on their employees — tracking keystrokes, taking random screenshots every few minutes, reading emails and internal messages, and scoring "productivity" in real time. The same [AI tools people use at work](/blog/how-to-use-ai-at-work/) to get things done are often the same category of tools their employers use to watch them. Some tools flag employees who spend too long away from their keyboards, monitor facial expressions via webcam for signs of disengagement, or analyze tone in written communications to detect dissatisfaction. Three in four workers say this surveillance directly decreases job satisfaction.
 
 In schools, AI tools monitor students' online activity continuously, flag search terms associated with sensitive topics, and in some cases use facial recognition to track student attention levels during class. These systems are often deployed without meaningful notice to students or parents, framed as safety tools.
 

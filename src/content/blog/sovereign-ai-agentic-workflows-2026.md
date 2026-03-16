@@ -142,7 +142,7 @@ You need people who can deploy, maintain, and fine-tune AI models. Those enginee
 
 ### Performance
 
-The largest, most capable AI models are currently trained by US companies with massive compute budgets. A sovereign model trained on smaller infrastructure may not match GPT-5 or Claude on general benchmarks. The advantage of sovereign models is specificity — they're better at local languages, local regulations, local context — not raw general intelligence.
+The largest, most capable AI models are currently trained by US companies with massive compute budgets. A sovereign model trained on smaller infrastructure may not match GPT-5 or [Claude on general benchmarks](/blog/chatgpt-vs-claude-for-beginners/). The advantage of sovereign models is specificity — they're better at local languages, local regulations, local context — not raw general intelligence.
 
 ### Speed
 
@@ -150,7 +150,7 @@ When OpenAI releases a new capability, API customers get it immediately. Soverei
 
 ## The Open-Source Bridge
 
-Here's the development that makes sovereign AI practical for organizations that aren't nation-states with billion-dollar budgets: **open-source AI models**.
+Here's the development that makes sovereign AI practical for organizations that aren't nation-states with billion-dollar budgets: **[open-source AI models](/blog/what-is-generative-ai/)**.
 
 Models like Meta's **Llama** and France's **Mistral** can be downloaded, deployed on your own servers, and fine-tuned on your own data — for free. You don't need to build a model from scratch. You take a world-class model and run it on infrastructure you control.
 
@@ -162,9 +162,9 @@ The quality gap between open-source and proprietary models has narrowed dramatic
 
 Sovereign AI isn't just an abstract geopolitical chess game. It directly affects your life in several ways.
 
-**Your data privacy.** When your country's healthcare system, tax authority, or social services use AI, sovereign deployment means your personal information stays within your country's legal jurisdiction. Without sovereign AI, your medical records could be processed on servers in a country with weaker privacy protections than your own.
+**Your data privacy.** When your country's healthcare system, tax authority, or social services use AI, sovereign deployment means your personal information stays within your country's legal jurisdiction. Without sovereign AI, your medical records could be processed on servers in a country with weaker [AI privacy protections](/blog/how-ai-is-eroding-your-privacy/) than your own.
 
-**Your job market.** Countries that build sovereign AI create local engineering, data science, and infrastructure jobs. Countries that only consume foreign AI import services but don't build a local tech workforce. The McKinsey Sovereign AI report specifically highlights the economic multiplier effect of local AI infrastructure investment.
+**Your job market.** Countries that build sovereign AI create local engineering, data science, and infrastructure jobs. Countries that only consume foreign AI import services but don't build a local tech workforce. This directly shapes [which jobs AI ends up replacing — and which it creates](/blog/will-ai-replace-my-job/).
 
 **Your digital independence.** If all of your country's critical systems — healthcare, finance, defense, education — depend on AI from a single foreign provider, that provider has enormous leverage. Sovereign AI is digital independence, the same way domestic energy production is energy independence.
 
