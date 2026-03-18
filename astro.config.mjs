@@ -21,6 +21,7 @@ const articleLastmod = {
 	'/blog/what-is-prompt-engineering-how-to-talk-to-ai/': '2026-03-09',
 	'/blog/will-ai-replace-my-job/': '2026-02-27',
 	'/blog/can-ai-read-your-emotions-emotion-ai-explained/': '2026-03-16',
+	'/blog/what-is-a-large-language-model-llm-explained/': '2026-03-18',
 };
 
 export default defineConfig({
