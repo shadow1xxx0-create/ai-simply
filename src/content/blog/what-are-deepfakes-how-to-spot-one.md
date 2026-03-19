@@ -26,17 +26,17 @@ faqs:
     answer: "A deepfake uses AI to synthetically generate or replace content — a face, voice, or entire scene. A 'cheap fake' uses simple editing techniques like slowing down footage, cutting clips out of context, or using basic video editing — no AI required. Cheap fakes are often more dangerous in practice because they're faster to produce and harder to classify as 'fake' under existing laws. The Nancy Pelosi 'drunk' video of 2019 was a cheap fake — the video was just slowed down to make her speech slurred. Deepfakes are technically sophisticated; cheap fakes are deceptively simple."
 ---
 
-Your phone rings. It's your son's number. You answer, and there he is — his voice, his accent, the specific way he says "Mum" — telling you he's been in a car accident, he needs $3,000 wired immediately, please don't call the police.
+Your phone rings. It's your son's number. You answer, and there he is: his voice, his accent, the specific way he says "Mum" — telling you he's been in a car accident, he needs $3,000 wired immediately, please don't call the police.
 
 He's not there. He never called. The voice is fake.
 
-This isn't a hypothetical. It's happening right now — 1 in 4 Americans have received a deepfake voice call in the past year. And it's the least sophisticated version of what deepfake technology can do.
+This isn't a hypothetical. It's happening right now. 1 in 4 Americans have received a deepfake voice call in the past year. And it's the least sophisticated version of what deepfake technology can do.
 
 Here's everything you need to know: what deepfakes actually are, how they're made, what's already happened, and how to protect yourself.
 
 ## What Are Deepfakes? (The Plain English Definition)
 
-**A deepfake is AI-generated media — video, audio, or image — that makes a real person appear to say or do something they never actually did.**
+**A deepfake is AI-generated media (video, audio, or image) that makes a real person appear to say or do something they never actually did.**
 
 The word is a mashup of "deep learning" (the AI technique involved) and "fake." The output can be:
 
@@ -53,15 +53,15 @@ There are three main methods, and they're converging into tools that require zer
 
 ### Method 1: Face Swapping
 
-The original deepfake technique. An AI maps one person's facial movements — eyes, mouth, nose, expressions — onto another person's body in a video.
+The original deepfake technique. An AI maps one person's facial movements (eyes, mouth, nose, expressions) onto another person's body in a video.
 
 Two neural networks are trained on thousands of images of both the source face and target face. The first learns to encode faces as patterns. The second learns to reconstruct them. By swapping the encoders, the AI can take every frame of a video and replace one face with another while preserving the original person's head movements and background.
 
-Early face swaps were obvious — blurry edges, wrong skin tones, frozen expressions. Modern versions are seamless.
+Early face swaps were obvious: blurry edges, wrong skin tones, frozen expressions. Modern versions are seamless.
 
 ### Method 2: Diffusion Models
 
-This is the same underlying technology behind [generative AI image tools](/blog/what-is-generative-ai/) like DALL-E and Stable Diffusion — but trained on photos of a specific person to generate entirely new images of them in any pose, setting, or context.
+This is the same underlying technology behind [generative AI image tools](/blog/what-is-generative-ai/) like DALL-E and Stable Diffusion, but trained on photos of a specific person to generate entirely new images of them in any pose, setting, or context.
 
 Feed the model 20–50 photos of someone. Train it using a technique called LoRA (Low-Rank Adaptation). The model learns their face so precisely it can then generate photorealistic images of them doing things they never did, in places they've never been.
 
@@ -69,9 +69,9 @@ This is how the Taylor Swift images were created. This is how explicit deepfakes
 
 ### Method 3: Voice Cloning
 
-The most accessible and fastest-moving category. AI voice models learn the unique acoustic fingerprint of a voice — its pitch, cadence, accent, rhythm — and can reproduce it saying anything.
+The most accessible and fastest-moving category. AI voice models learn the unique acoustic fingerprint of a voice (its pitch, cadence, accent, rhythm) and can reproduce it saying anything.
 
-**The threshold for cloning has collapsed.** In 2022, you needed 30 minutes of clean audio. In 2024, quality voice clones were generated from under 10 seconds. By 2026, credible clones are achievable from 3 seconds of audio — a voicemail greeting, a social media clip, a YouTube video.
+**The threshold for cloning has collapsed.** In 2022, you needed 30 minutes of clean audio. In 2024, quality voice clones were generated from under 10 seconds. By 2026, credible clones are achievable from 3 seconds of audio: a voicemail greeting, a social media clip, a YouTube video.
 
 The result: anyone's voice, saying anything, in real time.
 
@@ -79,12 +79,12 @@ The result: anyone's voice, saying anything, in real time.
 
 The deepfake problem has moved from "emerging threat" to "active crisis" faster than almost anyone predicted.
 
-- **500,000** deepfake files existed online in 2023. By 2025, that number hit **8 million** — a **900% increase** in two years.
+- **500,000** deepfake files existed online in 2023. By 2025, that number hit **8 million**, a **900% increase** in two years.
 - Deepfake fraud attempts increased **3,000% in 2023** alone.
 - Businesses lost an average of **$500,000 per deepfake-related incident** in 2024.
 - AI-enabled fraud losses in the US are projected to climb from $12.3 billion in 2023 to **$40 billion by 2027**.
 - Only **0.1% of people** correctly identified all fakes and real media in an iProov 2025 study.
-- Human detection accuracy for high-quality deepfake video: **24.5%** — worse than a coin flip.
+- Human detection accuracy for high-quality deepfake video: **24.5%**, worse than a coin flip.
 
 The detection gap is real: the people creating deepfakes improve faster than the average person's ability to spot them.
 
@@ -94,23 +94,23 @@ These aren't theoretical risks. They've already happened.
 
 ### The $25 Million Video Call (Arup, 2024)
 
-In early 2024, an employee at Arup — one of Britain's largest engineering firms — received a message about a confidential transaction. Suspicious, he joined a video call with what appeared to be multiple senior colleagues, including the CFO, all of whom vouched for the instruction.
+In early 2024, an employee at Arup (one of Britain's largest engineering firms) received a message about a confidential transaction. Suspicious, he joined a video call with what appeared to be multiple senior colleagues, including the CFO, all of whom vouched for the instruction.
 
 Every person on that call was a deepfake.
 
 He transferred **$25.6 million** across 15 transactions before realizing the call was fake. The investigation is ongoing. No funds have been recovered.
 
-The employee said he only realized something was wrong after contacting the UK head office directly. Everything on the call — the faces, the voices, the mannerisms — matched his real colleagues.
+The employee said he only realized something was wrong after contacting the UK head office directly. Everything on the call matched his real colleagues: the faces, the voices, the mannerisms.
 
 ### Taylor Swift (January 2024)
 
-AI-generated explicit images of Taylor Swift circulated on X (formerly Twitter) in January 2024. They received **45 million views, 24,000 reposts, and hundreds of thousands of likes** before being removed — 17 hours after they first appeared.
+AI-generated explicit images of Taylor Swift circulated on X (formerly Twitter) in January 2024. They received **45 million views, 24,000 reposts, and hundreds of thousands of likes** before being removed, 17 hours after they first appeared.
 
 The incident forced a public debate that had been avoided for years. Within days, bipartisan senators introduced the DEFIANCE Act. The White House called it "alarming." Swift herself did not publicly address it.
 
 ### The 2026 Midterm Elections
 
-On March 11, 2026 — today — the Republican National Senatorial Committee published an AI deepfake video of Democratic Senate candidate James Talarico in Texas. It shows a realistic AI version of Talarico speaking directly to camera for over a minute, saying things he never said.
+On March 11, 2026, the Republican National Senatorial Committee published an AI deepfake video of Democratic Senate candidate James Talarico in Texas. It shows a realistic AI version of Talarico speaking directly to camera for over a minute, saying things he never said.
 
 CNN called it "the first example of a phony version of a candidate talking in a lifelike manner for so long."
 

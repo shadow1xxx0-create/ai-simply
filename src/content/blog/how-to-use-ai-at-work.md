@@ -26,7 +26,7 @@ The first type uses AI and gets wildly more productive. They finish the report i
 
 The second type tried AI once, got a mediocre response, decided "it's not that useful," and went back to doing things the slow way.
 
-The difference isn't intelligence or tech-savviness. It's knowing *how* to use AI — what to ask for, how to ask for it, and what to do with the result.
+The difference isn't intelligence or tech-savviness. It's knowing *how* to use AI: what to ask for, how to ask for it, and what to do with the result.
 
 This guide covers exactly that.
 
@@ -56,12 +56,12 @@ Your job: give great briefings, use the output as a starting point, review every
 
 This is the single biggest time-saver for most office workers.
 
-Emails, reports, proposals, presentations, social posts, job descriptions, meeting agendas — anything that starts with a blank page. AI can produce a solid first draft in 10 seconds. You then spend 5 minutes editing it instead of 45 minutes writing it from scratch.
+Emails, reports, proposals, presentations, social posts, job descriptions, meeting agendas. Anything that starts with a blank page. AI can produce a solid first draft in 10 seconds. You then spend 5 minutes editing it instead of 45 minutes writing it from scratch.
 
 **Example prompt that works:**
 > "Write a professional email to a client whose project has been delayed by two weeks due to a third-party issue on our end. Tone: apologetic but confident. Acknowledge the delay, briefly explain it wasn't our fault but we're taking responsibility, offer a revised timeline, and invite them to a quick call. Keep it under 150 words."
 
-Notice how specific that is. The more you specify — tone, length, purpose, audience — the less editing you'll need to do.
+Notice how specific that is. The more you specify (tone, length, purpose, audience), the less editing you'll need to do.
 
 ### 2. Summarizing Long Documents
 
@@ -74,7 +74,7 @@ Reading a 40-page report and extracting the 5 things that actually matter to you
 Or be even more targeted:
 > "I'm a marketing manager. What in this document is relevant to my department? What action do I need to take based on this?"
 
-This works for lengthy emails, research papers, legal documents, competitor reports — anything you need to understand without reading every word.
+This works for lengthy emails, research papers, legal documents, competitor reports. Anything you need to understand without reading every word.
 
 ### 3. Brainstorming
 
@@ -86,7 +86,7 @@ The blank-page problem hits brainstorming hard. AI is excellent at generating a 
 
 > "What are some ways to make this policy announcement sound less corporate and more human?"
 
-The output isn't all gold. But getting 20 mediocre ideas is way better than staring at a blank page — you'll usually find 2-3 genuinely useful ones.
+The output isn't all gold. But getting 20 mediocre ideas is way better than staring at a blank page. You'll usually find 2-3 genuinely useful ones.
 
 ### 4. Research Summaries
 

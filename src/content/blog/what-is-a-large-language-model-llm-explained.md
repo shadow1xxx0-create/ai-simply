@@ -36,13 +36,13 @@ faqs:
 
 ChatGPT isn't thinking. It isn't understanding your question. And it doesn't "know" anything the way you do.
 
-It's doing something far weirder — and arguably far more impressive.
+It's doing something far weirder, and arguably far more impressive.
 
 That something is called a **large language model**, or **LLM**. It's the technology behind ChatGPT, Claude, Gemini, and virtually every AI assistant you've ever used. Over 1 billion people use products built on it every month. It powers Google searches, customer service bots, code editors, and medical diagnosis tools.
 
 And almost nobody can explain what it actually is.
 
-This guide fixes that. By the end, you'll understand exactly how LLMs work — not the buzzword version, the real version — including the numbers, the limitations, and what it all means for you.
+This guide fixes that. By the end, you'll understand exactly how LLMs work (not the buzzword version, the real version), including the numbers, the limitations, and what it all means for you.
 
 ## What Is a Large Language Model? (The Short Answer)
 
@@ -50,17 +50,17 @@ A **large language model** is an AI trained on an enormous amount of text until 
 
 That's the core of it.
 
-The "large" refers to two things: the size of the training data (trillions of words — more text than any human could read in thousands of lifetimes) and the size of the model itself (billions to trillions of internal settings called **parameters**).
+The "large" refers to two things: the size of the training data (trillions of words, more text than any human could read in thousands of lifetimes) and the size of the model itself (billions to trillions of internal settings called **parameters**).
 
-The "language" part means it deals specifically in text — understanding it, generating it, summarizing it, translating it, and answering questions about it.
+The "language" part means it deals specifically in text: understanding it, generating it, summarizing it, translating it, and answering questions about it.
 
-The "model" part means it's a mathematical system — a massive network of numbers that was trained to recognize patterns in language and reproduce them.
+The "model" part means it's a mathematical system, a massive network of numbers that was trained to recognize patterns in language and reproduce them.
 
-Here's the key insight: **an LLM doesn't look anything up.** It doesn't search a database of facts when you ask it a question. It generates a response word by word, based entirely on what's statistically likely to come next — based on patterns absorbed during training.
+Here's the key insight: **an LLM doesn't look anything up.** It doesn't search a database of facts when you ask it a question. It generates a response word by word, based entirely on what's statistically likely to come next, based on patterns absorbed during training.
 
 That's what makes it so impressive. And so unreliable.
 
-## LLM vs. GPT vs. ChatGPT vs. Claude — What's Actually the Difference?
+## LLM vs. GPT vs. ChatGPT vs. Claude: What's Actually the Difference?
 
 This is the most common source of confusion, so let's kill it immediately.
 
@@ -74,7 +74,7 @@ ChatGPT / Claude.ai / Gemini.com — the PRODUCTS you actually use (like the app
 
 Here's what each term means:
 
-**LLM (Large Language Model)** — the category. Any AI trained on massive amounts of text to understand and generate language. Saying "ChatGPT uses an LLM" is like saying "your iPhone is a smartphone." True, but not specific.
+**LLM (Large Language Model):** the category. Any AI trained on massive amounts of text to understand and generate language. Saying "ChatGPT uses an LLM" is like saying "your iPhone is a smartphone." True, but not specific.
 
 **GPT** (Generative Pre-trained Transformer) — OpenAI's specific model family. The "G" means it generates text. The "P" means it was pre-trained on huge data before you use it. The "T" means it uses the transformer architecture (more on that below). GPT-3 had 175 billion parameters. GPT-4 is estimated at ~1.8 trillion.
 
@@ -226,21 +226,21 @@ The practical implication: never trust AI output for high-stakes decisions witho
 
 LLMs are the engine behind an enormous range of products and tasks.
 
-**Writing and editing** — drafting emails, articles, marketing copy, legal documents, code comments. The single most common use case — **57% of knowledge workers** report using LLMs for productivity tasks.
+**Writing and editing:** drafting emails, articles, marketing copy, legal documents, code comments. The single most common use case, used by **57% of knowledge workers** for productivity tasks.
 
-**Code generation** — tools like GitHub Copilot (used by over 1.8 million developers) use LLMs to suggest code in real time. LLMs trained on code repositories can write, debug, and explain code across dozens of programming languages.
+**Code generation:** tools like GitHub Copilot (used by over 1.8 million developers) use LLMs to suggest code in real time. LLMs trained on code repositories can write, debug, and explain code across dozens of programming languages.
 
-**Research and summarization** — feeding in long documents and getting structured summaries. **51.7% of knowledge workers** use LLMs for research tasks.
+**Research and summarization:** feeding in long documents and getting structured summaries. **51.7% of knowledge workers** use LLMs for research tasks.
 
-**Customer service** — most modern chatbots are powered by fine-tuned LLMs rather than the rigid rule-based systems of the past.
+**Customer service:** most modern chatbots are powered by fine-tuned LLMs rather than the rigid rule-based systems of the past.
 
-**Search** — Google's AI Overviews, Perplexity, and Microsoft Copilot all use LLMs to generate search summaries and direct answers.
+**Search:** Google's AI Overviews, Perplexity, and Microsoft Copilot all use LLMs to generate search summaries and direct answers.
 
-**Translation** — DeepL, Google Translate, and similar tools now use LLM-based approaches that dramatically outperform older machine translation systems.
+**Translation:** DeepL, Google Translate, and similar tools now use LLM-based approaches that dramatically outperform older machine translation systems.
 
-**Education** — explaining concepts, tutoring, generating practice problems, providing feedback on writing.
+**Education:** explaining concepts, tutoring, generating practice problems, providing feedback on writing.
 
-**[AI agents](/blog/what-is-an-ai-agent-explained-simply)** — LLMs are the reasoning engine inside autonomous AI agents that can browse the web, write code, and take multi-step actions to complete complex tasks.
+**[AI agents](/blog/what-is-an-ai-agent-explained-simply):** LLMs are the reasoning engine inside autonomous AI agents that can browse the web, write code, and take multi-step actions to complete complex tasks.
 
 ## The Biggest LLMs in 2026 — How They Compare
 
@@ -261,19 +261,19 @@ The [generative AI landscape](/blog/what-is-generative-ai) is shifting fast: Dee
 
 Understanding what LLMs can't do is just as important as knowing what they can.
 
-**Knowledge cutoff** — LLMs don't browse the internet in real time (unless given specific tools). Their knowledge stops at a training cutoff date. Ask about events after that date and the model will either refuse or hallucinate.
+**Knowledge cutoff:** LLMs don't browse the internet in real time (unless given specific tools). Their knowledge stops at a training cutoff date. Ask about events after that date and the model will either refuse or hallucinate.
 
-**No true memory** — By default, every conversation starts fresh. The model doesn't remember you, your preferences, or past sessions. Context exists only within a single conversation.
+**No true memory:** By default, every conversation starts fresh. The model doesn't remember you, your preferences, or past sessions. Context exists only within a single conversation.
 
-**Poor at math** — LLMs predict tokens. They don't calculate. They often get arithmetic wrong on anything more complex than simple addition. This is why tools like ChatGPT now integrate external calculators and code execution.
+**Poor at math:** LLMs predict tokens. They don't calculate. They often get arithmetic wrong on anything more complex than simple addition. This is why tools like ChatGPT now integrate external calculators and code execution.
 
-**Energy and cost** — Training frontier models costs tens of millions of dollars. Running them at scale consumes enormous energy. Projected AI energy demand could reach **85–134 terawatt-hours annually by 2027** — comparable to the Netherlands' entire energy consumption.
+**Energy and cost:** Training frontier models costs tens of millions of dollars. Running them at scale consumes enormous energy. Projected AI energy demand could reach **85–134 terawatt-hours annually by 2027**, comparable to the Netherlands' entire energy consumption.
 
-**Bias** — LLMs learn from human-generated text. Human text contains biases. Those biases are absorbed and reproduced — sometimes subtly, sometimes not.
+**Bias:** LLMs learn from human-generated text. Human text contains biases. Those biases are absorbed and reproduced, sometimes subtly, sometimes not.
 
-**Can't truly reason** — LLMs are excellent at *appearing* to reason. Newer models with chain-of-thought capabilities (like OpenAI's o-series and Claude's extended thinking) have improved dramatically. But there's an ongoing debate about whether this is genuine logical reasoning or extremely sophisticated pattern matching.
+**Can't truly reason:** LLMs are excellent at *appearing* to reason. Newer models with chain-of-thought capabilities (like OpenAI's o-series and Claude's extended thinking) have improved dramatically. But there's an ongoing debate about whether this is genuine logical reasoning or extremely sophisticated pattern matching.
 
-**Size vs. efficiency tradeoff** — Bigger models are generally more capable but slower and more expensive. The Mixture of Experts approach (used in Llama 4 and GPT-4) tries to get the best of both by only activating part of the model at a time.
+**Size vs. efficiency tradeoff:** Bigger models are generally more capable but slower and more expensive. The Mixture of Experts approach (used in Llama 4 and GPT-4) tries to get the best of both by only activating part of the model at a time.
 
 ## How Much Does It Cost to Use an LLM?
 
@@ -316,7 +316,7 @@ Yes. LLM is also the abbreviation for *Legum Magister*, a postgraduate law degre
 
 **Is AI conscious or sentient?**
 
-No — and this is important to be clear on. LLMs have no awareness, experiences, or intentions. They generate text that *sounds* like a thinking being because they were trained on text written by thinking beings. The appearance of understanding is a reflection of the data, not evidence of an inner life. Whether future AI systems could be conscious is a genuinely open philosophical question — but current LLMs are not.
+No. And this is important to be clear on. LLMs have no awareness, experiences, or intentions. They generate text that *sounds* like a thinking being because they were trained on text written by thinking beings. The appearance of understanding is a reflection of the data, not evidence of an inner life. Whether future AI systems could be conscious is a genuinely open philosophical question — but current LLMs are not.
 
 **Can I run an LLM on my own computer?**
 

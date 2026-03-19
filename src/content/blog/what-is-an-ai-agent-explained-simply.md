@@ -34,17 +34,17 @@ Here's a concrete comparison:
 
 **ChatGPT** (not an agent): You ask "What's a good email subject line for a sales pitch?" It gives you 5 options. Done. It waits for your next question.
 
-**An AI agent**: You say "I need to send a follow-up email to everyone who opened my last newsletter but didn't click the link. Write personalized emails for each person and schedule them for 9am Tuesday." The agent then: logs into your email tool, finds the list of people who opened but didn't click, researches each person's company if needed, writes personalized emails, and schedules them — all by itself.
+**An AI agent**: You say "I need to send a follow-up email to everyone who opened my last newsletter but didn't click the link. Write personalized emails for each person and schedule them for 9am Tuesday." The agent then: logs into your email tool, finds the list of people who opened but didn't click, researches each person's company if needed, writes personalized emails, and schedules them, all by itself.
 
 The difference is autonomy. An agent acts. A regular AI assistant just responds.
 
 ## Why "Agent" Is the Right Word
 
-The word "agent" comes from the Latin *agere*, meaning "to do." A travel agent doesn't just answer questions about flights — they book flights on your behalf. A real estate agent doesn't just describe houses — they negotiate deals.
+The word "agent" comes from the Latin *agere*, meaning "to do." A travel agent doesn't just answer questions about flights. They book flights on your behalf. A real estate agent doesn't just describe houses. They negotiate deals.
 
 AI agents follow the same pattern. They have:
 1. A **goal** (what they're trying to achieve)
-2. **Tools** (things they can do — browse the web, run code, send emails)
+2. **Tools** (things they can do: browse the web, run code, send emails)
 3. **Autonomy** (they decide how to use those tools to reach the goal)
 
 An AI assistant without tools is just a very smart chatbot. An AI agent with tools and a goal is something qualitatively different.
@@ -55,7 +55,7 @@ You don't need to understand this technically, but a rough picture helps.
 
 ### Step 1: It Receives a Goal
 
-Someone (you, or another system) gives the agent a task. Not instructions for every step — just the destination.
+Someone (you, or another system) gives the agent a task. Not instructions for every step, just the destination.
 
 *"Research the top 5 project management tools and create a comparison table."*
 
@@ -67,7 +67,7 @@ This planning step is where modern AI (especially large language models like GPT
 
 ### Step 3: It Uses Tools
 
-This is the key bit most people don't realize. An AI agent on its own can't do much — it just predicts text. But give it **tools** and it can interact with the world:
+This is the key bit most people don't realize. An AI agent on its own can't do much. It just predicts text. But give it **tools** and it can interact with the world:
 
 - **Web browser tool**: Search Google, read websites
 - **Code execution tool**: Write and run Python code to analyze data

@@ -30,11 +30,11 @@ You've typed a question into ChatGPT and got an answer. You've asked an AI tool 
 
 But what actually *is* generative AI? What separates it from the AI that's been around for decades? And how does a computer create something that never existed before?
 
-Here's the clearest explanation I can give you — no jargon, no hype, just the actual idea.
+Here's the clearest explanation I can give you. No jargon, no hype, just the actual idea.
 
 ## What Is Generative AI? (The Simple Definition)
 
-**Generative AI is artificial intelligence that creates new content** — text, images, audio, video, or code — rather than just analyzing or classifying things that already exist.
+**Generative AI is artificial intelligence that creates new content** (text, images, audio, video, or code) rather than just analyzing or classifying things that already exist.
 
 When you ask ChatGPT to write a cover letter, that letter didn't exist five seconds ago. When you ask DALL-E for an image of a golden retriever on the moon, that image is brand new. When Suno writes you a song in 30 seconds, that song has never been heard before.
 
@@ -42,7 +42,7 @@ That's the generative part. The AI generates, it doesn't retrieve.
 
 ## Generative AI vs Traditional AI: What's the Difference?
 
-To understand generative AI, you first need to understand what most AI used to do — and still does.
+To understand generative AI, you first need to understand what most AI used to do, and still does.
 
 **Traditional AI is about recognizing and deciding.** You train a system on labeled examples, and it learns to classify new examples into those categories:
 
@@ -59,23 +59,23 @@ This is why the shift felt so sudden. Generative AI didn't just make existing AI
 
 ### Generative AI vs Machine Learning: Are They the Same?
 
-Not quite. **Machine learning** is the broad field of teaching computers to learn from data. Generative AI is a specific *type* of machine learning — the subset focused on generating new content rather than making predictions or classifications.
+Not quite. **Machine learning** is the broad field of teaching computers to learn from data. Generative AI is a specific *type* of machine learning: the subset focused on generating new content rather than making predictions or classifications.
 
-Every generative AI model uses machine learning. But most machine learning isn't generative. A fraud detector, a spam filter, a recommendation engine — all machine learning, none of them generative. Think of it as: machine learning is the category, generative AI is one powerful branch of it. [The full explanation of how machine learning works](/blog/what-is-machine-learning-explained/) is worth reading alongside this.
+Every generative AI model uses machine learning. But most machine learning isn't generative. A fraud detector, a spam filter, a recommendation engine: all machine learning, none of them generative. Think of it as: machine learning is the category, generative AI is one powerful branch of it. [The full explanation of how machine learning works](/blog/what-is-machine-learning-explained/) is worth reading alongside this.
 
 ## How Does Generative AI Work?
 
-You don't need to understand the math. But a basic picture helps — and it's less mysterious than most people think.
+You don't need to understand the math. But a basic picture helps, and it's less mysterious than most people think.
 
 ### Step 1: Learn the patterns from massive data
 
 A generative AI model is trained on enormous amounts of data:
 
-- A text model trains on **billions of pages** of text — websites, books, articles, code, scientific papers
+- A text model trains on **billions of pages** of text: websites, books, articles, code, scientific papers
 - An image model trains on **hundreds of millions of images** scraped from the internet
 - A music model trains on millions of songs
 
-During training, the model processes this data and learns its deep patterns. Not rules a human wrote — patterns it discovered on its own by exposure to billions of examples.
+During training, the model processes this data and learns its deep patterns. Not rules a human wrote. Patterns it discovered on its own by exposure to billions of examples.
 
 A text model doesn't get a grammar textbook. It learns grammar by seeing billions of grammatically correct sentences. It doesn't get a fact database. It learns facts by seeing them referenced repeatedly across millions of sources.
 
@@ -87,27 +87,27 @@ For text models like ChatGPT and Claude, the core training task is almost laugha
 
 Feed the model a sentence with the last word hidden. It guesses. It checks. It adjusts. Repeat this billions of times on billions of sentences, and something remarkable happens: to predict the next word reliably, the model has to learn grammar, facts, context, reasoning, and tone. Predicting language well enough turns out to require genuinely understanding it.
 
-For image models, the mechanism is different — most use **diffusion**, which works by learning to "de-noise" images. You show the model an image, progressively add random noise until it's pure static, and train the model to reverse that process. At generation time, it starts from noise and iteratively de-noises toward an image that matches your text description.
+For image models, the mechanism is different. Most use **diffusion**, which works by learning to "de-noise" images. You show the model an image, progressively add random noise until it's pure static, and train the model to reverse that process. At generation time, it starts from noise and iteratively de-noises toward an image that matches your text description.
 
 Both approaches share the same insight: learn to reproduce patterns from data well enough, and you've learned to create.
 
 ### Step 3: Generate on demand
 
-Once trained, you give the model a prompt — what you want — and it generates something new that fits the patterns it learned.
+Once trained, you give the model a prompt (what you want) and it generates something new that fits the patterns it learned.
 
 It's not searching a database. It's not copy-pasting existing content. It's using learned patterns to construct something original that fits the shape of your request.
 
 ## Who Invented Generative AI? (A Brief History)
 
-Generative AI has no single inventor — it's the product of several decades of research that accelerated sharply in the last ten years.
+Generative AI has no single inventor. It's the product of several decades of research that accelerated sharply in the last ten years.
 
 **1960s–2000s**: Early AI researchers explored text generation and simple image synthesis, but results were limited and brittle.
 
-**2014**: Ian Goodfellow, then a PhD student at Université de Montréal, invented **Generative Adversarial Networks (GANs)** — a system where two neural networks compete (one generates, one detects fakes) to produce increasingly realistic images. This was the first time AI could generate convincing images.
+**2014**: Ian Goodfellow, then a PhD student at Université de Montréal, invented **Generative Adversarial Networks (GANs)**: a system where two neural networks compete (one generates, one detects fakes) to produce increasingly realistic images. This was the first time AI could generate convincing images.
 
-**2017**: Researchers at Google Brain published *"Attention Is All You Need"* — introducing the **transformer architecture** that powers every major text AI today. Previous language models processed text one word at a time. Transformers process entire documents simultaneously, tracking how every word relates to every other.
+**2017**: Researchers at Google Brain published *"Attention Is All You Need"*, introducing the **transformer architecture** that powers every major text AI today. Previous language models processed text one word at a time. Transformers process entire documents simultaneously, tracking how every word relates to every other.
 
-**2020**: OpenAI released GPT-3 — a 175 billion parameter language model that could write, code, and reason with startling coherence. This showed what scale could do.
+**2020**: OpenAI released GPT-3, a 175 billion parameter language model that could write, code, and reason with startling coherence. This showed what scale could do.
 
 **2021–2022**: Diffusion models matured, enabling DALL-E, Stable Diffusion, and Midjourney to generate photorealistic images from text descriptions.
 
@@ -117,7 +117,7 @@ Generative AI has no single inventor — it's the product of several decades of 
 
 The second critical factor (beyond the transformer): researchers discovered that making models bigger produced non-linear improvements.
 
-A model 10x bigger isn't 10x better — it's often qualitatively different, capable of things the smaller model simply cannot do. Abilities like multi-step reasoning, translating languages the model wasn't explicitly trained on, and writing coherent long-form text seemed to *emerge* at certain size thresholds. Nobody programmed these abilities in — they appeared.
+A model 10x bigger isn't 10x better. It's often qualitatively different, capable of things the smaller model simply cannot do. Abilities like multi-step reasoning, translating languages the model wasn't explicitly trained on, and writing coherent long-form text seemed to *emerge* at certain size thresholds. Nobody programmed these abilities in. They appeared.
 
 GPT-3 (2020) had 175 billion parameters (internal adjustable values). Models today operate at even larger scales. Training one costs tens to hundreds of millions of dollars in compute.
 

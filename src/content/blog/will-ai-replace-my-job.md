@@ -22,17 +22,17 @@ faqs:
 
 Let's be honest: this is the question everyone is asking, and most of the answers you read are either catastrophist clickbait or dismissive corporate PR.
 
-The real picture is more complicated — and more useful to understand.
+The real picture is more complicated, and more useful to understand.
 
 ## What the Research Actually Shows
 
 There have been several serious economic studies on AI and jobs. Here's what they actually say (not what headlines claim they say):
 
-**Goldman Sachs (2023)**: Estimated that AI could "expose" 300 million full-time jobs globally to automation. This was widely reported as "AI will eliminate 300 million jobs." What the report actually said: "exposure" means some tasks within those jobs could be automated — not that the whole job disappears.
+**Goldman Sachs (2023)**: Estimated that AI could "expose" 300 million full-time jobs globally to automation. This was widely reported as "AI will eliminate 300 million jobs." What the report actually said: "exposure" means some tasks within those jobs could be automated, not that the whole job disappears.
 
 **McKinsey Global Institute**: Projects that by 2030, up to 30% of hours worked globally could be automated, but also that new jobs will be created. Net job loss is much smaller than gross displacement.
 
-**MIT/Boston University study**: Found that every industrial robot added per 1,000 workers in the 1990s reduced employment by about 0.34% — a real effect, but modest at the local level.
+**MIT/Boston University study**: Found that every industrial robot added per 1,000 workers in the 1990s reduced employment by about 0.34% (a real effect, but modest at the local level).
 
 The consistent finding across serious research: **AI automates tasks within jobs more than it eliminates entire jobs**. The job of "marketing manager" doesn't disappear; the tasks of writing first drafts, pulling data, and scheduling posts start getting handled by AI.
 
@@ -58,9 +58,9 @@ Some jobs are genuinely more vulnerable than others. Here's an honest look:
 
 ### Higher Risk
 
-**Data entry and processing**: If your job is primarily moving information from one system to another, categorizing things, or doing routine lookups — AI handles this very well. This isn't new; it started with software automation in the 90s. AI accelerates it.
+**Data entry and processing**: If your job is primarily moving information from one system to another, categorizing things, or doing routine lookups, AI handles this very well. This isn't new; it started with software automation in the 90s. AI accelerates it.
 
-**Basic copywriting and content**: Writing product descriptions, SEO-optimized articles following a template, summarizing documents, generating first drafts — AI can now do this competently and cheaply. Junior copywriters doing commodity writing are at risk.
+**Basic copywriting and content**: Writing product descriptions, SEO-optimized articles following a template, summarizing documents, generating first drafts. AI can now do this competently and cheaply. Junior copywriters doing commodity writing are at risk.
 
 **Routine customer service**: Answering the same questions over and over, processing returns, updating account details — this is exactly what AI chatbots are getting good at. Human agents will still handle complex, emotional, or high-stakes interactions.
 

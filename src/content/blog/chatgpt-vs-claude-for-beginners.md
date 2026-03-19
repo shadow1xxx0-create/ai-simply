@@ -24,13 +24,13 @@ If you've heard about AI but haven't known where to start, you've almost certain
 
 ChatGPT is from OpenAI. Claude is from Anthropic. Both are AI assistants you can talk to, ask questions, and get help from. Both are genuinely impressive. Both are free to start with.
 
-But they're not identical — and the differences actually matter depending on what you want to use AI for.
+But they're not identical, and the differences actually matter depending on what you want to use AI for.
 
 This guide explains both clearly, compares them honestly, and tells you which one to try first based on your needs.
 
 ## What They Both Are (The Basics)
 
-Both ChatGPT and Claude are **[large language model (LLM)](/blog/what-is-generative-ai/) assistants** — which is a technical way of saying: AI systems trained on enormous amounts of text that can generate human-like responses to questions and prompts.
+Both ChatGPT and Claude are **[large language model (LLM)](/blog/what-is-generative-ai/) assistants** (a technical way of saying: AI systems trained on enormous amounts of text that can generate human-like responses to questions and prompts).
 
 What they're good for:
 - Answering questions and explaining things
@@ -40,15 +40,15 @@ What they're good for:
 - Drafting emails, documents, and social posts
 - Analyzing documents you paste in
 
-Neither is connected to the internet in real-time by default (though both have web-browsing options). Neither is infallible — both can [confidently state wrong things](/blog/what-are-ai-hallucinations-why-ai-lies-to-you/). Both get better the more clearly you explain what you want.
+Neither is connected to the internet in real-time by default (though both have web-browsing options). Neither is infallible. Both can [confidently state wrong things](/blog/what-are-ai-hallucinations-why-ai-lies-to-you/). Both get better the more clearly you explain what you want.
 
-## ChatGPT — What You Need to Know
+## ChatGPT: What You Need to Know
 
 **Who makes it**: OpenAI, based in San Francisco. Founded in 2015.
 
 **When it launched**: November 2022 (changed everything overnight).
 
-**Free tier**: Yes — access to GPT-4o-mini on the free plan. Decent but not the best available.
+**Free tier**: Yes. Access to GPT-4o-mini on the free plan. Decent but not the best available.
 
 **Paid plan**: ChatGPT Plus is $20/month and gives you access to GPT-4o (the flagship model) plus extras like image generation with DALL-E, web browsing, and a library of custom GPTs (specialized AI tools people have built).
 
