@@ -11,7 +11,7 @@ faqs:
   - question: "What is vibe coding in simple terms?"
     answer: "Vibe coding is building software by describing what you want in plain English — and letting an AI write all the actual code. Instead of learning programming languages, you tell an AI tool what your app should do, and it generates the code for you. You stay focused on the idea; the AI handles the technical implementation."
   - question: "Who coined the term vibe coding?"
-    answer: "Andrej Karpathy coined the term 'vibe coding' in a post on X (formerly Twitter) on February 2, 2025. Karpathy is a former Tesla AI director and OpenAI co-founder. His original quote: 'There's a new kind of coding I call vibe coding, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.' The post was viewed over 4.5 million times."
+    answer: "Andrej Karpathy coined the term 'vibe coding' in a post on X (formerly Twitter) on February 2, 2025. Karpathy is a founding researcher at OpenAI and former Director of AI at Tesla. His original quote: 'There's a new kind of coding I call vibe coding, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.' The post was viewed over 4.5 million times."
   - question: "Do you need to know how to code to vibe code?"
     answer: "No. That's the whole point. Vibe coding tools like Lovable, Bolt.new, and Replit let you build apps by describing what you want in plain language. As of 2026, 63% of people using vibe coding tools identify as non-developers — founders, product managers, marketers, and hobbyists. Some tools like Cursor work better with basic coding knowledge, but many require none at all."
   - question: "What is the best vibe coding tool for beginners?"
@@ -30,7 +30,7 @@ faqs:
 
 You don't know how to code. But you have a clear idea for an app.
 
-Six months ago, you had no option. Either you hired a developer (expensive), learned to code (time-consuming), or used a rigid drag-and-drop tool that couldn't do what you wanted.
+Until recently, you had three options. Hire a developer (expensive). Learn to code (time-consuming). Or use a rigid drag-and-drop tool that couldn't do what you wanted.
 
 Now there's a fourth option. And in early 2026, it's changing everything.
 
@@ -46,13 +46,13 @@ The AI builds it.
 
 You give feedback. The AI adjusts. You keep going until it works.
 
-That's vibe coding. You're still building real software — not clicking templates in a drag-and-drop tool. The apps that come out run on actual code: JavaScript, Python, React, whatever the AI decides makes sense. You just never had to write any of it.
+That's vibe coding. You're still building real software — not clicking templates in a drag-and-drop tool. The apps that come out run on actual code: JavaScript, Python, or whatever language and framework the AI decides makes sense. You just never had to write any of it.
 
 ## Who Invented Vibe Coding? The Origin Story
 
 On February 2, 2025, Andrej Karpathy posted something on X that got 4.5 million views.
 
-Karpathy isn't just anyone. He's a former Tesla AI director, an OpenAI co-founder, and one of the most respected AI researchers in the world. When he posts, the industry pays attention.
+Karpathy isn't just anyone. He's a founding researcher at OpenAI, former Director of AI at Tesla, and one of the most respected AI researchers in the world. When he posts, the industry pays attention.
 
 His post introduced the phrase **"vibe coding"**:
 
@@ -145,11 +145,11 @@ Different tools for different users. Here's the full landscape of AI app builder
 
 **Lovable** is the most beginner-friendly AI app builder. It combines natural language input with a visual UI editor and is specifically designed for people who want to build MVPs without touching code. Generate both the code and the interface from a single description.
 
-**Bolt.new** from StackBlitz is strong for full-stack web apps. It's open-source at its core, which means more flexibility and the ability to self-host models if you want. When you paste a description of your web app, it generates a working React/Next.js prototype in minutes.
+**Bolt.new** from StackBlitz is strong for full-stack web apps. When you paste a description of your web app, it generates a working React/Next.js prototype in minutes. A community-maintained open-source version called bolt.diy also exists if you want to self-host.
 
 **Replit** has evolved into a complete cloud development platform. Its AI Agent can build, test, and deploy applications autonomously — you describe the app, the agent handles everything including setting up databases and deployment. No local setup required.
 
-**Google AI Studio** (launched March 2026) now includes a full-stack vibe coding experience powered by Gemini 2.5 Pro. You describe your app, it builds it, and deploys it directly to Google Cloud Run — with support for multiplayer features, external libraries, and Google login built in. If you're already in the Google ecosystem, this is now a serious option.
+**Google AI Studio** added a full-stack vibe coding experience in March 2026, powered by Gemini 2.5 Pro. You describe your app, it builds it, and deploys it directly to Google Cloud Run — with support for multiplayer features, external libraries, and Google login built in. If you're already in the Google ecosystem, this is now a serious option.
 
 **Cursor** is an AI-native code editor — basically VS Code rebuilt with AI at the center. More powerful than the others but assumes some coding familiarity. If you know even a little JavaScript or Python, Cursor dramatically amplifies what you can build. Developers love it. Pure non-developers often find it harder than Lovable or Bolt.
 
