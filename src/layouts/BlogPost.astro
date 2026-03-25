@@ -30,12 +30,14 @@ const articleSchema = {
 	"@type": "BlogPosting",
 	"headline": title,
 	"description": description,
+	"inLanguage": "en-US",
 	"datePublished": pubDate.toISOString(),
 	...(updatedDate && { "dateModified": updatedDate.toISOString() }),
 	...(wordCount && { "wordCount": wordCount }),
 	...(categoryLabel && { "articleSection": categoryLabel }),
+	...(tags && tags.length > 0 && { "keywords": tags.join(", ") }),
 	"author": {
-		"@type": "Organization",
+		"@type": "Person",
 		"name": SITE_AUTHOR,
 		"url": SITE_URL,
 	},
@@ -173,6 +175,17 @@ const faqSchema = faqs && faqs.length > 0 ? {
 			)}
 		</article>
 
+		<!-- Author bio -->
+		<div class="author-bio container">
+			<div class="author-bio__inner">
+				<div class="author-bio__avatar" aria-hidden="true">AB</div>
+				<div class="author-bio__content">
+					<p class="author-bio__name">Written by the AI Briefs Editorial Team</p>
+					<p class="author-bio__desc">AI Briefs explains artificial intelligence in plain English — no jargon, no hype. We cover the ideas, tools, and implications that matter to everyday people navigating an AI-powered world.</p>
+				</div>
+			</div>
+		</div>
+
 		<!-- Bottom newsletter CTA -->
 		<Newsletter
 			heading="Found this useful? Get more every week."
@@ -280,6 +293,84 @@ const faqSchema = faqs && faqs.length > 0 ? {
 		color: rgb(var(--gray));
 	}
 
+	/* Table of Contents */
+	.toc {
+		background: var(--bg-alt);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1.25rem 1.5rem;
+		margin-bottom: 2rem;
+		font-size: 0.92rem;
+	}
+
+	.toc__title {
+		font-weight: 700;
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: rgb(var(--gray));
+		margin-bottom: 0.75rem;
+	}
+
+	.toc ol {
+		margin: 0;
+		padding-left: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.toc a {
+		color: rgb(var(--black));
+		text-decoration: none;
+	}
+
+	.toc a:hover {
+		color: var(--primary);
+	}
+
+	/* Author bio */
+	.author-bio {
+		max-width: 750px;
+		padding-bottom: 2.5rem;
+	}
+
+	.author-bio__inner {
+		display: flex;
+		gap: 1rem;
+		align-items: flex-start;
+		background: var(--bg-alt);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1.25rem 1.5rem;
+	}
+
+	.author-bio__avatar {
+		flex-shrink: 0;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: var(--primary);
+		color: #fff;
+		font-weight: 700;
+		font-size: 0.85rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.author-bio__name {
+		font-weight: 700;
+		font-size: 0.95rem;
+		margin-bottom: 0.35rem !important;
+	}
+
+	.author-bio__desc {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+		margin-bottom: 0 !important;
+	}
+
 	.mid-article-nl {
 		background: var(--bg-alt);
 		border: 1px solid var(--border);
@@ -314,6 +405,30 @@ const faqSchema = faqs && faqs.length > 0 ? {
 		const headings = body.querySelectorAll('h2');
 		if (headings.length === 0) return;
 
+		// Table of Contents — inject before first H2 if 3+ headings
+		if (headings.length >= 3) {
+			const toc = document.createElement('nav');
+			toc.className = 'toc';
+			toc.setAttribute('aria-label', 'Table of contents');
+			const tocTitle = document.createElement('p');
+			tocTitle.className = 'toc__title';
+			tocTitle.textContent = 'In this article';
+			const ol = document.createElement('ol');
+			headings.forEach(h => {
+				if (!h.id) return;
+				const li = document.createElement('li');
+				const a = document.createElement('a');
+				a.href = `#${h.id}`;
+				a.textContent = h.textContent || '';
+				li.appendChild(a);
+				ol.appendChild(li);
+			});
+			toc.appendChild(tocTitle);
+			toc.appendChild(ol);
+			headings[0].parentNode.insertBefore(toc, headings[0]);
+		}
+
+		// Mid-article newsletter
 		const midIndex = Math.floor(headings.length / 2);
 		const midHeading = headings[midIndex];
 

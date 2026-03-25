@@ -22,6 +22,8 @@ const articleLastmod = {
 	'/blog/will-ai-replace-my-job/': '2026-02-27',
 	'/blog/can-ai-read-your-emotions-emotion-ai-explained/': '2026-03-16',
 	'/blog/what-is-a-large-language-model-llm-explained/': '2026-03-18',
+	'/blog/what-is-an-ai-reasoning-model/': '2026-03-19',
+	'/blog/what-is-vibe-coding/': '2026-03-21',
 };
 
 export default defineConfig({
