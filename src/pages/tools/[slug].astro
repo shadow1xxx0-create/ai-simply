@@ -19,6 +19,8 @@ const { Content } = await render(tool);
 
 const category = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
 const pb = PRICING_BADGE[tool.data.pricing] ?? PRICING_BADGE.freemium;
+const toolDomain = new URL(tool.data.url).hostname;
+const toolFavicon = `https://www.google.com/s2/favicons?domain=${toolDomain}&sz=128`;
 
 const allTools = await getCollection('tools');
 const related = allTools
@@ -54,7 +56,16 @@ const related = allTools
 	<!-- Tool Header -->
 	<section class="tool-hero">
 		<div class="container tool-hero__inner">
-			<div class="tool-hero__logo" aria-hidden="true">{category?.emoji ?? '🤖'}</div>
+			<div class="tool-hero__logo" aria-hidden="true">
+				<img
+					src={toolFavicon}
+					alt={tool.data.name}
+					width="64"
+					height="64"
+					onerror={`this.style.display='none';this.nextElementSibling.style.display='block'`}
+				/>
+				<span style="display:none">{category?.emoji ?? '🤖'}</span>
+			</div>
 			<div class="tool-hero__info">
 				<div class="tool-hero__meta">
 					{category && (

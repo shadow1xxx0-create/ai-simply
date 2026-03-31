@@ -12,11 +12,14 @@ interface Props {
 	tags?: string[];
 }
 
-const { name, description, category, pricing, slug } = Astro.props;
+const { name, description, category, pricing, slug, url } = Astro.props;
 
 const pb = PRICING_BADGE[pricing] ?? PRICING_BADGE.freemium;
 const cat = TOOL_CATEGORIES.find(c => c.slug === category);
 const emoji = cat?.emoji ?? '🤖';
+
+const domain = url ? new URL(url).hostname : '';
+const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=64` : '';
 ---
 
 <article
@@ -26,7 +29,13 @@ const emoji = cat?.emoji ?? '🤖';
 	data-name={name.toLowerCase()}
 >
 	<a href={`/tools/${slug}/`} class="tool-card__link">
-		<div class="tool-card__logo" aria-hidden="true">{emoji}</div>
+		<div class="tool-card__logo" aria-hidden="true">
+			{faviconUrl
+				? <img src={faviconUrl} alt={name} width="32" height="32" loading="lazy" onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+				: null
+			}
+			<span class="tool-card__emoji" style={faviconUrl ? 'display:none' : ''}>{emoji}</span>
+		</div>
 		<div class="tool-card__body">
 			<div class="tool-card__top">
 				<h3 class="tool-card__name">{name}</h3>
@@ -80,6 +89,19 @@ const emoji = cat?.emoji ?? '🤖';
 		font-size: 1.4rem;
 		margin-bottom: 0.75rem;
 		flex-shrink: 0;
+		overflow: hidden;
+	}
+
+	.tool-card__logo img {
+		width: 32px;
+		height: 32px;
+		object-fit: contain;
+	}
+
+	.tool-card__emoji {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.tool-card__body { flex: 1; }
