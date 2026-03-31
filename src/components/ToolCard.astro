@@ -1,0 +1,149 @@
+---
+import { PRICING_BADGE, TOOL_CATEGORIES } from '../consts';
+
+interface Props {
+	name: string;
+	description: string;
+	category: string;
+	subcategory?: string;
+	pricing: 'free' | 'freemium' | 'paid';
+	url: string;
+	slug: string;
+	tags?: string[];
+}
+
+const { name, description, category, pricing, slug } = Astro.props;
+
+const pb = PRICING_BADGE[pricing] ?? PRICING_BADGE.freemium;
+const cat = TOOL_CATEGORIES.find(c => c.slug === category);
+const emoji = cat?.emoji ?? '🤖';
+---
+
+<article
+	class="tool-card"
+	data-category={category}
+	data-pricing={pricing}
+	data-name={name.toLowerCase()}
+>
+	<a href={`/tools/${slug}/`} class="tool-card__link">
+		<div class="tool-card__logo" aria-hidden="true">{emoji}</div>
+		<div class="tool-card__body">
+			<div class="tool-card__top">
+				<h3 class="tool-card__name">{name}</h3>
+				<span
+					class="tool-card__pricing"
+					style={`background:${pb.bg};color:${pb.text}`}
+				>{pb.label}</span>
+			</div>
+			<p class="tool-card__desc">{description}</p>
+		</div>
+		<div class="tool-card__footer">
+			<span class="tool-card__cat">{cat?.name ?? category}</span>
+			<span class="tool-card__visit">Visit →</span>
+		</div>
+	</a>
+</article>
+
+<style>
+	.tool-card {
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		overflow: hidden;
+		transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+		height: 100%;
+	}
+
+	.tool-card:hover {
+		box-shadow: 0 4px 20px rgba(0,135,90,0.14);
+		transform: translateY(-3px);
+		border-color: rgba(0,135,90,0.28);
+	}
+
+	.tool-card__link {
+		display: flex;
+		flex-direction: column;
+		padding: 1.1rem;
+		color: inherit;
+		height: 100%;
+		text-decoration: none;
+	}
+
+	.tool-card__logo {
+		width: 46px;
+		height: 46px;
+		background: var(--primary-light);
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 1.4rem;
+		margin-bottom: 0.75rem;
+		flex-shrink: 0;
+	}
+
+	.tool-card__body { flex: 1; }
+
+	.tool-card__top {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 0.5rem;
+		margin-bottom: 0.3rem;
+	}
+
+	.tool-card__name {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin: 0;
+		line-height: 1.3;
+		transition: color 0.2s;
+	}
+
+	.tool-card:hover .tool-card__name { color: var(--primary); }
+
+	.tool-card__pricing {
+		font-size: 0.62rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		padding: 0.18rem 0.5rem;
+		border-radius: 50px;
+		white-space: nowrap;
+		flex-shrink: 0;
+		margin-top: 2px;
+	}
+
+	.tool-card__desc {
+		font-size: 0.82rem;
+		color: rgb(var(--gray));
+		line-height: 1.5;
+		margin: 0 0 0.75rem;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.tool-card__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-top: 0.65rem;
+		border-top: 1px solid var(--border);
+		margin-top: auto;
+	}
+
+	.tool-card__cat {
+		font-size: 0.7rem;
+		color: rgb(var(--gray));
+		text-transform: capitalize;
+	}
+
+	.tool-card__visit {
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--primary);
+	}
+</style>

@@ -1,0 +1,439 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import ToolCard from '../../../components/ToolCard.astro';
+import { TOOL_CATEGORIES, SITE_TITLE } from '../../../consts';
+
+export async function getStaticPaths() {
+	return TOOL_CATEGORIES.map(cat => ({
+		params: { slug: cat.slug },
+		props: { category: cat },
+	}));
+}
+
+const { category } = Astro.props;
+
+const allTools = await getCollection('tools');
+const tools = allTools
+	.filter(t => t.data.category === category.slug)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Subcategory counts
+const subcatCounts: Record<string, number> = {};
+for (const t of tools) {
+	if (t.data.subcategory) {
+		subcatCounts[t.data.subcategory] = (subcatCounts[t.data.subcategory] ?? 0) + 1;
+	}
+}
+
+// Pricing distribution
+const free = tools.filter(t => t.data.pricing === 'free').length;
+const freemium = tools.filter(t => t.data.pricing === 'freemium').length;
+const paid = tools.filter(t => t.data.pricing === 'paid').length;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title={`${category.name} Tools — Best ${category.name} AI Tools | ${SITE_TITLE}`}
+		description={`Browse the best ${category.name.toLowerCase()} AI tools. ${tools.length} curated tools to ${category.description.toLowerCase()}.`}
+	/>
+</head>
+<body>
+<Header />
+
+<main>
+	<!-- Breadcrumb -->
+	<div class="breadcrumb-bar">
+		<div class="container">
+			<nav class="breadcrumbs" aria-label="Breadcrumb">
+				<a href="/">Home</a><span>/</span>
+				<a href="/tools/">AI Tools</a><span>/</span>
+				<span aria-current="page">{category.name}</span>
+			</nav>
+		</div>
+	</div>
+
+	<!-- Category Header -->
+	<section class="cat-hero">
+		<div class="container cat-hero__inner">
+			<div class="cat-hero__icon" aria-hidden="true">{category.emoji}</div>
+			<div>
+				<h1 class="cat-hero__name">{category.name}</h1>
+				<p class="cat-hero__desc">{category.description}</p>
+				<div class="cat-hero__stats">
+					<span class="stat"><strong>{tools.length}</strong> tools</span>
+					{free > 0 && <span class="stat stat--free"><strong>{free}</strong> free</span>}
+					{freemium > 0 && <span class="stat stat--freemium"><strong>{freemium}</strong> freemium</span>}
+					{paid > 0 && <span class="stat stat--paid"><strong>{paid}</strong> paid</span>}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Subcategory chips -->
+	{category.subcategories.length > 0 && (
+		<div class="subcats-bar">
+			<div class="container subcats-inner">
+				<button class="subcat-chip active" data-sub="">All</button>
+				{category.subcategories.map(sub => (
+					<button class="subcat-chip" data-sub={sub}>
+						{sub}
+						{subcatCounts[sub] ? <span class="subcat-count">{subcatCounts[sub]}</span> : null}
+					</button>
+				))}
+			</div>
+		</div>
+	)}
+
+	<!-- Tools -->
+	<section class="tools-section">
+		<div class="container">
+			<!-- Toolbar -->
+			<div class="toolbar">
+				<div class="toolbar__search">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+					<input id="cat-search" type="search" placeholder={`Search ${category.name} tools...`} autocomplete="off" aria-label="Search" />
+				</div>
+				<div class="toolbar__filters">
+					<button class="price-btn active" data-price="all">All</button>
+					<button class="price-btn" data-price="free" style="color:#00875A">Free</button>
+					<button class="price-btn" data-price="freemium" style="color:#3B5BDB">Freemium</button>
+					<button class="price-btn" data-price="paid" style="color:#E67700">Paid</button>
+				</div>
+			</div>
+
+			<p class="results-label" id="results-label">Showing all {tools.length} tools</p>
+
+			<div class="tools-grid" id="tools-grid">
+				{tools.map(tool => (
+					<ToolCard
+						name={tool.data.name}
+						description={tool.data.description}
+						category={tool.data.category}
+						subcategory={tool.data.subcategory}
+						pricing={tool.data.pricing}
+						url={tool.data.url}
+						slug={tool.id}
+						tags={tool.data.tags}
+					/>
+				))}
+			</div>
+
+			<p class="no-results" id="no-results" style="display:none">No tools match your filters.</p>
+		</div>
+	</section>
+
+	<!-- Other Categories -->
+	<section class="section section--alt">
+		<div class="container">
+			<h2 class="section-heading" style="margin-bottom:1.25rem">Explore Other Categories</h2>
+			<div class="other-cats">
+				{TOOL_CATEGORIES.filter(c => c.slug !== category.slug).slice(0, 8).map(cat => (
+					<a href={`/tools/category/${cat.slug}/`} class="other-cat">
+						<span>{cat.emoji}</span>
+						<span>{cat.name}</span>
+					</a>
+				))}
+			</div>
+		</div>
+	</section>
+</main>
+
+<Footer />
+</body>
+</html>
+
+<script>
+	let activeSub = '';
+	let activePrice = 'all';
+	let searchQ = '';
+
+	const grid = document.getElementById('tools-grid')!;
+	const cards = Array.from(grid.querySelectorAll<HTMLElement>('.tool-card'));
+	const label = document.getElementById('results-label')!;
+	const noResults = document.getElementById('no-results')!;
+	const searchInput = document.getElementById('cat-search') as HTMLInputElement;
+
+	function filter() {
+		let count = 0;
+		const q = searchQ.toLowerCase();
+		cards.forEach(card => {
+			const sub = card.dataset.subcat ?? '';
+			const price = card.dataset.pricing ?? '';
+			const name = card.dataset.name ?? '';
+			const show = (activeSub === '' || sub === activeSub)
+				&& (activePrice === 'all' || price === activePrice)
+				&& (!q || name.includes(q));
+			card.style.display = show ? '' : 'none';
+			if (show) count++;
+		});
+		label.textContent = `Showing ${count} tool${count !== 1 ? 's' : ''}`;
+		noResults.style.display = count === 0 ? '' : 'none';
+	}
+
+	document.querySelectorAll<HTMLElement>('.subcat-chip').forEach(chip => {
+		chip.addEventListener('click', () => {
+			document.querySelectorAll('.subcat-chip').forEach(c => c.classList.remove('active'));
+			chip.classList.add('active');
+			activeSub = chip.dataset.sub ?? '';
+			filter();
+		});
+	});
+
+	document.querySelectorAll<HTMLElement>('.price-btn').forEach(btn => {
+		btn.addEventListener('click', () => {
+			document.querySelectorAll('.price-btn').forEach(b => b.classList.remove('active'));
+			btn.classList.add('active');
+			activePrice = btn.dataset.price ?? 'all';
+			filter();
+		});
+	});
+
+	searchInput.addEventListener('input', () => {
+		searchQ = searchInput.value;
+		filter();
+	});
+</script>
+
+<style>
+	.breadcrumb-bar {
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
+		padding: 0.75rem 0;
+	}
+
+	.breadcrumbs {
+		font-size: 0.82rem;
+		color: rgb(var(--gray));
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		flex-wrap: wrap;
+	}
+
+	.breadcrumbs a { color: rgb(var(--gray)); }
+	.breadcrumbs a:hover { color: var(--primary); }
+	.breadcrumbs span[aria-current] { color: rgb(var(--gray-dark)); font-weight: 600; }
+
+	/* Category Hero */
+	.cat-hero {
+		padding: 2.5rem 0 2rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.cat-hero__inner {
+		display: flex;
+		align-items: flex-start;
+		gap: 1.25rem;
+	}
+
+	.cat-hero__icon {
+		width: 64px;
+		height: 64px;
+		background: var(--primary-light);
+		border-radius: 14px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2rem;
+		flex-shrink: 0;
+	}
+
+	.cat-hero__name {
+		font-size: 2rem;
+		margin: 0 0 0.35rem;
+	}
+
+	.cat-hero__desc {
+		font-size: 1rem;
+		color: rgb(var(--gray));
+		margin: 0 0 0.75rem;
+	}
+
+	.cat-hero__stats {
+		display: flex;
+		gap: 0.65rem;
+		flex-wrap: wrap;
+	}
+
+	.stat {
+		font-size: 0.82rem;
+		background: var(--bg-alt);
+		border: 1px solid var(--border);
+		padding: 0.2rem 0.65rem;
+		border-radius: 50px;
+		color: rgb(var(--gray-dark));
+	}
+
+	.stat--free { background: #E0F5EE; border-color: #A3D9C4; color: #00875A; }
+	.stat--freemium { background: #EEF3FF; border-color: #BEC8F0; color: #3B5BDB; }
+	.stat--paid { background: #FFF4E6; border-color: #F0CFA0; color: #E67700; }
+
+	/* Subcats bar */
+	.subcats-bar {
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
+		padding: 0.75rem 0;
+		overflow-x: auto;
+	}
+
+	.subcats-inner {
+		display: flex;
+		gap: 0.4rem;
+		flex-wrap: nowrap;
+		min-width: max-content;
+	}
+
+	.subcat-chip {
+		padding: 0.32rem 0.75rem;
+		font-size: 0.78rem;
+		font-weight: 600;
+		border: 1px solid var(--border);
+		border-radius: 50px;
+		background: #fff;
+		cursor: pointer;
+		transition: all 0.15s;
+		white-space: nowrap;
+		font-family: inherit;
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		color: rgb(var(--gray-dark));
+	}
+
+	.subcat-chip:hover, .subcat-chip.active {
+		background: var(--primary);
+		color: #fff;
+		border-color: var(--primary);
+	}
+
+	.subcat-count {
+		font-size: 0.65rem;
+		background: rgba(255,255,255,0.3);
+		padding: 0 0.3rem;
+		border-radius: 10px;
+	}
+
+	.subcat-chip:not(.active) .subcat-count {
+		background: var(--bg-alt);
+		color: rgb(var(--gray));
+	}
+
+	/* Toolbar */
+	.tools-section { padding: 1.5rem 0 3rem; }
+
+	.toolbar {
+		display: flex;
+		gap: 0.75rem;
+		margin-bottom: 1rem;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.toolbar__search {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex: 1;
+		min-width: 180px;
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 0 0.75rem;
+	}
+
+	.toolbar__search svg { color: rgb(var(--gray)); flex-shrink: 0; }
+
+	.toolbar__search input {
+		border: none;
+		padding: 0.55rem 0;
+		font-size: 0.88rem;
+		background: transparent;
+		outline: none;
+		width: 100%;
+	}
+
+	.toolbar__filters {
+		display: flex;
+		gap: 0.35rem;
+	}
+
+	.price-btn {
+		padding: 0.42rem 0.85rem;
+		font-size: 0.78rem;
+		font-weight: 700;
+		border: 1px solid var(--border);
+		border-radius: 50px;
+		background: #fff;
+		cursor: pointer;
+		transition: all 0.15s;
+		font-family: inherit;
+	}
+
+	.price-btn:hover, .price-btn.active {
+		background: rgb(var(--black));
+		color: #fff;
+		border-color: rgb(var(--black));
+	}
+
+	.results-label {
+		font-size: 0.82rem;
+		color: rgb(var(--gray));
+		margin-bottom: 1rem;
+	}
+
+	.tools-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	.no-results {
+		text-align: center;
+		padding: 3rem;
+		color: rgb(var(--gray));
+	}
+
+	/* Other categories */
+	.section { padding: 3rem 0; }
+	.section--alt { background: var(--bg-alt); padding: 3rem 0; }
+	.section-heading { font-size: 1.35rem; }
+
+	.other-cats {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.other-cat {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.5rem 1rem;
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: rgb(var(--gray-dark));
+		transition: all 0.15s;
+	}
+
+	.other-cat:hover {
+		border-color: var(--primary);
+		color: var(--primary);
+		background: var(--primary-light);
+	}
+
+	@media (min-width: 640px) {
+		.tools-grid { grid-template-columns: repeat(3, 1fr); }
+	}
+
+	@media (min-width: 1024px) {
+		.tools-grid { grid-template-columns: repeat(4, 1fr); }
+	}
+</style>

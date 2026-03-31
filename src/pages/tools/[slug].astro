@@ -1,0 +1,358 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ToolCard from '../../components/ToolCard.astro';
+import { TOOL_CATEGORIES, PRICING_BADGE, SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+	const tools = await getCollection('tools');
+	return tools.map(tool => ({
+		params: { slug: tool.id },
+		props: { tool },
+	}));
+}
+
+const { tool } = Astro.props;
+const { Content } = await render(tool);
+
+const category = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
+const pb = PRICING_BADGE[tool.data.pricing] ?? PRICING_BADGE.freemium;
+
+const allTools = await getCollection('tools');
+const related = allTools
+	.filter(t => t.id !== tool.id && t.data.category === tool.data.category)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4);
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title={`${tool.data.name} — ${category?.name ?? 'AI Tool'} | ${SITE_TITLE}`}
+		description={tool.data.description}
+	/>
+</head>
+<body>
+<Header />
+
+<main>
+	<!-- Breadcrumb -->
+	<div class="breadcrumb-bar">
+		<div class="container">
+			<nav class="breadcrumbs" aria-label="Breadcrumb">
+				<a href="/">Home</a><span>/</span>
+				<a href="/tools/">AI Tools</a><span>/</span>
+				{category && <><a href={`/tools/category/${category.slug}/`}>{category.name}</a><span>/</span></>}
+				<span aria-current="page">{tool.data.name}</span>
+			</nav>
+		</div>
+	</div>
+
+	<!-- Tool Header -->
+	<section class="tool-hero">
+		<div class="container tool-hero__inner">
+			<div class="tool-hero__logo" aria-hidden="true">{category?.emoji ?? '🤖'}</div>
+			<div class="tool-hero__info">
+				<div class="tool-hero__meta">
+					{category && (
+						<a href={`/tools/category/${category.slug}/`} class="tool-hero__cat">
+							{category.emoji} {category.name}
+						</a>
+					)}
+					{tool.data.subcategory && (
+						<span class="tool-hero__subcat">{tool.data.subcategory}</span>
+					)}
+					<span
+						class="tool-hero__pricing"
+						style={`background:${pb.bg};color:${pb.text}`}
+					>{pb.label}</span>
+				</div>
+				<h1 class="tool-hero__name">{tool.data.name}</h1>
+				<p class="tool-hero__desc">{tool.data.description}</p>
+				{tool.data.tags.length > 0 && (
+					<div class="tool-hero__tags">
+						{tool.data.tags.map(tag => (
+							<span class="tag">#{tag}</span>
+						))}
+					</div>
+				)}
+			</div>
+			<div class="tool-hero__actions">
+				<a
+					href={tool.data.url}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn btn--primary tool-hero__visit"
+				>
+					Visit {tool.data.name}
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+				</a>
+				<a href="/tools/" class="btn btn--outline">← Back to Directory</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Content -->
+	<section class="tool-content">
+		<div class="container tool-content__inner">
+			<div class="tool-body prose">
+				<Content />
+			</div>
+
+			<aside class="tool-sidebar">
+				<div class="tool-sidebar__card">
+					<h3>Tool Info</h3>
+					<dl class="tool-info">
+						<div>
+							<dt>Category</dt>
+							<dd>{category?.name ?? tool.data.category}</dd>
+						</div>
+						{tool.data.subcategory && (
+							<div>
+								<dt>Type</dt>
+								<dd>{tool.data.subcategory}</dd>
+							</div>
+						)}
+						<div>
+							<dt>Pricing</dt>
+							<dd>
+								<span style={`background:${pb.bg};color:${pb.text};padding:0.15rem 0.5rem;border-radius:50px;font-size:0.8rem;font-weight:700`}>
+									{pb.label}
+								</span>
+							</dd>
+						</div>
+					</dl>
+					<a
+						href={tool.data.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="btn btn--primary"
+						style="width:100%;justify-content:center;margin-top:1rem"
+					>
+						Visit Website →
+					</a>
+				</div>
+			</aside>
+		</div>
+	</section>
+
+	<!-- Related Tools -->
+	{related.length > 0 && (
+		<section class="section section--alt">
+			<div class="container">
+				<h2 class="section-heading" style="margin-bottom:1.25rem">More {category?.name ?? 'AI'} Tools</h2>
+				<div class="related-grid">
+					{related.map(t => (
+						<ToolCard
+							name={t.data.name}
+							description={t.data.description}
+							category={t.data.category}
+							subcategory={t.data.subcategory}
+							pricing={t.data.pricing}
+							url={t.data.url}
+							slug={t.id}
+							tags={t.data.tags}
+						/>
+					))}
+				</div>
+			</div>
+		</section>
+	)}
+</main>
+
+<Footer />
+</body>
+</html>
+
+<style>
+	.breadcrumb-bar {
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
+		padding: 0.75rem 0;
+	}
+
+	.breadcrumbs {
+		font-size: 0.82rem;
+		color: rgb(var(--gray));
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		flex-wrap: wrap;
+	}
+
+	.breadcrumbs a { color: rgb(var(--gray)); transition: color 0.15s; }
+	.breadcrumbs a:hover { color: var(--primary); }
+	.breadcrumbs span[aria-current] { color: rgb(var(--gray-dark)); font-weight: 600; }
+
+	/* Tool Hero */
+	.tool-hero {
+		padding: 2.5rem 0 2rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.tool-hero__inner {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.tool-hero__logo {
+		width: 72px;
+		height: 72px;
+		background: var(--primary-light);
+		border-radius: 16px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2.2rem;
+		flex-shrink: 0;
+	}
+
+	.tool-hero__meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		margin-bottom: 0.5rem;
+	}
+
+	.tool-hero__cat {
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--primary);
+		background: var(--primary-light);
+		padding: 0.2rem 0.6rem;
+		border-radius: 50px;
+		text-decoration: none;
+	}
+
+	.tool-hero__subcat {
+		font-size: 0.75rem;
+		color: rgb(var(--gray));
+		background: var(--bg-alt);
+		padding: 0.2rem 0.6rem;
+		border-radius: 50px;
+	}
+
+	.tool-hero__pricing {
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		padding: 0.2rem 0.6rem;
+		border-radius: 50px;
+	}
+
+	.tool-hero__name {
+		font-size: 2rem;
+		margin: 0 0 0.5rem;
+	}
+
+	.tool-hero__desc {
+		font-size: 1.05rem;
+		color: rgb(var(--gray));
+		margin: 0 0 0.75rem;
+		line-height: 1.6;
+	}
+
+	.tool-hero__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+
+	.tag {
+		font-size: 0.75rem;
+		color: rgb(var(--gray));
+		background: var(--bg-alt);
+		border: 1px solid var(--border);
+		padding: 0.18rem 0.55rem;
+		border-radius: 50px;
+	}
+
+	.tool-hero__actions {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.tool-hero__visit {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	/* Content */
+	.tool-content { padding: 2.5rem 0 3rem; }
+
+	.tool-content__inner {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.tool-body { max-width: 100%; }
+
+	.prose h2 { font-size: 1.3rem; margin: 1.75rem 0 0.75rem; }
+	.prose h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+	.prose p { color: rgb(var(--gray-dark)); line-height: 1.75; }
+	.prose ul { padding-left: 1.25rem; }
+	.prose li { margin-bottom: 0.35rem; color: rgb(var(--gray-dark)); }
+
+	/* Sidebar */
+	.tool-sidebar__card {
+		background: var(--bg-alt);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1.25rem;
+		position: sticky;
+		top: 80px;
+	}
+
+	.tool-sidebar__card h3 {
+		font-size: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.tool-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+	}
+
+	.tool-info div {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 0.88rem;
+	}
+
+	.tool-info dt { color: rgb(var(--gray)); }
+	.tool-info dd { font-weight: 600; color: rgb(var(--black)); margin: 0; }
+
+	/* Related */
+	.section { padding: 3rem 0; }
+	.section--alt { background: var(--bg-alt); padding: 3rem 0; }
+	.section-heading { font-size: 1.35rem; }
+
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	@media (min-width: 640px) {
+		.related-grid { grid-template-columns: repeat(3, 1fr); }
+	}
+
+	@media (min-width: 768px) {
+		.tool-hero__inner { flex-direction: row; align-items: flex-start; }
+		.tool-hero__info { flex: 1; }
+		.tool-hero__actions { flex-direction: column; align-items: flex-start; }
+		.tool-content__inner { grid-template-columns: 1fr 280px; }
+		.related-grid { grid-template-columns: repeat(4, 1fr); }
+	}
+</style>

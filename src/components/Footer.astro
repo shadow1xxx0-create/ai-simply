@@ -1,44 +1,67 @@
 ---
-import { SITE_TITLE, BEEHIIV_FORM_URL } from '../consts';
+import { SITE_TITLE, BEEHIIV_FORM_URL, TOOL_CATEGORIES } from '../consts';
 const year = new Date().getFullYear();
+const topCategories = TOOL_CATEGORIES.slice(0, 8);
+const bottomCategories = TOOL_CATEGORIES.slice(8, 16);
 ---
 
 <footer class="site-footer" role="contentinfo">
 	<div class="container">
 		<div class="footer-grid">
-			<div>
+			<div class="footer-brand">
 				<h4>{SITE_TITLE}</h4>
-				<p>AI news and breakthroughs explained in plain English. No jargon. No hype. Just what matters, every week.</p>
-			</div>
-			<div>
-				<h4>Topics</h4>
-				<ul>
-					<li><a href="/blog/category/ai-explained/">AI Explained</a></li>
-					<li><a href="/blog/category/future-of-work/">Future of Work</a></li>
-					<li><a href="/blog/category/how-ai-works/">How AI Works</a></li>
-						<li><a href="/blog/">All Articles</a></li>
-				</ul>
-			</div>
-			<div>
-				<h4>Resources</h4>
-				<ul>
-<li><a href="/about/">About Us</a></li>
-					<li><a href="/privacy/">Privacy Policy</a></li>
-				</ul>
-			</div>
-			<div>
-				<h4>Get the Newsletter</h4>
-				<p>AI news, no jargon. Free.</p>
+				<p>Discover the best AI tools across 22 categories. Curated, categorized, and updated weekly.</p>
 				<a
 					href={BEEHIIV_FORM_URL}
 					target="_blank"
 					rel="noopener noreferrer"
 					class="footer-subscribe-btn"
-				>Subscribe Free →</a>
+				>Get Weekly AI Picks →</a>
+			</div>
+
+			<div>
+				<h4>Top Categories</h4>
+				<ul>
+					{topCategories.map(cat => (
+						<li>
+							<a href={`/tools/category/${cat.slug}/`}>
+								{cat.emoji} {cat.name}
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+
+			<div>
+				<h4>More Categories</h4>
+				<ul>
+					{bottomCategories.map(cat => (
+						<li>
+							<a href={`/tools/category/${cat.slug}/`}>
+								{cat.emoji} {cat.name}
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+
+			<div>
+				<h4>Resources</h4>
+				<ul>
+					<li><a href="/tools/">All AI Tools</a></li>
+					<li><a href="/reviews/">Reviews</a></li>
+					<li><a href="/tutorials/">Tutorials</a></li>
+					<li><a href="/pricing/">Pricing</a></li>
+					<li><a href="/blog/">Articles</a></li>
+					<li><a href="/submit/">Submit a Tool</a></li>
+					<li><a href="/about/">About</a></li>
+					<li><a href="/privacy/">Privacy Policy</a></li>
+				</ul>
 			</div>
 		</div>
+
 		<div class="footer-bottom">
-			<p>&copy; {year} {SITE_TITLE}. All rights reserved. AI explained simply.</p>
+			<p>&copy; {year} {SITE_TITLE}. All rights reserved.</p>
 		</div>
 	</div>
 </footer>
@@ -47,27 +70,30 @@ const year = new Date().getFullYear();
 	.site-footer {
 		background: #111111;
 		color: rgba(255,255,255,0.6);
-		padding: 2rem 0 1rem;
+		padding: 3rem 0 1.5rem;
 		margin-top: 0;
 	}
 
 	.footer-grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1.25rem;
-		margin-bottom: 1.25rem;
+		gap: 2rem;
+		margin-bottom: 2rem;
 	}
 
 	.site-footer h4 {
 		color: #fff;
-		font-size: 1rem;
-		margin-bottom: 0.75rem;
+		font-size: 0.9rem;
+		margin-bottom: 1rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		font-size: 0.75rem;
 	}
 
-	.site-footer p {
-		font-size: 0.9rem;
+	.footer-brand p {
+		font-size: 0.88rem;
 		line-height: 1.6;
-		margin-bottom: 0.75rem;
+		margin-bottom: 1rem;
 	}
 
 	.site-footer ul {
@@ -79,22 +105,22 @@ const year = new Date().getFullYear();
 	.site-footer li { margin-bottom: 0.4rem; }
 
 	.site-footer a {
-		color: rgba(255,255,255,0.6);
-		font-size: 0.9rem;
+		color: rgba(255,255,255,0.55);
+		font-size: 0.85rem;
+		transition: color 0.15s;
 	}
 
 	.site-footer a:hover { color: #fff; }
 
 	.footer-subscribe-btn {
 		display: inline-block;
-		padding: 0.6rem 1.25rem;
+		padding: 0.55rem 1.1rem;
 		background: var(--primary);
 		color: #fff;
-		font-size: 0.9rem;
+		font-size: 0.85rem;
 		font-weight: 700;
 		border-radius: var(--radius);
 		transition: background 0.15s;
-		margin-top: 0.25rem;
 	}
 
 	.footer-subscribe-btn:hover {
@@ -104,18 +130,20 @@ const year = new Date().getFullYear();
 
 	.footer-bottom {
 		border-top: 1px solid rgba(255,255,255,0.1);
-		padding-top: 1.5rem;
+		padding-top: 1.25rem;
 		text-align: center;
 	}
 
 	.footer-bottom p {
-		font-size: 0.8rem;
+		font-size: 0.78rem;
 		margin: 0;
 	}
 
-	@media (min-width: 768px) {
-		.footer-grid {
-			grid-template-columns: 2fr 1fr 1fr 1.5fr;
-		}
+	@media (min-width: 640px) {
+		.footer-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+
+	@media (min-width: 960px) {
+		.footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
 	}
 </style>

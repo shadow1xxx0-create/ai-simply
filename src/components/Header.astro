@@ -19,9 +19,11 @@ const pathname = Astro.url.pathname;
 
 		<ul class="nav-links">
 			<li><a href="/" class:list={[{ active: pathname === '/' }]}>Home</a></li>
-			<li><a href="/blog/" class:list={[{ active: pathname.startsWith('/blog') }]}>Articles</a></li>
-	<li><a href="/about/" class:list={[{ active: pathname === '/about/' }]}>About</a></li>
-			<li><a href="#newsletter" class="btn btn--primary btn--sm">Subscribe Free</a></li>
+			<li><a href="/tools/" class:list={[{ active: pathname.startsWith('/tools') }]}>AI Tools</a></li>
+			<li><a href="/reviews/" class:list={[{ active: pathname.startsWith('/reviews') }]}>Reviews</a></li>
+			<li><a href="/tutorials/" class:list={[{ active: pathname.startsWith('/tutorials') }]}>Tutorials</a></li>
+			<li><a href="/pricing/" class:list={[{ active: pathname === '/pricing/' }]}>Pricing</a></li>
+			<li><a href="/submit/" class="btn btn--primary btn--sm">Submit a Tool</a></li>
 		</ul>
 	</nav>
 </header>

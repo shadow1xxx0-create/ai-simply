@@ -1,0 +1,153 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead title={`Submit a Tool | ${SITE_TITLE}`} description="Submit your AI tool to the AI Briefs directory. Get discovered by thousands of AI enthusiasts." />
+</head>
+<body>
+<Header />
+<div class="page-header">
+	<div class="container">
+		<h1>Submit a Tool</h1>
+		<p>Know a great AI tool that should be in our directory?</p>
+	</div>
+</div>
+<main>
+	<div class="container submit-wrap">
+		<div class="submit-card">
+			<p class="submit-intro">Fill out the form below and we'll review your submission within 48 hours. We list free, freemium, and paid tools across all 22 categories.</p>
+
+			<form class="submit-form" name="submit-tool" method="POST" data-netlify="true" action="/submit-success/">
+				<input type="hidden" name="form-name" value="submit-tool" />
+
+				<div class="field">
+					<label for="tool-name">Tool Name *</label>
+					<input type="text" id="tool-name" name="tool-name" required placeholder="e.g. My AI Tool" />
+				</div>
+
+				<div class="field">
+					<label for="tool-url">Website URL *</label>
+					<input type="url" id="tool-url" name="tool-url" required placeholder="https://mytool.ai" />
+				</div>
+
+				<div class="field">
+					<label for="tool-description">Short Description *</label>
+					<input type="text" id="tool-description" name="tool-description" required maxlength="140" placeholder="What does it do? (max 140 characters)" />
+				</div>
+
+				<div class="field">
+					<label for="tool-category">Category *</label>
+					<select id="tool-category" name="tool-category" required>
+						<option value="">Select a category</option>
+						<option>AI Productivity</option>
+						<option>AI Writing</option>
+						<option>AI Video</option>
+						<option>AI Image</option>
+						<option>AI Art</option>
+						<option>AI Voice</option>
+						<option>AI Music</option>
+						<option>AI Chatbot</option>
+						<option>AI Vision</option>
+						<option>AI Marketing</option>
+						<option>AI Coding</option>
+						<option>AI Learning</option>
+						<option>AI Social</option>
+						<option>AI Business</option>
+						<option>AI Research</option>
+						<option>AI Insights</option>
+						<option>AI Life</option>
+						<option>AI Health</option>
+						<option>AI Legal</option>
+						<option>AI Design</option>
+						<option>AI Detection</option>
+						<option>Others</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label for="tool-pricing">Pricing Model *</label>
+					<select id="tool-pricing" name="tool-pricing" required>
+						<option value="">Select pricing</option>
+						<option>Free</option>
+						<option>Freemium</option>
+						<option>Paid</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label for="submitter-email">Your Email *</label>
+					<input type="email" id="submitter-email" name="submitter-email" required placeholder="you@example.com" />
+				</div>
+
+				<button type="submit" class="btn btn--primary">Submit Tool →</button>
+			</form>
+		</div>
+	</div>
+</main>
+<Footer />
+</body>
+</html>
+
+<style>
+	.submit-wrap {
+		padding: 3rem 0;
+		max-width: 620px;
+	}
+
+	.submit-card {
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 2rem;
+	}
+
+	.submit-intro {
+		color: rgb(var(--gray));
+		margin-bottom: 1.75rem;
+		font-size: 0.95rem;
+	}
+
+	.submit-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.1rem;
+	}
+
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.field label {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+	}
+
+	.field input, .field select {
+		padding: 0.7rem 0.9rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		font-size: 0.95rem;
+		font-family: inherit;
+		background: var(--bg);
+		transition: border-color 0.15s;
+		outline: none;
+	}
+
+	.field input:focus, .field select:focus {
+		border-color: var(--primary);
+	}
+
+	.btn--primary {
+		align-self: flex-start;
+		margin-top: 0.5rem;
+	}
+</style>

@@ -1,14 +1,20 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Newsletter from '../components/Newsletter.astro';
+import ToolCard from '../components/ToolCard.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, BEEHIIV_FORM_URL } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, TOOL_CATEGORIES } from '../consts';
 
-const posts = (await getCollection('blog'))
+const allTools = (await getCollection('tools'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featuredTools = allTools.filter(t => t.data.featured).slice(0, 2);
+const recentTools = allTools.slice(0, 12);
+const totalTools = allTools.length;
+
+const recentPosts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3);
 ---
@@ -16,351 +22,235 @@ const posts = (await getCollection('blog'))
 <!doctype html>
 <html lang="en">
 <head>
-	<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	<BaseHead title={`${SITE_TITLE} — AI Tools Directory`} description={SITE_DESCRIPTION} />
 </head>
 <body>
 <Header />
 
-	<main>
-		<!-- Hero — Newsletter First -->
-		<section class="hero" id="newsletter" aria-label="Newsletter signup">
-			<div class="container hero__inner">
-				<div class="hero__content">
-					<span class="hero__tag">Free Weekly Newsletter</span>
-					<h1>AI news in plain English.</h1>
-					<p class="hero__sub">No jargon. No hype. Just what matters.</p>
+<main>
+	<!-- Hero -->
+	<section class="hero">
+		<div class="container hero__inner">
+			<p class="hero__tag">AI Tools Directory</p>
+			<h1>Find the Best AI Tools</h1>
+			<p class="hero__sub">Browse {totalTools}+ curated AI tools across 22 categories. Free, freemium, and paid.</p>
+			<div class="hero__search">
+				<input
+					type="search"
+					id="global-search"
+					placeholder="Search AI tools..."
+					autocomplete="off"
+					aria-label="Search AI tools"
+				/>
+				<button type="button" class="hero__search-btn" aria-label="Search">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+				</button>
+			</div>
+		</div>
+	</section>
 
-					<form class="hero__form" id="hero-newsletter-form" action={BEEHIIV_FORM_URL} method="post" target="_blank">
-						<label for="hero-email" class="sr-only">Email address</label>
-						<input
-							id="hero-email"
-							type="email"
-							name="email"
-							placeholder="john@gmail.com"
-							required
-							autocomplete="email"
-						/>
-						<button type="submit" class="hero__btn">Subscribe Free →</button>
-					</form>
-
-					<p class="hero__proof">
-						Join <strong>thousands of readers</strong> who get AI explained simply every week.
-					</p>
-
-					<div class="hero__logos" aria-label="Readers from">
-						<span class="hero__logos-label">Read by people at</span>
-						<div class="hero__logos-row">
-							<span>Google</span>
-							<span>Microsoft</span>
-							<span>Amazon</span>
-							<span>Meta</span>
-							<span>HubSpot</span>
-						</div>
-					</div>
+	<!-- Today's Pick -->
+	{featuredTools.length > 0 && (
+		<section class="section section--alt">
+			<div class="container">
+				<div class="section-header">
+					<h2 class="section-heading">
+						<span class="section-heading__dot"></span>
+						Today's Pick
+					</h2>
+					<a href="/tools/" class="section-link">Browse all →</a>
 				</div>
-
-				<div class="hero__preview" aria-hidden="true">
-					<div class="preview-card">
-						<div class="preview-card__header">
-							<span class="preview-card__emoji">&#129302;</span>
-							<div>
-								<strong>AI Briefs</strong>
-								<span class="preview-card__date">This week's issue</span>
+				<div class="featured-grid">
+					{featuredTools.map(tool => (
+						<a href={`/tools/${tool.id}/`} class="featured-card">
+							<div class="featured-card__logo">{TOOL_CATEGORIES.find(c => c.slug === tool.data.category)?.emoji ?? '🤖'}</div>
+							<div class="featured-card__body">
+								<div class="featured-card__top">
+									<h3 class="featured-card__name">{tool.data.name}</h3>
+									<span class="featured-card__cat">{TOOL_CATEGORIES.find(c => c.slug === tool.data.category)?.name}</span>
+								</div>
+								<p class="featured-card__desc">{tool.data.description}</p>
 							</div>
-						</div>
-						<div class="preview-card__body">
-							<p class="preview-card__item"><span>&#128640;</span> <strong>Top Story:</strong> The latest AI breakthrough — and what it means for you</p>
-							<p class="preview-card__item"><span>&#129504;</span> <strong>Deep Dive:</strong> Why AI "hallucinations" happen — explained simply</p>
-							<p class="preview-card__item"><span>&#9889;</span> <strong>Quick Links:</strong> 4 AI tools worth trying this week</p>
-							<p class="preview-card__item"><span>&#128736;&#65039;</span> <strong>Tool of the Week:</strong> The one AI tool I'd recommend to a beginner</p>
-						</div>
-						<div class="preview-card__footer">
-							Free newsletter
-						</div>
-					</div>
+							<span class="featured-card__cta">Explore →</span>
+						</a>
+					))}
 				</div>
 			</div>
 		</section>
+	)}
 
-		<!-- Recent Articles -->
-		{posts.length > 0 && (
-			<section class="section section--alt" aria-label="Recent articles">
-				<div class="container">
-					<div class="section-header">
-						<h2 class="section-heading">Latest Explanations</h2>
-						<a href="/blog/" class="section-header__link">View all articles →</a>
-					</div>
-					<div class="articles-grid">
-						{posts.map((post) => (
-							<article class="card">
-								<a href={`/blog/${post.id}/`}>
-									<div class="card__img">
-										{post.data.heroImage ? (
-											<Image width={400} height={225} src={post.data.heroImage} alt={post.data.title} loading="lazy" />
-										) : (
-											<div class="card__placeholder" aria-hidden="true">&#129302;</div>
-										)}
-									</div>
-									<div class="card__body">
-										<span class="badge">{post.data.category.replace(/-/g, ' ')}</span>
-										<h3 class="card__title">{post.data.title}</h3>
-										<p class="card__excerpt">{post.data.description}</p>
-										<span class="card__meta">
-											<FormattedDate date={post.data.pubDate} />
-											{post.data.readingTime && <span> &middot; {post.data.readingTime}</span>}
-										</span>
-									</div>
-								</a>
-							</article>
-						))}
-					</div>
-					<div class="section-cta">
-						<a href="/blog/" class="btn btn--outline">Browse All Articles</a>
-					</div>
-				</div>
-			</section>
-		)}
-
-		<div class="nl-heading">
-			<p class="nl-heading__sub">Free Weekly Newsletter</p>
-			<h2 class="nl-heading__title">Join our newsletter.<br/>Stay updated.</h2>
+	<!-- Categories -->
+	<section class="section">
+		<div class="container">
+			<div class="section-header">
+				<h2 class="section-heading">Browse by Category</h2>
+				<a href="/tools/" class="section-link">All tools →</a>
+			</div>
+			<div class="categories-grid">
+				{TOOL_CATEGORIES.map(cat => (
+					<a href={`/tools/category/${cat.slug}/`} class="cat-tile">
+						<span class="cat-tile__emoji" aria-hidden="true">{cat.emoji}</span>
+						<span class="cat-tile__name">{cat.name}</span>
+					</a>
+				))}
+			</div>
 		</div>
+	</section>
 
-		<Newsletter
-			heading="Still not subscribed? Here's what you're missing."
-			text="The most important AI stories and tools worth knowing about. No spam ever. Free."
-		/>
-	</main>
+	<!-- Recently Added -->
+	{recentTools.length > 0 && (
+		<section class="section section--alt">
+			<div class="container">
+				<div class="section-header">
+					<h2 class="section-heading">Recently Added</h2>
+					<a href="/tools/" class="section-link">View all →</a>
+				</div>
+				<div class="tools-grid">
+					{recentTools.map(tool => (
+						<ToolCard
+							name={tool.data.name}
+							description={tool.data.description}
+							category={tool.data.category}
+							subcategory={tool.data.subcategory}
+							pricing={tool.data.pricing}
+							url={tool.data.url}
+							slug={tool.id}
+							tags={tool.data.tags}
+						/>
+					))}
+				</div>
+				<div class="section-cta">
+					<a href="/tools/" class="btn btn--outline">Browse All AI Tools</a>
+				</div>
+			</div>
+		</section>
+	)}
 
-	<Footer />
+	<!-- From the Blog -->
+	{recentPosts.length > 0 && (
+		<section class="section">
+			<div class="container">
+				<div class="section-header">
+					<h2 class="section-heading">AI Explained Simply</h2>
+					<a href="/blog/" class="section-link">All articles →</a>
+				</div>
+				<div class="blog-grid">
+					{recentPosts.map(post => (
+						<a href={`/blog/${post.id}/`} class="blog-card">
+							<div class="blog-card__body">
+								<span class="badge">{post.data.category.replace(/-/g, ' ')}</span>
+								<h3 class="blog-card__title">{post.data.title}</h3>
+								<p class="blog-card__excerpt">{post.data.description}</p>
+								<span class="blog-card__meta"><FormattedDate date={post.data.pubDate} /></span>
+							</div>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+	)}
+</main>
+
+<Footer />
 </body>
 </html>
+
+<script>
+	const input = document.getElementById('global-search') as HTMLInputElement;
+	if (input) {
+		input.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter') {
+				const q = input.value.trim();
+				if (q) window.location.href = `/tools/?q=${encodeURIComponent(q)}`;
+			}
+		});
+		const btn = document.querySelector('.hero__search-btn');
+		btn?.addEventListener('click', () => {
+			const q = input.value.trim();
+			if (q) window.location.href = `/tools/?q=${encodeURIComponent(q)}`;
+		});
+	}
+</script>
 
 <style>
 	/* Hero */
 	.hero {
-		padding: 7rem 0 7.5rem;
-		background: linear-gradient(160deg, #f0f0f0 0%, #fafafa 65%);
+		padding: 5rem 0 4.5rem;
+		background: linear-gradient(160deg, #f0f7f4 0%, #fafafa 60%);
 		border-bottom: 1px solid var(--border);
+		text-align: center;
 	}
 
 	.hero__inner {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 3rem;
-		align-items: stretch;
-	}
-
-	.hero__content {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-	}
-
-	.hero__preview {
-		display: flex;
-		align-items: stretch;
+		align-items: center;
 	}
 
 	.hero__tag {
 		display: inline-block;
-		font-size: 0.75rem;
+		font-size: 0.72rem;
 		font-weight: 700;
 		text-transform: uppercase;
-		letter-spacing: 0.08em;
+		letter-spacing: 0.1em;
 		color: var(--primary);
 		background: var(--primary-light);
-		border: 1px solid rgba(0,200,150,0.2);
-		padding: 0.3rem 0.75rem;
+		border: 1px solid rgba(0,135,90,0.2);
+		padding: 0.28rem 0.75rem;
 		border-radius: 50px;
 		margin-bottom: 1rem;
 	}
 
 	.hero h1 {
-		font-size: 4rem;
+		font-size: 3.4rem;
 		line-height: 1.1;
 		margin-bottom: 0.75rem;
 		color: rgb(var(--black));
 	}
 
 	.hero__sub {
-		font-size: 1.15rem;
+		font-size: 1.1rem;
 		color: rgb(var(--gray));
-		margin-bottom: 1.75rem;
-		line-height: 1.6;
-	}
-
-	.hero__form {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		gap: 0.75rem;
+		margin-bottom: 2rem;
 		max-width: 480px;
-		margin-bottom: 1rem;
 	}
 
-	.hero__form input {
-		flex: 1;
-		padding: 0.9rem 1.1rem;
-		border: 2px solid var(--border);
-		border-radius: var(--radius);
-		font-size: 1rem;
-		background: #fff;
-		transition: border-color 0.15s;
-	}
-
-	.hero__form input:focus-visible {
-		border-color: var(--primary);
-		outline: none;
-	}
-
-	.hero__btn {
-		padding: 0.5rem 1rem;
-		background: #111;
-		color: #fff;
-		font-size: 0.85rem;
-		font-weight: 700;
-		border: none;
-		border-radius: var(--radius);
-		cursor: pointer;
-		font-family: inherit;
-		transition: background 0.15s;
-		position: relative;
-		outline: none;
-		overflow: visible;
-		isolation: isolate;
-	}
-
-	.hero__btn::before {
-		content: '';
-		position: absolute;
-		inset: -3px;
-		border-radius: calc(var(--radius) + 3px);
-		background: conic-gradient(
-			from var(--angle, 0deg),
-			transparent 0deg,
-			#00ff99 60deg,
-			#00C896 120deg,
-			transparent 180deg
-		);
-		animation: spin-border 4s linear infinite;
-		z-index: -1;
-	}
-
-	.hero__btn::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: #111;
-		border-radius: var(--radius);
-		z-index: -1;
-	}
-
-	@property --angle {
-		syntax: '<angle>';
-		initial-value: 0deg;
-		inherits: false;
-	}
-
-	@keyframes spin-border {
-		to { --angle: 360deg; }
-	}
-
-	.hero__btn:hover { background: var(--primary-dark); }
-	.hero__btn:hover::after { background: var(--primary-dark); }
-
-	.hero__proof {
-		font-size: 0.88rem;
-		color: rgb(var(--gray));
-		margin-bottom: 1.5rem;
-	}
-
-	.hero__logos {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	.hero__logos-label {
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: rgb(var(--gray));
-		font-weight: 600;
-	}
-
-	.hero__logos-row {
-		display: flex;
-		gap: 1.25rem;
-		flex-wrap: wrap;
-	}
-
-	.hero__logos-row span {
-		font-size: 0.85rem;
-		font-weight: 700;
-		color: rgb(var(--gray-dark));
-	}
-
-	/* Newsletter preview card */
-	.preview-card {
-		background: #fff;
-		border: 1px solid var(--border);
-		border-radius: 12px;
-		box-shadow: var(--shadow-lg);
-		overflow: hidden;
-		width: 100%;
-		max-width: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.preview-card__header {
+	.hero__search {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
-		padding: 1rem 1.25rem;
-		border-bottom: 1px solid var(--border);
-		background: var(--bg-alt);
+		width: 100%;
+		max-width: 520px;
+		background: #fff;
+		border: 2px solid var(--border);
+		border-radius: 50px;
+		overflow: hidden;
+		transition: border-color 0.2s;
 	}
 
-	.preview-card__emoji {
-		font-size: 1.5rem;
-	}
+	.hero__search:focus-within { border-color: var(--primary); }
 
-	.preview-card__header strong {
-		display: block;
-		font-size: 0.95rem;
-	}
-
-	.preview-card__date {
-		font-size: 0.75rem;
-		color: rgb(var(--gray));
-	}
-
-	.preview-card__body {
-		padding: 1.5rem 1.75rem;
+	.hero__search input {
 		flex: 1;
+		padding: 0.9rem 1.25rem;
+		border: none;
+		font-size: 1rem;
+		background: transparent;
+		outline: none;
 	}
 
-	.preview-card__item {
-		font-size: 0.85rem;
-		color: rgb(var(--gray-dark));
-		margin-bottom: 0.75rem;
+	.hero__search-btn {
+		padding: 0.7rem 1.1rem;
+		background: var(--primary);
+		color: #fff;
+		border: none;
+		cursor: pointer;
 		display: flex;
-		gap: 0.5rem;
-		line-height: 1.4;
+		align-items: center;
+		border-radius: 0 50px 50px 0;
+		transition: background 0.15s;
 	}
 
-	.preview-card__item:last-child { margin-bottom: 0; }
-
-	.preview-card__footer {
-		padding: 0.75rem 1.25rem;
-		background: var(--bg-alt);
-		border-top: 1px solid var(--border);
-		font-size: 0.78rem;
-		color: rgb(var(--gray));
-		text-align: center;
-	}
+	.hero__search-btn:hover { background: var(--primary-dark); }
 
 	/* Sections */
 	.section { padding: 3rem 0; }
@@ -368,22 +258,39 @@ const posts = (await getCollection('blog'))
 
 	.section-header {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 		justify-content: space-between;
 		margin-bottom: 1.5rem;
-		flex-wrap: wrap;
 		gap: 0.5rem;
 	}
 
 	.section-heading {
-		font-size: 1.5rem;
+		font-size: 1.35rem;
 		margin: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 	}
 
-	.section-header__link {
-		font-size: 0.9rem;
+	.section-heading__dot {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		background: var(--primary);
+		border-radius: 50%;
+		animation: pulse 2s infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 1; transform: scale(1); }
+		50% { opacity: 0.6; transform: scale(1.3); }
+	}
+
+	.section-link {
+		font-size: 0.88rem;
 		font-weight: 600;
 		color: var(--primary);
+		white-space: nowrap;
 	}
 
 	.section-cta {
@@ -391,128 +298,179 @@ const posts = (await getCollection('blog'))
 		margin-top: 2rem;
 	}
 
-	/* Article Grid */
-	.articles-grid {
+	/* Featured */
+	.featured-grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1.5rem;
+		gap: 1rem;
 	}
 
-	.card {
-		background: var(--bg);
+	.featured-card {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		background: #fff;
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
-		overflow: hidden;
-		transition:
-			box-shadow 0.55s ease,
-			transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-			border-color 0.4s ease;
+		padding: 1.25rem;
+		color: inherit;
+		transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
 	}
 
-	.card:hover {
-		box-shadow:
-			0 0 0 1px rgba(0, 200, 150, 0.15),
-			0 6px 24px rgba(0, 200, 150, 0.18),
-			0 12px 40px rgba(0, 200, 150, 0.10);
-		transform: translateY(-5px);
-		border-color: rgba(0, 200, 150, 0.35);
+	.featured-card:hover {
+		box-shadow: 0 4px 16px rgba(0,135,90,0.12);
+		border-color: rgba(0,135,90,0.25);
+		transform: translateY(-2px);
 	}
 
-	.card a { color: inherit; display: block; }
-
-	.card__img {
-		overflow: hidden;
-	}
-
-	.card__img img {
-		width: 100%;
-		height: 200px;
-		object-fit: cover;
-		transition: transform 0.65s cubic-bezier(0.25, 0.8, 0.25, 1);
-	}
-
-	.card:hover .card__img img {
-		transform: scale(1.06);
-	}
-
-	.card__title {
-		transition: color 0.45s ease;
-	}
-
-	.card:hover .card__title {
-		color: var(--primary);
-	}
-
-	.card__placeholder {
-		height: 200px;
+	.featured-card__logo {
+		width: 56px;
+		height: 56px;
 		background: var(--primary-light);
+		border-radius: 12px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 3rem;
+		font-size: 1.8rem;
+		flex-shrink: 0;
 	}
 
-	.card__body { padding: 1.25rem; }
+	.featured-card__body { flex: 1; min-width: 0; }
 
-	.card__title {
+	.featured-card__top {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin-bottom: 0.3rem;
+		flex-wrap: wrap;
+	}
+
+	.featured-card__name {
 		font-size: 1.05rem;
-		margin: 0.5rem 0 0.4rem;
-		line-height: 1.35;
+		font-weight: 700;
+		margin: 0;
 		color: rgb(var(--black));
 	}
 
-	.card__excerpt {
+	.featured-card__cat {
+		font-size: 0.7rem;
+		background: var(--primary-light);
+		color: var(--primary);
+		padding: 0.15rem 0.5rem;
+		border-radius: 50px;
+		font-weight: 700;
+	}
+
+	.featured-card__desc {
 		font-size: 0.88rem;
 		color: rgb(var(--gray));
+		margin: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.featured-card__cta {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--primary);
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	/* Category Grid */
+	.categories-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.6rem;
+	}
+
+	.cat-tile {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		padding: 1rem 0.5rem;
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		color: rgb(var(--gray-dark));
+		text-align: center;
+		transition: all 0.2s;
+		text-decoration: none;
+	}
+
+	.cat-tile:hover {
+		border-color: var(--primary);
+		background: var(--primary-light);
+		color: var(--primary);
+		transform: translateY(-2px);
+	}
+
+	.cat-tile__emoji { font-size: 1.5rem; line-height: 1; }
+	.cat-tile__name { font-size: 0.72rem; font-weight: 700; line-height: 1.3; }
+
+	/* Tools Grid */
+	.tools-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	/* Blog Grid */
+	.blog-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.blog-card {
+		display: block;
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1.25rem;
+		color: inherit;
+		transition: box-shadow 0.2s, transform 0.2s;
+	}
+
+	.blog-card:hover {
+		box-shadow: 0 4px 16px rgba(0,135,90,0.1);
+		transform: translateY(-2px);
+	}
+
+	.blog-card__title {
+		font-size: 1rem;
+		margin: 0.4rem 0 0.35rem;
+		color: rgb(var(--black));
+		line-height: 1.4;
+	}
+
+	.blog-card:hover .blog-card__title { color: var(--primary); }
+
+	.blog-card__excerpt {
+		font-size: 0.84rem;
+		color: rgb(var(--gray));
+		margin: 0 0 0.5rem;
 		display: -webkit-box;
-		-webkit-line-clamp: 3;
+		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
-		margin-bottom: 0.5rem;
 	}
 
-	.card__meta {
-		font-size: 0.78rem;
-		color: rgb(var(--gray));
-	}
+	.blog-card__meta { font-size: 0.75rem; color: rgb(var(--gray)); }
 
 	@media (min-width: 640px) {
-		.articles-grid { grid-template-columns: repeat(2, 1fr); }
-	}
-
-	@media (min-width: 768px) {
-		.hero h1 { font-size: 3.5rem; }
-	}
-
-	.nl-heading {
-		text-align: center;
-		padding: 4rem 1.25rem 2.5rem;
-	}
-
-	.nl-heading__sub {
-		font-size: 0.78rem;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.12em;
-		color: var(--primary);
-		margin-bottom: 0.75rem;
-	}
-
-	.nl-heading__title {
-		font-size: 2.8rem;
-		font-weight: 700;
-		color: rgb(var(--black));
-		line-height: 1.15;
-		margin: 0;
-		font-family: 'Playfair Display', Georgia, serif;
+		.categories-grid { grid-template-columns: repeat(4, 1fr); }
+		.tools-grid { grid-template-columns: repeat(3, 1fr); }
+		.featured-grid { grid-template-columns: repeat(2, 1fr); }
+		.blog-grid { grid-template-columns: repeat(3, 1fr); }
 	}
 
 	@media (min-width: 960px) {
-		.hero__inner {
-			grid-template-columns: 1fr 1fr;
-			gap: 5rem;
-		}
-		.articles-grid { grid-template-columns: repeat(3, 1fr); }
+		.hero h1 { font-size: 4rem; }
+		.categories-grid { grid-template-columns: repeat(6, 1fr); }
+		.tools-grid { grid-template-columns: repeat(4, 1fr); }
 	}
-
 </style>

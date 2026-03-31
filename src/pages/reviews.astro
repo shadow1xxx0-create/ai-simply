@@ -1,0 +1,281 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { TOOL_CATEGORIES } from '../consts';
+
+const tools = await getCollection('tools');
+
+const featured = tools.filter(t => t.data.featured);
+const topTools = tools
+	.sort(() => 0.5 - Math.random())
+	.slice(0, 18);
+
+function getCategoryEmoji(slug: string) {
+	return TOOL_CATEGORIES.find(c => c.slug === slug)?.emoji ?? '🤖';
+}
+
+const MOCK_RATINGS: Record<string, { score: number; count: number }> = {
+	'chatgpt': { score: 4.8, count: 12400 },
+	'claude': { score: 4.7, count: 8200 },
+	'gemini': { score: 4.5, count: 6100 },
+	'midjourney': { score: 4.9, count: 9800 },
+	'github-copilot': { score: 4.7, count: 7300 },
+	'notion-ai': { score: 4.6, count: 5400 },
+	'runway': { score: 4.6, count: 3200 },
+	'elevenlabs': { score: 4.8, count: 4100 },
+	'grammarly': { score: 4.5, count: 11200 },
+	'cursor': { score: 4.8, count: 5900 },
+};
+
+function getRating(slug: string) {
+	return MOCK_RATINGS[slug] ?? { score: +(4.0 + Math.random() * 0.8).toFixed(1), count: Math.floor(500 + Math.random() * 3000) };
+}
+
+function renderStars(score: number) {
+	const full = Math.floor(score);
+	const half = score - full >= 0.5 ? 1 : 0;
+	const empty = 5 - full - half;
+	return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+}
+
+const pricingColors: Record<string, string> = {
+	free: '#16a34a',
+	freemium: '#0284c7',
+	paid: '#7c3aed',
+};
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title="AI Tool Reviews — AI Simply"
+		description="Honest reviews and ratings of the best AI tools. Find out which AI tools are worth your time and money."
+	/>
+</head>
+<body>
+	<Header />
+	<main>
+
+		<section class="page-hero">
+			<div class="container">
+				<div class="hero-badge">Honest Reviews</div>
+				<h1>AI Tool Reviews</h1>
+				<p>Real ratings and reviews of the best AI tools — so you can choose with confidence.</p>
+			</div>
+		</section>
+
+		<div class="container reviews-body">
+
+			<section class="reviews-section">
+				<h2 class="section-title">Top Rated Tools</h2>
+				<div class="reviews-grid">
+					{topTools.map(tool => {
+						const rating = getRating(tool.id);
+						const emoji = getCategoryEmoji(tool.data.category);
+						return (
+							<a href={`/tools/${tool.id}/`} class="review-card">
+								<div class="review-card__head">
+									<span class="tool-emoji">{emoji}</span>
+									<div class="tool-info">
+										<h3>{tool.data.name}</h3>
+										<span class="pricing-badge" style={`color:${pricingColors[tool.data.pricing]}`}>
+											{tool.data.pricing.charAt(0).toUpperCase() + tool.data.pricing.slice(1)}
+										</span>
+									</div>
+								</div>
+								<p class="review-desc">{tool.data.description}</p>
+								<div class="review-rating">
+									<span class="stars">{renderStars(rating.score)}</span>
+									<span class="score">{rating.score}</span>
+									<span class="count">({rating.count.toLocaleString()} reviews)</span>
+								</div>
+								<span class="review-cta">Read Review →</span>
+							</a>
+						);
+					})}
+				</div>
+			</section>
+
+			<section class="how-we-rate">
+				<h2>How We Rate AI Tools</h2>
+				<div class="criteria-grid">
+					<div class="criterion">
+						<span class="criterion-icon">🎯</span>
+						<h3>Accuracy</h3>
+						<p>How well the tool performs its core function — does it do what it claims?</p>
+					</div>
+					<div class="criterion">
+						<span class="criterion-icon">⚡</span>
+						<h3>Speed</h3>
+						<p>Response times, generation speed, and how quickly you can get results.</p>
+					</div>
+					<div class="criterion">
+						<span class="criterion-icon">💰</span>
+						<h3>Value</h3>
+						<p>Is the pricing fair for what you get? Are free tiers genuinely useful?</p>
+					</div>
+					<div class="criterion">
+						<span class="criterion-icon">🧩</span>
+						<h3>Ease of Use</h3>
+						<p>How quickly can a new user get started and see real results?</p>
+					</div>
+				</div>
+			</section>
+
+		</div>
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+.page-hero {
+	background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%);
+	border-bottom: 1px solid var(--border);
+	padding: 3.5rem 0 2.5rem;
+	text-align: center;
+}
+
+.hero-badge {
+	display: inline-block;
+	background: var(--accent);
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	padding: 0.3rem 0.9rem;
+	border-radius: 99px;
+	margin-bottom: 1rem;
+}
+
+.page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 0.75rem; }
+.page-hero p { color: rgb(var(--gray)); max-width: 540px; margin: 0 auto; }
+
+.reviews-body { padding: 3rem 0 4rem; }
+.reviews-section { margin-bottom: 3.5rem; }
+
+.section-title {
+	font-size: 1.35rem;
+	font-weight: 700;
+	margin-bottom: 1.5rem;
+	padding-bottom: 0.6rem;
+	border-bottom: 2px solid var(--border);
+}
+
+.reviews-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 1.25rem;
+}
+
+.review-card {
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	padding: 1.25rem;
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	color: inherit;
+	transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.review-card:hover {
+	transform: translateY(-3px);
+	border-color: rgba(0,200,150,0.35);
+	box-shadow: 0 6px 24px rgba(0,200,150,0.12);
+}
+
+.review-card__head {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.tool-emoji {
+	font-size: 2rem;
+	width: 48px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--primary-light);
+	border-radius: var(--radius);
+	flex-shrink: 0;
+}
+
+.tool-info h3 {
+	font-size: 1rem;
+	margin: 0 0 0.2rem;
+	transition: color 0.2s;
+}
+
+.review-card:hover h3 { color: var(--primary); }
+
+.pricing-badge {
+	font-size: 0.72rem;
+	font-weight: 600;
+}
+
+.review-desc {
+	font-size: 0.83rem;
+	color: rgb(var(--gray));
+	margin: 0;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.review-rating {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: 0.82rem;
+}
+
+.stars { color: #f59e0b; letter-spacing: 1px; }
+.score { font-weight: 700; color: rgb(var(--black)); }
+.count { color: rgb(var(--gray)); }
+
+.review-cta {
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: var(--primary);
+	margin-top: auto;
+}
+
+.how-we-rate {
+	background: var(--bg-alt, #f8fafc);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 2.5rem;
+}
+
+.how-we-rate h2 {
+	font-size: 1.35rem;
+	margin-bottom: 1.5rem;
+	text-align: center;
+}
+
+.criteria-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 1.5rem;
+}
+
+.criterion { text-align: center; }
+
+.criterion-icon {
+	font-size: 2rem;
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+.criterion h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+.criterion p { font-size: 0.83rem; color: rgb(var(--gray)); margin: 0; }
+</style>

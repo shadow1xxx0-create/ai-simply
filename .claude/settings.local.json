@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(npm run:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(grep -n \"pubDate\\\\|description\\\\|title\" /c/Users/dell/ai-simply/src/content/blog/*.md)",
+      "Bash(cp:*)",
+      "WebFetch(domain:getaibriefs.com)",
+      "WebFetch(domain:airmore.ai)"
     ]
   }
 }

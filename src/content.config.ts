@@ -20,4 +20,27 @@ const blog = defineCollection({
 		}),
 });
 
-export const collections = { blog };
+const tools = defineCollection({
+	loader: glob({ base: './src/content/tools', pattern: '**/*.{md,mdx}' }),
+	schema: ({ image }) =>
+		z.object({
+			name: z.string(),
+			description: z.string(),
+			category: z.enum([
+				'ai-productivity', 'ai-writing', 'ai-video', 'ai-image', 'ai-art',
+				'ai-voice', 'ai-music', 'ai-chatbot', 'ai-vision', 'ai-marketing',
+				'ai-coding', 'ai-learning', 'ai-social', 'ai-business', 'ai-research',
+				'ai-insights', 'ai-life', 'ai-health', 'ai-legal', 'ai-design',
+				'ai-detection', 'others',
+			]),
+			subcategory: z.string().optional(),
+			url: z.string().url(),
+			logo: image().optional(),
+			pricing: z.enum(['free', 'freemium', 'paid']).default('freemium'),
+			tags: z.array(z.string()).default([]),
+			featured: z.boolean().default(false),
+			pubDate: z.coerce.date(),
+		}),
+});
+
+export const collections = { blog, tools };

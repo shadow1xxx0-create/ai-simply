@@ -1,0 +1,286 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title="Pricing — AI Simply"
+		description="AI Simply is free to use. Submit your AI tool to reach thousands of AI enthusiasts and professionals."
+	/>
+</head>
+<body>
+	<Header />
+	<main>
+
+		<section class="page-hero">
+			<div class="container">
+				<div class="hero-badge">Pricing</div>
+				<h1>Simple, Transparent Pricing</h1>
+				<p>Browse and discover AI tools for free — forever. Submit your tool to reach our growing audience.</p>
+			</div>
+		</section>
+
+		<div class="container pricing-body">
+
+			<div class="plans-grid">
+
+				<div class="plan-card">
+					<div class="plan-head">
+						<span class="plan-icon">🔍</span>
+						<h2>Browse</h2>
+						<div class="plan-price">
+							<span class="price">$0</span>
+							<span class="period">forever</span>
+						</div>
+					</div>
+					<ul class="plan-features">
+						<li>✓ Browse all AI tools</li>
+						<li>✓ Filter by category & pricing</li>
+						<li>✓ Search across 130+ tools</li>
+						<li>✓ Read tutorials and guides</li>
+						<li>✓ Access tool reviews</li>
+						<li>✓ No account required</li>
+					</ul>
+					<a href="/tools/" class="plan-btn plan-btn--secondary">Browse Tools</a>
+				</div>
+
+				<div class="plan-card plan-card--featured">
+					<div class="plan-badge">Most Popular</div>
+					<div class="plan-head">
+						<span class="plan-icon">🚀</span>
+						<h2>Submit a Tool</h2>
+						<div class="plan-price">
+							<span class="price">Free</span>
+							<span class="period">during beta</span>
+						</div>
+					</div>
+					<ul class="plan-features">
+						<li>✓ Listed in our tools directory</li>
+						<li>✓ Appear in category pages</li>
+						<li>✓ Indexed by search engines</li>
+						<li>✓ Reach AI enthusiasts & pros</li>
+						<li>✓ Featured consideration</li>
+						<li>✓ Fast review turnaround</li>
+					</ul>
+					<a href="/submit/" class="plan-btn plan-btn--primary">Submit Your Tool</a>
+				</div>
+
+				<div class="plan-card">
+					<div class="plan-head">
+						<span class="plan-icon">⭐</span>
+						<h2>Featured Listing</h2>
+						<div class="plan-price">
+							<span class="price">Coming</span>
+							<span class="period">soon</span>
+						</div>
+					</div>
+					<ul class="plan-features">
+						<li>✓ Homepage "Today's Pick" slot</li>
+						<li>✓ Category page priority placement</li>
+						<li>✓ Featured badge on tool card</li>
+						<li>✓ Newsletter mention</li>
+						<li>✓ Social media shoutout</li>
+						<li>✓ Analytics dashboard</li>
+					</ul>
+					<a href="/submit/" class="plan-btn plan-btn--secondary">Join Waitlist</a>
+				</div>
+
+			</div>
+
+			<section class="faq-section">
+				<h2>Frequently Asked Questions</h2>
+				<div class="faq-list">
+					<div class="faq-item">
+						<h3>Is AI Simply really free to use?</h3>
+						<p>Yes. Browsing, searching, and reading reviews is completely free — no account needed.</p>
+					</div>
+					<div class="faq-item">
+						<h3>How do I submit my AI tool?</h3>
+						<p>Use our <a href="/submit/">Submit a Tool</a> form. We review every submission and typically respond within a few days.</p>
+					</div>
+					<div class="faq-item">
+						<h3>What makes a tool eligible for listing?</h3>
+						<p>Any legitimate AI-powered tool is welcome. We list tools across all 22 categories — from productivity to health to coding.</p>
+					</div>
+					<div class="faq-item">
+						<h3>When will featured listings be available?</h3>
+						<p>We're launching featured placements soon. Submit your tool now and you'll be notified when paid features go live.</p>
+					</div>
+				</div>
+			</section>
+
+		</div>
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+.page-hero {
+	background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%);
+	border-bottom: 1px solid var(--border);
+	padding: 3.5rem 0 2.5rem;
+	text-align: center;
+}
+
+.hero-badge {
+	display: inline-block;
+	background: var(--accent);
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	padding: 0.3rem 0.9rem;
+	border-radius: 99px;
+	margin-bottom: 1rem;
+}
+
+.page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 0.75rem; }
+.page-hero p { color: rgb(var(--gray)); max-width: 540px; margin: 0 auto; }
+
+.pricing-body { padding: 3rem 0 4rem; }
+
+.plans-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 1.5rem;
+	margin-bottom: 3.5rem;
+	align-items: start;
+}
+
+.plan-card {
+	position: relative;
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 2rem 1.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.plan-card--featured {
+	border-color: var(--primary);
+	box-shadow: 0 0 0 1px rgba(0,200,150,0.2), 0 8px 32px rgba(0,200,150,0.12);
+}
+
+.plan-badge {
+	position: absolute;
+	top: -12px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: var(--primary);
+	color: #fff;
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	padding: 0.25rem 0.9rem;
+	border-radius: 99px;
+	white-space: nowrap;
+}
+
+.plan-head { text-align: center; }
+
+.plan-icon {
+	font-size: 2.5rem;
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+.plan-head h2 { font-size: 1.3rem; margin-bottom: 0.75rem; }
+
+.plan-price {
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	gap: 0.4rem;
+}
+
+.price {
+	font-size: 2.2rem;
+	font-weight: 800;
+	color: rgb(var(--black));
+}
+
+.period {
+	font-size: 0.85rem;
+	color: rgb(var(--gray));
+}
+
+.plan-features {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	border-top: 1px solid var(--border);
+	padding-top: 1rem;
+}
+
+.plan-features li {
+	font-size: 0.88rem;
+	color: rgb(var(--gray-dark));
+}
+
+.plan-btn {
+	display: block;
+	text-align: center;
+	padding: 0.75rem 1.25rem;
+	border-radius: var(--radius);
+	font-weight: 600;
+	font-size: 0.9rem;
+	margin-top: auto;
+	transition: opacity 0.2s;
+}
+
+.plan-btn:hover { opacity: 0.85; }
+
+.plan-btn--primary {
+	background: var(--primary);
+	color: #fff;
+}
+
+.plan-btn--secondary {
+	background: var(--primary-light);
+	color: var(--primary);
+}
+
+.faq-section h2 {
+	font-size: 1.35rem;
+	margin-bottom: 1.5rem;
+	text-align: center;
+}
+
+.faq-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 1.25rem;
+}
+
+.faq-item {
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 1.25rem 1.5rem;
+}
+
+.faq-item h3 {
+	font-size: 0.95rem;
+	margin-bottom: 0.5rem;
+}
+
+.faq-item p {
+	font-size: 0.85rem;
+	color: rgb(var(--gray));
+	margin: 0;
+}
+
+.faq-item a { color: var(--primary); }
+</style>
