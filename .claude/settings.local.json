@@ -6,7 +6,10 @@
       "Bash(grep -n \"pubDate\\\\|description\\\\|title\" /c/Users/dell/ai-simply/src/content/blog/*.md)",
       "Bash(cp:*)",
       "WebFetch(domain:getaibriefs.com)",
-      "WebFetch(domain:airmore.ai)"
+      "WebFetch(domain:airmore.ai)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }
