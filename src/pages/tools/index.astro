@@ -36,6 +36,20 @@ for (const t of allTools) {
 	</div>
 </div>
 
+<!-- Category Rail -->
+<div class="cat-rail-wrap">
+	<button class="rail-arrow rail-arrow--left" id="rail-left" aria-label="Scroll left">‹</button>
+	<div class="cat-rail" id="cat-rail">
+		<button class="rail-item rail-item--active" data-rail-cat="all">All <span>{totalTools}</span></button>
+		{TOOL_CATEGORIES.map(cat => (
+			<button class="rail-item" data-rail-cat={cat.slug}>
+				{cat.emoji} {cat.name} <span>{catCounts[cat.slug] ?? 0}</span>
+			</button>
+		))}
+	</div>
+	<button class="rail-arrow rail-arrow--right" id="rail-right" aria-label="Scroll right">›</button>
+</div>
+
 <main class="tools-main">
 	<div class="container tools-layout">
 
@@ -131,6 +145,25 @@ for (const t of allTools) {
 </html>
 
 <script>
+// Category rail arrows
+const rail = document.getElementById('cat-rail')!;
+document.getElementById('rail-left')?.addEventListener('click', () => rail.scrollBy({ left: -200, behavior: 'smooth' }));
+document.getElementById('rail-right')?.addEventListener('click', () => rail.scrollBy({ left: 200, behavior: 'smooth' }));
+
+// Rail item clicks — sync with sidebar filter
+document.querySelectorAll<HTMLElement>('.rail-item').forEach(btn => {
+	btn.addEventListener('click', () => {
+		document.querySelectorAll('.rail-item').forEach(b => b.classList.remove('rail-item--active'));
+		btn.classList.add('rail-item--active');
+		const cat = btn.dataset.railCat!;
+		activeCat = cat;
+		activeSubcat = '';
+		// sync sidebar
+		document.querySelectorAll('[data-filter-cat]').forEach(b => b.classList.toggle('sidebar__item--active', (b as HTMLElement).dataset.filterCat === cat));
+		applyFilters();
+	});
+});
+
 // Tool categories subcategories map
 const SUBCATS: Record<string, string[]> = {
 	'ai-productivity': ['AI Assistant','AI Agent','AI Copilot','AI Search Engine','AI Email Assistant','AI Meeting Assistant','AI Note Taker','AI Resume Builder','AI Task Management','AI Scheduling','AI PDF','AI Report Generator'],
@@ -452,6 +485,66 @@ if (activeCat !== 'all') {
 		font-size: 0.95rem;
 		font-family: inherit;
 	}
+
+	/* Category Rail */
+	.cat-rail-wrap {
+		position: relative;
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
+		display: flex;
+		align-items: center;
+	}
+	.cat-rail {
+		display: flex;
+		gap: 0.4rem;
+		overflow-x: auto;
+		scroll-behavior: smooth;
+		padding: 0.6rem 0.5rem;
+		scrollbar-width: none;
+		flex: 1;
+	}
+	.cat-rail::-webkit-scrollbar { display: none; }
+	.rail-item {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.35rem 0.85rem;
+		border: 1px solid var(--border);
+		border-radius: 50px;
+		background: #fff;
+		font-size: 0.78rem;
+		font-weight: 600;
+		white-space: nowrap;
+		cursor: pointer;
+		font-family: inherit;
+		color: rgb(var(--gray-dark));
+		transition: all 0.15s;
+		flex-shrink: 0;
+	}
+	.rail-item span { font-size: 0.65rem; color: rgb(var(--gray)); }
+	.rail-item:hover, .rail-item--active {
+		background: var(--primary);
+		color: #fff;
+		border-color: var(--primary);
+	}
+	.rail-item--active span, .rail-item:hover span { color: rgba(255,255,255,0.8); }
+	.rail-arrow {
+		background: #fff;
+		border: 1px solid var(--border);
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		font-size: 1.1rem;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		margin: 0 0.35rem;
+		line-height: 1;
+		transition: all 0.15s;
+	}
+	.rail-arrow:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 
 	@media (min-width: 640px) {
 		.tools-grid { grid-template-columns: repeat(3, 1fr); }
