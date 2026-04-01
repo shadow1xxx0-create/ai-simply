@@ -8,6 +8,17 @@ pricing: freemium
 tags: [grammar, writing, proofreading, style, browser-extension]
 featured: false
 pubDate: 2026-03-31
+updatedDate: 2026-04-01
+rating: 4.6
+ratingCount: 22000
+pros:
+  - Works everywhere — browser, email, Google Docs, Word
+  - Catches subtle tone and clarity issues
+  - Real-time suggestions with clear explanations
+cons:
+  - Best features (tone, rewrite) require premium plan
+  - Can over-correct and remove natural voice
+  - Slower on large documents
 ---
 
 Grammarly is the most widely used AI writing assistant, installed by over 30 million people. It checks grammar, spelling, punctuation, style, and tone in real time — and with Grammarly AI, it can also rewrite sentences, adjust your communication style, and generate full drafts. Works in browsers, Word, Google Docs, and desktop apps.

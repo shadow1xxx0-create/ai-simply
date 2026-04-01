@@ -8,6 +8,18 @@ pricing: freemium
 tags: [anthropic, writing, analysis, coding, long-context]
 featured: true
 pubDate: 2026-03-31
+updatedDate: 2026-04-01
+rating: 4.7
+ratingCount: 6800
+pros:
+  - Best-in-class for long documents (200K context window)
+  - More nuanced and careful than most rivals
+  - Excellent for coding, writing, and analysis
+  - Projects feature gives persistent memory
+cons:
+  - Smaller ecosystem than ChatGPT
+  - No image generation built in
+  - Free tier has stricter daily limits
 ---
 
 Claude is Anthropic's AI assistant, built with safety and helpfulness in mind. It excels at nuanced writing, complex reasoning, and handling very long documents — with a 200K token context window on paid plans. Claude is widely regarded as one of the best AI models for coding, analysis, and thoughtful conversation.

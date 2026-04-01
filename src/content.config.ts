@@ -40,6 +40,11 @@ const tools = defineCollection({
 			tags: z.array(z.string()).default([]),
 			featured: z.boolean().default(false),
 			pubDate: z.coerce.date(),
+			updatedDate: z.coerce.date().optional(),
+			rating: z.number().min(1).max(5).optional(),
+			ratingCount: z.number().optional(),
+			pros: z.array(z.string()).optional(),
+			cons: z.array(z.string()).optional(),
 		}),
 });
 

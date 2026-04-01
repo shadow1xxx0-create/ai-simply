@@ -8,6 +8,17 @@ pricing: paid
 tags: [notion, productivity, notes, writing, workspace]
 featured: false
 pubDate: 2026-03-31
+updatedDate: 2026-04-01
+rating: 4.3
+ratingCount: 6200
+pros:
+  - AI embedded directly in your Notion workspace
+  - Can summarise, translate, and rewrite any page
+  - Ask AI across entire workspace knowledge base
+cons:
+  - $8/member/month on top of Notion subscription
+  - Less capable than standalone AI tools
+  - Slow on large databases
 ---
 
 Notion AI adds a powerful AI layer to the already popular Notion workspace. You can ask it to write content, summarize pages, fix grammar, translate text, and chat with your entire knowledge base. It's one of the most seamlessly integrated AI tools available — the AI works right where your docs and notes already live.

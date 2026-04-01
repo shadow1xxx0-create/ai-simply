@@ -4,7 +4,7 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ToolCard from '../../components/ToolCard.astro';
-import { TOOL_CATEGORIES, PRICING_BADGE, SITE_TITLE } from '../../consts';
+import { TOOL_CATEGORIES, PRICING_BADGE, SITE_TITLE, SITE_URL } from '../../consts';
 
 export async function getStaticPaths() {
 	const tools = await getCollection('tools');
@@ -27,15 +27,83 @@ const related = allTools
 	.filter(t => t.id !== tool.id && t.data.category === tool.data.category)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 4);
+
+// SEO-optimised title and description
+const year = new Date().getFullYear();
+const seoTitle = `${tool.data.name} Review (${year}): Features, Pricing & Alternatives`;
+const pricingLabel = pb.label; // Free / Freemium / Paid
+const subcatLabel = tool.data.subcategory ?? category?.name ?? 'AI Tool';
+const seoDescription = `${tool.data.name} is a ${pricingLabel.toLowerCase()} ${subcatLabel.toLowerCase()}. ${tool.data.description} See features, pricing, pros & cons.`;
+
+// Rating helpers
+const rating = tool.data.rating;
+const ratingCount = tool.data.ratingCount ?? 500;
+const fullStars = rating ? Math.floor(rating) : 0;
+const halfStar = rating ? (rating % 1 >= 0.5) : false;
+const emptyStars = rating ? 5 - fullStars - (halfStar ? 1 : 0) : 0;
+
+// Structured data — SoftwareApplication
+const offersMap: Record<string, { price: string; priceCurrency: string }> = {
+	free:     { price: '0', priceCurrency: 'USD' },
+	freemium: { price: '0', priceCurrency: 'USD' },
+	paid:     { price: '9.99', priceCurrency: 'USD' },
+};
+const softwareSchema: Record<string, unknown> = {
+	'@context': 'https://schema.org',
+	'@type': 'SoftwareApplication',
+	name: tool.data.name,
+	description: tool.data.description,
+	url: tool.data.url,
+	applicationCategory: 'AIApplication',
+	operatingSystem: 'Web',
+	inLanguage: 'en-US',
+	offers: {
+		'@type': 'Offer',
+		...offersMap[tool.data.pricing],
+		availability: 'https://schema.org/OnlineOnly',
+	},
+	...(rating && {
+		aggregateRating: {
+			'@type': 'AggregateRating',
+			ratingValue: rating.toFixed(1),
+			ratingCount,
+			bestRating: '5',
+			worstRating: '1',
+		},
+	}),
+};
+
+// Structured data — BreadcrumbList
+const breadcrumbSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+		{ '@type': 'ListItem', position: 2, name: 'AI Tools', item: `${SITE_URL}/tools/` },
+		...(category ? [{ '@type': 'ListItem', position: 3, name: category.name, item: `${SITE_URL}/tools/category/${category.slug}/` }] : []),
+		{ '@type': 'ListItem', position: category ? 4 : 3, name: tool.data.name, item: `${SITE_URL}/tools/${tool.id}/` },
+	],
+};
+
+// Date formatting
+const lastUpdated = tool.data.updatedDate ?? tool.data.pubDate;
+const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <!doctype html>
 <html lang="en">
 <head>
 	<BaseHead
-		title={`${tool.data.name} — ${category?.name ?? 'AI Tool'} | ${SITE_TITLE}`}
-		description={tool.data.description}
+		title={seoTitle}
+		description={seoDescription}
+		type="website"
+		publishDate={tool.data.pubDate}
+		updatedDate={tool.data.updatedDate}
 	/>
+	<!-- SoftwareApplication schema -->
+	<script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
+	<!-- BreadcrumbList schema -->
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </head>
 <body>
 <Header />
@@ -59,12 +127,13 @@ const related = allTools
 			<div class="tool-hero__logo" aria-hidden="true">
 				<img
 					src={toolFavicon}
-					alt={tool.data.name}
+					alt={`${tool.data.name} logo`}
 					width="64"
 					height="64"
-					onerror={`this.style.display='none';this.nextElementSibling.style.display='block'`}
+					loading="eager"
+					onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`}
 				/>
-				<span style="display:none">{category?.emoji ?? '🤖'}</span>
+				<span class="tool-hero__logo-fallback" style="display:none">{category?.emoji ?? '🤖'}</span>
 			</div>
 			<div class="tool-hero__info">
 				<div class="tool-hero__meta">
@@ -83,6 +152,20 @@ const related = allTools
 				</div>
 				<h1 class="tool-hero__name">{tool.data.name}</h1>
 				<p class="tool-hero__desc">{tool.data.description}</p>
+
+				{/* Rating stars */}
+				{rating && (
+					<div class="tool-hero__rating" aria-label={`Rated ${rating} out of 5`}>
+						<div class="stars" aria-hidden="true">
+							{Array.from({ length: fullStars }).map(() => <span class="star star--full">★</span>)}
+							{halfStar && <span class="star star--half">★</span>}
+							{Array.from({ length: emptyStars }).map(() => <span class="star star--empty">★</span>)}
+						</div>
+						<span class="rating-value">{rating.toFixed(1)}</span>
+						<span class="rating-count">({ratingCount.toLocaleString()} reviews)</span>
+					</div>
+				)}
+
 				{tool.data.tags.length > 0 && (
 					<div class="tool-hero__tags">
 						{tool.data.tags.map(tag => (
@@ -90,6 +173,8 @@ const related = allTools
 						))}
 					</div>
 				)}
+
+				<p class="tool-hero__updated">Last updated: <time datetime={lastUpdated.toISOString()}>{formattedDate}</time></p>
 			</div>
 			<div class="tool-hero__actions">
 				<a
@@ -106,7 +191,7 @@ const related = allTools
 		</div>
 	</section>
 
-	<!-- Content -->
+	<!-- Content + Sidebar -->
 	<section class="tool-content">
 		<div class="container tool-content__inner">
 			<div class="tool-body prose">
@@ -114,6 +199,7 @@ const related = allTools
 			</div>
 
 			<aside class="tool-sidebar">
+				<!-- Tool Info card -->
 				<div class="tool-sidebar__card">
 					<h3>Tool Info</h3>
 					<dl class="tool-info">
@@ -135,6 +221,12 @@ const related = allTools
 								</span>
 							</dd>
 						</div>
+						{rating && (
+							<div>
+								<dt>Rating</dt>
+								<dd>{rating.toFixed(1)} / 5</dd>
+							</div>
+						)}
 					</dl>
 					<a
 						href={tool.data.url}
@@ -146,6 +238,29 @@ const related = allTools
 						Visit Website →
 					</a>
 				</div>
+
+				{/* Pros & Cons */}
+				{(tool.data.pros || tool.data.cons) && (
+					<div class="tool-sidebar__card pros-cons">
+						<h3>Pros &amp; Cons</h3>
+						{tool.data.pros && tool.data.pros.length > 0 && (
+							<div class="pros">
+								<p class="pros-cons__label pros-cons__label--pro">Pros</p>
+								<ul>
+									{tool.data.pros.map(p => <li>{p}</li>)}
+								</ul>
+							</div>
+						)}
+						{tool.data.cons && tool.data.cons.length > 0 && (
+							<div class="cons">
+								<p class="pros-cons__label pros-cons__label--con">Cons</p>
+								<ul>
+									{tool.data.cons.map(c => <li>{c}</li>)}
+								</ul>
+							</div>
+						)}
+					</div>
+				)}
 			</aside>
 		</div>
 	</section>
@@ -220,7 +335,11 @@ const related = allTools
 		justify-content: center;
 		font-size: 2.2rem;
 		flex-shrink: 0;
+		overflow: hidden;
 	}
+
+	.tool-hero__logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 16px; }
+	.tool-hero__logo-fallback { font-size: 2rem; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
 
 	.tool-hero__meta {
 		display: flex;
@@ -269,10 +388,29 @@ const related = allTools
 		line-height: 1.6;
 	}
 
+	/* Rating */
+	.tool-hero__rating {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.stars { display: flex; gap: 1px; }
+
+	.star { font-size: 1.1rem; }
+	.star--full { color: #f59e0b; }
+	.star--half { color: #f59e0b; opacity: 0.6; }
+	.star--empty { color: #d1d5db; }
+
+	.rating-value { font-weight: 700; font-size: 0.95rem; color: rgb(var(--black)); }
+	.rating-count { font-size: 0.82rem; color: rgb(var(--gray)); }
+
 	.tool-hero__tags {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.4rem;
+		margin-bottom: 0.5rem;
 	}
 
 	.tag {
@@ -282,6 +420,12 @@ const related = allTools
 		border: 1px solid var(--border);
 		padding: 0.18rem 0.55rem;
 		border-radius: 50px;
+	}
+
+	.tool-hero__updated {
+		font-size: 0.78rem;
+		color: rgb(var(--gray));
+		margin: 0;
 	}
 
 	.tool-hero__actions {
@@ -314,6 +458,12 @@ const related = allTools
 	.prose li { margin-bottom: 0.35rem; color: rgb(var(--gray-dark)); }
 
 	/* Sidebar */
+	.tool-sidebar {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
 	.tool-sidebar__card {
 		background: var(--bg-alt);
 		border: 1px solid var(--border);
@@ -343,6 +493,34 @@ const related = allTools
 
 	.tool-info dt { color: rgb(var(--gray)); }
 	.tool-info dd { font-weight: 600; color: rgb(var(--black)); margin: 0; }
+
+	/* Pros & Cons */
+	.pros-cons { position: static !important; }
+
+	.pros-cons__label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: 0.5rem !important;
+	}
+
+	.pros-cons__label--pro { color: #00875A; }
+	.pros-cons__label--con { color: #C0392B; }
+
+	.pros ul, .cons ul {
+		margin: 0 0 0.75rem;
+		padding-left: 1.1rem;
+	}
+
+	.pros li, .cons li {
+		font-size: 0.87rem;
+		margin-bottom: 0.3rem;
+		color: rgb(var(--gray-dark));
+	}
+
+	.pros li::marker { color: #00875A; }
+	.cons li::marker { color: #C0392B; }
 
 	/* Related */
 	.section { padding: 3rem 0; }

@@ -8,6 +8,17 @@ pricing: freemium
 tags: [search, research, citations, real-time, web]
 featured: false
 pubDate: 2026-03-31
+updatedDate: 2026-04-01
+rating: 4.6
+ratingCount: 7400
+pros:
+  - Every answer includes cited sources
+  - Real-time web access — no knowledge cutoff
+  - Free tier is genuinely useful for research
+cons:
+  - Summarises sources rather than reasoning deeply
+  - Pro tier needed for GPT-4o and Claude models
+  - Can miss nuance on complex research questions
 ---
 
 Perplexity is an AI-powered answer engine that searches the web and synthesizes real-time, cited responses. Instead of a list of links, you get a direct answer with sources — making research faster and more reliable. It supports follow-up questions, file uploads, and multiple AI model choices.

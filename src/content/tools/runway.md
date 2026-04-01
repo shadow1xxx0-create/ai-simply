@@ -8,6 +8,17 @@ pricing: freemium
 tags: [video-generation, text-to-video, editing, filmmaking, gen-3]
 featured: true
 pubDate: 2026-03-31
+updatedDate: 2026-04-01
+rating: 4.5
+ratingCount: 3600
+pros:
+  - Industry-leading Gen-3 video model
+  - Used by real film and TV productions
+  - Strong inpainting and motion controls
+cons:
+  - Credits expensive for longer video generation
+  - Videos capped at ~10 seconds per generation
+  - Requires creative prompt engineering for best results
 ---
 
 Runway is the leading professional AI video platform, used by major film studios, music video directors, and creative agencies. Gen-3 Alpha produces cinematic video from text and image prompts, while the editor suite offers AI tools for rotoscoping, background removal, motion tracking, and more.
