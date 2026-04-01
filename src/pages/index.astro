@@ -10,9 +10,17 @@ import { SITE_TITLE, SITE_DESCRIPTION, TOOL_CATEGORIES } from '../consts';
 const allTools = (await getCollection('tools'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-const featuredTools = allTools.filter(t => t.data.featured).slice(0, 2);
+const featuredTools = allTools.filter(t => t.data.featured).slice(0, 6);
 const recentTools = allTools.slice(0, 12);
 const totalTools = allTools.length;
+const freeCount = allTools.filter(t => t.data.pricing === 'free').length;
+const freemiumCount = allTools.filter(t => t.data.pricing === 'freemium').length;
+
+// Category counts for tiles
+const catCounts: Record<string, number> = {};
+for (const t of allTools) {
+	catCounts[t.data.category] = (catCounts[t.data.category] ?? 0) + 1;
+}
 
 const recentPosts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -34,6 +42,15 @@ const recentPosts = (await getCollection('blog'))
 			<p class="hero__tag">AI Tools Directory</p>
 			<h1>Find the Best AI Tools</h1>
 			<p class="hero__sub">Browse {totalTools}+ curated AI tools across 22 categories. Free, freemium, and paid.</p>
+
+			<div class="hero__stats">
+				<span><strong>{totalTools}+</strong> tools</span>
+				<span class="hero__stats-sep">·</span>
+				<span><strong>22</strong> categories</span>
+				<span class="hero__stats-sep">·</span>
+				<span><strong>{freeCount + freemiumCount}</strong> free or freemium</span>
+			</div>
+
 			<div class="hero__search">
 				<input
 					type="search"
@@ -49,31 +66,40 @@ const recentPosts = (await getCollection('blog'))
 		</div>
 	</section>
 
-	<!-- Today's Pick -->
+	<!-- Featured Tools -->
 	{featuredTools.length > 0 && (
 		<section class="section section--alt">
 			<div class="container">
 				<div class="section-header">
 					<h2 class="section-heading">
 						<span class="section-heading__dot"></span>
-						Today's Pick
+						Featured Tools
 					</h2>
 					<a href="/tools/" class="section-link">Browse all →</a>
 				</div>
 				<div class="featured-grid">
-					{featuredTools.map(tool => (
-						<a href={`/tools/${tool.id}/`} class="featured-card">
-							<div class="featured-card__logo">{TOOL_CATEGORIES.find(c => c.slug === tool.data.category)?.emoji ?? '🤖'}</div>
-							<div class="featured-card__body">
-								<div class="featured-card__top">
-									<h3 class="featured-card__name">{tool.data.name}</h3>
-									<span class="featured-card__cat">{TOOL_CATEGORIES.find(c => c.slug === tool.data.category)?.name}</span>
+					{featuredTools.map(tool => {
+						const cat = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
+						const domain = new URL(tool.data.url).hostname;
+						const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+						return (
+							<a href={`/tools/${tool.id}/`} class="featured-card">
+								<div class="featured-card__logo">
+									<img src={favicon} alt={tool.data.name} width="36" height="36" loading="lazy"
+										onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+									<span class="featured-card__emoji" style="display:none">{cat?.emoji ?? '🤖'}</span>
 								</div>
-								<p class="featured-card__desc">{tool.data.description}</p>
-							</div>
-							<span class="featured-card__cta">Explore →</span>
-						</a>
-					))}
+								<div class="featured-card__body">
+									<div class="featured-card__top">
+										<h3 class="featured-card__name">{tool.data.name}</h3>
+										<span class="featured-card__cat">{cat?.name}</span>
+									</div>
+									<p class="featured-card__desc">{tool.data.description}</p>
+								</div>
+								<span class="featured-card__cta">Explore →</span>
+							</a>
+						);
+					})}
 				</div>
 			</div>
 		</section>
@@ -91,6 +117,7 @@ const recentPosts = (await getCollection('blog'))
 					<a href={`/tools/category/${cat.slug}/`} class="cat-tile">
 						<span class="cat-tile__emoji" aria-hidden="true">{cat.emoji}</span>
 						<span class="cat-tile__name">{cat.name}</span>
+						{catCounts[cat.slug] && <span class="cat-tile__count">{catCounts[cat.slug]}</span>}
 					</a>
 				))}
 			</div>
@@ -227,6 +254,19 @@ const recentPosts = (await getCollection('blog'))
 		transition: border-color 0.2s;
 	}
 
+	/* Stats bar */
+	.hero__stats {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-size: 0.85rem;
+		color: rgb(var(--gray));
+		margin-bottom: 1.75rem;
+	}
+
+	.hero__stats strong { color: rgb(var(--black)); font-weight: 700; }
+	.hero__stats-sep { color: var(--border); }
+
 	.hero__search:focus-within { border-color: var(--primary); }
 
 	.hero__search input {
@@ -302,7 +342,7 @@ const recentPosts = (await getCollection('blog'))
 	.featured-grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1rem;
+		gap: 0.85rem;
 	}
 
 	.featured-card {
@@ -324,16 +364,20 @@ const recentPosts = (await getCollection('blog'))
 	}
 
 	.featured-card__logo {
-		width: 56px;
-		height: 56px;
+		width: 48px;
+		height: 48px;
 		background: var(--primary-light);
 		border-radius: 12px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 1.8rem;
+		font-size: 1.6rem;
 		flex-shrink: 0;
+		overflow: hidden;
 	}
+
+	.featured-card__logo img { width: 36px; height: 36px; object-fit: contain; }
+	.featured-card__emoji { display: flex; align-items: center; justify-content: center; }
 
 	.featured-card__body { flex: 1; min-width: 0; }
 
@@ -410,6 +454,7 @@ const recentPosts = (await getCollection('blog'))
 
 	.cat-tile__emoji { font-size: 1.5rem; line-height: 1; }
 	.cat-tile__name { font-size: 0.72rem; font-weight: 700; line-height: 1.3; }
+	.cat-tile__count { font-size: 0.65rem; color: rgb(var(--gray)); background: var(--bg-alt); padding: 0.1rem 0.4rem; border-radius: 50px; }
 
 	/* Tools Grid */
 	.tools-grid {
@@ -466,6 +511,10 @@ const recentPosts = (await getCollection('blog'))
 		.tools-grid { grid-template-columns: repeat(3, 1fr); }
 		.featured-grid { grid-template-columns: repeat(2, 1fr); }
 		.blog-grid { grid-template-columns: repeat(3, 1fr); }
+	}
+
+	@media (min-width: 768px) {
+		.featured-grid { grid-template-columns: repeat(3, 1fr); }
 	}
 
 	@media (min-width: 960px) {
