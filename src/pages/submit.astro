@@ -23,8 +23,8 @@ import { SITE_TITLE } from '../consts';
 		<div class="submit-card">
 			<p class="submit-intro">Fill out the form below and we'll review your submission within 48 hours. We list free, freemium, and paid tools across all 22 categories.</p>
 
-			<form class="submit-form" name="submit-tool" method="POST" data-netlify="true" action="/submit-success/">
-				<input type="hidden" name="form-name" value="submit-tool" />
+			<form class="submit-form" id="submit-form">
+				<div id="form-success" style="display:none;padding:1rem;background:#E0F5EE;border-radius:8px;color:#00875A;font-weight:600;margin-bottom:1rem">✓ Submitted! We'll review within 48 hours.</div>
 
 				<div class="field">
 					<label for="tool-name">Tool Name *</label>
@@ -85,8 +85,27 @@ import { SITE_TITLE } from '../consts';
 					<input type="email" id="submitter-email" name="submitter-email" required placeholder="you@example.com" />
 				</div>
 
-				<button type="submit" class="btn btn--primary">Submit Tool →</button>
+				<button type="submit" class="btn btn--primary" id="submit-btn">Submit Tool →</button>
 			</form>
+
+			<script>
+			document.getElementById('submit-form')?.addEventListener('submit', async (e) => {
+				e.preventDefault();
+				const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+				btn.textContent = 'Submitting...';
+				btn.disabled = true;
+				const data = new FormData(e.target as HTMLFormElement);
+				const res = await fetch('https://formspree.io/f/REPLACE_WITH_YOUR_ID', { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+				if (res.ok) {
+					document.getElementById('form-success')!.style.display = 'block';
+					(e.target as HTMLFormElement).reset();
+				} else {
+					btn.textContent = 'Error — try again';
+				}
+				btn.disabled = false;
+				btn.textContent = 'Submit Tool →';
+			});
+			</script>
 		</div>
 	</div>
 </main>
