@@ -23,27 +23,29 @@ import { SITE_TITLE } from '../consts';
 		<div class="submit-card">
 			<p class="submit-intro">Fill out the form below and we'll review your submission within 48 hours. We list free, freemium, and paid tools across all 22 categories.</p>
 
+			<div data-fs-success style="display:none;padding:1rem;background:#E0F5EE;border-radius:8px;color:#00875A;font-weight:600;margin-bottom:1rem">✓ Submitted! We'll review within 48 hours.</div>
+			<div data-fs-error style="display:none;padding:1rem;background:#FFE8E8;border-radius:8px;color:#C0392B;font-weight:600;margin-bottom:1rem"></div>
+
 			<form class="submit-form" id="submit-form">
-				<div id="form-success" style="display:none;padding:1rem;background:#E0F5EE;border-radius:8px;color:#00875A;font-weight:600;margin-bottom:1rem">✓ Submitted! We'll review within 48 hours.</div>
 
 				<div class="field">
 					<label for="tool-name">Tool Name *</label>
-					<input type="text" id="tool-name" name="tool-name" required placeholder="e.g. My AI Tool" />
+					<input type="text" id="tool-name" data-fs-field name="tool-name" required placeholder="e.g. My AI Tool" />
 				</div>
 
 				<div class="field">
 					<label for="tool-url">Website URL *</label>
-					<input type="url" id="tool-url" name="tool-url" required placeholder="https://mytool.ai" />
+					<input type="url" id="tool-url" data-fs-field name="tool-url" required placeholder="https://mytool.ai" />
 				</div>
 
 				<div class="field">
 					<label for="tool-description">Short Description *</label>
-					<input type="text" id="tool-description" name="tool-description" required maxlength="140" placeholder="What does it do? (max 140 characters)" />
+					<input type="text" id="tool-description" data-fs-field name="tool-description" required maxlength="140" placeholder="What does it do? (max 140 characters)" />
 				</div>
 
 				<div class="field">
 					<label for="tool-category">Category *</label>
-					<select id="tool-category" name="tool-category" required>
+					<select id="tool-category" data-fs-field name="tool-category" required>
 						<option value="">Select a category</option>
 						<option>AI Productivity</option>
 						<option>AI Writing</option>
@@ -72,7 +74,7 @@ import { SITE_TITLE } from '../consts';
 
 				<div class="field">
 					<label for="tool-pricing">Pricing Model *</label>
-					<select id="tool-pricing" name="tool-pricing" required>
+					<select id="tool-pricing" data-fs-field name="tool-pricing" required>
 						<option value="">Select pricing</option>
 						<option>Free</option>
 						<option>Freemium</option>
@@ -82,30 +84,17 @@ import { SITE_TITLE } from '../consts';
 
 				<div class="field">
 					<label for="submitter-email">Your Email *</label>
-					<input type="email" id="submitter-email" name="submitter-email" required placeholder="you@example.com" />
+					<input type="email" id="submitter-email" data-fs-field name="submitter-email" required placeholder="you@example.com" />
 				</div>
 
-				<button type="submit" class="btn btn--primary" id="submit-btn">Submit Tool →</button>
+				<button type="submit" class="btn btn--primary" data-fs-submit-btn>Submit Tool →</button>
 			</form>
 
 			<script>
-			document.getElementById('submit-form')?.addEventListener('submit', async (e) => {
-				e.preventDefault();
-				const btn = document.getElementById('submit-btn') as HTMLButtonElement;
-				btn.textContent = 'Submitting...';
-				btn.disabled = true;
-				const data = new FormData(e.target as HTMLFormElement);
-				const res = await fetch('https://formspree.io/f/REPLACE_WITH_YOUR_ID', { method: 'POST', body: data, headers: { Accept: 'application/json' } });
-				if (res.ok) {
-					document.getElementById('form-success')!.style.display = 'block';
-					(e.target as HTMLFormElement).reset();
-				} else {
-					btn.textContent = 'Error — try again';
-				}
-				btn.disabled = false;
-				btn.textContent = 'Submit Tool →';
-			});
+			window.formspree = window.formspree || function() { (formspree.q = formspree.q || []).push(arguments); };
+			formspree('initForm', { formElement: '#submit-form', formId: 'xkopzklp' });
 			</script>
+			<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 		</div>
 	</div>
 </main>
