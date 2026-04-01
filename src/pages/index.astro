@@ -22,6 +22,30 @@ for (const t of allTools) {
 	catCounts[t.data.category] = (catCounts[t.data.category] ?? 0) + 1;
 }
 
+// AI News — RSS fetch
+interface NewsItem { title: string; link: string; date: string; source: string; }
+const RSS_FEEDS = [
+	{ url: 'https://venturebeat.com/category/ai/feed/', source: 'VentureBeat' },
+	{ url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml', source: 'The Verge' },
+	{ url: 'https://techcrunch.com/category/artificial-intelligence/feed/', source: 'TechCrunch' },
+];
+let newsItems: NewsItem[] = [];
+try {
+	const fetched = await Promise.allSettled(RSS_FEEDS.map(f => fetch(f.url, { signal: AbortSignal.timeout(4000) }).then(r => r.text()).then(xml => ({ xml, source: f.source }))));
+	for (const r of fetched) {
+		if (r.status !== 'fulfilled') continue;
+		const { xml, source } = r.value;
+		const items = [...xml.matchAll(/<item[\s\S]*?<\/item>/g)];
+		for (const m of items.slice(0, 4)) {
+			const title = m[0].match(/<title><!\[CDATA\[(.*?)\]\]><\/title>|<title>(.*?)<\/title>/)?.[1] ?? m[0].match(/<title>(.*?)<\/title>/)?.[1] ?? '';
+			const link = m[0].match(/<link>(.*?)<\/link>|<link href="(.*?)"/)?.[1] ?? '';
+			const date = m[0].match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? '';
+			if (title && link) newsItems.push({ title: title.trim(), link: link.trim(), date, source });
+		}
+	}
+	newsItems = newsItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 8);
+} catch {}
+
 const recentPosts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3);
@@ -148,6 +172,26 @@ const recentPosts = (await getCollection('blog'))
 				</div>
 				<div class="section-cta">
 					<a href="/tools/" class="btn btn--outline">Browse All AI Tools</a>
+				</div>
+			</div>
+		</section>
+	)}
+
+	<!-- AI News -->
+	{newsItems.length > 0 && (
+		<section class="section">
+			<div class="container">
+				<div class="section-header">
+					<h2 class="section-heading">Daily AI News</h2>
+					<span class="news-live">● Live</span>
+				</div>
+				<div class="news-grid">
+					{newsItems.map(item => (
+						<a href={item.link} target="_blank" rel="noopener noreferrer" class="news-card">
+							<span class="news-source">{item.source}</span>
+							<p class="news-title">{item.title}</p>
+						</a>
+					))}
 				</div>
 			</div>
 		</section>
@@ -506,7 +550,16 @@ const recentPosts = (await getCollection('blog'))
 
 	.blog-card__meta { font-size: 0.75rem; color: rgb(var(--gray)); }
 
+	/* News */
+	.news-live { font-size: 0.75rem; font-weight: 700; color: #e03131; }
+	.news-grid { display: grid; grid-template-columns: 1fr; gap: 0.6rem; }
+	.news-card { display: flex; flex-direction: column; gap: 0.3rem; padding: 0.85rem 1rem; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); transition: border-color 0.15s; }
+	.news-card:hover { border-color: var(--primary); }
+	.news-source { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary); }
+	.news-title { font-size: 0.88rem; font-weight: 600; color: rgb(var(--black)); margin: 0; line-height: 1.4; }
+
 	@media (min-width: 640px) {
+		.news-grid { grid-template-columns: repeat(2, 1fr); }
 		.categories-grid { grid-template-columns: repeat(4, 1fr); }
 		.tools-grid { grid-template-columns: repeat(3, 1fr); }
 		.featured-grid { grid-template-columns: repeat(2, 1fr); }
