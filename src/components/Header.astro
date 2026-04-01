@@ -1,6 +1,5 @@
 ---
-import { SITE_TITLE } from '../consts';
-
+import { SITE_TITLE, TOOL_CATEGORIES } from '../consts';
 const pathname = Astro.url.pathname;
 ---
 
@@ -19,9 +18,31 @@ const pathname = Astro.url.pathname;
 
 		<ul class="nav-links">
 			<li><a href="/" class:list={[{ active: pathname === '/' }]}>Home</a></li>
-			<li><a href="/tools/" class:list={[{ active: pathname.startsWith('/tools') }]}>AI Tools</a></li>
+
+			<!-- AI Tools with dropdown -->
+			<li class="nav-dropdown">
+				<a href="/tools/" class:list={[{ active: pathname.startsWith('/tools') }]}>
+					AI Tools
+					<svg class="dropdown-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+				</a>
+				<div class="dropdown-menu">
+					<div class="dropdown-grid">
+						{TOOL_CATEGORIES.map(cat => (
+							<a href={`/tools/category/${cat.slug}/`} class="dropdown-item">
+								<span class="dropdown-item__emoji">{cat.emoji}</span>
+								<span>{cat.name}</span>
+							</a>
+						))}
+					</div>
+					<div class="dropdown-footer">
+						<a href="/tools/">Browse all 200+ tools →</a>
+					</div>
+				</div>
+			</li>
+
 			<li><a href="/reviews/" class:list={[{ active: pathname.startsWith('/reviews') }]}>Reviews</a></li>
 			<li><a href="/tutorials/" class:list={[{ active: pathname.startsWith('/tutorials') }]}>Tutorials</a></li>
+			<li><a href="/blog/" class:list={[{ active: pathname.startsWith('/blog') }]}>Articles</a></li>
 			<li><a href="/pricing/" class:list={[{ active: pathname === '/pricing/' }]}>Pricing</a></li>
 			<li><a href="/submit/" class="btn btn--primary btn--sm">Submit a Tool</a></li>
 		</ul>
@@ -36,31 +57,15 @@ const pathname = Astro.url.pathname;
 			toggle.setAttribute('aria-expanded', 'false');
 			nav.classList.remove('nav-links--open');
 		}
-
 		toggle.addEventListener('click', () => {
 			const expanded = toggle.getAttribute('aria-expanded') === 'true';
-			if (expanded) {
-				closeNav();
-			} else {
-				toggle.setAttribute('aria-expanded', 'true');
-				nav.classList.add('nav-links--open');
-				nav.querySelectorAll('a')[0]?.focus();
-			}
+			expanded ? closeNav() : (toggle.setAttribute('aria-expanded', 'true'), nav.classList.add('nav-links--open'));
 		});
-
 		document.addEventListener('click', (e) => {
-			if (!nav.contains(e.target) && !toggle.contains(e.target)) {
-				closeNav();
-			}
+			if (!nav.contains(e.target) && !toggle.contains(e.target)) closeNav();
 		});
-
-		document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') closeNav();
-		});
-
-		nav.querySelectorAll('a').forEach((link) => {
-			link.addEventListener('click', closeNav);
-		});
+		document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+		nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNav));
 	}
 </script>
 
@@ -70,7 +75,7 @@ const pathname = Astro.url.pathname;
 		border-bottom: 1px solid var(--border);
 		position: sticky;
 		top: 0;
-		z-index: 100;
+		z-index: 200;
 	}
 
 	.site-nav {
@@ -88,9 +93,7 @@ const pathname = Astro.url.pathname;
 		font-weight: 700;
 		color: rgb(var(--black));
 	}
-
 	.site-logo:hover { color: var(--primary); }
-
 	.site-logo__icon {
 		display: flex;
 		align-items: center;
@@ -113,22 +116,9 @@ const pathname = Astro.url.pathname;
 		padding: 8px;
 		cursor: pointer;
 	}
+	.nav-toggle__bar { display: block; width: 20px; height: 2px; background: rgb(var(--gray-dark)); border-radius: 2px; }
 
-	.nav-toggle__bar {
-		display: block;
-		width: 20px;
-		height: 2px;
-		background: rgb(var(--gray-dark));
-		border-radius: 2px;
-		transition: 0.2s;
-	}
-
-	.nav-links {
-		display: none;
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
+	.nav-links { display: none; list-style: none; padding: 0; margin: 0; }
 
 	.nav-links--open {
 		display: flex;
@@ -144,39 +134,84 @@ const pathname = Astro.url.pathname;
 	}
 
 	.nav-links a {
-		display: block;
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
 		padding: 0.6rem 0.75rem;
 		color: rgb(var(--gray-dark));
 		font-weight: 500;
 		border-radius: var(--radius);
 	}
+	.nav-links a:hover, .nav-links a.active { color: var(--primary); background: var(--primary-light); }
 
-	.nav-links a:hover,
-	.nav-links a.active {
+	/* Dropdown */
+	.nav-dropdown { position: relative; }
+
+	.dropdown-caret { transition: transform 0.2s; flex-shrink: 0; }
+	.nav-dropdown:hover .dropdown-caret { transform: rotate(180deg); }
+
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		top: calc(100% + 8px);
+		left: 50%;
+		transform: translateX(-50%);
+		width: 580px;
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+		z-index: 300;
+		overflow: hidden;
+	}
+
+	.nav-dropdown:hover .dropdown-menu { display: block; }
+
+	.dropdown-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 2px;
+		padding: 0.75rem;
+	}
+
+	.dropdown-item {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.5rem 0.65rem;
+		border-radius: 8px;
+		font-size: 0.82rem;
+		font-weight: 500;
+		color: rgb(var(--gray-dark));
+		background: none !important;
+	}
+	.dropdown-item:hover { background: var(--primary-light) !important; color: var(--primary); }
+	.dropdown-item__emoji { font-size: 1rem; flex-shrink: 0; }
+
+	.dropdown-footer {
+		border-top: 1px solid var(--border);
+		padding: 0.65rem 1.25rem;
+		background: var(--bg-alt);
+	}
+	.dropdown-footer a {
+		font-size: 0.82rem;
+		font-weight: 700;
 		color: var(--primary);
-		background: var(--primary-light);
+		background: none !important;
+		padding: 0;
 	}
+	.dropdown-footer a:hover { background: none !important; color: var(--primary-dark); }
 
-	.btn--sm {
-		padding: 0.5rem 1rem;
-		font-size: 0.85rem;
-	}
+	.btn--sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
 
 	@media (min-width: 768px) {
 		.nav-toggle { display: none; }
+		.nav-links { display: flex; align-items: center; gap: 0.25rem; }
+		.nav-links--open { position: static; flex-direction: row; border: none; padding: 0; box-shadow: none; }
+	}
 
-		.nav-links {
-			display: flex;
-			align-items: center;
-			gap: 0.25rem;
-		}
-
-		.nav-links--open {
-			position: static;
-			flex-direction: row;
-			border: none;
-			padding: 0;
-			box-shadow: none;
-		}
+	@media (max-width: 767px) {
+		.dropdown-menu { display: none !important; }
+		.dropdown-caret { display: none; }
 	}
 </style>
