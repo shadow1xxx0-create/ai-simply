@@ -4,60 +4,144 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Newsletter from '../components/Newsletter.astro';
 import { SITE_TITLE } from '../consts';
-import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
 <!doctype html>
 <html lang="en">
 <head>
 	<BaseHead
-		title="About AI Briefs"
-		description="AI Briefs explains AI news and breakthroughs in plain English. No jargon. No hype. Just what matters, every week."
+		title={`About ${SITE_TITLE} — AI Tools Directory`}
+		description="AI Briefs is the most comprehensive AI tools directory — 200+ curated tools, honest reviews, and plain-English explainers."
 	/>
 </head>
 <body>
 	<Header />
 	<main>
-		<section class="page-header">
+
+		<!-- Hero -->
+		<section class="about-hero">
 			<div class="container">
-				<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]} />
-				<h1>About {SITE_TITLE}</h1>
+				<p class="about-tag">About Us</p>
+				<h1>Your guide to the AI universe</h1>
+				<p class="about-sub">We help people discover, understand, and use AI tools effectively. No jargon, no hype — just what matters.</p>
 			</div>
 		</section>
 
-		<article class="container about-content">
-			<h2>Our Mission</h2>
-			<p>
-				{SITE_TITLE} was built with one goal: to explain AI clearly, for everyone.
-				The AI space moves fast and the coverage is often either too technical or too hype-driven.
-				We cut through both and give you what actually matters.
-			</p>
-			<p>
-				Whether you're a professional trying to stay relevant, a curious person who keeps
-				hearing about AI, or someone who just wants to know what ChatGPT really is — this
-				is the place for you.
-			</p>
+		<!-- Stats -->
+		<section class="stats-bar">
+			<div class="container stats-grid">
+				<div class="stat-item">
+					<span class="stat-num">200+</span>
+					<span class="stat-label">AI Tools Curated</span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-num">22</span>
+					<span class="stat-label">Categories</span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-num">18</span>
+					<span class="stat-label">In-depth Articles</span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-num">100%</span>
+					<span class="stat-label">Free to Use</span>
+				</div>
+			</div>
+		</section>
 
-			<h2>What We Cover</h2>
-			<ul>
-				<li><strong>AI Explained</strong> &mdash; What is machine learning, what is an AI agent, how does a language model work — without the jargon.</li>
-				<li><strong>Future of Work</strong> &mdash; Will AI affect your job? Which skills matter? Honest, evidence-based analysis.</li>
-				<li><strong>Tool Comparisons</strong> &mdash; ChatGPT vs Claude, the best AI tools for specific tasks — tested practically.</li>
-				<li><strong>How-To Guides</strong> &mdash; How to actually use AI tools to do useful things at work and in everyday life.</li>
-				<li><strong>AI News</strong> &mdash; The most important AI developments, with context.</li>
-			</ul>
+		<!-- What We Do -->
+		<section class="section container">
+			<h2 class="section-h">What We Do</h2>
+			<div class="what-grid">
+				<div class="what-card">
+					<span class="what-icon">🗂️</span>
+					<h3>Curated AI Directory</h3>
+					<p>200+ hand-picked AI tools organized across 22 categories — from coding and writing to music and health. Every tool vetted before it's listed.</p>
+				</div>
+				<div class="what-card">
+					<span class="what-icon">📝</span>
+					<h3>Plain-English Explainers</h3>
+					<p>We cover the ideas, tools, and implications that matter — without the academic jargon or VC hype. AI explained so anyone can understand it.</p>
+				</div>
+				<div class="what-card">
+					<span class="what-icon">⭐</span>
+					<h3>Honest Reviews</h3>
+					<p>Real ratings and pros/cons for the tools we cover. We acknowledge downsides. No paid placements, no affiliate-driven rankings.</p>
+				</div>
+				<div class="what-card">
+					<span class="what-icon">📬</span>
+					<h3>Weekly Newsletter</h3>
+					<p>The most important AI developments of the week — with context on what they actually mean for your work and daily life.</p>
+				</div>
+			</div>
+		</section>
 
-			<h2>The Newsletter</h2>
-			<p>
-				We send a free newsletter covering what's actually happening in AI — and more importantly,
-				what it means for your work, your career, and your daily life. No noise, no hype.
-				Just the stuff worth knowing. Free, no spam, unsubscribe anytime.
-			</p>
-			<p>
-				Whether you want to use AI to get more done, understand what your company is adopting,
-				or just not feel lost when everyone around you is talking about it — this is for you.
-			</p>
-		</article>
+		<!-- Editorial Standards -->
+		<section class="standards-section">
+			<div class="container">
+				<h2 class="section-h">Our Editorial Standards</h2>
+				<div class="standards-list">
+					<div class="standard">
+						<span class="standard-dot"></span>
+						<div>
+							<strong>Independence</strong>
+							<p>No paid rankings. Tools are listed on merit, not payment. We disclose any affiliate relationships clearly.</p>
+						</div>
+					</div>
+					<div class="standard">
+						<span class="standard-dot"></span>
+						<div>
+							<strong>Accuracy</strong>
+							<p>Every article is fact-checked. Pricing and features are verified at time of publication and updated when things change.</p>
+						</div>
+					</div>
+					<div class="standard">
+						<span class="standard-dot"></span>
+						<div>
+							<strong>Practical Focus</strong>
+							<p>We evaluate tools based on real use cases — not benchmarks or lab conditions. Does it actually help you get things done?</p>
+						</div>
+					</div>
+					<div class="standard">
+						<span class="standard-dot"></span>
+						<div>
+							<strong>Accessibility</strong>
+							<p>Plain language, no assumed expertise. If you need a PhD to understand our explanation, we've failed.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Who We're For -->
+		<section class="section container">
+			<h2 class="section-h">Who This Is For</h2>
+			<div class="audience-grid">
+				{[
+					{ icon: '💼', title: 'Professionals', desc: 'Stay relevant as AI reshapes your industry. Find tools that actually save time.' },
+					{ icon: '🎓', title: 'Students', desc: 'Understand AI concepts and discover tools to help with research, writing, and learning.' },
+					{ icon: '💻', title: 'Developers', desc: 'Find the best AI APIs, coding tools, and frameworks for your next project.' },
+					{ icon: '🏢', title: 'Businesses', desc: 'Identify which AI tools can genuinely improve your operations and workflows.' },
+					{ icon: '🎨', title: 'Creators', desc: 'Discover AI tools for writing, design, video, music, and content creation.' },
+					{ icon: '🤔', title: 'Curious People', desc: "You keep hearing about AI and want to understand what's actually going on." },
+				].map(a => (
+					<div class="audience-card">
+						<span class="audience-icon">{a.icon}</span>
+						<h3>{a.title}</h3>
+						<p>{a.desc}</p>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- Contact -->
+		<section class="contact-section">
+			<div class="container contact-inner">
+				<h2>Get in Touch</h2>
+				<p>Have a tool to suggest, a correction, or want to collaborate? We respond within 48 hours.</p>
+				<a href="/submit/" class="btn btn--primary">Submit a Tool →</a>
+			</div>
+		</section>
 
 		<Newsletter />
 	</main>
@@ -66,23 +150,69 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 </html>
 
 <style>
-	.about-content {
-		max-width: 720px;
-		padding: 2.5rem 1.25rem 3rem;
+	.about-hero {
+		background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%);
+		border-bottom: 1px solid var(--border);
+		padding: 4rem 0 3rem;
+		text-align: center;
 	}
-
-	.about-content h2 {
-		margin-top: 2rem;
-		font-size: 1.4rem;
+	.about-tag {
+		display: inline-block;
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--primary);
+		background: var(--primary-light);
+		border: 1px solid rgba(0,135,90,0.2);
+		padding: 0.28rem 0.75rem;
+		border-radius: 50px;
+		margin-bottom: 1rem;
 	}
+	.about-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 0.75rem; }
+	.about-sub { font-size: 1.05rem; color: rgb(var(--gray)); max-width: 520px; margin: 0 auto; }
 
-	.about-content ul {
-		padding-left: 1.25rem;
-		margin-bottom: 1.5rem;
-	}
+	/* Stats */
+	.stats-bar { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 2rem 0; }
+	.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; text-align: center; }
+	.stat-num { display: block; font-size: 2.2rem; font-weight: 800; color: var(--primary); line-height: 1; }
+	.stat-label { font-size: 0.82rem; color: rgb(var(--gray)); }
 
-	.about-content li {
-		margin-bottom: 0.6rem;
-		line-height: 1.6;
+	/* Sections */
+	.section { padding: 3.5rem 0; }
+	.section-h { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.75rem; }
+
+	/* What We Do */
+	.what-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+	.what-card { padding: 1.5rem; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); }
+	.what-icon { font-size: 1.8rem; display: block; margin-bottom: 0.75rem; }
+	.what-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+	.what-card p { font-size: 0.88rem; color: rgb(var(--gray)); margin: 0; line-height: 1.6; }
+
+	/* Standards */
+	.standards-section { background: var(--bg-alt); padding: 3.5rem 0; }
+	.standards-list { display: flex; flex-direction: column; gap: 1.5rem; max-width: 680px; }
+	.standard { display: flex; gap: 1rem; align-items: flex-start; }
+	.standard-dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+	.standard strong { display: block; font-size: 1rem; margin-bottom: 0.25rem; }
+	.standard p { font-size: 0.88rem; color: rgb(var(--gray)); margin: 0; line-height: 1.6; }
+
+	/* Audience */
+	.audience-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+	.audience-card { padding: 1.25rem; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); }
+	.audience-icon { font-size: 1.5rem; display: block; margin-bottom: 0.5rem; }
+	.audience-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+	.audience-card p { font-size: 0.83rem; color: rgb(var(--gray)); margin: 0; line-height: 1.55; }
+
+	/* Contact */
+	.contact-section { padding: 3rem 0; }
+	.contact-inner { text-align: center; max-width: 520px; margin: 0 auto; }
+	.contact-inner h2 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+	.contact-inner p { color: rgb(var(--gray)); margin-bottom: 1.5rem; }
+
+	@media (min-width: 640px) {
+		.stats-grid { grid-template-columns: repeat(4, 1fr); }
+		.what-grid { grid-template-columns: repeat(2, 1fr); }
+		.audience-grid { grid-template-columns: repeat(3, 1fr); }
 	}
 </style>
