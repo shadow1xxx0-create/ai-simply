@@ -53,7 +53,7 @@ const explained = posts.filter(p => p.data.category !== 'guides');
 									<span class="tut-badge">Guide</span>
 									<h3>{post.data.title}</h3>
 									<p>{post.data.description}</p>
-									<span class="tut-meta"><FormattedDate date={post.data.pubDate} /></span>
+									<span class="tut-meta"><FormattedDate date={post.data.pubDate} />{post.data.readingTime && <> · {post.data.readingTime}</>}</span>
 								</div>
 							</a>
 						))}
@@ -76,7 +76,7 @@ const explained = posts.filter(p => p.data.category !== 'guides');
 								<span class="tut-badge tut-badge--explain">Explainer</span>
 								<h3>{post.data.title}</h3>
 								<p>{post.data.description}</p>
-								<span class="tut-meta"><FormattedDate date={post.data.pubDate} /></span>
+								<span class="tut-meta"><FormattedDate date={post.data.pubDate} />{post.data.readingTime && <> · {post.data.readingTime}</>}</span>
 							</div>
 						</a>
 					))}

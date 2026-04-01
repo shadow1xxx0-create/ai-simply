@@ -48,7 +48,7 @@ try {
 
 const recentPosts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
+	.slice(0, 6);
 ---
 
 <!doctype html>
@@ -190,6 +190,30 @@ const recentPosts = (await getCollection('blog'))
 						<a href={item.link} target="_blank" rel="noopener noreferrer" class="news-card">
 							<span class="news-source">{item.source}</span>
 							<p class="news-title">{item.title}</p>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+	)}
+
+	<!-- Popular Articles -->
+	{recentPosts.length > 0 && (
+		<section class="section section--alt">
+			<div class="container">
+				<div class="section-header">
+					<h2 class="section-heading">Popular Articles</h2>
+					<a href="/blog/" class="section-link">All articles →</a>
+				</div>
+				<div class="popular-list">
+					{recentPosts.map((post, i) => (
+						<a href={`/blog/${post.id}/`} class="popular-item">
+							<span class="popular-num">{String(i + 1).padStart(2, '0')}</span>
+							<div class="popular-body">
+								<span class="popular-cat">{post.data.category.replace(/-/g, ' ')}</span>
+								<h3 class="popular-title">{post.data.title}</h3>
+								<span class="popular-meta"><FormattedDate date={post.data.pubDate} />{post.data.readingTime && <> · {post.data.readingTime}</>}</span>
+							</div>
 						</a>
 					))}
 				</div>
@@ -557,6 +581,17 @@ const recentPosts = (await getCollection('blog'))
 	.news-card:hover { border-color: var(--primary); }
 	.news-source { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary); }
 	.news-title { font-size: 0.88rem; font-weight: 600; color: rgb(var(--black)); margin: 0; line-height: 1.4; }
+
+	/* Popular Articles */
+	.popular-list { display: flex; flex-direction: column; gap: 0; }
+	.popular-item { display: flex; align-items: flex-start; gap: 1.25rem; padding: 1rem 0; border-bottom: 1px solid var(--border); color: inherit; transition: background 0.15s; }
+	.popular-item:last-child { border-bottom: none; }
+	.popular-item:hover .popular-title { color: var(--primary); }
+	.popular-num { font-size: 1.8rem; font-weight: 800; color: var(--border); min-width: 2.5rem; line-height: 1; flex-shrink: 0; }
+	.popular-body { display: flex; flex-direction: column; gap: 0.2rem; }
+	.popular-cat { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--primary); }
+	.popular-title { font-size: 0.95rem; font-weight: 700; margin: 0; line-height: 1.4; transition: color 0.15s; }
+	.popular-meta { font-size: 0.75rem; color: rgb(var(--gray)); }
 
 	@media (min-width: 640px) {
 		.news-grid { grid-template-columns: repeat(2, 1fr); }

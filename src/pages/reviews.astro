@@ -7,31 +7,13 @@ import { TOOL_CATEGORIES } from '../consts';
 
 const tools = await getCollection('tools');
 
-const featured = tools.filter(t => t.data.featured);
-const topTools = tools
-	.sort(() => 0.5 - Math.random())
-	.slice(0, 18);
+// Prioritise tools with real ratings, then fill with featured, then rest
+const rated = tools.filter(t => t.data.rating).sort((a, b) => (b.data.rating ?? 0) - (a.data.rating ?? 0));
+const unrated = tools.filter(t => !t.data.rating && t.data.featured);
+const topTools = [...rated, ...unrated].slice(0, 18);
 
-function getCategoryEmoji(slug: string) {
-	return TOOL_CATEGORIES.find(c => c.slug === slug)?.emoji ?? '🤖';
-}
-
-const MOCK_RATINGS: Record<string, { score: number; count: number }> = {
-	'chatgpt': { score: 4.8, count: 12400 },
-	'claude': { score: 4.7, count: 8200 },
-	'gemini': { score: 4.5, count: 6100 },
-	'midjourney': { score: 4.9, count: 9800 },
-	'github-copilot': { score: 4.7, count: 7300 },
-	'notion-ai': { score: 4.6, count: 5400 },
-	'runway': { score: 4.6, count: 3200 },
-	'elevenlabs': { score: 4.8, count: 4100 },
-	'grammarly': { score: 4.5, count: 11200 },
-	'cursor': { score: 4.8, count: 5900 },
-};
-
-function getRating(slug: string) {
-	return MOCK_RATINGS[slug] ?? { score: +(4.0 + Math.random() * 0.8).toFixed(1), count: Math.floor(500 + Math.random() * 3000) };
-}
+const PRICING_LABELS: Record<string, string> = { free: 'Free', freemium: 'Freemium', paid: 'Paid' };
+const PRICING_COLORS: Record<string, string> = { free: '#16a34a', freemium: '#0284c7', paid: '#7c3aed' };
 
 function renderStars(score: number) {
 	const full = Math.floor(score);
@@ -39,12 +21,6 @@ function renderStars(score: number) {
 	const empty = 5 - full - half;
 	return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
 }
-
-const pricingColors: Record<string, string> = {
-	free: '#16a34a',
-	freemium: '#0284c7',
-	paid: '#7c3aed',
-};
 ---
 
 <!doctype html>
@@ -73,24 +49,31 @@ const pricingColors: Record<string, string> = {
 				<h2 class="section-title">Top Rated Tools</h2>
 				<div class="reviews-grid">
 					{topTools.map(tool => {
-						const rating = getRating(tool.id);
-						const emoji = getCategoryEmoji(tool.data.category);
+						const score = tool.data.rating ?? 4.2;
+						const count = tool.data.ratingCount ?? 500;
+						const domain = new URL(tool.data.url).hostname;
+						const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+						const cat = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
 						return (
 							<a href={`/tools/${tool.id}/`} class="review-card">
 								<div class="review-card__head">
-									<span class="tool-emoji">{emoji}</span>
+									<div class="tool-logo">
+										<img src={favicon} alt={tool.data.name} width="36" height="36" loading="lazy"
+											onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+										<span class="tool-logo-fallback" style="display:none">{cat?.emoji ?? '🤖'}</span>
+									</div>
 									<div class="tool-info">
 										<h3>{tool.data.name}</h3>
-										<span class="pricing-badge" style={`color:${pricingColors[tool.data.pricing]}`}>
-											{tool.data.pricing.charAt(0).toUpperCase() + tool.data.pricing.slice(1)}
+										<span class="pricing-badge" style={`color:${PRICING_COLORS[tool.data.pricing]}`}>
+											{PRICING_LABELS[tool.data.pricing]}
 										</span>
 									</div>
 								</div>
 								<p class="review-desc">{tool.data.description}</p>
 								<div class="review-rating">
-									<span class="stars">{renderStars(rating.score)}</span>
-									<span class="score">{rating.score}</span>
-									<span class="count">({rating.count.toLocaleString()} reviews)</span>
+									<span class="stars">{renderStars(score)}</span>
+									<span class="score">{score.toFixed(1)}</span>
+									<span class="count">({count.toLocaleString()} reviews)</span>
 								</div>
 								<span class="review-cta">Read Review →</span>
 							</a>
@@ -196,17 +179,19 @@ const pricingColors: Record<string, string> = {
 	gap: 0.75rem;
 }
 
-.tool-emoji {
-	font-size: 2rem;
+.tool-logo {
 	width: 48px;
 	height: 48px;
+	background: var(--primary-light);
+	border-radius: var(--radius);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: var(--primary-light);
-	border-radius: var(--radius);
 	flex-shrink: 0;
+	overflow: hidden;
 }
+.tool-logo img { width: 36px; height: 36px; object-fit: contain; }
+.tool-logo-fallback { font-size: 1.6rem; display: flex; align-items: center; justify-content: center; }
 
 .tool-info h3 {
 	font-size: 1rem;
