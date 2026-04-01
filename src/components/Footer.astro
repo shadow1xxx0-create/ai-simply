@@ -78,10 +78,27 @@ const freeToolLinks = [
 
 		<div class="footer-bottom">
 			<p>&copy; {year} {SITE_TITLE}. All rights reserved.</p>
-			<div class="footer-bottom-links">
-				<a href="/privacy/">Privacy</a>
-				<a href="/privacy/#terms">Terms</a>
-				<a href="/sitemap-index.xml">Sitemap</a>
+			<div class="footer-bottom-right">
+				<div class="footer-bottom-links">
+					<a href="/privacy/">Privacy</a>
+					<a href="/privacy/#terms">Terms</a>
+					<a href="/sitemap-index.xml">Sitemap</a>
+				</div>
+				<div class="lang-selector">
+					<span class="lang-icon">🌐</span>
+					<select id="lang-select" aria-label="Select language">
+						<option value="en" selected>English</option>
+						<option value="es">Español</option>
+						<option value="fr">Français</option>
+						<option value="de">Deutsch</option>
+						<option value="pt">Português</option>
+						<option value="zh">中文</option>
+						<option value="ja">日本語</option>
+						<option value="ko">한국어</option>
+						<option value="ar">العربية</option>
+						<option value="hi">हिन्दी</option>
+					</select>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -207,6 +224,23 @@ btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth'
 
 	.footer-bottom-links a { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
 	.footer-bottom-links a:hover { color: #fff; }
+
+	.footer-bottom-right { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+
+	.lang-selector { display: flex; align-items: center; gap: 0.4rem; }
+	.lang-icon { font-size: 0.85rem; }
+	.lang-selector select {
+		background: transparent;
+		border: 1px solid rgba(255,255,255,0.15);
+		color: rgba(255,255,255,0.5);
+		font-size: 0.75rem;
+		padding: 0.2rem 0.5rem;
+		border-radius: 4px;
+		cursor: pointer;
+		outline: none;
+	}
+	.lang-selector select:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+	.lang-selector select option { background: #1a1a1a; color: #fff; }
 
 	@media (min-width: 640px) {
 		.footer-grid { grid-template-columns: repeat(2, 1fr); }
