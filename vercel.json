@@ -1,12 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/:path(.*)",
-      "has": [{ "type": "host", "value": "www.getaibriefs.com" }],
-      "destination": "https://getaibriefs.com/:path",
-      "statusCode": 308
-    }
-  ],
   "headers": [
     {
       "source": "/fonts/(.*)",
