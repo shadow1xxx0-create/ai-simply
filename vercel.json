@@ -1,5 +1,5 @@
 {
-  "redirects": [
+  "beforeFiles": [
     {
       "source": "/:path(.*)",
       "has": [{ "type": "host", "value": "www.getaibriefs.com" }],
