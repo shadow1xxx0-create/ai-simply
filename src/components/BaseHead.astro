@@ -86,7 +86,7 @@ const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 {updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
 {category && <meta property="article:section" content={category} />}
 
-<!-- Schema.org WebSite -->
+<!-- Schema.org WebSite + SearchAction -->
 {type === 'website' && (
 	<script type="application/ld+json" set:html={JSON.stringify({
 		"@context": "https://schema.org",
@@ -98,6 +98,32 @@ const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 			"@type": "Organization",
 			"name": SITE_TITLE,
 			"url": SITE_URL,
+			"logo": {
+				"@type": "ImageObject",
+				"url": `${SITE_URL}/favicon.svg`,
+			},
+		},
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": {
+				"@type": "EntryPoint",
+				"urlTemplate": `${SITE_URL}/tools/?q={search_term_string}`,
+			},
+			"query-input": "required name=search_term_string",
 		},
 	})} />
 )}
+
+<!-- Schema.org Organization (all pages) -->
+<script type="application/ld+json" set:html={JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	"name": SITE_TITLE,
+	"url": SITE_URL,
+	"logo": `${SITE_URL}/favicon.svg`,
+	"sameAs": [
+		"https://twitter.com/getaibriefs",
+		"https://instagram.com/getaibriefs",
+		"https://youtube.com/@getaibriefs",
+	],
+})} />

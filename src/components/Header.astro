@@ -35,7 +35,12 @@ const pathname = Astro.url.pathname;
 						))}
 					</div>
 					<div class="dropdown-footer">
-						<a href="/tools/">Browse all 200+ tools →</a>
+						<div class="dropdown-footer-links">
+							<a href="/tools/new/">🆕 New Tools</a>
+							<a href="/tools/top-rated/">⭐ Top Rated</a>
+							<a href="/tools/collections/">📦 Collections</a>
+						</div>
+						<a href="/tools/quiz/" class="dropdown-footer-quiz">🎯 Find My Tool →</a>
 					</div>
 				</div>
 			</li>
@@ -192,6 +197,11 @@ const pathname = Astro.url.pathname;
 		border-top: 1px solid var(--border);
 		padding: 0.65rem 1.25rem;
 		background: var(--bg-alt);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		flex-wrap: wrap;
 	}
 	.dropdown-footer a {
 		font-size: 0.82rem;
@@ -201,6 +211,18 @@ const pathname = Astro.url.pathname;
 		padding: 0;
 	}
 	.dropdown-footer a:hover { background: none !important; color: var(--primary-dark); }
+	.dropdown-footer-links { display: flex; gap: 1rem; }
+	.dropdown-footer-links a { font-weight: 500; color: rgb(var(--gray-dark)); font-size: 0.8rem; }
+	.dropdown-footer-links a:hover { color: var(--primary) !important; background: none !important; }
+	.dropdown-footer-quiz {
+		font-size: 0.82rem !important;
+		font-weight: 700 !important;
+		color: #fff !important;
+		background: var(--primary) !important;
+		padding: 0.3rem 0.85rem !important;
+		border-radius: 99px !important;
+	}
+	.dropdown-footer-quiz:hover { background: var(--primary-dark) !important; color: #fff !important; }
 
 	.btn--sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
 

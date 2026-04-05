@@ -1,9 +1,15 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Newsletter from '../components/Newsletter.astro';
-import { SITE_TITLE } from '../consts';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { SITE_TITLE, TOOL_CATEGORIES } from '../consts';
+
+const toolCount = (await getCollection('tools')).length;
+const articleCount = (await getCollection('blog')).length;
+const categoryCount = TOOL_CATEGORIES.length;
 ---
 
 <!doctype html>
@@ -21,6 +27,7 @@ import { SITE_TITLE } from '../consts';
 		<!-- Hero -->
 		<section class="about-hero">
 			<div class="container">
+				<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]} />
 				<p class="about-tag">About Us</p>
 				<h1>Your guide to the AI universe</h1>
 				<p class="about-sub">We help people discover, understand, and use AI tools effectively. No jargon, no hype — just what matters.</p>
@@ -31,15 +38,15 @@ import { SITE_TITLE } from '../consts';
 		<section class="stats-bar">
 			<div class="container stats-grid">
 				<div class="stat-item">
-					<span class="stat-num">200+</span>
+					<span class="stat-num">{toolCount}+</span>
 					<span class="stat-label">AI Tools Curated</span>
 				</div>
 				<div class="stat-item">
-					<span class="stat-num">22</span>
+					<span class="stat-num">{categoryCount}</span>
 					<span class="stat-label">Categories</span>
 				</div>
 				<div class="stat-item">
-					<span class="stat-num">18</span>
+					<span class="stat-num">{articleCount}</span>
 					<span class="stat-label">In-depth Articles</span>
 				</div>
 				<div class="stat-item">
@@ -56,7 +63,7 @@ import { SITE_TITLE } from '../consts';
 				<div class="what-card">
 					<span class="what-icon">🗂️</span>
 					<h3>Curated AI Directory</h3>
-					<p>200+ hand-picked AI tools organized across 22 categories — from coding and writing to music and health. Every tool vetted before it's listed.</p>
+					<p>{toolCount}+ hand-picked AI tools organized across {categoryCount} categories — from coding and writing to music and health. Every tool vetted before it's listed.</p>
 				</div>
 				<div class="what-card">
 					<span class="what-icon">📝</span>
@@ -139,7 +146,10 @@ import { SITE_TITLE } from '../consts';
 			<div class="container contact-inner">
 				<h2>Get in Touch</h2>
 				<p>Have a tool to suggest, a correction, or want to collaborate? We respond within 48 hours.</p>
-				<a href="/submit/" class="btn btn--primary">Submit a Tool →</a>
+				<div class="contact-btns">
+					<a href="/contact/" class="btn btn--primary">Contact Us →</a>
+					<a href="/submit/" class="btn btn--outline-about">Submit a Tool</a>
+				</div>
 			</div>
 		</section>
 
@@ -209,6 +219,17 @@ import { SITE_TITLE } from '../consts';
 	.contact-inner { text-align: center; max-width: 520px; margin: 0 auto; }
 	.contact-inner h2 { font-size: 1.5rem; margin-bottom: 0.75rem; }
 	.contact-inner p { color: rgb(var(--gray)); margin-bottom: 1.5rem; }
+	.contact-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+	.btn--outline-about {
+		display: inline-flex; align-items: center;
+		padding: 0.65rem 1.25rem;
+		border: 1.5px solid var(--primary);
+		color: var(--primary);
+		border-radius: var(--radius);
+		font-weight: 600; font-size: 0.9rem;
+		transition: background 0.15s, color 0.15s;
+	}
+	.btn--outline-about:hover { background: var(--primary); color: #fff; }
 
 	@media (min-width: 640px) {
 		.stats-grid { grid-template-columns: repeat(4, 1fr); }

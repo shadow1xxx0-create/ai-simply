@@ -1,0 +1,386 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { TOOL_CATEGORIES, PRICING_BADGE, SITE_TITLE } from '../../../consts';
+
+export async function getStaticPaths() {
+	const tools = await getCollection('tools');
+
+	// Group by subcategory
+	const bySub: Record<string, typeof tools> = {};
+	for (const t of tools) {
+		const key = t.data.subcategory ?? t.data.category;
+		if (!bySub[key]) bySub[key] = [];
+		bySub[key].push(t);
+	}
+
+	const paths: { params: { slug: string }; props: any }[] = [];
+
+	for (const group of Object.values(bySub)) {
+		if (group.length < 2) continue;
+		for (let i = 0; i < group.length; i++) {
+			for (let j = i + 1; j < group.length; j++) {
+				const a = group[i], b = group[j];
+				paths.push({
+					params: { slug: `${a.id}-vs-${b.id}` },
+					props: { toolA: a, toolB: b },
+				});
+			}
+		}
+	}
+
+	return paths;
+}
+
+const { toolA, toolB } = Astro.props;
+const allTools = await getCollection('tools');
+
+const catA = TOOL_CATEGORIES.find(c => c.slug === toolA.data.category);
+const badgeA = PRICING_BADGE[toolA.data.pricing];
+const badgeB = PRICING_BADGE[toolB.data.pricing];
+const domainA = new URL(toolA.data.url).hostname;
+const domainB = new URL(toolB.data.url).hostname;
+const faviconA = `https://www.google.com/s2/favicons?domain=${domainA}&sz=128`;
+const faviconB = `https://www.google.com/s2/favicons?domain=${domainB}&sz=128`;
+
+const year = new Date().getFullYear();
+
+// Related comparisons: other tools in same subcategory
+const related = allTools
+	.filter(t => t.data.subcategory === toolA.data.subcategory && t.id !== toolA.id && t.id !== toolB.id)
+	.slice(0, 4);
+
+const seoTitle = `${toolA.data.name} vs ${toolB.data.name} (${year}): Which Is Better?`;
+const seoDesc = `${toolA.data.name} vs ${toolB.data.name} — side-by-side comparison of features, pricing, and ratings to help you pick the right ${catA?.name ?? 'AI'} tool.`;
+
+// Simple score: rating * 2 + (featured ? 1 : 0) + pricing bonus
+function score(t: typeof toolA) {
+	return (t.data.rating ?? 0) * 2 + (t.data.featured ? 1 : 0) + (t.data.pricing === 'free' ? 0.5 : 0);
+}
+const scoreA = score(toolA);
+const scoreB = score(toolB);
+const winner = scoreA > scoreB ? toolA : scoreB > scoreA ? toolB : null;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead title={`${seoTitle} | ${SITE_TITLE}`} description={seoDesc} />
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://getaibriefs.com/" },
+			{ "@type": "ListItem", "position": 2, "name": "AI Tools", "item": "https://getaibriefs.com/tools/" },
+			{ "@type": "ListItem", "position": 3, "name": `${toolA.data.name} vs ${toolB.data.name}` }
+		]
+	})} />
+</head>
+<body>
+<Header />
+
+<main>
+
+	<!-- Hero -->
+	<section class="vs-hero">
+		<div class="container">
+			<nav class="breadcrumbs">
+				<a href="/">Home</a><span>/</span>
+				<a href="/tools/">AI Tools</a><span>/</span>
+				<span>{toolA.data.name} vs {toolB.data.name}</span>
+			</nav>
+
+			<div class="vs-header">
+				<div class="vs-tool">
+					<div class="vs-logo">
+						<img src={faviconA} alt={toolA.data.name} width="60" height="60" loading="eager"
+							onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+						<span class="vs-emoji-fb" style="display:none">{catA?.emoji ?? '🤖'}</span>
+					</div>
+					<h1 class="vs-tool-name">{toolA.data.name}</h1>
+					<span class="vs-badge" style={`background:${badgeA.bg};color:${badgeA.text}`}>{badgeA.label}</span>
+					{toolA.data.rating && <div class="vs-score">★ {toolA.data.rating.toFixed(1)}</div>}
+					{winner?.id === toolA.id && <span class="vs-winner-badge">✓ Editor's Pick</span>}
+				</div>
+
+				<div class="vs-divider">VS</div>
+
+				<div class="vs-tool">
+					<div class="vs-logo">
+						<img src={faviconB} alt={toolB.data.name} width="60" height="60" loading="eager"
+							onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+						<span class="vs-emoji-fb" style="display:none">{catA?.emoji ?? '🤖'}</span>
+					</div>
+					<h1 class="vs-tool-name">{toolB.data.name}</h1>
+					<span class="vs-badge" style={`background:${badgeB.bg};color:${badgeB.text}`}>{badgeB.label}</span>
+					{toolB.data.rating && <div class="vs-score">★ {toolB.data.rating.toFixed(1)}</div>}
+					{winner?.id === toolB.id && <span class="vs-winner-badge">✓ Editor's Pick</span>}
+				</div>
+			</div>
+
+			<p class="vs-subtitle">{catA?.name} · Side-by-side comparison · Updated {year}</p>
+		</div>
+	</section>
+
+	<!-- Quick Summary -->
+	<section class="section">
+		<div class="container vs-body">
+
+			<div class="summary-grid">
+				<div class="summary-card">
+					<div class="summary-logo">
+						<img src={faviconA} alt={toolA.data.name} width="36" height="36" loading="lazy" />
+					</div>
+					<h3>{toolA.data.name}</h3>
+					<p>{toolA.data.description}</p>
+					<div class="summary-actions">
+						<a href={`/tools/${toolA.id}/`} class="btn btn--secondary btn--sm">Full Review</a>
+						<a href={toolA.data.url} target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--sm">Visit →</a>
+					</div>
+				</div>
+
+				<div class="summary-card">
+					<div class="summary-logo">
+						<img src={faviconB} alt={toolB.data.name} width="36" height="36" loading="lazy" />
+					</div>
+					<h3>{toolB.data.name}</h3>
+					<p>{toolB.data.description}</p>
+					<div class="summary-actions">
+						<a href={`/tools/${toolB.id}/`} class="btn btn--secondary btn--sm">Full Review</a>
+						<a href={toolB.data.url} target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--sm">Visit →</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Comparison table -->
+			<h2 class="compare-heading">At a Glance</h2>
+			<div class="compare-table-wrap">
+				<table class="compare-table">
+					<thead>
+						<tr>
+							<th></th>
+							<th>{toolA.data.name}</th>
+							<th>{toolB.data.name}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Pricing</td>
+							<td><span class="tbl-badge" style={`background:${badgeA.bg};color:${badgeA.text}`}>{badgeA.label}</span></td>
+							<td><span class="tbl-badge" style={`background:${badgeB.bg};color:${badgeB.text}`}>{badgeB.label}</span></td>
+						</tr>
+						<tr>
+							<td>Category</td>
+							<td>{catA?.name ?? '—'}</td>
+							<td>{TOOL_CATEGORIES.find(c => c.slug === toolB.data.category)?.name ?? '—'}</td>
+						</tr>
+						<tr>
+							<td>Subcategory</td>
+							<td>{toolA.data.subcategory ?? '—'}</td>
+							<td>{toolB.data.subcategory ?? '—'}</td>
+						</tr>
+						{(toolA.data.rating || toolB.data.rating) && (
+							<tr>
+								<td>Rating</td>
+								<td>{toolA.data.rating ? `★ ${toolA.data.rating.toFixed(1)} / 5` : '—'}</td>
+								<td>{toolB.data.rating ? `★ ${toolB.data.rating.toFixed(1)} / 5` : '—'}</td>
+							</tr>
+						)}
+						<tr>
+							<td>Editor's Pick</td>
+							<td>{winner?.id === toolA.id ? '✓ Yes' : '—'}</td>
+							<td>{winner?.id === toolB.id ? '✓ Yes' : '—'}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Verdict -->
+			{winner && (
+				<div class="verdict-box">
+					<div class="verdict-label">Our Verdict</div>
+					<div class="verdict-content">
+						<strong>{winner.data.name}</strong> edges ahead
+						{winner.data.rating ? ` with a ${winner.data.rating.toFixed(1)}/5 rating` : ''}
+						{winner.data.pricing === 'free' ? ' and a free plan' : ''}.
+						For a full breakdown, see our <a href={`/tools/${winner.id}/`}>{winner.data.name} review</a>.
+					</div>
+				</div>
+			)}
+
+			<!-- Also compare -->
+			{related.length > 0 && (
+				<div class="also-compare">
+					<h3>Also Compare</h3>
+					<div class="also-compare-links">
+						{related.map(r => (
+							<>
+								<a href={`/tools/vs/${toolA.id}-vs-${r.id}/`} class="compare-link">
+									{toolA.data.name} vs {r.data.name}
+								</a>
+								<a href={`/tools/vs/${toolB.id}-vs-${r.id}/`} class="compare-link">
+									{toolB.data.name} vs {r.data.name}
+								</a>
+							</>
+						))}
+					</div>
+				</div>
+			)}
+
+		</div>
+	</section>
+
+</main>
+
+<Footer />
+</body>
+</html>
+
+<style>
+	.breadcrumbs {
+		font-size: 0.82rem;
+		color: rgb(var(--gray));
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		flex-wrap: wrap;
+		margin-bottom: 2rem;
+	}
+	.breadcrumbs a { color: rgb(var(--gray)); }
+	.breadcrumbs a:hover { color: var(--primary); }
+
+	.vs-hero {
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
+		padding: 2.5rem 0 2rem;
+	}
+	.vs-header {
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+		margin-bottom: 1rem;
+		flex-wrap: wrap;
+	}
+	.vs-tool {
+		flex: 1;
+		min-width: 140px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 0.4rem;
+	}
+	.vs-logo {
+		width: 60px;
+		height: 60px;
+		border-radius: 14px;
+		overflow: hidden;
+		background: #fff;
+		border: 1px solid var(--border);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.vs-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+	.vs-emoji-fb { font-size: 1.8rem; }
+	.vs-tool-name { font-size: 1.4rem; margin: 0; }
+	.vs-badge { font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 50px; }
+	.vs-score { font-size: 0.9rem; font-weight: 700; color: #f59e0b; }
+	.vs-winner-badge {
+		background: #10b981;
+		color: #fff;
+		font-size: 0.7rem;
+		font-weight: 700;
+		padding: 0.2rem 0.6rem;
+		border-radius: 50px;
+	}
+	.vs-divider {
+		font-size: 1.5rem;
+		font-weight: 900;
+		color: rgb(var(--gray));
+		flex-shrink: 0;
+	}
+	.vs-subtitle {
+		text-align: center;
+		font-size: 0.82rem;
+		color: rgb(var(--gray));
+		margin: 0;
+	}
+
+	.vs-body { max-width: 780px; }
+
+	.summary-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+		margin-bottom: 2rem;
+	}
+	.summary-card {
+		background: var(--bg-alt);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1.25rem;
+	}
+	.summary-logo { margin-bottom: 0.5rem; }
+	.summary-logo img { border-radius: 8px; }
+	.summary-card h3 { font-size: 1rem; margin: 0 0 0.4rem; }
+	.summary-card p { font-size: 0.82rem; color: rgb(var(--gray)); margin: 0 0 0.75rem; }
+	.summary-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+	.compare-heading { font-size: 1.15rem; margin: 0 0 0.75rem; }
+	.compare-table-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+	.compare-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.88rem;
+	}
+	.compare-table th, .compare-table td {
+		padding: 0.65rem 0.85rem;
+		border: 1px solid var(--border);
+		text-align: left;
+	}
+	.compare-table th {
+		background: var(--bg-alt);
+		font-weight: 700;
+		font-size: 0.82rem;
+	}
+	.compare-table td:first-child {
+		font-weight: 600;
+		color: rgb(var(--gray));
+		background: var(--bg-alt);
+		width: 30%;
+	}
+	.tbl-badge { font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 50px; }
+
+	.verdict-box {
+		background: #f0fdf4;
+		border: 1px solid #a7f3d0;
+		border-radius: var(--radius);
+		padding: 1rem 1.25rem;
+		margin-bottom: 1.5rem;
+	}
+	.verdict-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #059669; margin-bottom: 0.3rem; }
+	.verdict-content { font-size: 0.9rem; line-height: 1.6; }
+	.verdict-content a { color: var(--primary); }
+
+	.also-compare { margin-top: 2rem; }
+	.also-compare h3 { font-size: 1rem; margin-bottom: 0.75rem; }
+	.also-compare-links { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+	.compare-link {
+		font-size: 0.8rem;
+		padding: 0.3rem 0.7rem;
+		border: 1px solid var(--border);
+		border-radius: 50px;
+		color: rgb(var(--gray-dark));
+		text-decoration: none;
+		transition: all 0.15s;
+	}
+	.compare-link:hover { border-color: var(--primary); color: var(--primary); }
+
+	@media (max-width: 480px) {
+		.summary-grid { grid-template-columns: 1fr; }
+		.vs-header { gap: 1rem; }
+	}
+</style>

@@ -1,0 +1,157 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { TOOL_CATEGORIES, PRICING_BADGE, SITE_TITLE } from '../../consts';
+
+const tools = (await getCollection('tools'))
+	.filter(t => t.data.rating)
+	.sort((a, b) => (b.data.rating ?? 0) - (a.data.rating ?? 0));
+
+function stars(score: number) {
+	const full = Math.floor(score);
+	const half = score - full >= 0.5 ? '½' : '';
+	const empty = 5 - full - (half ? 1 : 0);
+	return '★'.repeat(full) + half + '☆'.repeat(empty);
+}
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title={`Top Rated AI Tools (2026) — Best AI Apps by Rating | ${SITE_TITLE}`}
+		description="The highest-rated AI tools ranked by user reviews and our editorial scores. Find the best AI tools across every category."
+	/>
+</head>
+<body>
+<Header />
+
+<div class="page-header">
+	<div class="container">
+		<div class="header-badge">Community Rated</div>
+		<h1>Top Rated AI Tools</h1>
+		<p>Ranked by user ratings and editorial scores — the best AI tools across every category.</p>
+	</div>
+</div>
+
+<main class="container top-body">
+	<div class="ranked-list">
+		{tools.map((tool, i) => {
+			const cat = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
+			const domain = new URL(tool.data.url).hostname;
+			const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+			const badge = PRICING_BADGE[tool.data.pricing];
+			const score = tool.data.rating!;
+			const count = tool.data.ratingCount ?? 500;
+			return (
+				<a href={`/tools/${tool.id}/`} class="rank-row">
+					<span class={`rank-num ${i < 3 ? 'rank-top' : ''}`}>#{i + 1}</span>
+					<div class="rank-logo">
+						<img src={favicon} alt={tool.data.name} width="36" height="36" loading="lazy"
+							onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+						<span class="rank-logo-fb" style="display:none">{cat?.emoji ?? '🤖'}</span>
+					</div>
+					<div class="rank-info">
+						<h3>{tool.data.name}</h3>
+						<p>{tool.data.description}</p>
+						<div class="rank-tags">
+							<span class="cat-tag">{cat?.emoji} {cat?.name}</span>
+							<span class="pricing-pill" style={`background:${badge.bg};color:${badge.text}`}>{badge.label}</span>
+						</div>
+					</div>
+					<div class="rank-score">
+						<span class="score-num">{score.toFixed(1)}</span>
+						<span class="stars">{stars(score)}</span>
+						<span class="count">{count.toLocaleString()} reviews</span>
+					</div>
+				</a>
+			);
+		})}
+	</div>
+</main>
+
+<Footer />
+</body>
+</html>
+
+<style>
+.page-header {
+	background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%);
+	border-bottom: 1px solid var(--border);
+	padding: 3rem 0 2rem;
+	text-align: center;
+}
+.header-badge {
+	display: inline-block;
+	background: #f59e0b;
+	color: #fff;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	padding: 0.25rem 0.75rem;
+	border-radius: 99px;
+	margin-bottom: 0.75rem;
+}
+.page-header h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 0.5rem; }
+.page-header p { color: rgb(var(--gray)); max-width: 480px; margin: 0 auto; }
+
+.top-body { padding: 2.5rem 0 4rem; }
+
+.ranked-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.rank-row {
+	display: grid;
+	grid-template-columns: 2.5rem 52px 1fr auto;
+	align-items: center;
+	gap: 1rem;
+	padding: 1rem 1.25rem;
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	color: inherit;
+	transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.rank-row:hover {
+	transform: translateY(-2px);
+	border-color: rgba(0,200,150,0.35);
+	box-shadow: 0 4px 16px rgba(0,200,150,0.1);
+}
+
+.rank-num {
+	font-size: 1.1rem;
+	font-weight: 800;
+	color: rgb(var(--gray));
+	text-align: center;
+}
+.rank-top { color: #f59e0b; }
+
+.rank-logo {
+	width: 48px; height: 48px;
+	background: var(--primary-light);
+	border-radius: var(--radius);
+	display: flex; align-items: center; justify-content: center;
+	overflow: hidden; flex-shrink: 0;
+}
+.rank-logo img { width: 36px; height: 36px; object-fit: contain; }
+.rank-logo-fb { font-size: 1.5rem; display: flex; align-items: center; justify-content: center; }
+
+.rank-info h3 { font-size: 1rem; margin: 0 0 0.2rem; }
+.rank-row:hover h3 { color: var(--primary); }
+.rank-info p { font-size: 0.83rem; color: rgb(var(--gray)); margin: 0 0 0.4rem; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.rank-tags { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.cat-tag { font-size: 0.72rem; color: rgb(var(--gray)); }
+.pricing-pill { font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 99px; }
+
+.rank-score { text-align: right; flex-shrink: 0; }
+.score-num { display: block; font-size: 1.5rem; font-weight: 800; color: rgb(var(--black)); line-height: 1; }
+.stars { display: block; color: #f59e0b; font-size: 0.75rem; margin: 0.2rem 0; }
+.count { display: block; font-size: 0.7rem; color: rgb(var(--gray)); }
+
+@media (max-width: 600px) {
+	.rank-row { grid-template-columns: 2rem 44px 1fr; }
+	.rank-score { display: none; }
+}
+</style>

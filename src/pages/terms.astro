@@ -1,0 +1,162 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { SITE_TITLE, SITE_URL } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title={`Terms of Service | ${SITE_TITLE}`}
+		description={`Terms of Service for ${SITE_TITLE}. Read the rules and conditions that govern your use of our website.`}
+	/>
+</head>
+<body>
+<Header />
+
+<section class="page-header">
+	<div class="container">
+		<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Terms of Service' }]} />
+		<h1>Terms of Service</h1>
+		<p>Last updated: April 1, 2026</p>
+	</div>
+</section>
+
+<main class="container policy-content">
+
+	<nav class="toc" aria-label="Table of contents">
+		<h2>Contents</h2>
+		<ol>
+			<li><a href="#acceptance">Acceptance of Terms</a></li>
+			<li><a href="#use">Use of the Service</a></li>
+			<li><a href="#content">Content & Intellectual Property</a></li>
+			<li><a href="#third-party">Third-Party Tools & Links</a></li>
+			<li><a href="#submissions">User Submissions</a></li>
+			<li><a href="#disclaimers">Disclaimers</a></li>
+			<li><a href="#limitation">Limitation of Liability</a></li>
+			<li><a href="#privacy">Privacy</a></li>
+			<li><a href="#changes">Changes to These Terms</a></li>
+			<li><a href="#contact">Contact</a></li>
+		</ol>
+	</nav>
+
+	<section id="acceptance">
+		<h2>1. Acceptance of Terms</h2>
+		<p>By accessing or using <strong>{SITE_TITLE}</strong> (available at <a href={SITE_URL}>{SITE_URL}</a>), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the site.</p>
+		<p>These terms apply to all visitors, users, and any others who access or use the service.</p>
+	</section>
+
+	<section id="use">
+		<h2>2. Use of the Service</h2>
+		<p>You may use {SITE_TITLE} for personal, non-commercial research and informational purposes. You agree not to:</p>
+		<ul>
+			<li>Use automated bots or scrapers to harvest content at scale without prior written permission.</li>
+			<li>Reproduce, republish, or redistribute our editorial content without attribution.</li>
+			<li>Attempt to gain unauthorised access to our systems or infrastructure.</li>
+			<li>Use the service in any way that violates applicable laws or regulations.</li>
+			<li>Misrepresent your identity or affiliation when submitting tools or contacting us.</li>
+		</ul>
+	</section>
+
+	<section id="content">
+		<h2>3. Content & Intellectual Property</h2>
+		<p>All original content on {SITE_TITLE} — including articles, reviews, editorial ratings, UI design, and written descriptions — is the intellectual property of {SITE_TITLE} and is protected under applicable copyright law.</p>
+		<p>Tool names, logos, and trademarks referenced on this site belong to their respective owners. We use them for identification and informational purposes only, and their presence on this site does not imply endorsement or affiliation.</p>
+		<p>You may share links to our content and quote brief excerpts (up to 100 words) with proper attribution and a link back to the original page.</p>
+	</section>
+
+	<section id="third-party">
+		<h2>4. Third-Party Tools & Links</h2>
+		<p>{SITE_TITLE} is a directory and review platform. We link to external AI tools and services that are operated by third parties. We do not control, endorse, or take responsibility for the content, policies, or practices of any third-party website or service.</p>
+		<p>Before using any AI tool listed on our site, we strongly encourage you to read that tool's own terms of service and privacy policy. Your use of third-party services is governed solely by those services' terms.</p>
+		<p>Some listings may include affiliate or sponsored relationships, which are always disclosed in accordance with applicable advertising guidelines.</p>
+	</section>
+
+	<section id="submissions">
+		<h2>5. User Submissions</h2>
+		<p>When you submit a tool for listing via our submission form, you represent that:</p>
+		<ul>
+			<li>You are authorised to submit information about the tool.</li>
+			<li>The information you provide is accurate and not misleading.</li>
+			<li>The tool does not violate any laws or the rights of third parties.</li>
+		</ul>
+		<p>We reserve the right to accept, reject, or remove any submission at our sole discretion. Submission does not guarantee listing.</p>
+	</section>
+
+	<section id="disclaimers">
+		<h2>6. Disclaimers</h2>
+		<p>The information on {SITE_TITLE} is provided for general informational and educational purposes only. It does not constitute professional, legal, financial, or technical advice.</p>
+		<p>While we strive to keep information accurate and up to date, AI tools and their features change frequently. We make no warranties, express or implied, regarding the completeness, accuracy, or reliability of any content on this site.</p>
+		<p>The service is provided "as is" and "as available" without warranties of any kind.</p>
+	</section>
+
+	<section id="limitation">
+		<h2>7. Limitation of Liability</h2>
+		<p>To the fullest extent permitted by law, {SITE_TITLE} and its operators shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of — or inability to use — this site or any tool listed on it.</p>
+		<p>Our total liability for any claim arising out of these terms shall not exceed the amount you paid us in the twelve months preceding the claim (which, for free users, is zero).</p>
+	</section>
+
+	<section id="privacy">
+		<h2>8. Privacy</h2>
+		<p>Your use of {SITE_TITLE} is also governed by our <a href="/privacy/">Privacy Policy</a>, which is incorporated into these Terms by reference. Please review it to understand how we collect, use, and protect your information.</p>
+	</section>
+
+	<section id="changes">
+		<h2>9. Changes to These Terms</h2>
+		<p>We may update these Terms of Service from time to time. When we do, we will revise the "Last updated" date at the top of this page. Continued use of the site after changes constitutes your acceptance of the revised terms.</p>
+		<p>For significant changes, we may also notify users via our newsletter or a prominent notice on the site.</p>
+	</section>
+
+	<section id="contact">
+		<h2>10. Contact</h2>
+		<p>If you have questions about these Terms, please contact us:</p>
+		<ul>
+			<li><strong>Website:</strong> <a href="/contact/">{SITE_URL}/contact/</a></li>
+			<li><strong>Email:</strong> hello@getaibriefs.com</li>
+		</ul>
+	</section>
+
+</main>
+
+<Footer />
+</body>
+</html>
+
+<style>
+.page-header {
+	background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%);
+	border-bottom: 1px solid var(--border);
+	padding: 3rem 0 2rem;
+}
+.page-header h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 0.5rem 0 0.25rem; }
+.page-header p { color: rgb(var(--gray)); font-size: 0.9rem; }
+
+.policy-content {
+	max-width: 760px;
+	padding: 3rem 1.25rem 5rem;
+}
+
+.toc {
+	background: var(--bg-alt);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 1.25rem 1.5rem;
+	margin-bottom: 2.5rem;
+}
+.toc h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgb(var(--gray)); margin-bottom: 0.75rem; }
+.toc ol { margin: 0; padding-left: 1.25rem; }
+.toc li { margin-bottom: 0.3rem; }
+.toc a { font-size: 0.87rem; color: var(--primary); }
+.toc a:hover { text-decoration: underline; }
+
+.policy-content section { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+.policy-content h2 { font-size: 1.15rem; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+.policy-content p { font-size: 0.92rem; line-height: 1.75; color: rgb(var(--gray-dark)); margin-bottom: 0.85rem; }
+.policy-content ul { padding-left: 1.5rem; margin-bottom: 0.85rem; }
+.policy-content li { font-size: 0.92rem; line-height: 1.7; color: rgb(var(--gray-dark)); margin-bottom: 0.3rem; }
+.policy-content a { color: var(--primary); }
+.policy-content a:hover { text-decoration: underline; }
+</style>

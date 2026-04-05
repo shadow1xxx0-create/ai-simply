@@ -5,7 +5,8 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { CATEGORY_COLORS } from '../consts';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { CATEGORY_COLORS, SITE_TITLE } from '../consts';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -19,8 +20,8 @@ const explained = posts.filter(p => p.data.category !== 'guides');
 <html lang="en">
 <head>
 	<BaseHead
-		title="AI Tutorials & Guides — AI Simply"
-		description="Learn how to use AI tools effectively. Step-by-step guides, tutorials, and explainers — AI made simple."
+		title={`AI Tutorials & Guides | ${SITE_TITLE}`}
+		description="Learn how to use AI tools effectively. Step-by-step guides, tutorials, and plain-English explainers — AI made simple for everyone."
 	/>
 </head>
 <body>
@@ -29,9 +30,10 @@ const explained = posts.filter(p => p.data.category !== 'guides');
 
 		<section class="page-hero">
 			<div class="container">
+				<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Tutorials' }]} />
 				<div class="hero-badge">Learn AI</div>
 				<h1>Tutorials & Guides</h1>
-				<p>Step-by-step guides and explainers to help you get the most out of AI tools — no jargon, no fluff.</p>
+				<p>Step-by-step guides and plain-English explainers to help you understand and use AI tools — no jargon, no fluff.</p>
 			</div>
 		</section>
 

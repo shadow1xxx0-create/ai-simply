@@ -1,0 +1,307 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import { TOOL_CATEGORIES, PRICING_BADGE, SITE_TITLE } from '../../../consts';
+
+export async function getStaticPaths() {
+	const tools = await getCollection('tools');
+	// Only generate alternatives pages for tools that have at least 2 peers in their category
+	return tools
+		.filter(tool => {
+			const peers = tools.filter(t => t.data.category === tool.data.category && t.id !== tool.id);
+			return peers.length >= 2;
+		})
+		.map(tool => ({ params: { slug: tool.id }, props: { tool } }));
+}
+
+const { tool } = Astro.props;
+const allTools = await getCollection('tools');
+
+const category = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
+const badge = PRICING_BADGE[tool.data.pricing];
+
+// Alternatives: same category, sorted by rating desc, exclude current tool
+const alternatives = allTools
+	.filter(t => t.data.category === tool.data.category && t.id !== tool.id)
+	.sort((a, b) => {
+		// Featured first, then by rating
+		if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+		return (b.data.rating ?? 0) - (a.data.rating ?? 0);
+	})
+	.slice(0, 12);
+
+const toolDomain = new URL(tool.data.url).hostname;
+const toolFavicon = `https://www.google.com/s2/favicons?domain=${toolDomain}&sz=64`;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title={`Best ${tool.data.name} Alternatives (2026) — Top ${category?.name ?? 'AI'} Tools | ${SITE_TITLE}`}
+		description={`Looking for alternatives to ${tool.data.name}? We've compiled the ${alternatives.length} best ${category?.name ?? 'AI'} tools that offer similar or better features in 2026.`}
+	/>
+</head>
+<body>
+<Header />
+
+<section class="page-header">
+	<div class="container">
+		<Breadcrumb crumbs={[
+			{ label: 'Home', href: '/' },
+			{ label: 'AI Tools', href: '/tools/' },
+			{ label: tool.data.name, href: `/tools/${tool.id}/` },
+			{ label: 'Alternatives' },
+		]} />
+		<div class="header-content">
+			<div class="source-tool">
+				<div class="source-logo">
+					<img src={toolFavicon} alt={tool.data.name} width="40" height="40" loading="eager"
+						onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+					<span class="source-logo-fb" style="display:none">{category?.emoji ?? '🤖'}</span>
+				</div>
+				<div>
+					<div class="alt-label">Alternatives to</div>
+					<h1>{tool.data.name} Alternatives</h1>
+				</div>
+			</div>
+			<p>The {alternatives.length} best alternatives to {tool.data.name} — ranked by rating, features, and value. All in the {category?.name ?? 'AI'} category.</p>
+		</div>
+	</div>
+</section>
+
+<main class="container alts-body">
+
+	<!-- Current tool card -->
+	<div class="current-tool-wrap">
+		<h2 class="section-label">You're comparing alternatives to:</h2>
+		<div class="current-tool">
+			<div class="ct-logo">
+				<img src={toolFavicon} alt={tool.data.name} width="48" height="48" loading="lazy"
+					onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+				<span class="ct-logo-fb" style="display:none">{category?.emoji ?? '🤖'}</span>
+			</div>
+			<div class="ct-info">
+				<div class="ct-name-row">
+					<h3>{tool.data.name}</h3>
+					<span class="pricing-pill" style={`background:${badge.bg};color:${badge.text}`}>{badge.label}</span>
+					{tool.data.rating && <span class="tool-rating">★ {tool.data.rating.toFixed(1)}</span>}
+				</div>
+				<p>{tool.data.description}</p>
+				<div class="ct-actions">
+					<a href={`/tools/${tool.id}/`} class="btn btn--secondary btn--sm">View {tool.data.name}</a>
+					<a href={tool.data.url} target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--sm">Visit Site →</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Alternatives list -->
+	<div class="alts-header">
+		<h2>{alternatives.length} Alternatives to {tool.data.name}</h2>
+		<span class="alt-count">{category?.emoji} {category?.name}</span>
+	</div>
+
+	<div class="alts-list">
+		{alternatives.map((alt, i) => {
+			const altDomain = new URL(alt.data.url).hostname;
+			const altFavicon = `https://www.google.com/s2/favicons?domain=${altDomain}&sz=64`;
+			const altBadge = PRICING_BADGE[alt.data.pricing];
+			return (
+				<a href={`/tools/${alt.id}/`} class="alt-card">
+					<span class="alt-rank">#{i + 1}</span>
+					<div class="alt-logo">
+						<img src={altFavicon} alt={alt.data.name} width="40" height="40" loading="lazy"
+							onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+						<span class="alt-logo-fb" style="display:none">{category?.emoji ?? '🤖'}</span>
+					</div>
+					<div class="alt-info">
+						<div class="alt-name-row">
+							<h3>{alt.data.name}</h3>
+							<span class="pricing-pill" style={`background:${altBadge.bg};color:${altBadge.text}`}>{altBadge.label}</span>
+							{alt.data.featured && <span class="featured-badge">Featured</span>}
+						</div>
+						<p>{alt.data.description}</p>
+					</div>
+					{alt.data.rating ? (
+						<div class="alt-score">
+							<span class="score-num">{alt.data.rating.toFixed(1)}</span>
+							<span class="score-stars">{'★'.repeat(Math.floor(alt.data.rating))}{'☆'.repeat(5 - Math.floor(alt.data.rating))}</span>
+						</div>
+					) : (
+						<div class="alt-score alt-score--empty">
+							<span class="score-na">N/A</span>
+						</div>
+					)}
+				</a>
+			);
+		})}
+	</div>
+
+	<!-- Back links -->
+	<div class="back-links">
+		<a href={`/tools/category/${tool.data.category}/`} class="btn btn--secondary">
+			Browse all {category?.name} tools →
+		</a>
+		<a href="/tools/" class="btn btn--outline">All AI Tools</a>
+	</div>
+
+</main>
+
+<Footer />
+</body>
+</html>
+
+<style>
+.page-header {
+	background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%);
+	border-bottom: 1px solid var(--border);
+	padding: 3rem 0 2rem;
+}
+.header-content { margin-top: 0.75rem; }
+.source-tool {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 0.75rem;
+}
+.source-logo {
+	width: 52px; height: 52px;
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	display: flex; align-items: center; justify-content: center;
+	flex-shrink: 0; overflow: hidden;
+}
+.source-logo img { width: 40px; height: 40px; object-fit: contain; }
+.source-logo-fb { font-size: 1.6rem; }
+.alt-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgb(var(--gray)); margin-bottom: 0.15rem; }
+.page-header h1 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin: 0; }
+.page-header p { color: rgb(var(--gray)); max-width: 560px; font-size: 0.93rem; }
+
+.alts-body { padding: 2.5rem 0 5rem; }
+
+/* Current tool */
+.current-tool-wrap { margin-bottom: 2.5rem; }
+.section-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgb(var(--gray)); margin-bottom: 0.75rem; }
+
+.current-tool {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+	padding: 1.25rem 1.5rem;
+	border: 2px solid var(--border);
+	border-radius: var(--radius);
+	background: var(--bg);
+}
+.ct-logo {
+	width: 56px; height: 56px;
+	background: var(--primary-light);
+	border-radius: var(--radius);
+	display: flex; align-items: center; justify-content: center;
+	flex-shrink: 0; overflow: hidden;
+}
+.ct-logo img { width: 40px; height: 40px; object-fit: contain; }
+.ct-logo-fb { font-size: 1.6rem; }
+
+.ct-info { flex: 1; }
+.ct-name-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+.ct-name-row h3 { font-size: 1.1rem; margin: 0; }
+.ct-info p { font-size: 0.87rem; color: rgb(var(--gray-dark)); margin: 0 0 0.85rem; line-height: 1.6; }
+.ct-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+/* Alternatives list */
+.alts-header {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin-bottom: 1.25rem;
+}
+.alts-header h2 { font-size: 1.2rem; margin: 0; }
+.alt-count { font-size: 0.8rem; color: rgb(var(--gray)); background: var(--bg-alt); border: 1px solid var(--border); padding: 0.2rem 0.65rem; border-radius: 99px; }
+
+.alts-list { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 2.5rem; }
+
+.alt-card {
+	display: grid;
+	grid-template-columns: 2rem 52px 1fr auto;
+	align-items: center;
+	gap: 1rem;
+	padding: 1rem 1.25rem;
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	color: inherit;
+	transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+.alt-card:hover {
+	transform: translateY(-2px);
+	border-color: rgba(0,200,150,0.35);
+	box-shadow: 0 4px 14px rgba(0,200,150,0.1);
+}
+
+.alt-rank { font-size: 0.9rem; font-weight: 800; color: rgb(var(--gray)); text-align: center; }
+
+.alt-logo {
+	width: 48px; height: 48px;
+	background: var(--primary-light);
+	border-radius: var(--radius);
+	display: flex; align-items: center; justify-content: center;
+	flex-shrink: 0; overflow: hidden;
+}
+.alt-logo img { width: 36px; height: 36px; object-fit: contain; }
+.alt-logo-fb { font-size: 1.4rem; }
+
+.alt-name-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.25rem; }
+.alt-name-row h3 { font-size: 0.97rem; margin: 0; }
+.alt-card:hover h3 { color: var(--primary); }
+.alt-info p { font-size: 0.82rem; color: rgb(var(--gray)); margin: 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+
+.pricing-pill { font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 99px; flex-shrink: 0; }
+.featured-badge { font-size: 0.65rem; font-weight: 700; background: #fef9c3; color: #854d0e; padding: 0.15rem 0.45rem; border-radius: 99px; }
+.tool-rating { font-size: 0.78rem; font-weight: 700; color: #f59e0b; }
+
+.alt-score { text-align: right; flex-shrink: 0; min-width: 48px; }
+.score-num { display: block; font-size: 1.4rem; font-weight: 800; line-height: 1; color: rgb(var(--black)); }
+.score-stars { display: block; font-size: 0.65rem; color: #f59e0b; margin-top: 0.15rem; }
+.alt-score--empty .score-na { font-size: 0.8rem; color: rgb(var(--gray)); }
+
+/* Back links */
+.back-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+/* Buttons */
+.btn--secondary {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.55rem 1.1rem;
+	border: 1.5px solid var(--primary);
+	color: var(--primary);
+	border-radius: var(--radius);
+	font-size: 0.87rem;
+	font-weight: 700;
+	transition: background 0.15s, color 0.15s;
+}
+.btn--secondary:hover { background: var(--primary); color: #fff; }
+.btn--outline {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.55rem 1.1rem;
+	border: 1.5px solid var(--border);
+	color: rgb(var(--gray-dark));
+	border-radius: var(--radius);
+	font-size: 0.87rem;
+	font-weight: 600;
+	transition: border-color 0.15s, color 0.15s;
+}
+.btn--outline:hover { border-color: var(--primary); color: var(--primary); }
+.btn--sm { padding: 0.4rem 0.85rem; font-size: 0.8rem; }
+
+@media (max-width: 600px) {
+	.alt-card { grid-template-columns: 1.8rem 44px 1fr; }
+	.alt-score { display: none; }
+	.current-tool { flex-direction: column; }
+}
+</style>

@@ -136,6 +136,10 @@ for (const t of allTools) {
 			<p class="no-results" id="no-results" style="display:none;">
 				No tools found. <button id="clear-filters">Clear filters</button>
 			</p>
+
+			<div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+				<button class="load-more-btn" id="load-more-btn">Load more</button>
+			</div>
 		</div>
 	</div>
 </main>
@@ -190,6 +194,8 @@ const SUBCATS: Record<string, string[]> = {
 	'others': ['Large Language Models','AI Models','Open Source AI','AI Games'],
 };
 
+const PAGE_SIZE = 24;
+let page = 1;
 let activeCat = 'all';
 let activePrice = 'all';
 let activeSubcat = '';
@@ -203,6 +209,8 @@ const noResults = document.getElementById('no-results')!;
 const subcatsEl = document.getElementById('subcats')!;
 const searchInput = document.getElementById('tools-search') as HTMLInputElement;
 const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+const loadMoreWrap = document.getElementById('load-more-wrap')!;
+const loadMoreBtn = document.getElementById('load-more-btn')!;
 
 // Read URL params on load
 const params = new URLSearchParams(window.location.search);
@@ -229,6 +237,7 @@ function applyFilters() {
 		grid.appendChild(card);
 	});
 
+	const matched: HTMLElement[] = [];
 	cards.forEach(card => {
 		const cat = card.dataset.category ?? '';
 		const price = card.dataset.pricing ?? '';
@@ -240,16 +249,23 @@ function applyFilters() {
 		const subcatMatch = !activeSubcat || subcat === activeSubcat;
 		const searchMatch = !q || name.includes(q);
 
-		if (catMatch && priceMatch && subcatMatch && searchMatch) {
-			card.style.display = '';
-			visible++;
-		} else {
-			card.style.display = 'none';
-		}
+		if (catMatch && priceMatch && subcatMatch && searchMatch) matched.push(card);
 	});
 
-	label.textContent = `Showing ${visible} tool${visible !== 1 ? 's' : ''}${activeCat !== 'all' ? ` in ${activeCat.replace(/-/g, ' ')}` : ''}`;
-	noResults.style.display = visible === 0 ? '' : 'none';
+	const limit = page * PAGE_SIZE;
+	cards.forEach(card => { card.style.display = 'none'; });
+	matched.slice(0, limit).forEach(card => { card.style.display = ''; visible++; });
+
+	const remaining = matched.length - limit;
+	if (remaining > 0) {
+		loadMoreWrap.style.display = '';
+		loadMoreBtn.textContent = `Load more (${remaining} remaining)`;
+	} else {
+		loadMoreWrap.style.display = 'none';
+	}
+
+	label.textContent = `Showing ${Math.min(limit, matched.length)} of ${matched.length} tool${matched.length !== 1 ? 's' : ''}${activeCat !== 'all' ? ` in ${activeCat.replace(/-/g, ' ')}` : ''}`;
+	noResults.style.display = matched.length === 0 ? '' : 'none';
 
 	// Subcategory chips
 	if (activeCat !== 'all' && SUBCATS[activeCat]) {
@@ -270,6 +286,7 @@ document.querySelectorAll<HTMLElement>('[data-filter-cat]').forEach(btn => {
 		btn.classList.add('sidebar__item--active');
 		activeCat = btn.dataset.filterCat!;
 		activeSubcat = '';
+		page = 1;
 		applyFilters();
 	});
 });
@@ -280,6 +297,7 @@ document.querySelectorAll<HTMLElement>('[data-filter-price]').forEach(btn => {
 		document.querySelectorAll('[data-filter-price]').forEach(b => b.classList.remove('sidebar__item--active'));
 		btn.classList.add('sidebar__item--active');
 		activePrice = btn.dataset.filterPrice!;
+		page = 1;
 		applyFilters();
 	});
 });
@@ -289,24 +307,33 @@ subcatsEl.addEventListener('click', (e) => {
 	const t = (e.target as HTMLElement).closest<HTMLElement>('.subcat-chip');
 	if (!t) return;
 	activeSubcat = t.dataset.sub ?? '';
+	page = 1;
 	applyFilters();
 });
 
 // Search
 searchInput.addEventListener('input', () => {
 	searchQuery = searchInput.value;
+	page = 1;
 	applyFilters();
 });
 
 // Sort
 sortSelect.addEventListener('change', () => {
 	sortMode = sortSelect.value;
+	page = 1;
+	applyFilters();
+});
+
+// Load more
+loadMoreBtn.addEventListener('click', () => {
+	page++;
 	applyFilters();
 });
 
 // Clear
 document.getElementById('clear-filters')?.addEventListener('click', () => {
-	activeCat = 'all'; activePrice = 'all'; activeSubcat = ''; searchQuery = '';
+	activeCat = 'all'; activePrice = 'all'; activeSubcat = ''; searchQuery = ''; page = 1;
 	searchInput.value = '';
 	document.querySelectorAll('[data-filter-cat]').forEach((b, i) => b.classList.toggle('sidebar__item--active', i === 0));
 	document.querySelectorAll('[data-filter-price]').forEach((b, i) => b.classList.toggle('sidebar__item--active', i === 0));
@@ -468,6 +495,24 @@ if (activeCat !== 'all') {
 		grid-template-columns: repeat(2, 1fr);
 		gap: 1rem;
 	}
+
+	.load-more-wrap {
+		text-align: center;
+		padding: 1.5rem 0 0.5rem;
+	}
+	.load-more-btn {
+		padding: 0.65rem 2rem;
+		background: #fff;
+		border: 2px solid var(--primary);
+		border-radius: var(--radius);
+		color: var(--primary);
+		font-size: 0.9rem;
+		font-weight: 700;
+		cursor: pointer;
+		font-family: inherit;
+		transition: all 0.15s;
+	}
+	.load-more-btn:hover { background: var(--primary); color: #fff; }
 
 	.no-results {
 		text-align: center;

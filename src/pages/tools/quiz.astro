@@ -1,0 +1,1018 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { TOOL_CATEGORIES, SITE_TITLE } from '../../consts';
+
+const allTools = await getCollection('tools');
+
+// Compact tool data passed to client — only what scoring needs
+const toolsData = allTools.map(t => ({
+  id: t.id,
+  name: t.data.name,
+  description: t.data.description,
+  category: t.data.category,
+  pricing: t.data.pricing,
+  url: t.data.url,
+  rating: t.data.rating ?? null,
+  featured: t.data.featured,
+  tags: t.data.tags,
+}));
+
+const catsData = TOOL_CATEGORIES.map(c => ({ slug: c.slug, name: c.name, emoji: c.emoji }));
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <BaseHead
+    title={`AI Tool Finder Quiz — Find Your Perfect Match | ${SITE_TITLE}`}
+    description="Answer 5 quick questions and get personalised AI tool recommendations from 200+ tools — matched to your goals, role, and budget."
+  />
+</head>
+<body class="quiz-page">
+<Header />
+<main id="quiz-main">
+  <div id="quiz-app" role="main" aria-live="polite">
+    <noscript>
+      <div class="noscript-msg">
+        <p>This quiz requires JavaScript. <a href="/tools/">Browse all 200+ AI tools →</a></p>
+      </div>
+    </noscript>
+  </div>
+</main>
+<Footer />
+</body>
+</html>
+
+<script define:vars={{ toolsData, catsData }}>
+
+/* ─── DATA ────────────────────────────────────────────────────── */
+
+const QUESTIONS = [
+  {
+    id: 'goal',
+    step: 1,
+    question: 'What do you mainly want to achieve with AI?',
+    subtitle: 'Pick the one that fits best — we\'ll personalise your results from 200+ tools.',
+    options: [
+      { id: 'write',    emoji: '✍️', label: 'Write better content',       sub: 'Blog posts, emails, copy, scripts' },
+      { id: 'images',   emoji: '🖼️', label: 'Generate images & visuals',  sub: 'Photos, illustrations, art, design' },
+      { id: 'code',     emoji: '💻', label: 'Code and build software',     sub: 'Autocomplete, debugging, generation' },
+      { id: 'business', emoji: '📊', label: 'Run and grow my business',    sub: 'Marketing, automation, CRM, analytics' },
+      { id: 'video',    emoji: '🎬', label: 'Create videos and audio',     sub: 'Video generation, voice cloning, music' },
+      { id: 'research', emoji: '💬', label: 'Research and get answers',    sub: 'Q&A, summarise documents, learn fast' },
+      { id: 'design',   emoji: '🎨', label: 'Design and creative work',    sub: 'UI, logos, branding, 3D, graphics' },
+      { id: 'music',    emoji: '🎵', label: 'Make music and sounds',       sub: 'Composition, vocals, audio editing' },
+    ],
+  },
+  {
+    id: 'role',
+    step: 2,
+    question: 'Which best describes you?',
+    subtitle: 'This helps us weight tools suited to your context and experience.',
+    options: [
+      { id: 'student',  emoji: '🎓', label: 'Student or researcher',       sub: 'Learning, essays, research papers' },
+      { id: 'pro',      emoji: '💼', label: 'Working professional',         sub: 'Productivity, reports, communication' },
+      { id: 'dev',      emoji: '🧑‍💻', label: 'Developer or engineer',     sub: 'APIs, code, technical side projects' },
+      { id: 'creator',  emoji: '🎨', label: 'Content creator or artist',   sub: 'YouTube, social, design, music' },
+      { id: 'biz',      emoji: '🏢', label: 'Business owner or marketer',  sub: 'Growth, campaigns, customer ops' },
+      { id: 'newcomer', emoji: '🤔', label: 'Curious AI newcomer',         sub: 'Just exploring — new to all this' },
+    ],
+  },
+  {
+    id: 'budget',
+    step: 3,
+    question: "What's your budget?",
+    subtitle: "We'll make sure every recommendation fits your spending comfort.",
+    options: [
+      { id: 'free',     emoji: '🆓', label: 'Free tools only',            sub: 'No credit card, no subscriptions' },
+      { id: 'freemium', emoji: '💳', label: 'Free to start, pay if good', sub: 'Freemium — upgrade only if it\'s worth it' },
+      { id: 'any',      emoji: '🚀', label: 'Budget isn\'t the priority', sub: 'Show me the best, whatever the price' },
+    ],
+  },
+  {
+    id: 'freq',
+    step: 4,
+    question: 'How will you use AI day-to-day?',
+    subtitle: 'Frequent use cases versus one-off projects need different tools.',
+    options: [
+      { id: 'daily',     emoji: '📅', label: 'Every day for work or study', sub: 'I\'ll use this constantly' },
+      { id: 'project',   emoji: '🎯', label: 'For a specific project',      sub: 'One big use case I\'m working on' },
+      { id: 'exploring', emoji: '🔍', label: 'Just exploring AI',           sub: 'Curious — no specific plan yet' },
+      { id: 'building',  emoji: '🔨', label: 'Building something with AI',  sub: 'Integrating AI into a product' },
+    ],
+  },
+  {
+    id: 'tech',
+    step: 5,
+    question: 'How technical are you?',
+    subtitle: "We'll match you with tools that fit your comfort level.",
+    options: [
+      { id: 'easy', emoji: '🖱️', label: 'Non-technical',         sub: 'Point, click, done — no setup please' },
+      { id: 'mid',  emoji: '⚙️', label: 'Somewhat technical',    sub: 'Fine with some configuration' },
+      { id: 'dev',  emoji: '🔌', label: 'Very technical',         sub: 'I want APIs, SDKs, and integrations' },
+    ],
+  },
+];
+
+/* ─── SCORING MATRIX ──────────────────────────────────────────── */
+
+const SCORES = {
+  goal: {
+    write:    { 'ai-writing': 5, 'ai-marketing': 3, 'ai-productivity': 2 },
+    images:   { 'ai-image': 5, 'ai-art': 4, 'ai-design': 2 },
+    code:     { 'ai-coding': 5, 'ai-productivity': 2 },
+    business: { 'ai-business': 5, 'ai-marketing': 4, 'ai-productivity': 3 },
+    video:    { 'ai-video': 5, 'ai-voice': 3, 'ai-music': 2 },
+    research: { 'ai-chatbot': 5, 'ai-research': 4, 'ai-learning': 3 },
+    design:   { 'ai-design': 5, 'ai-art': 3, 'ai-image': 2 },
+    music:    { 'ai-music': 5, 'ai-voice': 3 },
+  },
+  role: {
+    student:  { 'ai-learning': 3, 'ai-research': 3, 'ai-writing': 2, 'ai-chatbot': 2 },
+    pro:      { 'ai-productivity': 3, 'ai-writing': 2, 'ai-business': 2 },
+    dev:      { 'ai-coding': 4, 'ai-productivity': 2 },
+    creator:  { 'ai-image': 2, 'ai-video': 2, 'ai-art': 2, 'ai-writing': 2, 'ai-music': 2 },
+    biz:      { 'ai-business': 3, 'ai-marketing': 3, 'ai-productivity': 2 },
+    newcomer: { 'ai-chatbot': 3, 'ai-learning': 3 },
+  },
+  freq: {
+    daily:     { 'ai-productivity': 2, 'ai-writing': 1 },
+    project:   {},
+    exploring: { 'ai-chatbot': 2, 'ai-learning': 1 },
+    building:  { 'ai-coding': 2, 'ai-productivity': 1 },
+  },
+  tech: {
+    easy: {},
+    mid:  {},
+    dev:  { 'ai-coding': 2 },
+  },
+};
+
+const PRICING_FILTER = {
+  free:     ['free'],
+  freemium: ['free', 'freemium'],
+  any:      ['free', 'freemium', 'paid'],
+};
+
+/* ─── STATE ───────────────────────────────────────────────────── */
+
+const state = {
+  step: 0,
+  answers: {},
+  results: [],
+  transitioning: false,
+};
+
+/* ─── SCORING ENGINE ──────────────────────────────────────────── */
+
+function scoreTools(answers) {
+  // Build category weight map
+  const catWeights = {};
+  for (const [qId, optId] of Object.entries(answers)) {
+    if (qId === 'budget') continue;
+    const map = SCORES[qId]?.[optId] ?? {};
+    for (const [cat, w] of Object.entries(map)) {
+      catWeights[cat] = (catWeights[cat] ?? 0) + w;
+    }
+  }
+
+  const allowedPricing = PRICING_FILTER[answers.budget ?? 'any'];
+
+  const scored = toolsData
+    .filter(t => allowedPricing.includes(t.pricing))
+    .map(t => {
+      let score = catWeights[t.category] ?? 0;
+      // Bonuses
+      if (t.featured) score += 1;
+      if (t.rating)   score += (t.rating - 4.0) * 0.5; // boost high-rated
+      if (answers.budget === 'free' && t.pricing === 'free') score += 1.5;
+      if (answers.tech === 'dev' && (t.tags?.includes('api') || t.tags?.includes('sdk') || t.category === 'ai-coding')) score += 1;
+      if (answers.tech === 'easy' && t.rating && t.rating >= 4.5) score += 0.5;
+      return { ...t, score };
+    })
+    .filter(t => t.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  // Normalize match % — top tool = 98%, floor = 62%
+  const maxScore = scored[0]?.score ?? 1;
+  return scored.slice(0, 8).map((t, i) => ({
+    ...t,
+    matchPct: Math.round(Math.max(62, Math.min(98, 98 - i * (36 / Math.min(scored.length - 1, 7))))),
+  }));
+}
+
+function getMatchReason(tool, answers) {
+  const reasons = [];
+  const cat = catsData.find(c => c.slug === tool.category);
+
+  if (answers.goal === 'write'    && ['ai-writing','ai-marketing'].includes(tool.category)) reasons.push('matches your writing goal');
+  if (answers.goal === 'images'   && ['ai-image','ai-art'].includes(tool.category))         reasons.push('perfect for image creation');
+  if (answers.goal === 'code'     && tool.category === 'ai-coding')                         reasons.push('built for coders');
+  if (answers.goal === 'business' && ['ai-business','ai-marketing'].includes(tool.category)) reasons.push('built for business');
+  if (answers.goal === 'video'    && ['ai-video','ai-voice'].includes(tool.category))       reasons.push('great for video & audio');
+  if (answers.goal === 'research' && ['ai-chatbot','ai-research'].includes(tool.category)) reasons.push('ideal for research');
+  if (answers.goal === 'design'   && ['ai-design','ai-art'].includes(tool.category))       reasons.push('top design tool');
+  if (answers.goal === 'music'    && ['ai-music','ai-voice'].includes(tool.category))      reasons.push('made for music');
+
+  if (answers.role === 'student'  && ['ai-learning','ai-research'].includes(tool.category)) reasons.push('popular with students');
+  if (answers.role === 'dev'      && tool.category === 'ai-coding')                         reasons.push('developer favourite');
+  if (answers.role === 'creator'  && ['ai-image','ai-video','ai-art','ai-music'].includes(tool.category)) reasons.push('loved by creators');
+  if (answers.role === 'newcomer' && ['ai-chatbot','ai-learning'].includes(tool.category)) reasons.push('great starting point');
+
+  if (answers.budget === 'free' && tool.pricing === 'free') reasons.push('100% free');
+  if (tool.rating && tool.rating >= 4.7) reasons.push(`top-rated ${tool.rating}/5`);
+  if (tool.featured) reasons.push("editor's pick");
+
+  const top = reasons.slice(0, 2);
+  if (top.length === 0 && cat) top.push(`top ${cat.name} tool`);
+  return top.join(' · ');
+}
+
+function getCategoryOf(tool) {
+  return catsData.find(c => c.slug === tool.category);
+}
+
+function faviconUrl(url) {
+  try { return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=64`; }
+  catch { return ''; }
+}
+
+function pricingBadge(pricing) {
+  const MAP = {
+    free:     { bg: '#E0F5EE', color: '#00875A', label: 'Free' },
+    freemium: { bg: '#EEF3FF', color: '#3B5BDB', label: 'Freemium' },
+    paid:     { bg: '#FFF4E6', color: '#E67700', label: 'Paid' },
+  };
+  return MAP[pricing] ?? MAP.freemium;
+}
+
+/* ─── URL SHARING ─────────────────────────────────────────────── */
+
+function encodeAnswers(answers) {
+  const keys = ['goal','role','budget','freq','tech'];
+  return keys.map(k => answers[k] ?? '').join(',');
+}
+
+function decodeAnswers(str) {
+  if (!str) return null;
+  const keys = ['goal','role','budget','freq','tech'];
+  const vals = str.split(',');
+  const out = {};
+  keys.forEach((k, i) => { if (vals[i]) out[k] = vals[i]; });
+  return Object.keys(out).length === 5 ? out : null;
+}
+
+/* ─── RENDERERS ───────────────────────────────────────────────── */
+
+function renderIntro() {
+  return `
+    <div class="qz-intro">
+      <div class="qz-intro__icon">🎯</div>
+      <h1 class="qz-intro__title">Find Your Perfect AI Tool</h1>
+      <p class="qz-intro__sub">5 quick questions. Personalised matches from 200+ AI tools — filtered to your goals, role, and budget.</p>
+      <div class="qz-intro__stats">
+        <span>✓ 200+ tools</span>
+        <span>✓ 22 categories</span>
+        <span>✓ ~1 minute</span>
+      </div>
+      <button class="qz-start-btn" id="qz-start">Start the Quiz →</button>
+      <p class="qz-intro__privacy">No sign-up. No data stored. Results are instant.</p>
+    </div>
+  `;
+}
+
+function renderQuestion(q, currentAnswer) {
+  const progress = (q.step / 5) * 100;
+  return `
+    <div class="qz-question">
+      <div class="qz-progress">
+        <div class="qz-progress__bar" style="width:${progress}%"></div>
+      </div>
+      <div class="qz-q-header">
+        <span class="qz-step">Question ${q.step} of 5</span>
+        ${q.step > 1 ? `<button class="qz-back-btn" id="qz-back">← Back</button>` : ''}
+      </div>
+      <h2 class="qz-q-title">${q.question}</h2>
+      <p class="qz-q-sub">${q.subtitle}</p>
+      <div class="qz-options qz-options--${q.options.length <= 4 ? 'small' : 'large'}" id="qz-options">
+        ${q.options.map(opt => `
+          <button
+            class="qz-option${currentAnswer === opt.id ? ' selected' : ''}"
+            data-value="${opt.id}"
+            aria-pressed="${currentAnswer === opt.id ? 'true' : 'false'}"
+          >
+            <span class="qz-option__emoji">${opt.emoji}</span>
+            <span class="qz-option__label">${opt.label}</span>
+            <span class="qz-option__sub">${opt.sub}</span>
+            <span class="qz-option__check" aria-hidden="true">✓</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="qz-nav">
+        <button class="qz-next-btn${currentAnswer ? '' : ' disabled'}" id="qz-next" ${!currentAnswer ? 'disabled' : ''}>
+          ${q.step < 5 ? 'Next Question →' : 'See My Matches →'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderCalculating() {
+  return `
+    <div class="qz-calculating">
+      <div class="qz-calc-spinner"></div>
+      <h2>Finding your matches…</h2>
+      <p>Scoring 200+ tools against your answers</p>
+      <div class="qz-calc-steps">
+        <span class="qz-calc-step active" id="cs1">Analysing your goals</span>
+        <span class="qz-calc-step" id="cs2">Filtering by budget</span>
+        <span class="qz-calc-step" id="cs3">Ranking top matches</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderResults(results, answers) {
+  const topMatches = results.slice(0, 3);
+  const alsoConsider = results.slice(3);
+  const goalLabel = QUESTIONS[0].options.find(o => o.id === answers.goal)?.label ?? '';
+  const roleLabel = QUESTIONS[1].options.find(o => o.id === answers.role)?.label ?? '';
+
+  const shareUrl = `${window.location.origin}/tools/quiz/?r=${encodeURIComponent(encodeAnswers(answers))}`;
+
+  return `
+    <div class="qz-results">
+      <div class="qz-results__hero">
+        <div class="qz-results__badge">Your AI Matches</div>
+        <h1 class="qz-results__title">Here are your top picks</h1>
+        <p class="qz-results__sub">
+          Based on your goal to <strong>${goalLabel.toLowerCase()}</strong> as a <strong>${roleLabel.toLowerCase()}</strong>
+          — scored and ranked from ${toolsData.filter(t => PRICING_FILTER[answers.budget].includes(t.pricing)).length}+ eligible tools.
+        </p>
+      </div>
+
+      <div class="qz-top-matches">
+        ${topMatches.map((tool, i) => {
+          const cat = getCategoryOf(tool);
+          const badge = pricingBadge(tool.pricing);
+          const reason = getMatchReason(tool, answers);
+          const favicon = faviconUrl(tool.url);
+          const medals = ['🥇','🥈','🥉'];
+          return `
+            <a href="/tools/${tool.id}/" class="qz-match-card qz-match-card--top" target="_self">
+              <div class="qz-match-card__rank">${medals[i]}</div>
+              <div class="qz-match-card__head">
+                <div class="qz-match-logo">
+                  <img src="${favicon}" alt="${tool.name}" width="44" height="44" loading="${i === 0 ? 'eager' : 'lazy'}"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                  <span class="qz-match-logo-fb" style="display:none">${cat?.emoji ?? '🤖'}</span>
+                </div>
+                <div class="qz-match-info">
+                  <div class="qz-match-name-row">
+                    <h3 class="qz-match-name">${tool.name}</h3>
+                    <span class="qz-pricing-pill" style="background:${badge.bg};color:${badge.color}">${badge.label}</span>
+                  </div>
+                  <span class="qz-match-cat">${cat?.emoji ?? ''} ${cat?.name ?? ''}</span>
+                </div>
+                <div class="qz-match-pct">
+                  <span class="qz-pct-num">${tool.matchPct}%</span>
+                  <span class="qz-pct-label">match</span>
+                </div>
+              </div>
+              <div class="qz-match-bar-wrap">
+                <div class="qz-match-bar" style="--pct:${tool.matchPct}%"></div>
+              </div>
+              <p class="qz-match-desc">${tool.description}</p>
+              ${reason ? `<div class="qz-match-reason">✓ ${reason}</div>` : ''}
+              <span class="qz-match-cta">Explore ${tool.name} →</span>
+            </a>
+          `;
+        }).join('')}
+      </div>
+
+      ${alsoConsider.length > 0 ? `
+        <div class="qz-also">
+          <h2 class="qz-also__title">Also worth considering</h2>
+          <div class="qz-also-grid">
+            ${alsoConsider.map(tool => {
+              const cat = getCategoryOf(tool);
+              const badge = pricingBadge(tool.pricing);
+              const favicon = faviconUrl(tool.url);
+              return `
+                <a href="/tools/${tool.id}/" class="qz-also-card" target="_self">
+                  <div class="qz-also-head">
+                    <div class="qz-also-logo">
+                      <img src="${favicon}" alt="${tool.name}" width="32" height="32" loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                      <span class="qz-also-logo-fb" style="display:none">${cat?.emoji ?? '🤖'}</span>
+                    </div>
+                    <div>
+                      <div class="qz-also-name">${tool.name}</div>
+                      <span class="qz-pricing-pill" style="background:${badge.bg};color:${badge.color};font-size:0.6rem">${badge.label}</span>
+                    </div>
+                    <span class="qz-also-pct">${tool.matchPct}%</span>
+                  </div>
+                  <p class="qz-also-desc">${tool.description}</p>
+                </a>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="qz-results-actions">
+        <button class="qz-retake-btn" id="qz-retake">↺ Retake Quiz</button>
+        <button class="qz-share-btn" id="qz-share" data-url="${shareUrl}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share Results
+        </button>
+        <a href="/tools/" class="qz-browse-btn">Browse All Tools →</a>
+      </div>
+
+      <p class="qz-disclaimer">Results are personalised based on your answers. <a href="/rating-methodology/">How we rate tools.</a></p>
+    </div>
+  `;
+}
+
+/* ─── TRANSITIONS ─────────────────────────────────────────────── */
+
+function mount(html, direction = 'forward') {
+  const app = document.getElementById('quiz-app');
+  if (!app) return;
+
+  const incoming = document.createElement('div');
+  incoming.className = `qz-screen qz-screen--${direction === 'forward' ? 'enter-right' : 'enter-left'}`;
+  incoming.innerHTML = html;
+
+  const current = app.querySelector('.qz-screen');
+  if (current) {
+    current.classList.add(direction === 'forward' ? 'qz-screen--exit-left' : 'qz-screen--exit-right');
+    setTimeout(() => current.remove(), 280);
+  }
+
+  app.appendChild(incoming);
+  // Trigger reflow then animate in
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      incoming.classList.remove('qz-screen--enter-right', 'qz-screen--enter-left');
+      incoming.classList.add('qz-screen--active');
+    });
+  });
+
+  bindEvents();
+}
+
+/* ─── EVENT BINDING ───────────────────────────────────────────── */
+
+function bindEvents() {
+  const app = document.getElementById('quiz-app');
+  if (!app) return;
+
+  // Start button
+  app.querySelector('#qz-start')?.addEventListener('click', () => {
+    state.step = 1;
+    mount(renderQuestion(QUESTIONS[0], state.answers['goal']));
+  });
+
+  // Option selection
+  app.querySelector('#qz-options')?.addEventListener('click', e => {
+    const btn = e.target.closest('.qz-option');
+    if (!btn) return;
+    const val = btn.dataset.value;
+    const qId = QUESTIONS[state.step - 1].id;
+    state.answers[qId] = val;
+
+    // Update UI without full re-render
+    app.querySelectorAll('.qz-option').forEach(b => {
+      const sel = b.dataset.value === val;
+      b.classList.toggle('selected', sel);
+      b.setAttribute('aria-pressed', sel ? 'true' : 'false');
+    });
+    const nextBtn = app.querySelector('#qz-next');
+    if (nextBtn) { nextBtn.disabled = false; nextBtn.classList.remove('disabled'); }
+  });
+
+  // Next button
+  app.querySelector('#qz-next')?.addEventListener('click', () => {
+    const qId = QUESTIONS[state.step - 1].id;
+    if (!state.answers[qId]) return;
+    if (state.step < 5) {
+      state.step++;
+      mount(renderQuestion(QUESTIONS[state.step - 1], state.answers[QUESTIONS[state.step - 1].id]));
+    } else {
+      // Go to calculating → results
+      state.step = 6;
+      mount(renderCalculating());
+      // Animate calculating steps
+      let s = 1;
+      const iv = setInterval(() => {
+        if (s > 3) { clearInterval(iv); return; }
+        document.getElementById(`cs${s}`)?.classList.add('done');
+        s++;
+        if (s <= 3) document.getElementById(`cs${s}`)?.classList.add('active');
+      }, 350);
+      setTimeout(() => {
+        state.results = scoreTools(state.answers);
+        state.step = 7;
+        // Update URL for sharing
+        const url = new URL(window.location.href);
+        url.searchParams.set('r', encodeAnswers(state.answers));
+        history.replaceState(null, '', url.toString());
+        mount(renderResults(state.results, state.answers));
+        // Animate match bars
+        setTimeout(() => {
+          document.querySelectorAll('.qz-match-bar').forEach(bar => {
+            bar.classList.add('animated');
+          });
+        }, 100);
+      }, 1400);
+    }
+  });
+
+  // Back button
+  app.querySelector('#qz-back')?.addEventListener('click', () => {
+    if (state.step > 1) {
+      state.step--;
+      mount(renderQuestion(QUESTIONS[state.step - 1], state.answers[QUESTIONS[state.step - 1].id]), 'back');
+    }
+  });
+
+  // Retake
+  app.querySelector('#qz-retake')?.addEventListener('click', () => {
+    state.step = 0;
+    state.answers = {};
+    state.results = [];
+    history.replaceState(null, '', window.location.pathname);
+    mount(renderIntro(), 'back');
+  });
+
+  // Share
+  app.querySelector('#qz-share')?.addEventListener('click', async function() {
+    const url = this.dataset.url;
+    try {
+      await navigator.clipboard.writeText(url);
+      this.textContent = '✓ Link copied!';
+      this.style.background = 'var(--primary)';
+      this.style.color = '#fff';
+      setTimeout(() => {
+        this.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share Results`;
+        this.style.background = '';
+        this.style.color = '';
+      }, 2500);
+    } catch {
+      prompt('Copy this link:', url);
+    }
+  });
+}
+
+/* ─── INIT ────────────────────────────────────────────────────── */
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Check for shared results in URL
+  const params = new URLSearchParams(window.location.search);
+  const shared = params.get('r');
+  const decoded = shared ? decodeAnswers(decodeURIComponent(shared)) : null;
+
+  if (decoded) {
+    state.answers = decoded;
+    state.results = scoreTools(decoded);
+    state.step = 7;
+    const app = document.getElementById('quiz-app');
+    if (app) {
+      const screen = document.createElement('div');
+      screen.className = 'qz-screen qz-screen--active';
+      screen.innerHTML = renderResults(state.results, decoded);
+      app.appendChild(screen);
+      bindEvents();
+      setTimeout(() => {
+        document.querySelectorAll('.qz-match-bar').forEach(b => b.classList.add('animated'));
+      }, 200);
+    }
+  } else {
+    const app = document.getElementById('quiz-app');
+    if (app) {
+      const screen = document.createElement('div');
+      screen.className = 'qz-screen qz-screen--active';
+      screen.innerHTML = renderIntro();
+      app.appendChild(screen);
+      bindEvents();
+    }
+  }
+});
+
+</script>
+
+<style>
+/* ─── PAGE SHELL ─────────────────────────────────────────────── */
+.quiz-page #quiz-main {
+  min-height: 80vh;
+  background: linear-gradient(160deg, var(--primary-light) 0%, #f8fffe 35%, var(--bg) 100%);
+}
+
+#quiz-app {
+  position: relative;
+  overflow: hidden;
+  min-height: 80vh;
+}
+
+.noscript-msg { padding: 4rem; text-align: center; color: rgb(var(--gray)); }
+
+/* ─── SCREEN TRANSITIONS ─────────────────────────────────────── */
+.qz-screen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem 3rem;
+}
+.qz-screen--active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  position: relative;
+}
+.qz-screen--enter-right  { opacity: 0; transform: translateX(60px); }
+.qz-screen--enter-left   { opacity: 0; transform: translateX(-60px); }
+.qz-screen--exit-left    { opacity: 0; transform: translateX(-60px); pointer-events: none; }
+.qz-screen--exit-right   { opacity: 0; transform: translateX(60px); pointer-events: none; }
+
+/* ─── INTRO ───────────────────────────────────────────────────── */
+.qz-intro {
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  padding: 3rem 0;
+}
+.qz-intro__icon { font-size: 4rem; margin-bottom: 1rem; display: block; }
+.qz-intro__title {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  color: rgb(var(--black));
+  margin-bottom: 0.75rem;
+  line-height: 1.15;
+}
+.qz-intro__sub { font-size: 1.05rem; color: rgb(var(--gray-dark)); line-height: 1.65; margin-bottom: 1.25rem; }
+.qz-intro__stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 2rem;
+}
+.qz-start-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.5rem;
+  background: var(--primary);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 20px rgba(0,135,90,0.3);
+  font-family: inherit;
+}
+.qz-start-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(0,135,90,0.4);
+}
+.qz-intro__privacy { font-size: 0.75rem; color: rgb(var(--gray)); margin-top: 1rem; }
+
+/* ─── QUESTION SCREEN ─────────────────────────────────────────── */
+.qz-question {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.qz-progress {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+.qz-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #00c896);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.qz-q-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+.qz-step { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); }
+.qz-back-btn {
+  background: none; border: none;
+  font-size: 0.82rem; color: rgb(var(--gray));
+  cursor: pointer; font-family: inherit;
+  padding: 0.2rem 0;
+  transition: color 0.15s;
+}
+.qz-back-btn:hover { color: rgb(var(--black)); }
+
+.qz-q-title {
+  font-size: clamp(1.3rem, 3.5vw, 1.85rem);
+  font-weight: 800;
+  color: rgb(var(--black));
+  line-height: 1.25;
+  margin-bottom: 0.4rem;
+}
+.qz-q-sub { font-size: 0.9rem; color: rgb(var(--gray)); margin-bottom: 1.75rem; }
+
+/* Option grids */
+.qz-options--large {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.65rem;
+}
+.qz-options--small {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.65rem;
+}
+
+.qz-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  padding: 1rem 1.1rem;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.qz-option:hover {
+  border-color: rgba(0,135,90,0.4);
+  background: var(--primary-light);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(0,135,90,0.1);
+}
+.qz-option.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  box-shadow: 0 0 0 1px var(--primary), 0 4px 16px rgba(0,135,90,0.15);
+}
+.qz-option__emoji { font-size: 1.4rem; margin-bottom: 0.2rem; }
+.qz-option__label { font-size: 0.9rem; font-weight: 700; color: rgb(var(--black)); }
+.qz-option__sub { font-size: 0.75rem; color: rgb(var(--gray)); line-height: 1.4; }
+.qz-option__check {
+  position: absolute;
+  top: 0.6rem; right: 0.75rem;
+  width: 20px; height: 20px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.qz-option.selected .qz-option__check { opacity: 1; }
+
+.qz-nav { margin-top: 1.75rem; display: flex; justify-content: flex-end; }
+.qz-next-btn {
+  padding: 0.85rem 2.25rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.97rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  box-shadow: 0 4px 16px rgba(0,135,90,0.25);
+}
+.qz-next-btn:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,135,90,0.35);
+}
+.qz-next-btn.disabled, .qz-next-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ─── CALCULATING ─────────────────────────────────────────────── */
+.qz-calculating {
+  text-align: center;
+  padding: 4rem 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.qz-calc-spinner {
+  width: 56px; height: 56px;
+  border: 4px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: qz-spin 0.8s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+@keyframes qz-spin { to { transform: rotate(360deg); } }
+.qz-calculating h2 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+.qz-calculating p { color: rgb(var(--gray)); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.qz-calc-steps { display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
+.qz-calc-step { font-size: 0.82rem; color: rgb(var(--gray)); transition: color 0.3s; }
+.qz-calc-step.active { color: var(--primary); font-weight: 600; }
+.qz-calc-step.done::before { content: '✓ '; }
+.qz-calc-step.done { color: var(--primary); }
+
+/* ─── RESULTS ─────────────────────────────────────────────────── */
+.qz-results {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+.qz-results__hero { text-align: center; margin-bottom: 2.5rem; }
+.qz-results__badge {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.9rem;
+  border-radius: 99px;
+  margin-bottom: 0.75rem;
+}
+.qz-results__title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; margin-bottom: 0.6rem; }
+.qz-results__sub { font-size: 0.95rem; color: rgb(var(--gray-dark)); max-width: 560px; margin: 0 auto; line-height: 1.65; }
+
+/* Top 3 match cards */
+.qz-top-matches {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+@media (min-width: 700px) {
+  .qz-top-matches { grid-template-columns: repeat(3, 1fr); }
+}
+
+.qz-match-card--top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.4rem 1.35rem;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+}
+.qz-match-card--top:first-child {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px rgba(0,135,90,0.15), 0 8px 28px rgba(0,135,90,0.12);
+}
+.qz-match-card--top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,135,90,0.15);
+  border-color: rgba(0,135,90,0.45);
+}
+.qz-match-card__rank { font-size: 1.4rem; margin-bottom: 0.1rem; }
+.qz-match-card__head { display: flex; align-items: center; gap: 0.65rem; }
+.qz-match-logo {
+  width: 46px; height: 46px;
+  background: var(--primary-light);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; overflow: hidden;
+}
+.qz-match-logo img { width: 34px; height: 34px; object-fit: contain; }
+.qz-match-logo-fb { font-size: 1.3rem; }
+.qz-match-info { flex: 1; min-width: 0; }
+.qz-match-name-row { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.15rem; }
+.qz-match-name { font-size: 0.97rem; font-weight: 700; margin: 0; }
+.qz-match-card--top:hover .qz-match-name { color: var(--primary); }
+.qz-match-cat { font-size: 0.7rem; color: rgb(var(--gray)); }
+.qz-pricing-pill { font-size: 0.63rem; font-weight: 700; padding: 0.12rem 0.45rem; border-radius: 99px; flex-shrink: 0; }
+
+.qz-match-pct { text-align: right; flex-shrink: 0; }
+.qz-pct-num { display: block; font-size: 1.5rem; font-weight: 800; color: var(--primary); line-height: 1; }
+.qz-pct-label { font-size: 0.65rem; color: rgb(var(--gray)); text-transform: uppercase; letter-spacing: 0.06em; }
+
+.qz-match-bar-wrap { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.qz-match-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #00c896);
+  border-radius: 3px;
+  width: 0;
+  transition: width 0.8s ease;
+}
+.qz-match-bar.animated { width: var(--pct); }
+
+.qz-match-desc { font-size: 0.8rem; color: rgb(var(--gray-dark)); margin: 0; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qz-match-reason { font-size: 0.73rem; color: var(--primary); font-weight: 600; background: var(--primary-light); padding: 0.25rem 0.6rem; border-radius: 99px; width: fit-content; }
+.qz-match-cta { font-size: 0.8rem; font-weight: 700; color: var(--primary); margin-top: auto; }
+
+/* Also consider */
+.qz-also { margin-bottom: 2.5rem; }
+.qz-also__title { font-size: 1rem; font-weight: 700; color: rgb(var(--gray)); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.85rem; }
+.qz-also-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.7rem; }
+.qz-also-card {
+  padding: 0.9rem 1rem;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.qz-also-card:hover { border-color: rgba(0,135,90,0.3); transform: translateY(-1px); }
+.qz-also-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+.qz-also-logo {
+  width: 34px; height: 34px;
+  background: var(--primary-light);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; overflow: hidden;
+}
+.qz-also-logo img { width: 24px; height: 24px; object-fit: contain; }
+.qz-also-logo-fb { font-size: 1rem; }
+.qz-also-name { font-size: 0.87rem; font-weight: 700; }
+.qz-also-card:hover .qz-also-name { color: var(--primary); }
+.qz-also-pct { margin-left: auto; font-size: 0.82rem; font-weight: 700; color: var(--primary); }
+.qz-also-desc { font-size: 0.77rem; color: rgb(var(--gray)); margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* Action buttons */
+.qz-results-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.qz-retake-btn {
+  padding: 0.65rem 1.3rem;
+  background: var(--bg-alt);
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  font-size: 0.87rem; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+  color: rgb(var(--gray-dark));
+  transition: all 0.15s;
+}
+.qz-retake-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+.qz-share-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.65rem 1.3rem;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  font-size: 0.87rem; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+  color: rgb(var(--gray-dark));
+  transition: all 0.15s;
+}
+.qz-share-btn:hover { border-color: var(--primary); color: var(--primary); }
+.qz-browse-btn {
+  display: inline-flex; align-items: center;
+  padding: 0.65rem 1.3rem;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50px;
+  font-size: 0.87rem; font-weight: 700;
+  transition: background 0.15s;
+  margin-left: auto;
+}
+.qz-browse-btn:hover { background: var(--primary-dark); color: #fff; }
+
+.qz-disclaimer { font-size: 0.75rem; color: rgb(var(--gray)); }
+.qz-disclaimer a { color: var(--primary); }
+
+@media (prefers-reduced-motion: reduce) {
+  .qz-screen { transition: none; }
+  .qz-calc-spinner { animation: none; border-top-color: var(--primary); }
+  .qz-match-bar { transition: none; }
+}
+</style>

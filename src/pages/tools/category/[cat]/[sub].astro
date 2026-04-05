@@ -1,0 +1,424 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../../../components/BaseHead.astro';
+import Header from '../../../../components/Header.astro';
+import Footer from '../../../../components/Footer.astro';
+import ToolCard from '../../../../components/ToolCard.astro';
+import { TOOL_CATEGORIES, SITE_TITLE } from '../../../../consts';
+
+export async function getStaticPaths() {
+	function toSlug(str: string) {
+		return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+	}
+	const allTools = await getCollection('tools');
+
+	const paths: { params: { cat: string; sub: string }; props: any }[] = [];
+
+	for (const category of TOOL_CATEGORIES) {
+		for (const subName of category.subcategories) {
+			const subSlug = toSlug(subName);
+			const tools = allTools.filter(
+				t => t.data.category === category.slug && t.data.subcategory === subName
+			);
+			if (tools.length > 0) {
+				paths.push({
+					params: { cat: category.slug, sub: subSlug },
+					props: { category, subName, tools },
+				});
+			}
+		}
+	}
+
+	return paths;
+}
+
+function toSlug(str: string) {
+	return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+const { category, subName, tools } = Astro.props;
+
+const sorted = [...tools].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const free = sorted.filter(t => t.data.pricing === 'free').length;
+const freemium = sorted.filter(t => t.data.pricing === 'freemium').length;
+const paid = sorted.filter(t => t.data.pricing === 'paid').length;
+
+const year = new Date().getFullYear();
+const seoTitle = `Best ${subName} Tools (${year}) — Ranked & Reviewed`;
+const seoDesc = `Discover the best ${subName.toLowerCase()} tools in ${year}. Compare ${sorted.length > 0 ? sorted.length + ' curated' : ''} options with pricing, features, and ratings to find the right fit.`;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead title={`${seoTitle} | ${SITE_TITLE}`} description={seoDesc} />
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://getaibriefs.com/" },
+			{ "@type": "ListItem", "position": 2, "name": "AI Tools", "item": "https://getaibriefs.com/tools/" },
+			{ "@type": "ListItem", "position": 3, "name": category.name, "item": `https://getaibriefs.com/tools/category/${category.slug}/` },
+			{ "@type": "ListItem", "position": 4, "name": subName }
+		]
+	})} />
+</head>
+<body>
+<Header />
+
+<main>
+	<!-- Breadcrumb -->
+	<div class="breadcrumb-bar">
+		<div class="container">
+			<nav class="breadcrumbs" aria-label="Breadcrumb">
+				<a href="/">Home</a><span>/</span>
+				<a href="/tools/">AI Tools</a><span>/</span>
+				<a href={`/tools/category/${category.slug}/`}>{category.name}</a><span>/</span>
+				<span aria-current="page">{subName}</span>
+			</nav>
+		</div>
+	</div>
+
+	<!-- Hero -->
+	<section class="sub-hero">
+		<div class="container sub-hero__inner">
+			<div class="sub-hero__icon" aria-hidden="true">{category.emoji}</div>
+			<div>
+				<div class="sub-hero__parent">
+					<a href={`/tools/category/${category.slug}/`}>{category.name}</a>
+				</div>
+				<h1 class="sub-hero__name">Best {subName} Tools</h1>
+				<p class="sub-hero__desc">
+					{sorted.length > 0
+						? `${sorted.length} curated ${subName.toLowerCase()} tools — ranked by features, pricing, and user ratings.`
+						: `Discover the top ${subName.toLowerCase()} tools for ${year}.`
+					}
+				</p>
+				<div class="sub-hero__stats">
+					{sorted.length > 0 && <span class="stat"><strong>{sorted.length}</strong> tools</span>}
+					{free > 0 && <span class="stat stat--free"><strong>{free}</strong> free</span>}
+					{freemium > 0 && <span class="stat stat--freemium"><strong>{freemium}</strong> freemium</span>}
+					{paid > 0 && <span class="stat stat--paid"><strong>{paid}</strong> paid</span>}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Other subcategories in this category -->
+	{category.subcategories.length > 1 && (
+		<div class="subcats-bar">
+			<div class="container subcats-inner">
+				{category.subcategories.map(sub => {
+					const slug = toSlug(sub);
+					const isActive = sub === subName;
+					return (
+						<a
+							href={`/tools/category/${category.slug}/${slug}/`}
+							class={`subcat-chip${isActive ? ' active' : ''}`}
+							aria-current={isActive ? 'page' : undefined}
+						>
+							{sub}
+						</a>
+					);
+				})}
+			</div>
+		</div>
+	)}
+
+	<!-- Tools grid -->
+	<section class="tools-section">
+		<div class="container">
+			<>
+				<div class="toolbar">
+						<div class="toolbar__search">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+							<input id="sub-search" type="search" placeholder={`Search ${subName} tools...`} autocomplete="off" aria-label="Search" />
+						</div>
+						<div class="toolbar__filters">
+							<button class="price-btn active" data-price="all">All</button>
+							<button class="price-btn" data-price="free" style="color:#00875A">Free</button>
+							<button class="price-btn" data-price="freemium" style="color:#3B5BDB">Freemium</button>
+							<button class="price-btn" data-price="paid" style="color:#E67700">Paid</button>
+						</div>
+					</div>
+					<p class="results-label" id="results-label">Showing all {sorted.length} tools</p>
+					<div class="tools-grid" id="tools-grid">
+						{sorted.map(tool => (
+							<ToolCard
+								name={tool.data.name}
+								description={tool.data.description}
+								category={tool.data.category}
+								subcategory={tool.data.subcategory}
+								pricing={tool.data.pricing}
+								url={tool.data.url}
+								slug={tool.id}
+								tags={tool.data.tags}
+							/>
+						))}
+					</div>
+					<p class="no-results" id="no-results" style="display:none">No tools match your filters.</p>
+				</>
+		</div>
+	</section>
+
+	<!-- Related subcategories -->
+	<section class="section section--alt">
+		<div class="container">
+			<h2 class="section-heading">More {category.name} Categories</h2>
+			<div class="other-cats">
+				{category.subcategories
+					.filter(sub => sub !== subName)
+					.slice(0, 10)
+					.map(sub => (
+						<a href={`/tools/category/${category.slug}/${toSlug(sub)}/`} class="other-cat">
+							{category.emoji} {sub}
+						</a>
+					))
+				}
+				<a href={`/tools/category/${category.slug}/`} class="other-cat other-cat--all">
+					View all {category.name} →
+				</a>
+			</div>
+		</div>
+	</section>
+</main>
+
+<Footer />
+</body>
+</html>
+
+<script>
+	let activePrice = 'all';
+	let searchQ = '';
+
+	const grid = document.getElementById('tools-grid');
+	const label = document.getElementById('results-label');
+	const noResults = document.getElementById('no-results');
+	const searchInput = document.getElementById('sub-search') as HTMLInputElement | null;
+
+	if (grid && label && noResults) {
+		const cards = Array.from(grid.querySelectorAll<HTMLElement>('.tool-card'));
+
+		function filter() {
+			let count = 0;
+			const q = searchQ.toLowerCase();
+			cards.forEach(card => {
+				const price = card.dataset.pricing ?? '';
+				const name = (card.dataset.name ?? '').toLowerCase();
+				const show = (activePrice === 'all' || price === activePrice)
+					&& (!q || name.includes(q));
+				card.style.display = show ? '' : 'none';
+				if (show) count++;
+			});
+			label.textContent = `Showing ${count} tool${count !== 1 ? 's' : ''}`;
+			noResults.style.display = count === 0 ? '' : 'none';
+		}
+
+		document.querySelectorAll<HTMLElement>('.price-btn').forEach(btn => {
+			btn.addEventListener('click', () => {
+				document.querySelectorAll('.price-btn').forEach(b => b.classList.remove('active'));
+				btn.classList.add('active');
+				activePrice = btn.dataset.price ?? 'all';
+				filter();
+			});
+		});
+
+		if (searchInput) {
+			searchInput.addEventListener('input', () => {
+				searchQ = searchInput.value;
+				filter();
+			});
+		}
+	}
+</script>
+
+<style>
+	.breadcrumb-bar {
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
+		padding: 0.75rem 0;
+	}
+	.breadcrumbs {
+		font-size: 0.82rem;
+		color: rgb(var(--gray));
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		flex-wrap: wrap;
+	}
+	.breadcrumbs a { color: rgb(var(--gray)); }
+	.breadcrumbs a:hover { color: var(--primary); }
+	.breadcrumbs span[aria-current] { color: rgb(var(--gray-dark)); font-weight: 600; }
+
+	.sub-hero {
+		padding: 2.5rem 0 2rem;
+		border-bottom: 1px solid var(--border);
+	}
+	.sub-hero__inner {
+		display: flex;
+		align-items: flex-start;
+		gap: 1.25rem;
+	}
+	.sub-hero__icon {
+		width: 64px;
+		height: 64px;
+		background: var(--primary-light);
+		border-radius: 14px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2rem;
+		flex-shrink: 0;
+	}
+	.sub-hero__parent {
+		font-size: 0.8rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: 0.25rem;
+	}
+	.sub-hero__parent a { color: var(--primary); }
+	.sub-hero__parent a:hover { text-decoration: underline; }
+	.sub-hero__name { font-size: 2rem; margin: 0 0 0.35rem; }
+	.sub-hero__desc { font-size: 1rem; color: rgb(var(--gray)); margin: 0 0 0.75rem; }
+	.sub-hero__stats { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+
+	.stat {
+		font-size: 0.82rem;
+		background: var(--bg-alt);
+		border: 1px solid var(--border);
+		padding: 0.2rem 0.65rem;
+		border-radius: 50px;
+		color: rgb(var(--gray-dark));
+	}
+	.stat--free { background: #E0F5EE; border-color: #A3D9C4; color: #00875A; }
+	.stat--freemium { background: #EEF3FF; border-color: #BEC8F0; color: #3B5BDB; }
+	.stat--paid { background: #FFF4E6; border-color: #F0CFA0; color: #E67700; }
+
+	.subcats-bar {
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
+		padding: 0.75rem 0;
+		overflow-x: auto;
+	}
+	.subcats-inner {
+		display: flex;
+		gap: 0.4rem;
+		flex-wrap: nowrap;
+		min-width: max-content;
+	}
+	.subcat-chip {
+		padding: 0.32rem 0.75rem;
+		font-size: 0.78rem;
+		font-weight: 600;
+		border: 1px solid var(--border);
+		border-radius: 50px;
+		background: #fff;
+		cursor: pointer;
+		transition: all 0.15s;
+		white-space: nowrap;
+		color: rgb(var(--gray-dark));
+		text-decoration: none;
+	}
+	.subcat-chip:hover, .subcat-chip.active {
+		background: var(--primary);
+		color: #fff;
+		border-color: var(--primary);
+	}
+
+	.tools-section { padding: 1.5rem 0 3rem; }
+	.toolbar {
+		display: flex;
+		gap: 0.75rem;
+		margin-bottom: 1rem;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+	.toolbar__search {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex: 1;
+		min-width: 180px;
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 0 0.75rem;
+	}
+	.toolbar__search svg { color: rgb(var(--gray)); flex-shrink: 0; }
+	.toolbar__search input {
+		border: none;
+		padding: 0.55rem 0;
+		font-size: 0.88rem;
+		background: transparent;
+		outline: none;
+		width: 100%;
+	}
+	.toolbar__filters { display: flex; gap: 0.35rem; }
+	.price-btn {
+		padding: 0.42rem 0.85rem;
+		font-size: 0.78rem;
+		font-weight: 700;
+		border: 1px solid var(--border);
+		border-radius: 50px;
+		background: #fff;
+		cursor: pointer;
+		transition: all 0.15s;
+		font-family: inherit;
+	}
+	.price-btn:hover, .price-btn.active {
+		background: rgb(var(--black));
+		color: #fff;
+		border-color: rgb(var(--black));
+	}
+	.results-label {
+		font-size: 0.82rem;
+		color: rgb(var(--gray));
+		margin-bottom: 1rem;
+	}
+	.tools-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+	@media (min-width: 640px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+	@media (min-width: 1024px) { .tools-grid { grid-template-columns: repeat(4, 1fr); } }
+
+	.no-results { text-align: center; padding: 3rem; color: rgb(var(--gray)); }
+	.empty-state {
+		text-align: center;
+		padding: 4rem 0;
+		color: rgb(var(--gray));
+	}
+	.empty-state p { font-size: 1.1rem; margin-bottom: 1rem; }
+
+	.section { padding: 3rem 0; }
+	.section--alt { background: var(--bg-alt); padding: 3rem 0; }
+	.section-heading { font-size: 1.35rem; margin-bottom: 1.25rem; }
+
+	.other-cats { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+	.other-cat {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.5rem 1rem;
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: rgb(var(--gray-dark));
+		transition: all 0.15s;
+		text-decoration: none;
+	}
+	.other-cat:hover {
+		border-color: var(--primary);
+		color: var(--primary);
+		background: var(--primary-light);
+	}
+	.other-cat--all {
+		border-style: dashed;
+		color: var(--primary);
+	}
+</style>

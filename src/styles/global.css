@@ -290,6 +290,23 @@ li { margin-bottom: 0.35em; }
 	color: #fff;
 }
 
+.btn--outline-sm {
+	display: inline-flex;
+	align-items: center;
+	background: transparent;
+	color: rgb(var(--gray-dark));
+	border: 1.5px solid var(--border);
+	border-radius: var(--radius);
+	padding: 0.45rem 0.9rem;
+	font-size: 0.83rem;
+	font-weight: 600;
+	transition: border-color 0.15s, color 0.15s;
+}
+.btn--outline-sm:hover {
+	border-color: var(--primary);
+	color: var(--primary);
+}
+
 /* --- Category Badge --- */
 
 .badge {
@@ -309,3 +326,22 @@ li { margin-bottom: 0.35em; }
 	h1 { font-size: 2em; }
 	h2 { font-size: 1.5em; }
 }
+
+/* --- Accessibility: Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* --- Print Styles --- */
+@media print {
+	.site-header, .site-footer, #back-to-top, .nav-toggle { display: none !important; }
+	body { font-size: 12pt; color: #000; background: #fff; }
+	a { color: #000; text-decoration: underline; }
+	a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
+}
+

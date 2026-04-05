@@ -2,14 +2,27 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { TOOL_CATEGORIES } from '../consts';
+
+const popularCategories = TOOL_CATEGORIES.slice(0, 8);
+const quickLinks = [
+	{ label: 'All AI Tools', href: '/tools/', icon: '🗂️' },
+	{ label: 'New AI Tools', href: '/tools/new/', icon: '🆕' },
+	{ label: 'Top Rated', href: '/tools/top-rated/', icon: '⭐' },
+	{ label: 'Collections', href: '/tools/collections/', icon: '📦' },
+	{ label: 'Reviews', href: '/reviews/', icon: '⭐' },
+	{ label: 'Tutorials', href: '/tutorials/', icon: '📖' },
+	{ label: 'Articles', href: '/blog/', icon: '📝' },
+	{ label: 'Submit a Tool', href: '/submit/', icon: '🚀' },
+];
 ---
 
 <!doctype html>
 <html lang="en">
 <head>
 	<BaseHead
-		title="Page Not Found"
-		description="The page you're looking for doesn't exist. Browse our AI articles and guides."
+		title="Page Not Found (404)"
+		description="The page you're looking for doesn't exist. Browse our AI tools directory or search for what you need."
 		noindex={true}
 	/>
 </head>
@@ -17,16 +30,49 @@ import Footer from '../components/Footer.astro';
 	<Header />
 	<main>
 		<section class="not-found">
-			<div class="container">
-				<p class="not-found__code">404</p>
-				<h1>Page Not Found</h1>
-				<p class="not-found__desc">
-					The page you're looking for doesn't exist or has been moved.
-				</p>
-				<div class="not-found__links">
-					<a href="/" class="btn btn--primary">Go Home</a>
-					<a href="/blog/" class="btn btn--outline">Browse Articles</a>
+			<div class="container nf-inner">
+
+				<!-- Hero -->
+				<div class="nf-hero">
+					<p class="nf-code">404</p>
+					<h1>Page Not Found</h1>
+					<p class="nf-desc">The page you're looking for doesn't exist or may have moved. Try searching for what you need:</p>
+
+					<!-- Search -->
+					<div class="nf-search">
+						<input type="search" id="nf-search-input" placeholder="Search AI tools…" autocomplete="off" aria-label="Search AI tools" />
+						<button type="button" id="nf-search-btn" aria-label="Search">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+						</button>
+					</div>
 				</div>
+
+				<!-- Quick links -->
+				<div class="nf-section">
+					<h2>Popular Pages</h2>
+					<div class="quick-links">
+						{quickLinks.map(l => (
+							<a href={l.href} class="quick-link">
+								<span class="quick-link__icon">{l.icon}</span>
+								{l.label}
+							</a>
+						))}
+					</div>
+				</div>
+
+				<!-- Categories -->
+				<div class="nf-section">
+					<h2>Browse by Category</h2>
+					<div class="cat-chips">
+						{popularCategories.map(cat => (
+							<a href={`/tools/category/${cat.slug}/`} class="cat-chip">
+								{cat.emoji} {cat.name}
+							</a>
+						))}
+						<a href="/tools/" class="cat-chip cat-chip--more">View all 22 →</a>
+					</div>
+				</div>
+
 			</div>
 		</section>
 	</main>
@@ -34,39 +80,100 @@ import Footer from '../components/Footer.astro';
 </body>
 </html>
 
+<script>
+const input = document.getElementById('nf-search-input') as HTMLInputElement;
+const btn = document.getElementById('nf-search-btn')!;
+function doSearch() {
+	const q = input?.value.trim();
+	if (q) window.location.href = `/tools/?q=${encodeURIComponent(q)}`;
+}
+btn?.addEventListener('click', doSearch);
+input?.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(); });
+</script>
+
 <style>
-	.not-found {
-		padding: 5rem 1.25rem;
-		text-align: center;
-		min-height: 50vh;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+.not-found {
+	padding: 4rem 0 5rem;
+	min-height: 60vh;
+}
+.nf-inner { max-width: 760px; }
 
-	.not-found__code {
-		font-size: 5rem;
-		font-weight: 700;
-		color: var(--border);
-		line-height: 1;
-		margin-bottom: 0.5rem;
-	}
+.nf-hero { text-align: center; margin-bottom: 3rem; }
+.nf-code {
+	font-size: 6rem;
+	font-weight: 800;
+	color: var(--border);
+	line-height: 1;
+	margin-bottom: 0.5rem;
+	font-family: "Atkinson", system-ui, sans-serif;
+}
+.not-found h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); margin-bottom: 0.6rem; }
+.nf-desc { color: rgb(var(--gray)); font-size: 1rem; margin-bottom: 1.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
 
-	.not-found h1 {
-		font-size: 2rem;
-		margin-bottom: 0.75rem;
-	}
+/* Search */
+.nf-search {
+	display: flex;
+	align-items: center;
+	max-width: 440px;
+	margin: 0 auto;
+	background: #fff;
+	border: 2px solid var(--border);
+	border-radius: 50px;
+	overflow: hidden;
+	transition: border-color 0.2s;
+}
+.nf-search:focus-within { border-color: var(--primary); }
+.nf-search input {
+	flex: 1;
+	padding: 0.75rem 1.25rem;
+	border: none;
+	font-size: 0.95rem;
+	background: transparent;
+	outline: none;
+	font-family: inherit;
+}
+.nf-search button {
+	padding: 0 1rem;
+	background: var(--primary);
+	color: #fff;
+	border: none;
+	height: 44px;
+	cursor: pointer;
+	display: flex; align-items: center; justify-content: center;
+	transition: background 0.15s;
+}
+.nf-search button:hover { background: var(--primary-dark); }
 
-	.not-found__desc {
-		color: rgb(var(--gray));
-		font-size: 1.05rem;
-		margin-bottom: 2rem;
-	}
+/* Sections */
+.nf-section { margin-bottom: 2.5rem; }
+.nf-section h2 { font-size: 1rem; font-weight: 700; color: rgb(var(--gray)); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.85rem; }
 
-	.not-found__links {
-		display: flex;
-		gap: 1rem;
-		justify-content: center;
-		flex-wrap: wrap;
-	}
+/* Quick links */
+.quick-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.6rem; }
+.quick-link {
+	display: flex; align-items: center; gap: 0.5rem;
+	padding: 0.65rem 1rem;
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	font-size: 0.87rem; font-weight: 500;
+	color: rgb(var(--gray-dark));
+	transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.quick-link:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+.quick-link__icon { font-size: 1rem; flex-shrink: 0; }
+
+/* Category chips */
+.cat-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.cat-chip {
+	padding: 0.4rem 0.9rem;
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: 99px;
+	font-size: 0.83rem; font-weight: 500;
+	color: rgb(var(--gray-dark));
+	transition: all 0.15s;
+}
+.cat-chip:hover { background: var(--primary-light); border-color: rgba(0,200,150,0.4); color: var(--primary); }
+.cat-chip--more { font-weight: 700; color: var(--primary); background: var(--primary-light); border-color: rgba(0,200,150,0.3); }
 </style>

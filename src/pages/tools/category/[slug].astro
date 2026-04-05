@@ -6,6 +6,10 @@ import Footer from '../../../components/Footer.astro';
 import ToolCard from '../../../components/ToolCard.astro';
 import { TOOL_CATEGORIES, SITE_TITLE } from '../../../consts';
 
+function toSlug(str: string) {
+	return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 export async function getStaticPaths() {
 	return TOOL_CATEGORIES.map(cat => ({
 		params: { slug: cat.slug },
@@ -80,10 +84,10 @@ const paid = tools.filter(t => t.data.pricing === 'paid').length;
 			<div class="container subcats-inner">
 				<button class="subcat-chip active" data-sub="">All</button>
 				{category.subcategories.map(sub => (
-					<button class="subcat-chip" data-sub={sub}>
+					<a href={`/tools/category/${category.slug}/${toSlug(sub)}/`} class="subcat-chip" data-sub={sub}>
 						{sub}
 						{subcatCounts[sub] ? <span class="subcat-count">{subcatCounts[sub]}</span> : null}
-					</button>
+					</a>
 				))}
 			</div>
 		</div>
@@ -175,14 +179,7 @@ const paid = tools.filter(t => t.data.pricing === 'paid').length;
 		noResults.style.display = count === 0 ? '' : 'none';
 	}
 
-	document.querySelectorAll<HTMLElement>('.subcat-chip').forEach(chip => {
-		chip.addEventListener('click', () => {
-			document.querySelectorAll('.subcat-chip').forEach(c => c.classList.remove('active'));
-			chip.classList.add('active');
-			activeSub = chip.dataset.sub ?? '';
-			filter();
-		});
-	});
+	// Subcategory chips are now <a> links — no JS needed for them.
 
 	document.querySelectorAll<HTMLElement>('.price-btn').forEach(btn => {
 		btn.addEventListener('click', () => {
@@ -303,6 +300,7 @@ const paid = tools.filter(t => t.data.pricing === 'paid').length;
 		align-items: center;
 		gap: 0.3rem;
 		color: rgb(var(--gray-dark));
+		text-decoration: none;
 	}
 
 	.subcat-chip:hover, .subcat-chip.active {

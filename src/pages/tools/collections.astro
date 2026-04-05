@@ -1,0 +1,310 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { TOOL_CATEGORIES, PRICING_BADGE, SITE_TITLE } from '../../consts';
+
+const allTools = await getCollection('tools');
+
+function getTools(filter: (t: typeof allTools[0]) => boolean, limit = 6) {
+	return allTools.filter(filter).slice(0, limit);
+}
+
+const collections = [
+	{
+		id: 'best-free',
+		title: 'Best Free AI Tools',
+		emoji: '🆓',
+		description: 'Powerful AI tools that cost nothing to get started — no credit card required.',
+		tools: getTools(t => t.data.pricing === 'free' && (t.data.rating ?? 0) >= 4),
+	},
+	{
+		id: 'top-chatbots',
+		title: 'Top AI Chatbots',
+		emoji: '💬',
+		description: 'The best conversational AI assistants for research, writing, and everyday tasks.',
+		tools: getTools(t => t.data.category === 'ai-chatbot'),
+	},
+	{
+		id: 'ai-image-generators',
+		title: 'Best AI Image Generators',
+		emoji: '🖼️',
+		description: 'Turn text into stunning visuals in seconds with these image generation tools.',
+		tools: getTools(t => t.data.category === 'ai-image' || t.data.category === 'ai-art'),
+	},
+	{
+		id: 'ai-writing',
+		title: 'Best AI Writing Tools',
+		emoji: '✍️',
+		description: 'Write faster and better with AI — from blog posts to marketing copy.',
+		tools: getTools(t => t.data.category === 'ai-writing'),
+	},
+	{
+		id: 'ai-coding',
+		title: 'Best AI Coding Assistants',
+		emoji: '💻',
+		description: 'Supercharge your development workflow with AI code generation and review.',
+		tools: getTools(t => t.data.category === 'ai-coding'),
+	},
+	{
+		id: 'ai-video',
+		title: 'Best AI Video Tools',
+		emoji: '🎬',
+		description: 'Create, edit, and enhance video content with AI in a fraction of the time.',
+		tools: getTools(t => t.data.category === 'ai-video'),
+	},
+	{
+		id: 'ai-productivity',
+		title: 'Best AI Productivity Tools',
+		emoji: '⚡',
+		description: 'AI tools that automate busywork, manage tasks, and help you do more in less time.',
+		tools: getTools(t => t.data.category === 'ai-productivity'),
+	},
+	{
+		id: 'ai-voice',
+		title: 'Best AI Voice & Audio Tools',
+		emoji: '🎤',
+		description: 'Text to speech, voice cloning, transcription, and audio enhancement with AI.',
+		tools: getTools(t => t.data.category === 'ai-voice' || t.data.category === 'ai-music'),
+	},
+	{
+		id: 'chatgpt-alternatives',
+		title: 'ChatGPT Alternatives',
+		emoji: '🔄',
+		description: "Powerful AI chatbots and assistants that rival or surpass ChatGPT in specific areas.",
+		tools: getTools(t => t.data.category === 'ai-chatbot' && t.data.name !== 'ChatGPT'),
+	},
+	{
+		id: 'freemium-picks',
+		title: 'Best Freemium AI Tools',
+		emoji: '⭐',
+		description: 'Start free, upgrade when you need more — the best freemium AI tools with generous free tiers.',
+		tools: getTools(t => t.data.pricing === 'freemium' && (t.data.rating ?? 0) >= 4),
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title={`AI Tool Collections — Curated Lists | ${SITE_TITLE}`}
+		description="Hand-picked collections of the best AI tools. Curated lists for writing, coding, image generation, productivity, and more."
+	/>
+</head>
+<body>
+<Header />
+
+<section class="page-header">
+	<div class="container">
+		<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'AI Tools', href: '/tools/' }, { label: 'Collections' }]} />
+		<h1>AI Tool Collections</h1>
+		<p>Hand-picked lists of the best AI tools for specific use cases — updated regularly by our editorial team.</p>
+	</div>
+</section>
+
+<main class="container collections-body">
+
+	<!-- Quick jump -->
+	<nav class="quick-nav" aria-label="Jump to collection">
+		{collections.map(c => (
+			<a href={`#${c.id}`} class="quick-chip">{c.emoji} {c.title}</a>
+		))}
+	</nav>
+
+	<!-- Collections -->
+	{collections.map(col => (
+		<section class="collection" id={col.id}>
+			<div class="col-header">
+				<div class="col-title-wrap">
+					<span class="col-emoji">{col.emoji}</span>
+					<div>
+						<h2>{col.title}</h2>
+						<p>{col.description}</p>
+					</div>
+				</div>
+				<a href={`/tools/category/${TOOL_CATEGORIES.find(c =>
+					col.tools[0]?.data.category === c.slug
+				)?.slug ?? ''}/`} class="see-all-link">See all →</a>
+			</div>
+
+			{col.tools.length > 0 ? (
+				<div class="tools-row">
+					{col.tools.map(tool => {
+						const cat = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
+						const domain = new URL(tool.data.url).hostname;
+						const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+						const badge = PRICING_BADGE[tool.data.pricing];
+						return (
+							<a href={`/tools/${tool.id}/`} class="tool-card">
+								<div class="tool-top">
+									<div class="tool-logo">
+										<img src={favicon} alt={tool.data.name} width="32" height="32" loading="lazy"
+											onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+										<span class="tool-logo-fb" style="display:none">{cat?.emoji ?? '🤖'}</span>
+									</div>
+									<div class="tool-meta">
+										<h3>{tool.data.name}</h3>
+										<span class="pricing-pill" style={`background:${badge.bg};color:${badge.text}`}>{badge.label}</span>
+									</div>
+									{tool.data.rating && <span class="tool-rating">★ {tool.data.rating.toFixed(1)}</span>}
+								</div>
+								<p class="tool-desc">{tool.data.description}</p>
+							</a>
+						);
+					})}
+				</div>
+			) : (
+				<p class="empty-msg">Coming soon — we're adding tools to this collection.</p>
+			)}
+		</section>
+	))}
+</main>
+
+<Footer />
+</body>
+</html>
+
+<style>
+.page-header {
+	background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%);
+	border-bottom: 1px solid var(--border);
+	padding: 3rem 0 2rem;
+}
+.page-header h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0.5rem 0 0.5rem; }
+.page-header p { color: rgb(var(--gray)); max-width: 520px; }
+
+.collections-body { padding: 2.5rem 0 5rem; }
+
+/* Quick nav */
+.quick-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 3rem;
+}
+.quick-chip {
+	padding: 0.35rem 0.85rem;
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: 99px;
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: rgb(var(--gray-dark));
+	transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.quick-chip:hover {
+	background: var(--primary-light);
+	border-color: rgba(0,200,150,0.4);
+	color: var(--primary);
+}
+
+/* Collection section */
+.collection {
+	margin-bottom: 3.5rem;
+	scroll-margin-top: 80px;
+}
+
+.col-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 1.25rem;
+}
+
+.col-title-wrap {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.85rem;
+}
+.col-emoji { font-size: 1.75rem; flex-shrink: 0; margin-top: 0.1rem; }
+.col-title-wrap h2 { font-size: 1.2rem; margin: 0 0 0.3rem; }
+.col-title-wrap p { font-size: 0.87rem; color: rgb(var(--gray)); margin: 0; }
+
+.see-all-link {
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: var(--primary);
+	white-space: nowrap;
+	flex-shrink: 0;
+	margin-top: 0.25rem;
+}
+.see-all-link:hover { text-decoration: underline; }
+
+/* Tool cards row */
+.tools-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 0.85rem;
+}
+
+.tool-card {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1rem 1.1rem;
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	color: inherit;
+	transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.tool-card:hover {
+	transform: translateY(-2px);
+	border-color: rgba(0,200,150,0.35);
+	box-shadow: 0 4px 14px rgba(0,200,150,0.1);
+}
+
+.tool-top {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+}
+.tool-logo {
+	width: 40px; height: 40px;
+	background: var(--primary-light);
+	border-radius: 8px;
+	display: flex; align-items: center; justify-content: center;
+	flex-shrink: 0; overflow: hidden;
+}
+.tool-logo img { width: 28px; height: 28px; object-fit: contain; }
+.tool-logo-fb { font-size: 1.2rem; }
+
+.tool-meta { flex: 1; min-width: 0; }
+.tool-meta h3 { font-size: 0.9rem; margin: 0 0 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tool-card:hover h3 { color: var(--primary); }
+
+.pricing-pill {
+	font-size: 0.65rem; font-weight: 700;
+	padding: 0.15rem 0.45rem;
+	border-radius: 99px;
+}
+
+.tool-rating {
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: #f59e0b;
+	flex-shrink: 0;
+}
+
+.tool-desc {
+	font-size: 0.8rem;
+	color: rgb(var(--gray));
+	margin: 0;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	line-height: 1.5;
+}
+
+.empty-msg {
+	font-size: 0.87rem;
+	color: rgb(var(--gray));
+	font-style: italic;
+	padding: 1rem 0;
+}
+</style>

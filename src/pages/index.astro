@@ -11,6 +11,7 @@ const allTools = (await getCollection('tools'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const featuredTools = allTools.filter(t => t.data.featured).slice(0, 6);
+const todaysPick = allTools.filter(t => t.data.featured && t.data.rating)[0] ?? allTools.filter(t => t.data.featured)[0] ?? allTools[0];
 const recentTools = allTools.slice(0, 12);
 const totalTools = allTools.length;
 const freeCount = allTools.filter(t => t.data.pricing === 'free').length;
@@ -102,6 +103,31 @@ const carouselPosts = allPosts.slice(0, 3);
 		</div>
 	</div>
 
+	<!-- Quiz CTA Banner -->
+	<section class="quiz-cta-section">
+		<div class="container quiz-cta-inner">
+			<div class="quiz-cta-left">
+				<span class="quiz-cta-badge">New ✨</span>
+				<h2 class="quiz-cta-title">Not sure which AI tool is right for you?</h2>
+				<p class="quiz-cta-sub">Answer 5 quick questions and get personalised recommendations from {totalTools}+ tools — matched to your goals, role, and budget.</p>
+				<a href="/tools/quiz/" class="quiz-cta-btn">Find My Perfect AI Tool →</a>
+				<p class="quiz-cta-note">~1 minute · No sign-up · Instant results</p>
+			</div>
+			<div class="quiz-cta-visual" aria-hidden="true">
+				<div class="quiz-preview-card">
+					<div class="qp-step">Step 1 of 5</div>
+					<div class="qp-question">What do you want to achieve?</div>
+					<div class="qp-options">
+						<div class="qp-opt qp-opt--selected">✍️ Write content</div>
+						<div class="qp-opt">🖼️ Generate images</div>
+						<div class="qp-opt">💻 Code faster</div>
+						<div class="qp-opt">📊 Run my business</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
 	<!-- Featured Tools -->
 	{featuredTools.length > 0 && (
 		<section class="section section--alt">
@@ -141,6 +167,44 @@ const carouselPosts = allPosts.slice(0, 3);
 		</section>
 	)}
 
+	<!-- Today's Pick -->
+	{todaysPick && (() => {
+		const cat = TOOL_CATEGORIES.find(c => c.slug === todaysPick.data.category);
+		const domain = new URL(todaysPick.data.url).hostname;
+		const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+		return (
+			<section class="todays-pick-section">
+				<div class="container todays-pick-inner">
+					<div class="todays-pick-label">
+						<span class="pick-badge">⭐ Today's Pick</span>
+					</div>
+					<a href={`/tools/${todaysPick.id}/`} class="todays-pick-card">
+						<div class="pick-logo">
+							<img src={favicon} alt={todaysPick.data.name} width="52" height="52" loading="lazy"
+								onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+							<span class="pick-emoji-fallback" style="display:none">{cat?.emoji ?? '🤖'}</span>
+						</div>
+						<div class="pick-body">
+							<div class="pick-meta">
+								<span class="pick-cat">{cat?.name}</span>
+								{todaysPick.data.pricing && <span class={`pick-pricing pick-pricing--${todaysPick.data.pricing}`}>{todaysPick.data.pricing.charAt(0).toUpperCase() + todaysPick.data.pricing.slice(1)}</span>}
+							</div>
+							<h3 class="pick-name">{todaysPick.data.name}</h3>
+							<p class="pick-desc">{todaysPick.data.description}</p>
+						</div>
+						{todaysPick.data.rating && (
+							<div class="pick-rating">
+								<span class="pick-score">{todaysPick.data.rating.toFixed(1)}</span>
+								<span class="pick-stars">{'★'.repeat(Math.round(todaysPick.data.rating))}</span>
+							</div>
+						)}
+						<span class="pick-arrow">→</span>
+					</a>
+				</div>
+			</section>
+		);
+	})()}
+
 	<!-- Categories -->
 	<section class="section">
 		<div class="container">
@@ -157,6 +221,19 @@ const carouselPosts = allPosts.slice(0, 3);
 					</a>
 				))}
 			</div>
+		</div>
+	</section>
+
+	<!-- Newsletter CTA -->
+	<section class="newsletter-section">
+		<div class="container newsletter-inner">
+			<div class="newsletter-text">
+				<h2>Stay ahead of AI — weekly</h2>
+				<p>Get the top AI tools, reviews, and news every week. No spam, unsubscribe anytime.</p>
+			</div>
+			<a href="https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9" target="_blank" rel="noopener noreferrer" class="newsletter-cta-btn">
+				Subscribe Free →
+			</a>
 		</div>
 	</section>
 
@@ -336,6 +413,7 @@ const carouselPosts = allPosts.slice(0, 3);
 <script>
 	// Carousel
 	let current = 0;
+	let paused = false;
 	const slides = document.querySelectorAll<HTMLElement>('.carousel-slide');
 	const dots = document.querySelectorAll<HTMLElement>('.carousel-dot');
 	function goTo(n: number) {
@@ -348,8 +426,16 @@ const carouselPosts = allPosts.slice(0, 3);
 	document.getElementById('carousel-prev')?.addEventListener('click', () => goTo(current - 1));
 	document.getElementById('carousel-next')?.addEventListener('click', () => goTo(current + 1));
 	dots.forEach(d => d.addEventListener('click', () => goTo(+(d.dataset.dot ?? 0))));
-	const autoplay = setInterval(() => goTo(current + 1), 5000);
-	document.getElementById('hero-carousel')?.addEventListener('mouseenter', () => clearInterval(autoplay));
+	// Keyboard navigation
+	document.getElementById('hero-carousel')?.addEventListener('keydown', (e) => {
+		if (e.key === 'ArrowLeft') goTo(current - 1);
+		if (e.key === 'ArrowRight') goTo(current + 1);
+	});
+	// Pause on hover, resume on leave
+	const autoplay = setInterval(() => { if (!paused) goTo(current + 1); }, 5000);
+	const carousel = document.getElementById('hero-carousel');
+	carousel?.addEventListener('mouseenter', () => { paused = true; });
+	carousel?.addEventListener('mouseleave', () => { paused = false; });
 
 	const input = document.getElementById('global-search') as HTMLInputElement;
 	if (input) {
@@ -368,6 +454,90 @@ const carouselPosts = allPosts.slice(0, 3);
 </script>
 
 <style>
+	/* Today's Pick */
+	.todays-pick-section {
+		background: linear-gradient(135deg, #f0f4ff 0%, #e8f5f0 100%);
+		border-top: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
+		padding: 1.25rem 0;
+	}
+	.todays-pick-inner { display: flex; flex-direction: column; gap: 0.75rem; }
+	.pick-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		font-size: 0.72rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.07em;
+		color: var(--primary);
+	}
+	.todays-pick-card {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1rem 1.25rem;
+		text-decoration: none;
+		color: inherit;
+		transition: box-shadow 0.15s, border-color 0.15s;
+	}
+	.todays-pick-card:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+	.pick-logo { flex-shrink: 0; width: 52px; height: 52px; border-radius: 10px; overflow: hidden; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; }
+	.pick-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+	.pick-emoji-fallback { font-size: 1.6rem; }
+	.pick-body { flex: 1; min-width: 0; }
+	.pick-meta { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem; }
+	.pick-cat { font-size: 0.72rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
+	.pick-pricing { font-size: 0.65rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 50px; }
+	.pick-pricing--free { background: #E0F5EE; color: #00875A; }
+	.pick-pricing--freemium { background: #EEF3FF; color: #3B5BDB; }
+	.pick-pricing--paid { background: #FFF4E6; color: #E67700; }
+	.pick-name { font-size: 1.05rem; font-weight: 700; margin: 0 0 0.15rem; }
+	.pick-desc { font-size: 0.82rem; color: rgb(var(--gray)); margin: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+	.pick-rating { flex-shrink: 0; text-align: center; }
+	.pick-score { display: block; font-size: 1.3rem; font-weight: 800; color: rgb(var(--gray-dark)); line-height: 1; }
+	.pick-stars { font-size: 0.7rem; color: #f59e0b; letter-spacing: -1px; }
+	.pick-arrow { flex-shrink: 0; font-size: 1.2rem; color: var(--primary); font-weight: 700; }
+	@media (min-width: 768px) {
+		.todays-pick-inner { flex-direction: row; align-items: center; }
+		.todays-pick-label { flex-shrink: 0; }
+		.todays-pick-card { flex: 1; }
+	}
+
+	/* Newsletter inline CTA */
+	.newsletter-section {
+		background: var(--primary);
+		padding: 2rem 0;
+	}
+	.newsletter-inner {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		align-items: flex-start;
+	}
+	.newsletter-text h2 { font-size: 1.35rem; color: #fff; margin: 0 0 0.35rem; }
+	.newsletter-text p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin: 0; }
+	.newsletter-cta-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.65rem 1.5rem;
+		background: #fff;
+		color: var(--primary);
+		font-weight: 800;
+		font-size: 0.9rem;
+		border-radius: var(--radius);
+		text-decoration: none;
+		white-space: nowrap;
+		transition: opacity 0.15s;
+	}
+	.newsletter-cta-btn:hover { opacity: 0.92; }
+	@media (min-width: 640px) {
+		.newsletter-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+	}
+
 	/* Hero Carousel */
 	.hero-carousel { position: relative; height: 420px; overflow: hidden; background: #111; }
 	.carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
@@ -388,6 +558,87 @@ const carouselPosts = allPosts.slice(0, 3);
 	.carousel-dots { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.4rem; z-index: 3; }
 	.carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; }
 	.carousel-dot.active { background: #fff; transform: scale(1.3); }
+
+	/* Quiz CTA Banner */
+	.quiz-cta-section {
+		background: linear-gradient(135deg, #0f2d1e 0%, #0a3d2b 50%, #0d3528 100%);
+		padding: 3rem 0;
+		overflow: hidden;
+	}
+	.quiz-cta-inner {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+		align-items: center;
+	}
+	@media (min-width: 860px) {
+		.quiz-cta-inner { grid-template-columns: 1fr 320px; }
+	}
+	.quiz-cta-badge {
+		display: inline-block;
+		background: rgba(0,200,130,0.2);
+		color: #4ade9e;
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		padding: 0.22rem 0.75rem;
+		border-radius: 99px;
+		border: 1px solid rgba(0,200,130,0.3);
+		margin-bottom: 0.75rem;
+		display: inline-block;
+	}
+	.quiz-cta-title {
+		font-size: clamp(1.4rem, 3vw, 2rem);
+		font-weight: 800;
+		color: #fff;
+		line-height: 1.2;
+		margin-bottom: 0.65rem;
+	}
+	.quiz-cta-sub { font-size: 0.93rem; color: rgba(255,255,255,0.7); line-height: 1.65; margin-bottom: 1.4rem; max-width: 480px; }
+	.quiz-cta-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.85rem 2rem;
+		background: #00c878;
+		color: #0a2d1d;
+		font-size: 0.97rem;
+		font-weight: 800;
+		border-radius: 50px;
+		transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+		box-shadow: 0 4px 20px rgba(0,200,120,0.4);
+	}
+	.quiz-cta-btn:hover { background: #00e88c; color: #0a2d1d; transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0,200,120,0.5); }
+	.quiz-cta-note { font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.75rem; }
+
+	/* Quiz preview mockup */
+	.quiz-cta-visual { display: none; }
+	@media (min-width: 860px) { .quiz-cta-visual { display: block; } }
+	.quiz-preview-card {
+		background: rgba(255,255,255,0.06);
+		border: 1px solid rgba(255,255,255,0.1);
+		border-radius: 16px;
+		padding: 1.4rem;
+		backdrop-filter: blur(8px);
+	}
+	.qp-step { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #4ade9e; margin-bottom: 0.6rem; }
+	.qp-question { font-size: 0.97rem; font-weight: 700; color: #fff; margin-bottom: 1rem; line-height: 1.3; }
+	.qp-options { display: flex; flex-direction: column; gap: 0.45rem; }
+	.qp-opt {
+		padding: 0.55rem 0.9rem;
+		background: rgba(255,255,255,0.06);
+		border: 1px solid rgba(255,255,255,0.12);
+		border-radius: 8px;
+		font-size: 0.82rem;
+		color: rgba(255,255,255,0.7);
+		transition: all 0.15s;
+	}
+	.qp-opt--selected {
+		background: rgba(0,200,120,0.2);
+		border-color: rgba(0,200,120,0.5);
+		color: #4ade9e;
+		font-weight: 600;
+	}
 
 	/* Search bar */
 	.search-bar-wrap { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 1.25rem 0; }

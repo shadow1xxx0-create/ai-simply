@@ -3,17 +3,24 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { TOOL_CATEGORIES } from '../consts';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { TOOL_CATEGORIES, PRICING_BADGE, SITE_TITLE } from '../consts';
 
 const tools = await getCollection('tools');
 
-// Prioritise tools with real ratings, then fill with featured, then rest
-const rated = tools.filter(t => t.data.rating).sort((a, b) => (b.data.rating ?? 0) - (a.data.rating ?? 0));
-const unrated = tools.filter(t => !t.data.rating && t.data.featured);
-const topTools = [...rated, ...unrated].slice(0, 18);
+// Only show tools with real editorial ratings
+const ratedTools = tools
+	.filter(t => t.data.rating)
+	.sort((a, b) => (b.data.rating ?? 0) - (a.data.rating ?? 0));
 
-const PRICING_LABELS: Record<string, string> = { free: 'Free', freemium: 'Freemium', paid: 'Paid' };
-const PRICING_COLORS: Record<string, string> = { free: '#16a34a', freemium: '#0284c7', paid: '#7c3aed' };
+const unratedFeatured = tools
+	.filter(t => !t.data.rating && t.data.featured)
+	.slice(0, 6);
+
+const allReviewTools = [...ratedTools, ...unratedFeatured];
+
+// Category options for filter
+const availableCategories = [...new Set(ratedTools.map(t => t.data.category))];
 
 function renderStars(score: number) {
 	const full = Math.floor(score);
@@ -27,8 +34,8 @@ function renderStars(score: number) {
 <html lang="en">
 <head>
 	<BaseHead
-		title="AI Tool Reviews — AI Simply"
-		description="Honest reviews and ratings of the best AI tools. Find out which AI tools are worth your time and money."
+		title={`AI Tool Reviews & Ratings (2026) | ${SITE_TITLE}`}
+		description="Honest, hands-on reviews and ratings of the best AI tools. Find out which AI tools are worth your time and money with our independent editorial scores."
 	/>
 </head>
 <body>
@@ -37,25 +44,57 @@ function renderStars(score: number) {
 
 		<section class="page-hero">
 			<div class="container">
+				<Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Reviews' }]} />
 				<div class="hero-badge">Honest Reviews</div>
 				<h1>AI Tool Reviews</h1>
-				<p>Real ratings and reviews of the best AI tools — so you can choose with confidence.</p>
+				<p>Real ratings from hands-on testing — so you can choose with confidence. <a href="/rating-methodology/" class="methodology-link">See our methodology →</a></p>
 			</div>
 		</section>
 
 		<div class="container reviews-body">
 
+			<!-- Filter toolbar -->
+			<div class="filter-bar">
+				<div class="filter-group">
+					<span class="filter-label">Filter:</span>
+					<div class="filter-chips" id="cat-filters">
+						<button class="filter-chip active" data-cat="">All Categories</button>
+						{availableCategories.map(slug => {
+							const cat = TOOL_CATEGORIES.find(c => c.slug === slug);
+							return cat ? <button class="filter-chip" data-cat={slug}>{cat.emoji} {cat.name}</button> : null;
+						})}
+					</div>
+				</div>
+				<div class="sort-wrap">
+					<label for="sort-select" class="filter-label">Sort:</label>
+					<select id="sort-select" class="sort-select">
+						<option value="rating-desc">Highest Rated</option>
+						<option value="rating-asc">Lowest Rated</option>
+						<option value="name-asc">A → Z</option>
+						<option value="free-first">Free First</option>
+					</select>
+				</div>
+			</div>
+
 			<section class="reviews-section">
-				<h2 class="section-title">Top Rated Tools</h2>
-				<div class="reviews-grid">
-					{topTools.map(tool => {
-						const score = tool.data.rating ?? 4.2;
-						const count = tool.data.ratingCount ?? 500;
+				<div class="results-label" id="results-label">{ratedTools.length} reviewed tools</div>
+				<div class="reviews-grid" id="reviews-grid">
+					{allReviewTools.map(tool => {
+						const score = tool.data.rating;
+						const count = tool.data.ratingCount ?? null;
 						const domain = new URL(tool.data.url).hostname;
 						const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 						const cat = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
+						const badge = PRICING_BADGE[tool.data.pricing];
 						return (
-							<a href={`/tools/${tool.id}/`} class="review-card">
+							<a
+								href={`/tools/${tool.id}/`}
+								class="review-card"
+								data-cat={tool.data.category}
+								data-pricing={tool.data.pricing}
+								data-rating={score ?? 0}
+								data-name={tool.data.name}
+							>
 								<div class="review-card__head">
 									<div class="tool-logo">
 										<img src={favicon} alt={tool.data.name} width="36" height="36" loading="lazy"
@@ -64,47 +103,73 @@ function renderStars(score: number) {
 									</div>
 									<div class="tool-info">
 										<h3>{tool.data.name}</h3>
-										<span class="pricing-badge" style={`color:${PRICING_COLORS[tool.data.pricing]}`}>
-											{PRICING_LABELS[tool.data.pricing]}
-										</span>
+										<span class="cat-label">{cat?.emoji} {cat?.name}</span>
 									</div>
+									<span class="pricing-pill" style={`background:${badge.bg};color:${badge.text}`}>{badge.label}</span>
 								</div>
 								<p class="review-desc">{tool.data.description}</p>
-								<div class="review-rating">
-									<span class="stars">{renderStars(score)}</span>
-									<span class="score">{score.toFixed(1)}</span>
-									<span class="count">({count.toLocaleString()} reviews)</span>
-								</div>
+								{score ? (
+									<div class="review-rating">
+										<span class="stars">{renderStars(score)}</span>
+										<span class="score">{score.toFixed(1)}</span>
+										{count && <span class="count">({count.toLocaleString()} reviews)</span>}
+									</div>
+								) : (
+									<div class="review-rating">
+										<span class="no-rating">Editorial pick — not yet rated</span>
+									</div>
+								)}
 								<span class="review-cta">Read Review →</span>
 							</a>
 						);
 					})}
 				</div>
+				<p class="no-results" id="no-results" style="display:none">No tools match these filters. <button onclick="document.querySelectorAll('.filter-chip').forEach((c,i)=>{c.classList.toggle('active',i===0)});renderGrid('','rating-desc')">Clear filters</button></p>
 			</section>
 
+			<!-- Disclosure -->
+			<div class="disclosure">
+				<strong>Editorial independence:</strong> Our ratings are independent of commercial relationships. Tools may pay for listing, but this has no effect on their score. See our <a href="/rating-methodology/">rating methodology</a>.
+			</div>
+
+			<!-- How we rate -->
 			<section class="how-we-rate">
 				<h2>How We Rate AI Tools</h2>
+				<p>Every rated tool is tested hands-on by our editorial team across five weighted criteria.</p>
 				<div class="criteria-grid">
 					<div class="criterion">
-						<span class="criterion-icon">🎯</span>
-						<h3>Accuracy</h3>
-						<p>How well the tool performs its core function — does it do what it claims?</p>
+						<span class="criterion-icon">⚡</span>
+						<h3>Output Quality</h3>
+						<p class="crit-weight">30% weight</p>
+						<p>Does it do what it claims — and how well?</p>
 					</div>
 					<div class="criterion">
-						<span class="criterion-icon">⚡</span>
-						<h3>Speed</h3>
-						<p>Response times, generation speed, and how quickly you can get results.</p>
+						<span class="criterion-icon">🎯</span>
+						<h3>Ease of Use</h3>
+						<p class="crit-weight">25% weight</p>
+						<p>How quickly can a new user see real value?</p>
 					</div>
 					<div class="criterion">
 						<span class="criterion-icon">💰</span>
-						<h3>Value</h3>
-						<p>Is the pricing fair for what you get? Are free tiers genuinely useful?</p>
+						<h3>Value for Money</h3>
+						<p class="crit-weight">20% weight</p>
+						<p>Fair pricing for what you actually get.</p>
 					</div>
 					<div class="criterion">
-						<span class="criterion-icon">🧩</span>
-						<h3>Ease of Use</h3>
-						<p>How quickly can a new user get started and see real results?</p>
+						<span class="criterion-icon">🔧</span>
+						<h3>Features & Depth</h3>
+						<p class="crit-weight">15% weight</p>
+						<p>Range of capabilities and integrations.</p>
 					</div>
+					<div class="criterion">
+						<span class="criterion-icon">🛡️</span>
+						<h3>Reliability & Trust</h3>
+						<p class="crit-weight">10% weight</p>
+						<p>Uptime, speed, and data transparency.</p>
+					</div>
+				</div>
+				<div class="methodology-cta">
+					<a href="/rating-methodology/" class="btn btn--outline-review">Read Full Methodology →</a>
 				</div>
 			</section>
 
@@ -114,45 +179,130 @@ function renderStars(score: number) {
 </body>
 </html>
 
+<script>
+const grid = document.getElementById('reviews-grid')!;
+const label = document.getElementById('results-label')!;
+const noResults = document.getElementById('no-results')!;
+const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+
+function renderGrid(cat: string, sort: string) {
+	const cards = Array.from(grid.querySelectorAll<HTMLElement>('.review-card'));
+	let visible = 0;
+	cards.forEach(c => {
+		const match = !cat || c.dataset.cat === cat;
+		c.style.display = match ? '' : 'none';
+		if (match) visible++;
+	});
+
+	// Sort visible
+	const visibleCards = cards.filter(c => c.style.display !== 'none');
+	visibleCards.sort((a, b) => {
+		if (sort === 'rating-desc') return parseFloat(b.dataset.rating ?? '0') - parseFloat(a.dataset.rating ?? '0');
+		if (sort === 'rating-asc') return parseFloat(a.dataset.rating ?? '0') - parseFloat(b.dataset.rating ?? '0');
+		if (sort === 'name-asc') return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
+		if (sort === 'free-first') {
+			const order = { free: 0, freemium: 1, paid: 2 };
+			return (order[a.dataset.pricing as keyof typeof order] ?? 3) - (order[b.dataset.pricing as keyof typeof order] ?? 3);
+		}
+		return 0;
+	});
+	visibleCards.forEach(c => grid.appendChild(c));
+
+	label.textContent = `${visible} reviewed tool${visible !== 1 ? 's' : ''}`;
+	noResults.style.display = visible === 0 ? '' : 'none';
+}
+
+// Category chips
+document.getElementById('cat-filters')!.addEventListener('click', e => {
+	const chip = (e.target as HTMLElement).closest<HTMLElement>('.filter-chip');
+	if (!chip) return;
+	document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+	chip.classList.add('active');
+	renderGrid(chip.dataset.cat ?? '', sortSelect.value);
+});
+
+sortSelect.addEventListener('change', () => {
+	const activeCat = (document.querySelector('.filter-chip.active') as HTMLElement)?.dataset.cat ?? '';
+	renderGrid(activeCat, sortSelect.value);
+});
+</script>
+
 <style>
 .page-hero {
 	background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%);
 	border-bottom: 1px solid var(--border);
-	padding: 3.5rem 0 2.5rem;
-	text-align: center;
+	padding: 2.5rem 0 2rem;
 }
-
 .hero-badge {
 	display: inline-block;
 	background: var(--accent);
 	color: #fff;
-	font-size: 0.75rem;
+	font-size: 0.72rem;
 	font-weight: 700;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	padding: 0.3rem 0.9rem;
+	padding: 0.25rem 0.8rem;
 	border-radius: 99px;
-	margin-bottom: 1rem;
+	margin: 0.75rem 0 0.6rem;
 }
+.page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 0.5rem; }
+.page-hero p { color: rgb(var(--gray)); max-width: 560px; font-size: 0.95rem; }
+.methodology-link { color: var(--primary); font-weight: 600; }
+.methodology-link:hover { text-decoration: underline; }
 
-.page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 0.75rem; }
-.page-hero p { color: rgb(var(--gray)); max-width: 540px; margin: 0 auto; }
+.reviews-body { padding: 2rem 0 4rem; }
 
-.reviews-body { padding: 3rem 0 4rem; }
-.reviews-section { margin-bottom: 3.5rem; }
-
-.section-title {
-	font-size: 1.35rem;
-	font-weight: 700;
+/* Filter bar */
+.filter-bar {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1rem;
+	flex-wrap: wrap;
 	margin-bottom: 1.5rem;
-	padding-bottom: 0.6rem;
-	border-bottom: 2px solid var(--border);
+	padding-bottom: 1.25rem;
+	border-bottom: 1px solid var(--border);
 }
+.filter-group { display: flex; align-items: flex-start; gap: 0.6rem; flex-wrap: wrap; flex: 1; }
+.filter-label { font-size: 0.78rem; font-weight: 700; color: rgb(var(--gray)); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.3rem; white-space: nowrap; }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.filter-chip {
+	padding: 0.3rem 0.75rem;
+	border: 1.5px solid var(--border);
+	border-radius: 99px;
+	background: var(--bg);
+	font-size: 0.78rem;
+	font-weight: 500;
+	color: rgb(var(--gray-dark));
+	cursor: pointer;
+	transition: all 0.15s;
+}
+.filter-chip.active, .filter-chip:hover {
+	background: var(--primary);
+	border-color: var(--primary);
+	color: #fff;
+}
+.sort-wrap { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+.sort-select {
+	padding: 0.35rem 0.75rem;
+	border: 1.5px solid var(--border);
+	border-radius: var(--radius);
+	font-size: 0.83rem;
+	background: var(--bg);
+	color: rgb(var(--gray-dark));
+	cursor: pointer;
+	outline: none;
+}
+.sort-select:focus { border-color: var(--primary); }
+
+.results-label { font-size: 0.82rem; color: rgb(var(--gray)); margin-bottom: 1rem; }
+
+.reviews-section { margin-bottom: 2rem; }
 
 .reviews-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-	gap: 1.25rem;
+	gap: 1.1rem;
 }
 
 .review-card {
@@ -164,103 +314,76 @@ function renderStars(score: number) {
 	border: 1px solid var(--border);
 	border-radius: var(--radius);
 	color: inherit;
-	transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+	transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
-
 .review-card:hover {
-	transform: translateY(-3px);
+	transform: translateY(-2px);
 	border-color: rgba(0,200,150,0.35);
-	box-shadow: 0 6px 24px rgba(0,200,150,0.12);
+	box-shadow: 0 6px 20px rgba(0,200,150,0.12);
 }
-
-.review-card__head {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-}
-
+.review-card__head { display: flex; align-items: center; gap: 0.65rem; }
 .tool-logo {
-	width: 48px;
-	height: 48px;
+	width: 44px; height: 44px;
 	background: var(--primary-light);
 	border-radius: var(--radius);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-	overflow: hidden;
+	display: flex; align-items: center; justify-content: center;
+	flex-shrink: 0; overflow: hidden;
 }
-.tool-logo img { width: 36px; height: 36px; object-fit: contain; }
-.tool-logo-fallback { font-size: 1.6rem; display: flex; align-items: center; justify-content: center; }
-
-.tool-info h3 {
-	font-size: 1rem;
-	margin: 0 0 0.2rem;
-	transition: color 0.2s;
-}
-
+.tool-logo img { width: 32px; height: 32px; object-fit: contain; }
+.tool-logo-fallback { font-size: 1.4rem; display: flex; align-items: center; justify-content: center; }
+.tool-info { flex: 1; min-width: 0; }
+.tool-info h3 { font-size: 0.95rem; margin: 0 0 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.15s; }
 .review-card:hover h3 { color: var(--primary); }
+.cat-label { font-size: 0.7rem; color: rgb(var(--gray)); }
+.pricing-pill { font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 99px; flex-shrink: 0; }
+.review-desc { font-size: 0.82rem; color: rgb(var(--gray)); margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5; }
+.review-rating { display: flex; align-items: center; gap: 0.4rem; font-size: 0.83rem; }
+.stars { color: #f59e0b; letter-spacing: 0.5px; }
+.score { font-weight: 800; color: rgb(var(--black)); }
+.count { color: rgb(var(--gray)); font-size: 0.77rem; }
+.no-rating { font-size: 0.78rem; color: rgb(var(--gray)); font-style: italic; }
+.review-cta { font-size: 0.82rem; font-weight: 600; color: var(--primary); margin-top: auto; }
+.no-results { padding: 2rem 0; color: rgb(var(--gray)); font-size: 0.9rem; }
+.no-results button { background: none; border: none; color: var(--primary); cursor: pointer; font-weight: 600; font-size: inherit; }
 
-.pricing-badge {
-	font-size: 0.72rem;
-	font-weight: 600;
-}
-
-.review-desc {
-	font-size: 0.83rem;
-	color: rgb(var(--gray));
-	margin: 0;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-}
-
-.review-rating {
-	display: flex;
-	align-items: center;
-	gap: 0.4rem;
+/* Disclosure */
+.disclosure {
+	background: #fffbeb;
+	border: 1px solid #fde68a;
+	border-radius: var(--radius);
+	padding: 0.85rem 1.1rem;
 	font-size: 0.82rem;
+	color: #78350f;
+	margin-bottom: 2.5rem;
+	line-height: 1.6;
 }
+.disclosure a { color: #92400e; font-weight: 600; }
+.disclosure a:hover { text-decoration: underline; }
 
-.stars { color: #f59e0b; letter-spacing: 1px; }
-.score { font-weight: 700; color: rgb(var(--black)); }
-.count { color: rgb(var(--gray)); }
-
-.review-cta {
-	font-size: 0.82rem;
-	font-weight: 600;
-	color: var(--primary);
-	margin-top: auto;
-}
-
+/* How we rate */
 .how-we-rate {
-	background: var(--bg-alt, #f8fafc);
+	background: var(--bg-alt);
 	border: 1px solid var(--border);
 	border-radius: var(--radius);
 	padding: 2.5rem;
 }
-
-.how-we-rate h2 {
-	font-size: 1.35rem;
-	margin-bottom: 1.5rem;
-	text-align: center;
-}
-
-.criteria-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-	gap: 1.5rem;
-}
-
+.how-we-rate h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.how-we-rate > p { font-size: 0.87rem; color: rgb(var(--gray)); margin-bottom: 1.5rem; }
+.criteria-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
 .criterion { text-align: center; }
-
-.criterion-icon {
-	font-size: 2rem;
-	display: block;
-	margin-bottom: 0.5rem;
+.criterion-icon { font-size: 1.75rem; display: block; margin-bottom: 0.4rem; }
+.criterion h3 { font-size: 0.9rem; margin-bottom: 0.15rem; }
+.crit-weight { font-size: 0.7rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem; }
+.criterion p:last-child { font-size: 0.8rem; color: rgb(var(--gray)); margin: 0; }
+.methodology-cta { text-align: center; }
+.btn--outline-review {
+	display: inline-flex; align-items: center;
+	padding: 0.6rem 1.25rem;
+	border: 1.5px solid var(--primary);
+	color: var(--primary);
+	border-radius: var(--radius);
+	font-size: 0.87rem; font-weight: 700;
+	transition: background 0.15s, color 0.15s;
 }
-
-.criterion h3 { font-size: 1rem; margin-bottom: 0.4rem; }
-.criterion p { font-size: 0.83rem; color: rgb(var(--gray)); margin: 0; }
+.btn--outline-review:hover { background: var(--primary); color: #fff; }
 </style>
