@@ -64,7 +64,6 @@ const QUESTIONS = [
       { id: 'video',    emoji: '🎬', label: 'Create videos and audio',     sub: 'Video generation, voice cloning, music' },
       { id: 'research', emoji: '💬', label: 'Research and get answers',    sub: 'Q&A, summarise documents, learn fast' },
       { id: 'design',   emoji: '🎨', label: 'Design and creative work',    sub: 'UI, logos, branding, 3D, graphics' },
-      { id: 'music',    emoji: '🎵', label: 'Make music and sounds',       sub: 'Composition, vocals, audio editing' },
     ],
   },
   {
@@ -125,16 +124,15 @@ const SCORES = {
     images:   { 'ai-image': 5, 'ai-art': 4, 'ai-design': 2 },
     code:     { 'ai-coding': 5, 'ai-productivity': 2 },
     business: { 'ai-business': 5, 'ai-marketing': 4, 'ai-productivity': 3 },
-    video:    { 'ai-video': 5, 'ai-voice': 3, 'ai-music': 2 },
+    video:    { 'ai-video': 5, 'ai-voice': 3 },
     research: { 'ai-chatbot': 5, 'ai-research': 4, 'ai-learning': 3 },
     design:   { 'ai-design': 5, 'ai-art': 3, 'ai-image': 2 },
-    music:    { 'ai-music': 5, 'ai-voice': 3 },
   },
   role: {
     student:  { 'ai-learning': 3, 'ai-research': 3, 'ai-writing': 2, 'ai-chatbot': 2 },
     pro:      { 'ai-productivity': 3, 'ai-writing': 2, 'ai-business': 2 },
     dev:      { 'ai-coding': 4, 'ai-productivity': 2 },
-    creator:  { 'ai-image': 2, 'ai-video': 2, 'ai-art': 2, 'ai-writing': 2, 'ai-music': 2 },
+    creator:  { 'ai-image': 2, 'ai-video': 2, 'ai-art': 2, 'ai-writing': 2 },
     biz:      { 'ai-business': 3, 'ai-marketing': 3, 'ai-productivity': 2 },
     newcomer: { 'ai-chatbot': 3, 'ai-learning': 3 },
   },
@@ -215,11 +213,10 @@ function getMatchReason(tool, answers) {
   if (answers.goal === 'video'    && ['ai-video','ai-voice'].includes(tool.category))       reasons.push('great for video & audio');
   if (answers.goal === 'research' && ['ai-chatbot','ai-research'].includes(tool.category)) reasons.push('ideal for research');
   if (answers.goal === 'design'   && ['ai-design','ai-art'].includes(tool.category))       reasons.push('top design tool');
-  if (answers.goal === 'music'    && ['ai-music','ai-voice'].includes(tool.category))      reasons.push('made for music');
 
   if (answers.role === 'student'  && ['ai-learning','ai-research'].includes(tool.category)) reasons.push('popular with students');
   if (answers.role === 'dev'      && tool.category === 'ai-coding')                         reasons.push('developer favourite');
-  if (answers.role === 'creator'  && ['ai-image','ai-video','ai-art','ai-music'].includes(tool.category)) reasons.push('loved by creators');
+  if (answers.role === 'creator'  && ['ai-image','ai-video','ai-art'].includes(tool.category)) reasons.push('loved by creators');
   if (answers.role === 'newcomer' && ['ai-chatbot','ai-learning'].includes(tool.category)) reasons.push('great starting point');
 
   if (answers.budget === 'free' && tool.pricing === 'free') reasons.push('100% free');

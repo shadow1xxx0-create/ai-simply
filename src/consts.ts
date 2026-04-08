@@ -64,13 +64,6 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
 		subcategories: ['AI Text-to-Speech', 'AI Speech-to-Text', 'AI Transcription', 'AI Voice Generator', 'AI Voice Cloning', 'AI Voice Over', 'AI Dubbing', 'AI Voice Changer', 'AI Podcast'],
 	},
 	{
-		slug: 'ai-music',
-		name: 'AI Music',
-		emoji: '🎵',
-		description: 'Compose music with AI',
-		subcategories: ['AI Music Generator', 'AI Song Generator', 'AI Lyrics Generator', 'AI Sound Effect Generator', 'AI Vocal Remover', 'AI Beat Generator', 'AI Melody Generator', 'AI Instrumental Generator'],
-	},
-	{
 		slug: 'ai-chatbot',
 		name: 'AI Chatbot',
 		emoji: '💬',
