@@ -483,32 +483,6 @@ if (activeCat !== 'all') {
 		margin-bottom: 0.75rem;
 	}
 
-	/* Subcategory chips */
-	.subcats {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-		margin-bottom: 1rem;
-	}
-
-	.subcat-chip {
-		padding: 0.3rem 0.75rem;
-		font-size: 0.75rem;
-		font-weight: 600;
-		border: 1px solid var(--border);
-		border-radius: 50px;
-		background: #fff;
-		cursor: pointer;
-		transition: all 0.15s;
-		font-family: inherit;
-		color: rgb(var(--gray-dark));
-	}
-
-	.subcat-chip:hover, .subcat-chip.active {
-		background: var(--primary);
-		color: #fff;
-		border-color: var(--primary);
-	}
 
 	/* Tools grid */
 	.tools-grid {
@@ -629,5 +603,34 @@ if (activeCat !== 'all') {
 
 	@media (min-width: 1280px) {
 		.tools-grid { grid-template-columns: repeat(4, 1fr); }
+	}
+</style>
+
+<style is:global>
+	/* Subcategory chips — global because they're created dynamically via JS */
+	.subcats {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-bottom: 1rem;
+	}
+
+	.subcat-chip {
+		padding: 0.3rem 0.75rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		border: 1px solid var(--border);
+		border-radius: 50px;
+		background: #fff;
+		cursor: pointer;
+		transition: all 0.15s;
+		font-family: inherit;
+		color: rgb(var(--gray-dark));
+	}
+
+	.subcat-chip:hover, .subcat-chip.active {
+		background: var(--primary);
+		color: #fff;
+		border-color: var(--primary);
 	}
 </style>
