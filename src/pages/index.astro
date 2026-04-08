@@ -129,6 +129,36 @@ const carouselPosts = allPosts.slice(0, 3);
 	</section>
 
 
+	<!-- AI News -->
+	{newsItems.length > 0 && (
+		<section class="section section--alt">
+			<div class="container">
+				<div class="section-header">
+					<h2 class="section-heading section-heading--sm">AI News <span class="news-live">● Live</span></h2>
+				</div>
+				<div class="news-timeline">
+					{newsItems.map(item => {
+						const d = item.date ? new Date(item.date) : null;
+						const dateStr = d && !isNaN(d.getTime()) ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+						return (
+							<a href={item.link} target="_blank" rel="noopener noreferrer" class="timeline-item">
+								<div class="timeline-dot"></div>
+								<div class="timeline-body">
+									<div class="timeline-meta">
+										<span class="timeline-source">{item.source}</span>
+										{dateStr && <span class="timeline-date">{dateStr}</span>}
+									</div>
+									<p class="timeline-title">{item.title}</p>
+								</div>
+								<span class="timeline-arrow">→</span>
+							</a>
+						);
+					})}
+				</div>
+			</div>
+		</section>
+	)}
+
 	<!-- Categories -->
 	<section class="section">
 		<div class="container">
