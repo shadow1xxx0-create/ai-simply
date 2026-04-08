@@ -470,15 +470,17 @@ function mount(html, direction = 'forward') {
 function bindEvents() {
   const app = document.getElementById('quiz-app');
   if (!app) return;
+  // Always bind to the last (newest) screen so old exiting screens don't intercept
+  const root = app.lastElementChild || app;
 
   // Start button
-  app.querySelector('#qz-start')?.addEventListener('click', () => {
+  root.querySelector('#qz-start')?.addEventListener('click', () => {
     state.step = 1;
     mount(renderQuestion(QUESTIONS[0], state.answers['goal']));
   });
 
   // Option selection
-  app.querySelector('#qz-options')?.addEventListener('click', e => {
+  root.querySelector('#qz-options')?.addEventListener('click', e => {
     const btn = e.target.closest('.qz-option');
     if (!btn) return;
     const val = btn.dataset.value;
@@ -486,17 +488,17 @@ function bindEvents() {
     state.answers[qId] = val;
 
     // Update UI without full re-render
-    app.querySelectorAll('.qz-option').forEach(b => {
+    root.querySelectorAll('.qz-option').forEach(b => {
       const sel = b.dataset.value === val;
       b.classList.toggle('selected', sel);
       b.setAttribute('aria-pressed', sel ? 'true' : 'false');
     });
-    const nextBtn = app.querySelector('#qz-next');
+    const nextBtn = root.querySelector('#qz-next');
     if (nextBtn) { nextBtn.disabled = false; nextBtn.classList.remove('disabled'); }
   });
 
   // Next button
-  app.querySelector('#qz-next')?.addEventListener('click', () => {
+  root.querySelector('#qz-next')?.addEventListener('click', () => {
     const qId = QUESTIONS[state.step - 1].id;
     if (!state.answers[qId]) return;
     if (state.step < 5) {
@@ -533,7 +535,7 @@ function bindEvents() {
   });
 
   // Back button
-  app.querySelector('#qz-back')?.addEventListener('click', () => {
+  root.querySelector('#qz-back')?.addEventListener('click', () => {
     if (state.step > 1) {
       state.step--;
       mount(renderQuestion(QUESTIONS[state.step - 1], state.answers[QUESTIONS[state.step - 1].id]), 'back');
@@ -541,7 +543,7 @@ function bindEvents() {
   });
 
   // Retake
-  app.querySelector('#qz-retake')?.addEventListener('click', () => {
+  root.querySelector('#qz-retake')?.addEventListener('click', () => {
     state.step = 0;
     state.answers = {};
     state.results = [];
@@ -550,7 +552,7 @@ function bindEvents() {
   });
 
   // Share
-  app.querySelector('#qz-share')?.addEventListener('click', async function() {
+  root.querySelector('#qz-share')?.addEventListener('click', async function() {
     const url = this.dataset.url;
     try {
       await navigator.clipboard.writeText(url);
