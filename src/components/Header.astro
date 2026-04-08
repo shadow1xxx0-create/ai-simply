@@ -49,6 +49,7 @@ const pathname = Astro.url.pathname;
 			<li><a href="/tutorials/" class:list={[{ active: pathname.startsWith('/tutorials') }]}>Tutorials</a></li>
 			<li><a href="/blog/" class:list={[{ active: pathname.startsWith('/blog') }]}>Articles</a></li>
 			<li><a href="/pricing/" class:list={[{ active: pathname === '/pricing/' }]}>Pricing</a></li>
+			<li><a href="/proxy/" class:list={[{ active: pathname === '/proxy/' }]}>Proxy</a></li>
 			<li>
 			<button class="nav-search-btn" id="nav-search-btn" aria-label="Search tools">
 				<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>

@@ -14,7 +14,8 @@
       "Bash(do echo:*)",
       "Read(//c/Users/dell/ai-simply/src/content/tools/**)",
       "Bash(done)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(ls C:/Users/dell/ai-simply/src/pages/tools/category/[cat]/)"
     ]
   }
 }
