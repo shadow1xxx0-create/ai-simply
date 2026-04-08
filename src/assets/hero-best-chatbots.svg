@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Decorative circles -->
+  <circle cx="200" cy="120" r="180" fill="#7c3aed" opacity="0.08"/>
+  <circle cx="1050" cy="500" r="220" fill="#2563eb" opacity="0.08"/>
+  <!-- Chat bubble left -->
+  <rect x="340" y="180" width="260" height="100" rx="20" fill="url(#accent)" opacity="0.9"/>
+  <polygon points="360,280 340,310 400,280" fill="#7c3aed" opacity="0.9"/>
+  <rect x="350" y="205" width="180" height="14" rx="7" fill="white" opacity="0.9"/>
+  <rect x="350" y="230" width="130" height="12" rx="6" fill="white" opacity="0.6"/>
+  <rect x="350" y="253" width="155" height="12" rx="6" fill="white" opacity="0.5"/>
+  <!-- Chat bubble right -->
+  <rect x="600" y="290" width="260" height="100" rx="20" fill="#1e3a5f" opacity="0.95"/>
+  <polygon points="840,390 860,420 820,390" fill="#1e3a5f" opacity="0.95"/>
+  <rect x="615" y="315" width="180" height="14" rx="7" fill="white" opacity="0.9"/>
+  <rect x="615" y="340" width="140" height="12" rx="6" fill="white" opacity="0.6"/>
+  <rect x="615" y="363" width="110" height="12" rx="6" fill="white" opacity="0.5"/>
+  <!-- Chat bubble small -->
+  <rect x="380" y="410" width="180" height="70" rx="16" fill="url(#accent)" opacity="0.7"/>
+  <polygon points="395,480 375,505 430,480" fill="#7c3aed" opacity="0.7"/>
+  <rect x="395" y="430" width="120" height="11" rx="5" fill="white" opacity="0.9"/>
+  <rect x="395" y="450" width="90" height="10" rx="5" fill="white" opacity="0.6"/>
+  <!-- Title text -->
+  <text x="600" y="560" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Chatbots 2026</text>
+  <text x="600" y="598" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="white" text-anchor="middle" opacity="0.55">ChatGPT · Claude · Gemini · Grok · DeepSeek</text>
+</svg>

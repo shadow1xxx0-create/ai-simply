@@ -1,0 +1,46 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const BACKEND = 'https://web-production-8f27a.up.railway.app';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <BaseHead title="Free Proxy Generator — getaibriefs.com" description="Scrape and validate free HTTP, SOCKS4, and SOCKS5 proxies in real time. Filter by country, type, and speed." />
+  <style>
+    .proxy-wrap {
+      width: 100%;
+      min-height: 80vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 20px;
+      background: #0d0d0d;
+    }
+    iframe {
+      width: 100%;
+      max-width: 780px;
+      height: 900px;
+      border: none;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <Header />
+  <main>
+    <div class="proxy-wrap">
+      <iframe
+        src={BACKEND}
+        title="Proxy Generator"
+        loading="lazy"
+        allow="clipboard-write"
+      ></iframe>
+    </div>
+  </main>
+  <Footer />
+</body>
+</html>

@@ -3,7 +3,7 @@ title: "Best AI Music Generators in 2026 (Ranked & Reviewed)"
 description: "We tested the top AI music generators — here's how Suno, Udio, Mubert, Soundraw, AIVA, and more compare on sound quality, licensing, and ease of use."
 pubDate: 2026-04-05
 updatedDate: 2026-04-05
-heroImage: "../../assets/ai-at-work.jpg"
+heroImage: "../../assets/hero-best-music-generators.svg"
 category: "guides"
 tags: ["AI music generator", "best AI music tools", "Suno", "Udio", "Mubert", "Soundraw", "AIVA", "AI song generator", "text to music"]
 readingTime: "11 min read"

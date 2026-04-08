@@ -2,7 +2,7 @@
 name: Wordtune
 description: AI writing companion — rewrite, shorten, expand, and improve any sentence instantly as you write.
 category: ai-writing
-subcategory: AI Writing Assistant
+subcategory: AI Writing Assistants
 url: https://wordtune.com
 pricing: freemium
 tags: [writing, rewriting, paraphrasing, editing, chrome-extension]

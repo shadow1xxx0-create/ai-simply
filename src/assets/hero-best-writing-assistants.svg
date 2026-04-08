@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1c1410"/>
+      <stop offset="100%" style="stop-color:#2d1e0f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#ef4444"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="150" cy="150" r="200" fill="#f59e0b" opacity="0.06"/>
+  <circle cx="1100" cy="480" r="250" fill="#ef4444" opacity="0.06"/>
+  <!-- Document -->
+  <rect x="430" y="130" width="340" height="340" rx="16" fill="#2a1f14" stroke="#f59e0b" stroke-width="2" opacity="0.9"/>
+  <!-- Text lines -->
+  <rect x="460" y="175" width="240" height="14" rx="7" fill="#f59e0b" opacity="0.8"/>
+  <rect x="460" y="205" width="200" height="11" rx="5" fill="white" opacity="0.4"/>
+  <rect x="460" y="225" width="220" height="11" rx="5" fill="white" opacity="0.35"/>
+  <rect x="460" y="245" width="180" height="11" rx="5" fill="white" opacity="0.3"/>
+  <rect x="460" y="278" width="230" height="11" rx="5" fill="white" opacity="0.4"/>
+  <rect x="460" y="298" width="195" height="11" rx="5" fill="white" opacity="0.35"/>
+  <rect x="460" y="318" width="215" height="11" rx="5" fill="white" opacity="0.3"/>
+  <rect x="460" y="350" width="200" height="11" rx="5" fill="white" opacity="0.4"/>
+  <rect x="460" y="370" width="170" height="11" rx="5" fill="white" opacity="0.3"/>
+  <!-- Pencil icon -->
+  <g transform="translate(720,360) rotate(45)">
+    <rect x="-12" y="-55" width="24" height="70" rx="4" fill="url(#accent)" opacity="0.95"/>
+    <polygon points="-12,15 12,15 0,38" fill="#f59e0b" opacity="0.95"/>
+    <rect x="-12" y="-55" width="24" height="16" rx="4" fill="#374151" opacity="0.9"/>
+  </g>
+  <!-- Sparkle -->
+  <text x="760" y="235" font-size="36" fill="#f59e0b" opacity="0.8">✦</text>
+  <text x="390" y="320" font-size="24" fill="#f59e0b" opacity="0.5">✦</text>
+  <!-- Title -->
+  <text x="600" y="555" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Writing Assistants 2026</text>
+  <text x="600" y="595" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="white" text-anchor="middle" opacity="0.5">Jasper · Rytr · Copy.ai · Writesonic</text>
+</svg>

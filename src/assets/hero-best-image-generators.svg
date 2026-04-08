@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#180a18"/>
+      <stop offset="100%" style="stop-color:#200f28"/>
+    </linearGradient>
+    <linearGradient id="pink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="imgA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e0a2e"/>
+      <stop offset="100%" style="stop-color:#2a1040"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="200" cy="180" r="200" fill="#ec4899" opacity="0.07"/>
+  <circle cx="1050" cy="450" r="240" fill="#8b5cf6" opacity="0.06"/>
+  <!-- Image grid -->
+  <rect x="255" y="115" width="200" height="200" rx="12" fill="url(#imgA)" stroke="#ec4899" stroke-width="1.5"/>
+  <!-- Mountain shape in img1 -->
+  <polygon points="255,315 325,195 395,315" fill="#ec4899" opacity="0.3"/>
+  <polygon points="290,315 355,220 420,315" fill="#8b5cf6" opacity="0.25"/>
+  <circle cx="370" cy="150" r="25" fill="#fbbf24" opacity="0.4"/>
+
+  <rect x="465" y="115" width="200" height="200" rx="12" fill="url(#imgA)" stroke="#8b5cf6" stroke-width="1.5"/>
+  <!-- Portrait silhouette in img2 -->
+  <circle cx="565" cy="175" r="35" fill="#ec4899" opacity="0.35"/>
+  <rect x="525" y="213" width="80" height="100" rx="30" fill="#8b5cf6" opacity="0.3"/>
+
+  <rect x="675" y="115" width="200" height="200" rx="12" fill="url(#imgA)" stroke="#ec4899" stroke-width="1.5"/>
+  <!-- Abstract art in img3 -->
+  <circle cx="735" cy="175" r="45" fill="#ec4899" opacity="0.25"/>
+  <circle cx="775" cy="215" r="55" fill="#8b5cf6" opacity="0.2"/>
+  <circle cx="755" cy="185" r="30" fill="#fbbf24" opacity="0.2"/>
+
+  <rect x="885" y="115" width="200" height="200" rx="12" fill="url(#imgA)" stroke="#8b5cf6" stroke-width="1.5"/>
+  <!-- Landscape in img4 -->
+  <rect x="885" y="255" width="200" height="60" rx="8" fill="#10b981" opacity="0.3"/>
+  <polygon points="885,255 935,185 985,255" fill="#3b82f6" opacity="0.3"/>
+  <polygon points="950,255 1020,195 1090,255" fill="#3b82f6" opacity="0.25"/>
+  <circle cx="1050" cy="155" r="28" fill="#fbbf24" opacity="0.35"/>
+
+  <!-- Bottom row -->
+  <rect x="255" y="325" width="200" height="135" rx="12" fill="url(#imgA)" stroke="#ec4899" stroke-width="1" opacity="0.7"/>
+  <rect x="465" y="325" width="200" height="135" rx="12" fill="url(#imgA)" stroke="#8b5cf6" stroke-width="1" opacity="0.7"/>
+  <rect x="675" y="325" width="200" height="135" rx="12" fill="url(#imgA)" stroke="#ec4899" stroke-width="1" opacity="0.7"/>
+  <rect x="885" y="325" width="200" height="135" rx="12" fill="url(#imgA)" stroke="#8b5cf6" stroke-width="1" opacity="0.7"/>
+  <!-- AI sparkle badge -->
+  <circle cx="450" cy="115" r="22" fill="url(#pink)"/>
+  <text x="450" y="122" font-family="system-ui, sans-serif" font-size="18" fill="white" text-anchor="middle">✦</text>
+  <!-- Prompt bar -->
+  <rect x="255" y="470" width="830" height="48" rx="10" fill="#1e0f2e" stroke="#ec4899" stroke-width="1" opacity="0.9"/>
+  <text x="278" y="499" font-family="system-ui, sans-serif" font-size="14" fill="#ec4899" opacity="0.8">✦</text>
+  <text x="296" y="499" font-family="system-ui, sans-serif" font-size="14" fill="white" opacity="0.55">"A surreal landscape with neon mountains and floating islands..."</text>
+  <rect x="1040" y="480" width="36" height="30" rx="6" fill="url(#pink)" opacity="0.9"/>
+  <polygon points="1048,495 1048,495 1068,495" fill="none"/>
+  <text x="1058" y="500" font-family="system-ui, sans-serif" font-size="18" fill="white" text-anchor="middle">→</text>
+  <!-- Title -->
+  <text x="600" y="565" font-family="system-ui, -apple-system, sans-serif" font-size="40" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Image Generators 2026</text>
+  <text x="600" y="603" font-family="system-ui, -apple-system, sans-serif" font-size="21" fill="white" text-anchor="middle" opacity="0.5">Midjourney · DALL-E · Stable Diffusion · Flux</text>
+</svg>

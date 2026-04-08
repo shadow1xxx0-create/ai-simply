@@ -128,44 +128,81 @@ const carouselPosts = allPosts.slice(0, 3);
 		</div>
 	</section>
 
-	<!-- Featured Tools -->
-	{featuredTools.length > 0 && (
-		<section class="section section--alt">
-			<div class="container">
-				<div class="section-header">
-					<h2 class="section-heading">
-						<span class="section-heading__dot"></span>
-						Featured Tools
-					</h2>
-					<a href="/tools/" class="section-link">Browse all →</a>
-				</div>
-				<div class="featured-grid">
-					{featuredTools.map(tool => {
-						const cat = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
-						const domain = new URL(tool.data.url).hostname;
-						const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
-						return (
-							<a href={`/tools/${tool.id}/`} class="featured-card">
-								<div class="featured-card__logo">
-									<img src={favicon} alt={tool.data.name} width="36" height="36" loading="lazy"
-										onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
-									<span class="featured-card__emoji" style="display:none">{cat?.emoji ?? '🤖'}</span>
-								</div>
-								<div class="featured-card__body">
-									<div class="featured-card__top">
-										<h3 class="featured-card__name">{tool.data.name}</h3>
-										<span class="featured-card__cat">{cat?.name}</span>
-									</div>
-									<p class="featured-card__desc">{tool.data.description}</p>
-								</div>
-								<span class="featured-card__cta">Explore →</span>
-							</a>
-						);
-					})}
-				</div>
+	<!-- Featured Tools + News Sidebar -->
+	<div class="home-with-sidebar">
+		<div class="container home-with-sidebar__inner">
+
+			<!-- Main column -->
+			<div class="home-main-col">
+				{featuredTools.length > 0 && (
+					<section class="section section--alt">
+						<div class="section-header">
+							<h2 class="section-heading">
+								<span class="section-heading__dot"></span>
+								Featured Tools
+							</h2>
+							<a href="/tools/" class="section-link">Browse all →</a>
+						</div>
+						<div class="featured-grid">
+							{featuredTools.map(tool => {
+								const cat = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
+								const domain = new URL(tool.data.url).hostname;
+								const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+								return (
+									<a href={`/tools/${tool.id}/`} class="featured-card">
+										<div class="featured-card__logo">
+											<img src={favicon} alt={tool.data.name} width="36" height="36" loading="lazy"
+												onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+											<span class="featured-card__emoji" style="display:none">{cat?.emoji ?? '🤖'}</span>
+										</div>
+										<div class="featured-card__body">
+											<div class="featured-card__top">
+												<h3 class="featured-card__name">{tool.data.name}</h3>
+												<span class="featured-card__cat">{cat?.name}</span>
+											</div>
+											<p class="featured-card__desc">{tool.data.description}</p>
+										</div>
+										<span class="featured-card__cta">Explore →</span>
+									</a>
+								);
+							})}
+						</div>
+					</section>
+				)}
 			</div>
-		</section>
-	)}
+
+			<!-- News Sidebar -->
+			{newsItems.length > 0 && (
+				<aside class="home-news-sidebar">
+					<div class="news-sidebar-inner">
+						<div class="section-header">
+							<h2 class="section-heading section-heading--sm">AI News <span class="news-live">● Live</span></h2>
+						</div>
+						<div class="news-timeline">
+							{newsItems.map(item => {
+								const d = item.date ? new Date(item.date) : null;
+								const dateStr = d && !isNaN(d.getTime()) ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+								return (
+									<a href={item.link} target="_blank" rel="noopener noreferrer" class="timeline-item">
+										<div class="timeline-dot"></div>
+										<div class="timeline-body">
+											<div class="timeline-meta">
+												<span class="timeline-source">{item.source}</span>
+												{dateStr && <span class="timeline-date">{dateStr}</span>}
+											</div>
+											<p class="timeline-title">{item.title}</p>
+										</div>
+										<span class="timeline-arrow">→</span>
+									</a>
+								);
+							})}
+						</div>
+					</div>
+				</aside>
+			)}
+
+		</div>
+	</div>
 
 	<!-- Today's Pick -->
 	{todaysPick && (() => {
@@ -296,36 +333,6 @@ const carouselPosts = allPosts.slice(0, 3);
 		</section>
 	)}
 
-	<!-- AI News Timeline -->
-	{newsItems.length > 0 && (
-		<section class="section section--alt">
-			<div class="container">
-				<div class="section-header">
-					<h2 class="section-heading">AI News Timeline <span class="news-live">● Live</span></h2>
-					<span class="news-sub">Daily developments in global artificial intelligence</span>
-				</div>
-				<div class="news-timeline">
-					{newsItems.map(item => {
-						const d = item.date ? new Date(item.date) : null;
-						const dateStr = d && !isNaN(d.getTime()) ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
-						return (
-							<a href={item.link} target="_blank" rel="noopener noreferrer" class="timeline-item">
-								<div class="timeline-dot"></div>
-								<div class="timeline-body">
-									<div class="timeline-meta">
-										<span class="timeline-source">{item.source}</span>
-										{dateStr && <span class="timeline-date">{dateStr}</span>}
-									</div>
-									<p class="timeline-title">{item.title}</p>
-								</div>
-								<span class="timeline-arrow">→</span>
-							</a>
-						);
-					})}
-				</div>
-			</div>
-		</section>
-	)}
 
 	<!-- Popular Articles -->
 	{recentPosts.length > 0 && (
@@ -451,9 +458,151 @@ const carouselPosts = allPosts.slice(0, 3);
 			if (q) window.location.href = `/tools/?q=${encodeURIComponent(q)}`;
 		});
 	}
+
+	// ── Scroll-reveal ──────────────────────────────────────────────
+	const revealEls = document.querySelectorAll<HTMLElement>(
+		'.section-heading, .featured-card, .tool-card, .blog-card, .popular-item, .tut-row-card, .hot-card, .cat-tile, .timeline-item, .quiz-cta-inner, .todays-pick-inner'
+	);
+	revealEls.forEach((el, i) => {
+		el.style.opacity = '0';
+		el.style.transform = 'translateY(24px)';
+		el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+		el.style.transitionDelay = `${(i % 6) * 60}ms`;
+	});
+
+	const io = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				const el = entry.target as HTMLElement;
+				el.style.opacity = '1';
+				el.style.transform = 'translateY(0)';
+				io.unobserve(el);
+			}
+		});
+	}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+	revealEls.forEach(el => io.observe(el));
+
+	// ── Floating orbs (hero background) ───────────────────────────
+	const heroCarousel = document.getElementById('hero-carousel');
+	if (heroCarousel) {
+		['a', 'b', 'c'].forEach(letter => {
+			const orb = document.createElement('div');
+			orb.className = `hero-orb hero-orb--${letter}`;
+			heroCarousel.appendChild(orb);
+		});
+	}
 </script>
 
 <style>
+	/* ── Floating hero orbs ──────────────────────────────────────── */
+	.hero-orb {
+		position: absolute;
+		border-radius: 50%;
+		pointer-events: none;
+		z-index: 1;
+		filter: blur(60px);
+		opacity: 0.18;
+	}
+	.hero-orb--a {
+		width: 340px; height: 340px;
+		background: radial-gradient(circle, #00c896, transparent);
+		top: -80px; left: -60px;
+		animation: orbFloat 9s ease-in-out infinite;
+	}
+	.hero-orb--b {
+		width: 280px; height: 280px;
+		background: radial-gradient(circle, #3b82f6, transparent);
+		bottom: -60px; right: 10%;
+		animation: orbFloat 12s ease-in-out infinite reverse;
+	}
+	.hero-orb--c {
+		width: 200px; height: 200px;
+		background: radial-gradient(circle, #a855f7, transparent);
+		top: 30%; right: 25%;
+		animation: orbFloat 7s ease-in-out infinite 2s;
+	}
+	@keyframes orbFloat {
+		0%, 100% { transform: translateY(0) scale(1); }
+		50%       { transform: translateY(-28px) scale(1.06); }
+	}
+
+	/* ── Enhanced card hovers ────────────────────────────────────── */
+	.featured-card {
+		transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease !important;
+	}
+	.featured-card:hover {
+		transform: translateY(-4px) !important;
+		box-shadow: 0 8px 28px rgba(0,135,90,0.14) !important;
+		border-color: rgba(0,135,90,0.3) !important;
+	}
+	.blog-card {
+		transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease !important;
+	}
+	.blog-card:hover {
+		transform: translateY(-4px) !important;
+		box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+	}
+	.hot-card:hover {
+		transform: translateY(-5px) !important;
+		box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+	}
+	.tut-row-card:hover {
+		transform: translateX(4px) !important;
+		border-color: var(--primary) !important;
+		box-shadow: 0 4px 16px rgba(0,135,90,0.1) !important;
+	}
+	.popular-item {
+		transition: transform 0.2s ease, background 0.15s !important;
+		border-radius: var(--radius);
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+	.popular-item:hover {
+		transform: translateX(5px) !important;
+		background: var(--primary-light) !important;
+	}
+
+	/* ── Timeline item hover ─────────────────────────────────────── */
+	.timeline-item:hover .timeline-dot {
+		transform: scale(1.4);
+		transition: transform 0.2s ease;
+	}
+	.timeline-dot { transition: transform 0.2s ease; }
+
+	/* ── Section heading underline slide ─────────────────────────── */
+	.section-heading {
+		position: relative;
+		display: inline-block;
+	}
+	.section-heading::after {
+		content: '';
+		position: absolute;
+		bottom: -4px; left: 0;
+		width: 0; height: 3px;
+		background: var(--primary);
+		border-radius: 2px;
+		transition: width 0.4s ease;
+	}
+	.section-heading:hover::after { width: 100%; }
+
+	/* ── Floating search bar pulse ───────────────────────────────── */
+	.hero__search {
+		animation: searchFloat 4s ease-in-out infinite;
+	}
+	@keyframes searchFloat {
+		0%, 100% { box-shadow: 0 4px 20px rgba(0,135,90,0.15); }
+		50%       { box-shadow: 0 8px 32px rgba(0,135,90,0.28); }
+	}
+
+	/* ── Cat tile bounce on hover ────────────────────────────────── */
+	.cat-tile {
+		transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, border-color 0.2s ease !important;
+	}
+	.cat-tile:hover {
+		transform: translateY(-6px) scale(1.03) !important;
+	}
+
 	/* Today's Pick */
 	.todays-pick-section {
 		background: linear-gradient(135deg, #f0f4ff 0%, #e8f5f0 100%);
@@ -896,6 +1045,38 @@ const carouselPosts = allPosts.slice(0, 3);
 	}
 
 	.blog-card__meta { font-size: 0.75rem; color: rgb(var(--gray)); }
+
+	/* Home two-column layout */
+	.home-with-sidebar { background: var(--bg-alt); border-bottom: 1px solid var(--border); }
+	.home-with-sidebar__inner { display: grid; grid-template-columns: 1fr; gap: 0; align-items: start; }
+	.home-main-col { min-width: 0; overflow: hidden; padding-right: 0; }
+	.home-main-col .section { padding-top: 2rem; padding-bottom: 2rem; }
+	.home-news-sidebar {
+		display: none;
+		border-left: 1px solid var(--border);
+		background: var(--bg);
+		min-width: 0;
+	}
+	.news-sidebar-inner {
+		padding: 1.75rem 1rem 2rem 1.5rem;
+		position: sticky;
+		top: 72px;
+		max-height: calc(100vh - 80px);
+		overflow-y: auto;
+	}
+	.section-heading--sm { font-size: 1rem; margin-bottom: 0.75rem; }
+
+	@media (min-width: 1024px) {
+		.home-with-sidebar__inner { grid-template-columns: 1fr 290px; column-gap: 0; }
+		.home-news-sidebar { display: block; }
+		.home-main-col { padding-right: 2rem; }
+		.home-main-col .featured-grid { grid-template-columns: 1fr; }
+	}
+	@media (min-width: 1280px) {
+		.home-with-sidebar__inner { grid-template-columns: 1fr 310px; }
+		.home-main-col { padding-right: 2.5rem; }
+		.home-main-col .featured-grid { grid-template-columns: 1fr; }
+	}
 
 	/* News Timeline */
 	.news-live { font-size: 0.75rem; font-weight: 700; color: #e03131; }

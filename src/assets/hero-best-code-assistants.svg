@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1100" cy="100" r="200" fill="#10b981" opacity="0.05"/>
+  <circle cx="100" cy="530" r="180" fill="#10b981" opacity="0.05"/>
+  <!-- Code editor window -->
+  <rect x="300" y="110" width="600" height="360" rx="12" fill="#1e2530" stroke="#30363d" stroke-width="1.5"/>
+  <!-- Window chrome -->
+  <rect x="300" y="110" width="600" height="36" rx="12" fill="#21262d"/>
+  <rect x="300" y="134" width="600" height="12" fill="#21262d"/>
+  <circle cx="332" cy="128" r="7" fill="#ff5f56"/>
+  <circle cx="356" cy="128" r="7" fill="#ffbd2e"/>
+  <circle cx="380" cy="128" r="7" fill="#27c93f"/>
+  <!-- Line numbers -->
+  <rect x="300" y="146" width="40" height="324" fill="#161b22" opacity="0.8"/>
+  <text x="318" y="172" font-family="monospace" font-size="13" fill="#484f58" text-anchor="middle">1</text>
+  <text x="318" y="196" font-family="monospace" font-size="13" fill="#484f58" text-anchor="middle">2</text>
+  <text x="318" y="220" font-family="monospace" font-size="13" fill="#484f58" text-anchor="middle">3</text>
+  <text x="318" y="244" font-family="monospace" font-size="13" fill="#484f58" text-anchor="middle">4</text>
+  <text x="318" y="268" font-family="monospace" font-size="13" fill="#484f58" text-anchor="middle">5</text>
+  <text x="318" y="292" font-family="monospace" font-size="13" fill="#484f58" text-anchor="middle">6</text>
+  <text x="318" y="316" font-family="monospace" font-size="13" fill="#484f58" text-anchor="middle">7</text>
+  <text x="318" y="340" font-family="monospace" font-size="13" fill="#484f58" text-anchor="middle">8</text>
+  <text x="318" y="364" font-family="monospace" font-size="13" fill="#484f58" text-anchor="middle">9</text>
+  <!-- Code text -->
+  <text x="354" y="172" font-family="monospace" font-size="14" fill="#ff7b72">function</text>
+  <text x="432" y="172" font-family="monospace" font-size="14" fill="#d2a8ff"> generateCode</text>
+  <text x="573" y="172" font-family="monospace" font-size="14" fill="#c9d1d9">(prompt) {</text>
+  <text x="354" y="196" font-family="monospace" font-size="14" fill="#c9d1d9">  </text>
+  <text x="370" y="196" font-family="monospace" font-size="14" fill="#ff7b72">const</text>
+  <text x="406" y="196" font-family="monospace" font-size="14" fill="#79c0ff"> ai </text>
+  <text x="432" y="196" font-family="monospace" font-size="14" fill="#c9d1d9">= </text>
+  <text x="450" y="196" font-family="monospace" font-size="14" fill="#79c0ff">new</text>
+  <text x="477" y="196" font-family="monospace" font-size="14" fill="#d2a8ff"> Cursor</text>
+  <text x="534" y="196" font-family="monospace" font-size="14" fill="#c9d1d9">();</text>
+  <text x="354" y="220" font-family="monospace" font-size="14" fill="#8b949e">  // AI writes the rest...</text>
+  <rect x="354" y="232" width="340" height="22" rx="4" fill="#10b981" opacity="0.15"/>
+  <text x="354" y="248" font-family="monospace" font-size="14" fill="#10b981">  return ai.complete(prompt);</text>
+  <text x="354" y="272" font-family="monospace" font-size="14" fill="#c9d1d9">}</text>
+  <!-- Cursor blink -->
+  <rect x="354" y="286" width="2" height="18" fill="#10b981" opacity="0.9"/>
+  <!-- AI suggestion overlay -->
+  <rect x="356" y="300" width="300" height="62" rx="6" fill="#1c2b1e" stroke="#10b981" stroke-width="1" opacity="0.95"/>
+  <text x="368" y="320" font-family="monospace" font-size="12" fill="#10b981">✦ AI suggestion</text>
+  <text x="368" y="340" font-family="monospace" font-size="12" fill="#8b949e">  const result = await</text>
+  <text x="368" y="356" font-family="monospace" font-size="12" fill="#8b949e">  ai.generate(prompt);</text>
+  <!-- Title -->
+  <text x="600" y="558" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Code Assistants 2026</text>
+  <text x="600" y="596" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="white" text-anchor="middle" opacity="0.5">Cursor · GitHub Copilot · Windsurf · Codeium</text>
+</svg>

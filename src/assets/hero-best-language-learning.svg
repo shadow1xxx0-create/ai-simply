@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0f00"/>
+      <stop offset="100%" style="stop-color:#2d1800"/>
+    </linearGradient>
+    <linearGradient id="orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316"/>
+      <stop offset="100%" style="stop-color:#fb923c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="200" cy="150" r="200" fill="#f97316" opacity="0.07"/>
+  <circle cx="1050" cy="480" r="240" fill="#ea580c" opacity="0.07"/>
+  <!-- Globe -->
+  <circle cx="600" cy="270" r="160" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>
+  <ellipse cx="600" cy="270" rx="80" ry="160" fill="none" stroke="#f97316" stroke-width="1.5" opacity="0.4"/>
+  <ellipse cx="600" cy="270" rx="140" ry="60" fill="none" stroke="#f97316" stroke-width="1.5" opacity="0.4"/>
+  <ellipse cx="600" cy="270" rx="140" ry="115" fill="none" stroke="#f97316" stroke-width="1" opacity="0.3"/>
+  <line x1="440" y1="270" x2="760" y2="270" stroke="#f97316" stroke-width="1.5" opacity="0.4"/>
+  <line x1="600" y1="110" x2="600" y2="430" stroke="#f97316" stroke-width="1.5" opacity="0.4"/>
+  <!-- Speech bubbles with language text -->
+  <rect x="270" y="160" width="130" height="50" rx="10" fill="url(#orange)" opacity="0.9"/>
+  <polygon points="285,210 270,230 310,210" fill="#f97316" opacity="0.9"/>
+  <text x="335" y="190" font-family="system-ui, sans-serif" font-size="20" fill="white" text-anchor="middle" font-weight="600">Hola</text>
+  <text x="335" y="208" font-family="system-ui, sans-serif" font-size="12" fill="white" opacity="0.8" text-anchor="middle">Spanish</text>
+
+  <rect x="800" y="140" width="130" height="50" rx="10" fill="#1a4060" stroke="#f97316" stroke-width="1.5" opacity="0.9"/>
+  <polygon points="915,190 930,210 895,190" fill="#1a4060" opacity="0.9"/>
+  <text x="865" y="168" font-family="system-ui, sans-serif" font-size="20" fill="white" text-anchor="middle" font-weight="600">Bonjour</text>
+  <text x="865" y="186" font-family="system-ui, sans-serif" font-size="12" fill="#f97316" text-anchor="middle">French</text>
+
+  <rect x="300" y="340" width="130" height="50" rx="10" fill="#1a4060" stroke="#fb923c" stroke-width="1.5" opacity="0.9"/>
+  <polygon points="315,340 300,320 345,340" fill="#1a4060" opacity="0.9"/>
+  <text x="365" y="368" font-family="system-ui, sans-serif" font-size="20" fill="white" text-anchor="middle" font-weight="600">Ciao</text>
+  <text x="365" y="386" font-family="system-ui, sans-serif" font-size="12" fill="#fb923c" text-anchor="middle">Italian</text>
+
+  <rect x="780" y="340" width="130" height="50" rx="10" fill="url(#orange)" opacity="0.9"/>
+  <polygon points="905,340 920,320 895,340" fill="#f97316" opacity="0.9"/>
+  <text x="845" y="368" font-family="system-ui, sans-serif" font-size="20" fill="white" text-anchor="middle" font-weight="600">こんにちは</text>
+  <text x="845" y="386" font-family="system-ui, sans-serif" font-size="12" fill="white" opacity="0.8" text-anchor="middle">Japanese</text>
+
+  <!-- Title -->
+  <text x="600" y="555" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Language Learning 2026</text>
+  <text x="600" y="593" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="white" text-anchor="middle" opacity="0.5">Duolingo · Babbel · Pimsleur</text>
+</svg>

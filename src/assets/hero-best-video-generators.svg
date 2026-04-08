@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050a15"/>
+      <stop offset="100%" style="stop-color:#0a1428"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="200" fill="#3b82f6" opacity="0.06"/>
+  <circle cx="1050" cy="450" r="240" fill="#1d4ed8" opacity="0.06"/>
+  <!-- Film strip top -->
+  <rect x="230" y="115" width="740" height="130" rx="8" fill="#0d1f3c" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="230" y="115" width="30" height="130" rx="8" fill="#0a1828"/>
+  <rect x="940" y="115" width="30" height="130" rx="8" fill="#0a1828"/>
+  <rect x="242" y="130" width="16" height="22" rx="3" fill="#3b82f6" opacity="0.5"/>
+  <rect x="242" y="162" width="16" height="22" rx="3" fill="#3b82f6" opacity="0.5"/>
+  <rect x="242" y="194" width="16" height="22" rx="3" fill="#3b82f6" opacity="0.5"/>
+  <rect x="952" y="130" width="16" height="22" rx="3" fill="#3b82f6" opacity="0.5"/>
+  <rect x="952" y="162" width="16" height="22" rx="3" fill="#3b82f6" opacity="0.5"/>
+  <rect x="952" y="194" width="16" height="22" rx="3" fill="#3b82f6" opacity="0.5"/>
+  <!-- Frames in filmstrip -->
+  <rect x="272" y="126" width="140" height="108" rx="4" fill="#1a2d50"/>
+  <rect x="422" y="126" width="140" height="108" rx="4" fill="#1a2d50"/>
+  <rect x="572" y="126" width="140" height="108" rx="4" fill="#1a2d50"/>
+  <rect x="722" y="126" width="140" height="108" rx="4" fill="#1a2d50"/>
+  <rect x="872" y="126" width="60" height="108" rx="4" fill="#1a2d50"/>
+  <!-- Play button on middle frame -->
+  <circle cx="492" cy="180" r="30" fill="url(#blue)" opacity="0.9"/>
+  <polygon points="482,167 482,193 510,180" fill="white"/>
+  <!-- AI text-to-video prompt area -->
+  <rect x="230" y="265" width="740" height="60" rx="10" fill="#0d1f3c" stroke="#3b82f6" stroke-width="1"/>
+  <text x="254" y="291" font-family="system-ui, sans-serif" font-size="14" fill="#3b82f6" opacity="0.8">✦ Prompt:</text>
+  <text x="340" y="291" font-family="system-ui, sans-serif" font-size="14" fill="white" opacity="0.6">"A cinematic shot of mountains at sunrise, aerial view..."</text>
+  <rect x="910" y="276" width="48" height="36" rx="8" fill="url(#blue)" opacity="0.9"/>
+  <text x="934" y="299" font-family="system-ui, sans-serif" font-size="13" fill="white" text-anchor="middle" font-weight="600">Gen</text>
+  <!-- Progress bar -->
+  <rect x="230" y="345" width="740" height="8" rx="4" fill="#0d1f3c"/>
+  <rect x="230" y="345" width="490" height="8" rx="4" fill="url(#blue)" opacity="0.8"/>
+  <text x="600" y="375" font-family="system-ui, sans-serif" font-size="13" fill="white" text-anchor="middle" opacity="0.5">Generating... 66%</text>
+  <!-- Title -->
+  <text x="600" y="558" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Video Generators 2026</text>
+  <text x="600" y="596" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="white" text-anchor="middle" opacity="0.5">Runway · Sora · Kling · Pika · Luma</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0a0a"/>
+      <stop offset="100%" style="stop-color:#2d1010"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f43f5e"/>
+      <stop offset="100%" style="stop-color:#e11d48"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="200" fill="#f43f5e" opacity="0.07"/>
+  <circle cx="1050" cy="450" r="240" fill="#e11d48" opacity="0.06"/>
+  <!-- Microphone body -->
+  <rect x="562" y="140" width="76" height="120" rx="38" fill="url(#red)" opacity="0.95"/>
+  <rect x="562" y="220" width="76" height="40" rx="8" fill="#9b1a2f"/>
+  <!-- Mic stand -->
+  <line x1="600" y1="260" x2="600" y2="340" stroke="#f43f5e" stroke-width="4" opacity="0.8"/>
+  <line x1="555" y1="340" x2="645" y2="340" stroke="#f43f5e" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  <!-- Mic arc -->
+  <path d="M 530 200 Q 530 290 600 290 Q 670 290 670 200" fill="none" stroke="#f43f5e" stroke-width="3" opacity="0.7"/>
+  <!-- Sound waves emanating -->
+  <path d="M 710 195 Q 730 225 710 255" fill="none" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  <path d="M 740 175 Q 775 225 740 275" fill="none" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 770 155 Q 820 225 770 295" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+  <path d="M 800 135 Q 865 225 800 315" fill="none" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" opacity="0.25"/>
+  <path d="M 490 195 Q 470 225 490 255" fill="none" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  <path d="M 460 175 Q 425 225 460 275" fill="none" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 430 155 Q 380 225 430 295" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+  <!-- Waveform at bottom -->
+  <g opacity="0.7">
+    <rect x="280" y="368" width="6" height="20" rx="3" fill="#f43f5e"/>
+    <rect x="292" y="358" width="6" height="40" rx="3" fill="#f43f5e"/>
+    <rect x="304" y="350" width="6" height="56" rx="3" fill="#f43f5e"/>
+    <rect x="316" y="360" width="6" height="36" rx="3" fill="#f43f5e"/>
+    <rect x="328" y="354" width="6" height="48" rx="3" fill="#f43f5e"/>
+    <rect x="340" y="363" width="6" height="30" rx="3" fill="#f43f5e"/>
+    <rect x="352" y="356" width="6" height="44" rx="3" fill="#f43f5e"/>
+    <rect x="364" y="366" width="6" height="24" rx="3" fill="#f43f5e"/>
+    <rect x="376" y="350" width="6" height="56" rx="3" fill="#f43f5e"/>
+    <rect x="388" y="360" width="6" height="36" rx="3" fill="#f43f5e"/>
+    <rect x="400" y="368" width="6" height="20" rx="3" fill="#f43f5e"/>
+    <rect x="412" y="353" width="6" height="50" rx="3" fill="#f43f5e"/>
+    <rect x="424" y="362" width="6" height="32" rx="3" fill="#f43f5e"/>
+    <rect x="760" y="368" width="6" height="20" rx="3" fill="#f43f5e"/>
+    <rect x="772" y="355" width="6" height="46" rx="3" fill="#f43f5e"/>
+    <rect x="784" y="348" width="6" height="60" rx="3" fill="#f43f5e"/>
+    <rect x="796" y="358" width="6" height="40" rx="3" fill="#f43f5e"/>
+    <rect x="808" y="352" width="6" height="52" rx="3" fill="#f43f5e"/>
+    <rect x="820" y="364" width="6" height="28" rx="3" fill="#f43f5e"/>
+    <rect x="832" y="355" width="6" height="46" rx="3" fill="#f43f5e"/>
+    <rect x="844" y="366" width="6" height="24" rx="3" fill="#f43f5e"/>
+    <rect x="856" y="350" width="6" height="56" rx="3" fill="#f43f5e"/>
+    <rect x="868" y="360" width="6" height="36" rx="3" fill="#f43f5e"/>
+    <rect x="880" y="368" width="6" height="20" rx="3" fill="#f43f5e"/>
+    <rect x="892" y="354" width="6" height="48" rx="3" fill="#f43f5e"/>
+    <rect x="904" y="362" width="6" height="32" rx="3" fill="#f43f5e"/>
+  </g>
+  <!-- Title -->
+  <text x="600" y="558" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Text-to-Speech 2026</text>
+  <text x="600" y="596" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="white" text-anchor="middle" opacity="0.5">ElevenLabs · Murf · Play.ht · Speechify</text>
+</svg>

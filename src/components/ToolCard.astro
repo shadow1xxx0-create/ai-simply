@@ -12,7 +12,7 @@ interface Props {
 	tags?: string[];
 }
 
-const { name, description, category, pricing, slug, url } = Astro.props;
+const { name, description, category, subcategory, pricing, slug, url, tags } = Astro.props;
 
 const pb = PRICING_BADGE[pricing] ?? PRICING_BADGE.freemium;
 const cat = TOOL_CATEGORIES.find(c => c.slug === category);
@@ -27,6 +27,9 @@ const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}
 	data-category={category}
 	data-pricing={pricing}
 	data-name={name.toLowerCase()}
+	data-subcat={subcategory ?? ''}
+	data-desc={description.toLowerCase()}
+	data-tags={(tags ?? []).join(' ').toLowerCase()}
 >
 	<a href={`/tools/${slug}/`} class="tool-card__link">
 		<div class="tool-card__logo" aria-hidden="true">

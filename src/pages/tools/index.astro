@@ -243,11 +243,13 @@ function applyFilters() {
 		const price = card.dataset.pricing ?? '';
 		const name = card.dataset.name ?? '';
 		const subcat = card.dataset.subcat ?? '';
+		const desc = card.dataset.desc ?? '';
+		const tags = card.dataset.tags ?? '';
 
 		const catMatch = activeCat === 'all' || cat === activeCat;
 		const priceMatch = activePrice === 'all' || price === activePrice;
 		const subcatMatch = !activeSubcat || subcat === activeSubcat;
-		const searchMatch = !q || name.includes(q);
+		const searchMatch = !q || name.includes(q) || desc.includes(q) || tags.includes(q) || subcat.toLowerCase().includes(q);
 
 		if (catMatch && priceMatch && subcatMatch && searchMatch) matched.push(card);
 	});
@@ -269,10 +271,29 @@ function applyFilters() {
 
 	// Subcategory chips
 	if (activeCat !== 'all' && SUBCATS[activeCat]) {
-		const subs = SUBCATS[activeCat];
-		subcatsEl.style.display = '';
-		subcatsEl.innerHTML = `<button class="subcat-chip${!activeSubcat ? ' active' : ''}" data-sub="">All</button>` +
-			subs.map(s => `<button class="subcat-chip${activeSubcat === s ? ' active' : ''}" data-sub="${s}">${s}</button>`).join('');
+		// Find which subcats have at least one card matching cat+price+search (ignoring subcat filter)
+		const availableSubs = SUBCATS[activeCat].filter(s =>
+			cards.some(card => {
+				const cat = card.dataset.category ?? '';
+				const price = card.dataset.pricing ?? '';
+				const name = card.dataset.name ?? '';
+				const subcat = card.dataset.subcat ?? '';
+				const desc = card.dataset.desc ?? '';
+				const tags = card.dataset.tags ?? '';
+				const catMatch = activeCat === 'all' || cat === activeCat;
+				const priceMatch = activePrice === 'all' || price === activePrice;
+				const searchMatch = !q || name.includes(q) || desc.includes(q) || tags.includes(q) || subcat.toLowerCase().includes(q);
+				return catMatch && priceMatch && searchMatch && subcat === s;
+			})
+		);
+		if (availableSubs.length > 0) {
+			subcatsEl.style.display = '';
+			subcatsEl.innerHTML = `<button class="subcat-chip${!activeSubcat ? ' active' : ''}" data-sub="">All</button>` +
+				availableSubs.map(s => `<button class="subcat-chip${activeSubcat === s ? ' active' : ''}" data-sub="${s}">${s}</button>`).join('');
+		} else {
+			subcatsEl.style.display = 'none';
+			subcatsEl.innerHTML = '';
+		}
 	} else {
 		subcatsEl.style.display = 'none';
 		subcatsEl.innerHTML = '';

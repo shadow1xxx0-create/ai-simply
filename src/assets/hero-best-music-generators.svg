@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#100818"/>
+      <stop offset="100%" style="stop-color:#1a1028"/>
+    </linearGradient>
+    <linearGradient id="violet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#c026d3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="200" fill="#8b5cf6" opacity="0.07"/>
+  <circle cx="1050" cy="450" r="240" fill="#c026d3" opacity="0.06"/>
+  <!-- Music player UI -->
+  <rect x="330" y="130" width="540" height="310" rx="20" fill="#140c20" stroke="#8b5cf6" stroke-width="2"/>
+  <!-- Album art placeholder -->
+  <rect x="370" y="165" width="160" height="160" rx="12" fill="#2a1840"/>
+  <!-- Vinyl record effect -->
+  <circle cx="450" cy="245" r="60" fill="#1e1030" stroke="#8b5cf6" stroke-width="1" opacity="0.8"/>
+  <circle cx="450" cy="245" r="40" fill="#160c24" stroke="#8b5cf6" stroke-width="0.5" opacity="0.6"/>
+  <circle cx="450" cy="245" r="20" fill="#1e1030" stroke="#8b5cf6" stroke-width="0.5" opacity="0.6"/>
+  <circle cx="450" cy="245" r="6" fill="#8b5cf6"/>
+  <!-- Track info -->
+  <text x="555" y="195" font-family="system-ui, sans-serif" font-size="18" fill="white" font-weight="600">AI Generated</text>
+  <text x="555" y="218" font-family="system-ui, sans-serif" font-size="14" fill="#8b5cf6">Cinematic Electronic</text>
+  <!-- Waveform visualization -->
+  <g opacity="0.85">
+    <rect x="555" y="248" width="5" height="16" rx="2.5" fill="#8b5cf6"/>
+    <rect x="565" y="238" width="5" height="36" rx="2.5" fill="#8b5cf6"/>
+    <rect x="575" y="242" width="5" height="28" rx="2.5" fill="#c026d3"/>
+    <rect x="585" y="232" width="5" height="48" rx="2.5" fill="#8b5cf6"/>
+    <rect x="595" y="245" width="5" height="22" rx="2.5" fill="#8b5cf6"/>
+    <rect x="605" y="235" width="5" height="42" rx="2.5" fill="#c026d3"/>
+    <rect x="615" y="240" width="5" height="32" rx="2.5" fill="#8b5cf6"/>
+    <rect x="625" y="228" width="5" height="56" rx="2.5" fill="#c026d3"/>
+    <rect x="635" y="242" width="5" height="28" rx="2.5" fill="#8b5cf6"/>
+    <rect x="645" y="236" width="5" height="40" rx="2.5" fill="#8b5cf6"/>
+    <rect x="655" y="247" width="5" height="18" rx="2.5" fill="#c026d3"/>
+    <rect x="665" y="238" width="5" height="36" rx="2.5" fill="#8b5cf6"/>
+    <rect x="675" y="243" width="5" height="26" rx="2.5" fill="#8b5cf6"/>
+    <rect x="685" y="230" width="5" height="52" rx="2.5" fill="#c026d3"/>
+    <rect x="695" y="244" width="5" height="24" rx="2.5" fill="#8b5cf6"/>
+    <rect x="705" y="237" width="5" height="38" rx="2.5" fill="#8b5cf6"/>
+    <rect x="715" y="250" width="5" height="12" rx="2.5" fill="#c026d3"/>
+    <rect x="725" y="240" width="5" height="32" rx="2.5" fill="#8b5cf6"/>
+    <rect x="735" y="234" width="5" height="44" rx="2.5" fill="#8b5cf6"/>
+    <rect x="745" y="246" width="5" height="20" rx="2.5" fill="#c026d3"/>
+    <rect x="755" y="238" width="5" height="36" rx="2.5" fill="#8b5cf6"/>
+    <rect x="765" y="248" width="5" height="16" rx="2.5" fill="#8b5cf6"/>
+    <rect x="775" y="240" width="5" height="32" rx="2.5" fill="#c026d3"/>
+    <rect x="785" y="243" width="5" height="26" rx="2.5" fill="#8b5cf6"/>
+    <rect x="795" y="235" width="5" height="42" rx="2.5" fill="#8b5cf6"/>
+  </g>
+  <!-- Progress bar -->
+  <rect x="370" y="356" width="460" height="6" rx="3" fill="#2a1840"/>
+  <rect x="370" y="356" width="180" height="6" rx="3" fill="url(#violet)"/>
+  <circle cx="550" cy="359" r="8" fill="white"/>
+  <!-- Controls -->
+  <text x="450" y="395" font-size="24" fill="white" text-anchor="middle" opacity="0.6">⏮</text>
+  <circle cx="600" cy="385" r="22" fill="url(#violet)" opacity="0.95"/>
+  <polygon points="593,376 593,394 614,385" fill="white"/>
+  <text x="750" y="395" font-size="24" fill="white" text-anchor="middle" opacity="0.6">⏭</text>
+  <!-- Notes decoration -->
+  <text x="240" y="250" font-size="40" fill="#8b5cf6" opacity="0.3">♪</text>
+  <text x="930" y="220" font-size="32" fill="#c026d3" opacity="0.3">♫</text>
+  <text x="180" y="360" font-size="28" fill="#8b5cf6" opacity="0.2">♩</text>
+  <text x="970" y="380" font-size="36" fill="#8b5cf6" opacity="0.2">♬</text>
+  <!-- Title -->
+  <text x="600" y="556" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Music Generators 2026</text>
+  <text x="600" y="594" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="white" text-anchor="middle" opacity="0.5">Suno · Udio · Mubert · AIVA · Soundraw</text>
+</svg>

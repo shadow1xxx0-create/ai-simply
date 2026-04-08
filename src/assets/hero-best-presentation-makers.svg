@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1a10"/>
+      <stop offset="100%" style="stop-color:#0f2416"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="200" cy="180" r="200" fill="#10b981" opacity="0.07"/>
+  <circle cx="1050" cy="470" r="240" fill="#059669" opacity="0.06"/>
+  <!-- Main slide -->
+  <rect x="300" y="120" width="600" height="360" rx="12" fill="#111f16" stroke="#10b981" stroke-width="2"/>
+  <!-- Slide header -->
+  <rect x="300" y="120" width="600" height="56" rx="12" fill="#0d1f13"/>
+  <rect x="300" y="164" width="600" height="12" fill="#0d1f13"/>
+  <rect x="330" y="142" width="200" height="16" rx="8" fill="#10b981" opacity="0.8"/>
+  <rect x="330" y="164" width="120" height="10" rx="5" fill="white" opacity="0.3"/>
+  <!-- Slide content left column -->
+  <rect x="320" y="196" width="10" height="10" rx="5" fill="#10b981"/>
+  <rect x="338" y="199" width="160" height="9" rx="4" fill="white" opacity="0.5"/>
+  <rect x="320" y="220" width="10" height="10" rx="5" fill="#10b981" opacity="0.7"/>
+  <rect x="338" y="223" width="140" height="9" rx="4" fill="white" opacity="0.4"/>
+  <rect x="320" y="244" width="10" height="10" rx="5" fill="#10b981" opacity="0.6"/>
+  <rect x="338" y="247" width="150" height="9" rx="4" fill="white" opacity="0.35"/>
+  <rect x="320" y="268" width="10" height="10" rx="5" fill="#10b981" opacity="0.5"/>
+  <rect x="338" y="271" width="130" height="9" rx="4" fill="white" opacity="0.3"/>
+  <!-- Chart in right column -->
+  <rect x="540" y="190" width="330" height="200" rx="8" fill="#0a1a10" stroke="#10b981" stroke-width="1" opacity="0.8"/>
+  <!-- Bar chart -->
+  <rect x="575" y="310" width="30" height="60" rx="3" fill="#10b981" opacity="0.7"/>
+  <rect x="620" y="280" width="30" height="90" rx="3" fill="#10b981" opacity="0.85"/>
+  <rect x="665" y="260" width="30" height="110" rx="3" fill="#10b981"/>
+  <rect x="710" y="295" width="30" height="75" rx="3" fill="#10b981" opacity="0.75"/>
+  <rect x="755" y="270" width="30" height="100" rx="3" fill="#10b981" opacity="0.9"/>
+  <rect x="800" y="240" width="30" height="130" rx="3" fill="#10b981"/>
+  <line x1="560" y1="372" x2="845" y2="372" stroke="#10b981" stroke-width="1" opacity="0.4"/>
+  <!-- Sparkle AI indicator -->
+  <text x="334" y="320" font-family="system-ui, sans-serif" font-size="12" fill="#10b981" opacity="0.7">✦ AI-generated</text>
+  <!-- Bottom slide dots -->
+  <circle cx="480" cy="456" r="6" fill="#10b981"/>
+  <circle cx="500" cy="456" r="6" fill="#1a3d25"/>
+  <circle cx="520" cy="456" r="6" fill="#1a3d25"/>
+  <circle cx="540" cy="456" r="6" fill="#1a3d25"/>
+  <circle cx="560" cy="456" r="6" fill="#1a3d25"/>
+  <!-- Mini slides on right -->
+  <rect x="920" y="120" width="130" height="80" rx="6" fill="#1a3020" stroke="#10b981" stroke-width="1" opacity="0.8"/>
+  <rect x="930" y="132" width="80" height="8" rx="4" fill="#10b981" opacity="0.6"/>
+  <rect x="930" y="148" width="100" height="6" rx="3" fill="white" opacity="0.3"/>
+  <rect x="930" y="162" width="90" height="6" rx="3" fill="white" opacity="0.25"/>
+  <rect x="930" y="176" width="80" height="6" rx="3" fill="white" opacity="0.2"/>
+  <rect x="920" y="215" width="130" height="80" rx="6" fill="#0d1f13" stroke="#10b981" stroke-width="2" opacity="0.9"/>
+  <rect x="930" y="227" width="80" height="8" rx="4" fill="#10b981" opacity="0.8"/>
+  <rect x="930" y="243" width="100" height="6" rx="3" fill="white" opacity="0.3"/>
+  <rect x="920" y="310" width="130" height="80" rx="6" fill="#1a3020" stroke="#10b981" stroke-width="1" opacity="0.6"/>
+  <rect x="930" y="322" width="80" height="8" rx="4" fill="#10b981" opacity="0.5"/>
+  <rect x="930" y="338" width="100" height="6" rx="3" fill="white" opacity="0.25"/>
+  <!-- Title -->
+  <text x="600" y="556" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Presentation Makers 2026</text>
+  <text x="600" y="594" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="white" text-anchor="middle" opacity="0.5">Gamma · Beautiful.ai · Tome · SlidesAI</text>
+</svg>

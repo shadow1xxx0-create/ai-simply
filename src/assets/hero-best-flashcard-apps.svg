@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#130a1e"/>
+      <stop offset="100%" style="stop-color:#1e0f30"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="200" cy="150" r="200" fill="#a855f7" opacity="0.07"/>
+  <circle cx="1050" cy="500" r="240" fill="#7c3aed" opacity="0.07"/>
+  <!-- Stack of flashcards (back cards) -->
+  <rect x="370" y="175" width="460" height="280" rx="16" fill="#2a1a40" stroke="#7c3aed" stroke-width="1.5" opacity="0.5" transform="rotate(-6 600 315)"/>
+  <rect x="370" y="175" width="460" height="280" rx="16" fill="#2a1a40" stroke="#a855f7" stroke-width="1.5" opacity="0.7" transform="rotate(-3 600 315)"/>
+  <!-- Front flashcard -->
+  <rect x="370" y="175" width="460" height="280" rx="16" fill="#1a0f2e" stroke="#a855f7" stroke-width="2"/>
+  <!-- Card content -->
+  <text x="600" y="285" font-family="system-ui, sans-serif" font-size="22" fill="#a855f7" text-anchor="middle" font-weight="600">What is spaced repetition?</text>
+  <line x1="430" y1="305" x2="770" y2="305" stroke="#a855f7" stroke-width="1" opacity="0.4"/>
+  <text x="600" y="340" font-family="system-ui, sans-serif" font-size="16" fill="white" text-anchor="middle" opacity="0.6">Tap to reveal answer</text>
+  <!-- Flip arrows -->
+  <path d="M 565 370 Q 580 380 600 370 Q 620 360 635 370" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.6"/>
+  <polygon points="633,366 641,376 625,376" fill="#a855f7" opacity="0.6"/>
+  <!-- Progress dots -->
+  <circle cx="510" cy="420" r="10" fill="#a855f7"/>
+  <circle cx="540" cy="420" r="10" fill="#a855f7"/>
+  <circle cx="570" cy="420" r="10" fill="#a855f7"/>
+  <circle cx="600" cy="420" r="10" fill="#3d1f60"/>
+  <circle cx="630" cy="420" r="10" fill="#3d1f60"/>
+  <circle cx="660" cy="420" r="10" fill="#3d1f60"/>
+  <circle cx="690" cy="420" r="10" fill="#3d1f60"/>
+  <text x="600" y="452" font-family="system-ui, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.5">3 of 7</text>
+  <!-- Sparkle decorations -->
+  <text x="310" y="260" font-size="28" fill="#a855f7" opacity="0.5">✦</text>
+  <text x="870" y="200" font-size="22" fill="#7c3aed" opacity="0.5">✦</text>
+  <text x="880" y="390" font-size="18" fill="#a855f7" opacity="0.4">✦</text>
+  <!-- Title -->
+  <text x="600" y="556" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">Best AI Flashcard Apps 2026</text>
+  <text x="600" y="594" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="white" text-anchor="middle" opacity="0.5">Anki · Quizlet · Brainscape</text>
+</svg>
