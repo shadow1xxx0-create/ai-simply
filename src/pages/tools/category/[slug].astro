@@ -83,7 +83,7 @@ const paid = tools.filter(t => t.data.pricing === 'paid').length;
 		<div class="subcats-bar">
 			<div class="container subcats-inner">
 				<button class="subcat-chip active" data-sub="">All</button>
-				{category.subcategories.map(sub => (
+				{category.subcategories.filter(sub => subcatCounts[sub]).map(sub => (
 					<a href={`/tools/category/${category.slug}/${toSlug(sub)}/`} class="subcat-chip" data-sub={sub}>
 						{sub}
 						{subcatCounts[sub] ? <span class="subcat-count">{subcatCounts[sub]}</span> : null}

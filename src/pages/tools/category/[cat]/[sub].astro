@@ -4,7 +4,7 @@ import BaseHead from '../../../../components/BaseHead.astro';
 import Header from '../../../../components/Header.astro';
 import Footer from '../../../../components/Footer.astro';
 import ToolCard from '../../../../components/ToolCard.astro';
-import { TOOL_CATEGORIES, SITE_TITLE } from '../../../../consts';
+import { TOOL_CATEGORIES, SUBCATEGORY_INTROS, SITE_TITLE } from '../../../../consts';
 
 export async function getStaticPaths() {
 	function toSlug(str: string) {
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 			if (tools.length > 0) {
 				paths.push({
 					params: { cat: category.slug, sub: subSlug },
-					props: { category, subName, tools },
+					props: { category, subName, tools, allTools },
 				});
 			}
 		}
@@ -36,7 +36,15 @@ function toSlug(str: string) {
 	return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-const { category, subName, tools } = Astro.props;
+const { category, subName, tools, allTools } = Astro.props;
+const introText = SUBCATEGORY_INTROS[subName] ?? '';
+
+// Subcategories in this category that actually have tools
+const activeSubs = new Set(
+	allTools
+		.filter((t: any) => t.data.category === category.slug)
+		.map((t: any) => t.data.subcategory)
+);
 
 const sorted = [...tools].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
@@ -105,11 +113,20 @@ const seoDesc = `Discover the best ${subName.toLowerCase()} tools in ${year}. Co
 		</div>
 	</section>
 
+	<!-- Editorial intro -->
+	{introText && (
+		<section class="intro-section">
+			<div class="container">
+				<p class="intro-text">{introText}</p>
+			</div>
+		</section>
+	)}
+
 	<!-- Other subcategories in this category -->
 	{category.subcategories.length > 1 && (
 		<div class="subcats-bar">
 			<div class="container subcats-inner">
-				{category.subcategories.map(sub => {
+				{category.subcategories.filter(sub => activeSubs.has(sub)).map(sub => {
 					const slug = toSlug(sub);
 					const isActive = sub === subName;
 					return (
@@ -295,6 +312,16 @@ const seoDesc = `Discover the best ${subName.toLowerCase()} tools in ${year}. Co
 	.stat--free { background: #E0F5EE; border-color: #A3D9C4; color: #00875A; }
 	.stat--freemium { background: #EEF3FF; border-color: #BEC8F0; color: #3B5BDB; }
 	.stat--paid { background: #FFF4E6; border-color: #F0CFA0; color: #E67700; }
+
+	.intro-section {
+		padding: 1.5rem 0 0;
+	}
+	.intro-text {
+		font-size: 1rem;
+		line-height: 1.7;
+		color: rgb(var(--gray-dark));
+		max-width: 720px;
+	}
 
 	.subcats-bar {
 		background: var(--bg-alt);
