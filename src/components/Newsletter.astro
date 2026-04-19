@@ -9,40 +9,44 @@ interface Props {
 
 const {
 	variant = 'full',
-	heading = 'Get AI news in plain English — free, every week',
-	text = 'Join thousands of readers. No jargon, no hype. Free.',
+	heading = 'Enjoying this article?',
+	text = 'Get AI news in plain English — free, every week.',
 } = Astro.props;
 ---
-
-<script async src="https://subscribe-forms.beehiiv.com/embed.js" crossorigin="anonymous"></script>
 
 {variant === 'full' ? (
 	<section class="newsletter" id="newsletter" aria-label="Newsletter signup">
 		<div class="container newsletter__inner">
-			<iframe
-				src={BEEHIIV_FORM_URL}
-				class="beehiiv-embed"
-				data-test-id="beehiiv-embed"
-				frameborder="0"
-				scrolling="no"
-				loading="lazy"
-				style="width:100%;max-width:100%;height:260px;margin:0;border-radius:0!important;background-color:transparent;box-shadow:0 0 #0000;"
-			></iframe>
+			<h3 class="newsletter__heading">{heading}</h3>
+			<p class="newsletter__text">{text}</p>
+			<form class="nl-form" action={BEEHIIV_FORM_URL} method="POST" target="_blank" rel="noopener">
+				<input
+					type="email"
+					name="email"
+					required
+					placeholder="you@example.com"
+					aria-label="Email address"
+					class="nl-form__input"
+				/>
+				<button type="submit" class="nl-form__btn">Subscribe</button>
+			</form>
 		</div>
 	</section>
 ) : (
 	<aside class="inline-nl" aria-label="Newsletter signup">
 		<h3>{heading}</h3>
 		<p>{text}</p>
-		<iframe
-			src={BEEHIIV_FORM_URL}
-			class="beehiiv-embed"
-			data-test-id="beehiiv-embed"
-			frameborder="0"
-			scrolling="no"
-			loading="lazy"
-			style="width:100%;max-width:100%;height:260px;margin:0;border-radius:6px!important;background-color:transparent;box-shadow:0 0 #0000;"
-		></iframe>
+		<form class="nl-form" action={BEEHIIV_FORM_URL} method="POST" target="_blank" rel="noopener">
+			<input
+				type="email"
+				name="email"
+				required
+				placeholder="you@example.com"
+				aria-label="Email address"
+				class="nl-form__input"
+			/>
+			<button type="submit" class="nl-form__btn">Subscribe</button>
+		</form>
 	</aside>
 )}
 
@@ -56,8 +60,18 @@ const {
 	.newsletter__inner {
 		max-width: 520px;
 		margin: 0 auto;
-		max-height: 310px;
-		overflow: hidden;
+	}
+
+	.newsletter__heading {
+		color: rgb(var(--black));
+		margin-bottom: 0.5rem;
+		font-size: 1.4rem;
+	}
+
+	.newsletter__text {
+		font-size: 0.95rem;
+		color: rgb(var(--gray));
+		margin-bottom: 1.25rem;
 	}
 
 	/* Inline variant */

@@ -46,6 +46,7 @@ import { SITE_TITLE } from '../consts';
 					<label for="subject">Subject <span class="req">*</span></label>
 					<select id="subject" name="subject" required>
 						<option value="" disabled selected>Select a topic…</option>
+						<option value="Featured Listing">Featured Listing (Waitlist)</option>
 						<option value="Submit a Tool">Submit a Tool</option>
 						<option value="Report an Error">Report an Error</option>
 						<option value="Advertising / Partnership">Advertising / Partnership</option>
@@ -93,11 +94,21 @@ import { SITE_TITLE } from '../consts';
 </body>
 </html>
 
-<script>
+<script data-astro-rerun>
 const form = document.getElementById('contact-form') as HTMLFormElement;
 const btn = document.getElementById('submit-btn') as HTMLButtonElement;
 const success = document.getElementById('form-success')!;
 const error = document.getElementById('form-error')!;
+
+const params = new URLSearchParams(location.search);
+const pre = params.get('subject');
+if (pre) {
+	const select = document.getElementById('subject') as HTMLSelectElement;
+	const match = Array.from(select.options).find(
+		o => o.value.toLowerCase() === pre.toLowerCase()
+	);
+	if (match) select.value = match.value;
+}
 
 form?.addEventListener('submit', async (e) => {
 	e.preventDefault();
