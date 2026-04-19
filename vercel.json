@@ -1,5 +1,30 @@
 {
+  "redirects": [
+    { "source": "/tools/suno", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/udio", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/udio-ai", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/aiva", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/boomy", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/beatoven", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/loudme", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/mubert", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/soundful", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/soundraw", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/category/ai-music", "destination": "/tools", "statusCode": 301 },
+    { "source": "/tools/category/ai-music/:path*", "destination": "/tools", "statusCode": 301 },
+    { "source": "/blog/best-ai-music-generators", "destination": "/blog", "statusCode": 301 }
+  ],
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=()" }
+      ]
+    },
     {
       "source": "/fonts/(.*)",
       "headers": [
