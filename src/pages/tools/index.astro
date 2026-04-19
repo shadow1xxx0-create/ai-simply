@@ -129,6 +129,8 @@ for (const t of allTools) {
 						url={tool.data.url}
 						slug={tool.id}
 						tags={tool.data.tags}
+						sponsored={tool.data.sponsored}
+						verified={tool.data.verified}
 					/>
 				))}
 			</div>
@@ -148,7 +150,13 @@ for (const t of allTools) {
 </body>
 </html>
 
-<script>
+<script data-astro-rerun>
+function esc(str: string) {
+	const d = document.createElement('span');
+	d.textContent = str;
+	return d.innerHTML;
+}
+
 // Category rail arrows
 const rail = document.getElementById('cat-rail')!;
 document.getElementById('rail-left')?.addEventListener('click', () => rail.scrollBy({ left: -200, behavior: 'smooth' }));
@@ -289,7 +297,7 @@ function applyFilters() {
 		if (availableSubs.length > 0) {
 			subcatsEl.style.display = '';
 			subcatsEl.innerHTML = `<button class="subcat-chip${!activeSubcat ? ' active' : ''}" data-sub="">All</button>` +
-				availableSubs.map(s => `<button class="subcat-chip${activeSubcat === s ? ' active' : ''}" data-sub="${s}">${s}</button>`).join('');
+				availableSubs.map(s => `<button class="subcat-chip${activeSubcat === s ? ' active' : ''}" data-sub="${esc(s)}">${esc(s)}</button>`).join('');
 		} else {
 			subcatsEl.style.display = 'none';
 			subcatsEl.innerHTML = '';
@@ -332,11 +340,15 @@ subcatsEl.addEventListener('click', (e) => {
 	applyFilters();
 });
 
-// Search
+// Search (debounced)
+let searchTimer: ReturnType<typeof setTimeout>;
 searchInput.addEventListener('input', () => {
-	searchQuery = searchInput.value;
-	page = 1;
-	applyFilters();
+	clearTimeout(searchTimer);
+	searchTimer = setTimeout(() => {
+		searchQuery = searchInput.value;
+		page = 1;
+		applyFilters();
+	}, 200);
 });
 
 // Sort

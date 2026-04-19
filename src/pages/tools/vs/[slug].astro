@@ -96,7 +96,7 @@ const winner = scoreA > scoreB ? toolA : scoreB > scoreA ? toolB : null;
 				<div class="vs-tool">
 					<div class="vs-logo">
 						<img src={faviconA} alt={toolA.data.name} width="60" height="60" loading="eager"
-							onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+							class="js-favicon" />
 						<span class="vs-emoji-fb" style="display:none">{catA?.emoji ?? '🤖'}</span>
 					</div>
 					<h1 class="vs-tool-name">{toolA.data.name}</h1>
@@ -110,7 +110,7 @@ const winner = scoreA > scoreB ? toolA : scoreB > scoreA ? toolB : null;
 				<div class="vs-tool">
 					<div class="vs-logo">
 						<img src={faviconB} alt={toolB.data.name} width="60" height="60" loading="eager"
-							onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+							class="js-favicon" />
 						<span class="vs-emoji-fb" style="display:none">{catA?.emoji ?? '🤖'}</span>
 					</div>
 					<h1 class="vs-tool-name">{toolB.data.name}</h1>
@@ -384,3 +384,13 @@ const winner = scoreA > scoreB ? toolA : scoreB > scoreA ? toolB : null;
 		.vs-header { gap: 1rem; }
 	}
 </style>
+
+<script data-astro-rerun>
+document.querySelectorAll<HTMLImageElement>('.js-favicon').forEach(img => {
+	img.addEventListener('error', () => {
+		img.style.display = 'none';
+		const fb = img.nextElementSibling as HTMLElement;
+		if (fb) fb.style.display = 'flex';
+	}, { once: true });
+});
+</script>

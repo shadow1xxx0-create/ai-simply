@@ -22,8 +22,20 @@ const articleLastmod = {
 	'/blog/will-ai-replace-my-job/': '2026-02-27',
 	'/blog/can-ai-read-your-emotions-emotion-ai-explained/': '2026-03-16',
 	'/blog/what-is-a-large-language-model-llm-explained/': '2026-03-18',
-	'/blog/what-is-an-ai-reasoning-model/': '2026-03-19',
-	'/blog/what-is-vibe-coding/': '2026-03-21',
+	'/blog/what-is-an-ai-reasoning-model-explained/': '2026-03-19',
+	'/blog/what-is-vibe-coding-explained/': '2026-03-21',
+	'/blog/best-ai-chatbots/': '2026-04-05',
+	'/blog/best-ai-code-assistants/': '2026-04-05',
+	'/blog/best-ai-flashcard-apps/': '2026-04-05',
+	'/blog/best-ai-grammar-checkers/': '2026-04-05',
+	'/blog/best-ai-image-generators/': '2026-04-05',
+	'/blog/best-ai-language-learning/': '2026-04-05',
+	'/blog/best-ai-meeting-assistants/': '2026-04-05',
+	'/blog/best-ai-presentation-makers/': '2026-04-05',
+	'/blog/best-ai-seo-tools/': '2026-04-05',
+	'/blog/best-ai-text-to-speech/': '2026-04-05',
+	'/blog/best-ai-video-generators/': '2026-04-05',
+	'/blog/best-ai-writing-assistants/': '2026-04-05',
 };
 
 export default defineConfig({

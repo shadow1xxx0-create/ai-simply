@@ -1,0 +1,74 @@
+---
+// Shared scroll-reveal controller. Injects an inline script that:
+//   1. Selects known card/heading classes + any [data-reveal] element.
+//   2. Adds .reveal (initial hidden state) then toggles .reveal.in via IntersectionObserver.
+//   3. Honors prefers-reduced-motion (reveals immediately, no observer).
+//   4. Re-runs on astro:page-load so View Transitions keep animations working.
+---
+
+<script is:inline>
+	(function () {
+		const SELECTOR = [
+			'[data-reveal]',
+			'.section-heading',
+			'.featured-card',
+			'.tool-card',
+			'.blog-card',
+			'.popular-item',
+			'.tut-row-card',
+			'.hot-card',
+			'.cat-tile',
+			'.timeline-item',
+			'.quiz-cta-inner',
+			'.todays-pick-inner',
+			'.review-card',
+			'.article-hero',
+			'.article-body > h2',
+			'.article-body > h3',
+			'.faq-item',
+			'.post h2',
+			'.post h3',
+		].join(',');
+
+		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		function run() {
+			const els = document.querySelectorAll(SELECTOR);
+			if (!els.length) return;
+
+			if (reduced || !('IntersectionObserver' in window)) {
+				els.forEach((el) => {
+					el.classList.add('reveal', 'in');
+				});
+				return;
+			}
+
+			els.forEach((el, i) => {
+				if (el.classList.contains('reveal')) return;
+				el.classList.add('reveal');
+				el.style.transitionDelay = (i % 6) * 60 + 'ms';
+			});
+
+			const io = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('in');
+							io.unobserve(entry.target);
+						}
+					});
+				},
+				{ threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+			);
+
+			els.forEach((el) => io.observe(el));
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', run);
+		} else {
+			run();
+		}
+		document.addEventListener('astro:page-load', run);
+	})();
+</script>

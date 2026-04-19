@@ -4,6 +4,8 @@ export const SITE_URL = 'https://getaibriefs.com';
 export const SITE_AUTHOR = 'AI Briefs';
 export const BEEHIIV_FORM_URL = 'https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9';
 
+export const TOOL_OF_THE_WEEK = { slug: 'chatgpt', label: 'Tool of the Week' };
+
 export const CATEGORY_COLORS: Record<string, string> = {
 	'ai-explained':   '#EEF3FF',
 	'future-of-work': '#FFF4E6',

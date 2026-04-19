@@ -50,7 +50,7 @@ function stars(score: number) {
 					<span class={`rank-num ${i < 3 ? 'rank-top' : ''}`}>#{i + 1}</span>
 					<div class="rank-logo">
 						<img src={favicon} alt={tool.data.name} width="36" height="36" loading="lazy"
-							onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+							class="js-favicon" />
 						<span class="rank-logo-fb" style="display:none">{cat?.emoji ?? '🤖'}</span>
 					</div>
 					<div class="rank-info">
@@ -155,3 +155,13 @@ function stars(score: number) {
 	.rank-score { display: none; }
 }
 </style>
+
+<script data-astro-rerun>
+document.querySelectorAll<HTMLImageElement>('.js-favicon').forEach(img => {
+	img.addEventListener('error', () => {
+		img.style.display = 'none';
+		const fb = img.nextElementSibling as HTMLElement;
+		if (fb) fb.style.display = 'flex';
+	}, { once: true });
+});
+</script>

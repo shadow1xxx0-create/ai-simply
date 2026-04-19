@@ -142,7 +142,7 @@ const collections = [
 								<div class="tool-top">
 									<div class="tool-logo">
 										<img src={favicon} alt={tool.data.name} width="32" height="32" loading="lazy"
-											onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+											class="js-favicon" />
 										<span class="tool-logo-fb" style="display:none">{cat?.emoji ?? '🤖'}</span>
 									</div>
 									<div class="tool-meta">
@@ -308,3 +308,13 @@ const collections = [
 	padding: 1rem 0;
 }
 </style>
+
+<script data-astro-rerun>
+document.querySelectorAll<HTMLImageElement>('.js-favicon').forEach(img => {
+	img.addEventListener('error', () => {
+		img.style.display = 'none';
+		const fb = img.nextElementSibling as HTMLElement;
+		if (fb) fb.style.display = 'flex';
+	}, { once: true });
+});
+</script>

@@ -60,7 +60,7 @@ const toolFavicon = `https://www.google.com/s2/favicons?domain=${toolDomain}&sz=
 			<div class="source-tool">
 				<div class="source-logo">
 					<img src={toolFavicon} alt={tool.data.name} width="40" height="40" loading="eager"
-						onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+						class="js-favicon" />
 					<span class="source-logo-fb" style="display:none">{category?.emoji ?? '🤖'}</span>
 				</div>
 				<div>
@@ -81,7 +81,7 @@ const toolFavicon = `https://www.google.com/s2/favicons?domain=${toolDomain}&sz=
 		<div class="current-tool">
 			<div class="ct-logo">
 				<img src={toolFavicon} alt={tool.data.name} width="48" height="48" loading="lazy"
-					onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+					class="js-favicon" />
 				<span class="ct-logo-fb" style="display:none">{category?.emoji ?? '🤖'}</span>
 			</div>
 			<div class="ct-info">
@@ -115,7 +115,7 @@ const toolFavicon = `https://www.google.com/s2/favicons?domain=${toolDomain}&sz=
 					<span class="alt-rank">#{i + 1}</span>
 					<div class="alt-logo">
 						<img src={altFavicon} alt={alt.data.name} width="40" height="40" loading="lazy"
-							onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+							class="js-favicon" />
 						<span class="alt-logo-fb" style="display:none">{category?.emoji ?? '🤖'}</span>
 					</div>
 					<div class="alt-info">
@@ -305,3 +305,13 @@ const toolFavicon = `https://www.google.com/s2/favicons?domain=${toolDomain}&sz=
 	.current-tool { flex-direction: column; }
 }
 </style>
+
+<script data-astro-rerun>
+document.querySelectorAll<HTMLImageElement>('.js-favicon').forEach(img => {
+	img.addEventListener('error', () => {
+		img.style.display = 'none';
+		const fb = img.nextElementSibling as HTMLElement;
+		if (fb) fb.style.display = 'flex';
+	}, { once: true });
+});
+</script>

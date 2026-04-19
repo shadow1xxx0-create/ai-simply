@@ -171,6 +171,8 @@ const seoDesc = `Discover the best ${subName.toLowerCase()} tools in ${year}. Co
 								url={tool.data.url}
 								slug={tool.id}
 								tags={tool.data.tags}
+								sponsored={tool.data.sponsored}
+								verified={tool.data.verified}
 							/>
 						))}
 					</div>
@@ -205,7 +207,7 @@ const seoDesc = `Discover the best ${subName.toLowerCase()} tools in ${year}. Co
 </body>
 </html>
 
-<script>
+<script data-astro-rerun>
 	let activePrice = 'all';
 	let searchQ = '';
 

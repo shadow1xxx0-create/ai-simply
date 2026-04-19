@@ -28,7 +28,7 @@ const tools = defineCollection({
 			description: z.string(),
 			category: z.enum([
 				'ai-productivity', 'ai-writing', 'ai-video', 'ai-image', 'ai-art',
-				'ai-voice', 'ai-music', 'ai-chatbot', 'ai-vision', 'ai-marketing',
+				'ai-voice', 'ai-chatbot', 'ai-vision', 'ai-marketing',
 				'ai-coding', 'ai-learning', 'ai-social', 'ai-business', 'ai-research',
 				'ai-insights', 'ai-life', 'ai-health', 'ai-legal', 'ai-design',
 				'ai-detection', 'others',
@@ -45,6 +45,9 @@ const tools = defineCollection({
 			ratingCount: z.number().optional(),
 			pros: z.array(z.string()).optional(),
 			cons: z.array(z.string()).optional(),
+			affiliateUrl: z.string().url().optional(),
+			sponsored: z.boolean().default(false),
+			verified: z.boolean().default(false),
 		}),
 });
 

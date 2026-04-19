@@ -46,7 +46,7 @@ const catsData = TOOL_CATEGORIES.map(c => ({ slug: c.slug, name: c.name, emoji: 
 </body>
 </html>
 
-<script define:vars={{ toolsData, catsData }}>
+<script define:vars={{ toolsData, catsData }} data-astro-rerun>
 
 /* ─── DATA ────────────────────────────────────────────────────── */
 
@@ -237,6 +237,12 @@ function faviconUrl(url) {
   catch { return ''; }
 }
 
+function esc(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
 function pricingBadge(pricing) {
   const MAP = {
     free:     { bg: '#E0F5EE', color: '#00875A', label: 'Free' },
@@ -363,16 +369,16 @@ function renderResults(results, answers) {
               <div class="qz-match-card__rank">${medals[i]}</div>
               <div class="qz-match-card__head">
                 <div class="qz-match-logo">
-                  <img src="${favicon}" alt="${tool.name}" width="44" height="44" loading="${i === 0 ? 'eager' : 'lazy'}"
-                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                  <img src="${favicon}" alt="${esc(tool.name)}" width="44" height="44" loading="${i === 0 ? 'eager' : 'lazy'}"
+                    class="qz-favicon" />
                   <span class="qz-match-logo-fb" style="display:none">${cat?.emoji ?? '🤖'}</span>
                 </div>
                 <div class="qz-match-info">
                   <div class="qz-match-name-row">
-                    <h3 class="qz-match-name">${tool.name}</h3>
+                    <h3 class="qz-match-name">${esc(tool.name)}</h3>
                     <span class="qz-pricing-pill" style="background:${badge.bg};color:${badge.color}">${badge.label}</span>
                   </div>
-                  <span class="qz-match-cat">${cat?.emoji ?? ''} ${cat?.name ?? ''}</span>
+                  <span class="qz-match-cat">${cat?.emoji ?? ''} ${esc(cat?.name ?? '')}</span>
                 </div>
                 <div class="qz-match-pct">
                   <span class="qz-pct-num">${tool.matchPct}%</span>
@@ -382,9 +388,9 @@ function renderResults(results, answers) {
               <div class="qz-match-bar-wrap">
                 <div class="qz-match-bar" style="--pct:${tool.matchPct}%"></div>
               </div>
-              <p class="qz-match-desc">${tool.description}</p>
-              ${reason ? `<div class="qz-match-reason">✓ ${reason}</div>` : ''}
-              <span class="qz-match-cta">Explore ${tool.name} →</span>
+              <p class="qz-match-desc">${esc(tool.description)}</p>
+              ${reason ? `<div class="qz-match-reason">✓ ${esc(reason)}</div>` : ''}
+              <span class="qz-match-cta">Explore ${esc(tool.name)} →</span>
             </a>
           `;
         }).join('')}
@@ -402,17 +408,17 @@ function renderResults(results, answers) {
                 <a href="/tools/${tool.id}/" class="qz-also-card" target="_self">
                   <div class="qz-also-head">
                     <div class="qz-also-logo">
-                      <img src="${favicon}" alt="${tool.name}" width="32" height="32" loading="lazy"
-                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                      <img src="${favicon}" alt="${esc(tool.name)}" width="32" height="32" loading="lazy"
+                        class="qz-favicon" />
                       <span class="qz-also-logo-fb" style="display:none">${cat?.emoji ?? '🤖'}</span>
                     </div>
                     <div>
-                      <div class="qz-also-name">${tool.name}</div>
+                      <div class="qz-also-name">${esc(tool.name)}</div>
                       <span class="qz-pricing-pill" style="background:${badge.bg};color:${badge.color};font-size:0.6rem">${badge.label}</span>
                     </div>
                     <span class="qz-also-pct">${tool.matchPct}%</span>
                   </div>
-                  <p class="qz-also-desc">${tool.description}</p>
+                  <p class="qz-also-desc">${esc(tool.description)}</p>
                 </a>
               `;
             }).join('')}
@@ -469,6 +475,15 @@ function bindEvents() {
   if (!app) return;
   // Always bind to the last (newest) screen so old exiting screens don't intercept
   const root = app.lastElementChild || app;
+
+  // Favicon error fallback
+  root.querySelectorAll<HTMLImageElement>('.qz-favicon').forEach(img => {
+    img.addEventListener('error', () => {
+      img.style.display = 'none';
+      const fb = img.nextElementSibling as HTMLElement;
+      if (fb) fb.style.display = 'flex';
+    }, { once: true });
+  });
 
   // Start button
   root.querySelector('#qz-start')?.addEventListener('click', () => {

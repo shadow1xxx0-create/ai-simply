@@ -10,9 +10,11 @@ interface Props {
 	url: string;
 	slug: string;
 	tags?: string[];
+	sponsored?: boolean;
+	verified?: boolean;
 }
 
-const { name, description, category, subcategory, pricing, slug, url, tags } = Astro.props;
+const { name, description, category, subcategory, pricing, slug, url, tags, sponsored, verified } = Astro.props;
 
 const pb = PRICING_BADGE[pricing] ?? PRICING_BADGE.freemium;
 const cat = TOOL_CATEGORIES.find(c => c.slug === category);
@@ -23,7 +25,7 @@ const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}
 ---
 
 <article
-	class="tool-card"
+	class:list={['tool-card', { 'tool-card--sponsored': sponsored }]}
 	data-category={category}
 	data-pricing={pricing}
 	data-name={name.toLowerCase()}
@@ -34,14 +36,17 @@ const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}
 	<a href={`/tools/${slug}/`} class="tool-card__link">
 		<div class="tool-card__logo" aria-hidden="true">
 			{faviconUrl
-				? <img src={faviconUrl} alt={name} width="32" height="32" loading="lazy" onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+				? <img src={faviconUrl} alt={name} width="32" height="32" loading="lazy" class="tool-card__favicon" />
 				: null
 			}
 			<span class="tool-card__emoji" style={faviconUrl ? 'display:none' : ''}>{emoji}</span>
 		</div>
 		<div class="tool-card__body">
 			<div class="tool-card__top">
-				<h3 class="tool-card__name">{name}</h3>
+				<h3 class="tool-card__name">
+					{name}
+					{verified && <span class="tool-card__verified" title="Tested by AI Briefs">✓</span>}
+				</h3>
 				<span
 					class="tool-card__pricing"
 					style={`background:${pb.bg};color:${pb.text}`}
@@ -55,6 +60,16 @@ const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}
 		</div>
 	</a>
 </article>
+
+<script data-astro-rerun>
+document.querySelectorAll<HTMLImageElement>('.tool-card__favicon').forEach(img => {
+	img.addEventListener('error', () => {
+		img.style.display = 'none';
+		const fb = img.nextElementSibling as HTMLElement;
+		if (fb) fb.style.display = 'flex';
+	}, { once: true });
+});
+</script>
 
 <style>
 	.tool-card {
@@ -170,5 +185,17 @@ const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}
 		font-size: 0.78rem;
 		font-weight: 700;
 		color: var(--primary);
+	}
+
+	/* Sponsored */
+	.tool-card--sponsored { border-color: rgba(0,135,90,0.25); background: linear-gradient(to bottom, rgba(0,135,90,0.03), var(--bg)); }
+
+	/* Verified badge */
+	.tool-card__verified {
+		display: inline-flex; align-items: center; justify-content: center;
+		width: 16px; height: 16px;
+		font-size: 0.55rem; font-weight: 800;
+		background: var(--primary); color: #fff;
+		border-radius: 50%; margin-left: 4px; vertical-align: middle;
 	}
 </style>

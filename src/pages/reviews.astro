@@ -98,7 +98,7 @@ function renderStars(score: number) {
 								<div class="review-card__head">
 									<div class="tool-logo">
 										<img src={favicon} alt={tool.data.name} width="36" height="36" loading="lazy"
-											onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+											class="js-favicon" />
 										<span class="tool-logo-fallback" style="display:none">{cat?.emoji ?? '🤖'}</span>
 									</div>
 									<div class="tool-info">
@@ -179,7 +179,7 @@ function renderStars(score: number) {
 </body>
 </html>
 
-<script>
+<script data-astro-rerun>
 const grid = document.getElementById('reviews-grid')!;
 const label = document.getElementById('results-label')!;
 const noResults = document.getElementById('no-results')!;
@@ -387,3 +387,13 @@ sortSelect.addEventListener('change', () => {
 }
 .btn--outline-review:hover { background: var(--primary); color: #fff; }
 </style>
+
+<script data-astro-rerun>
+document.querySelectorAll<HTMLImageElement>('.js-favicon').forEach(img => {
+	img.addEventListener('error', () => {
+		img.style.display = 'none';
+		const fb = img.nextElementSibling as HTMLElement;
+		if (fb) fb.style.display = 'flex';
+	}, { once: true });
+});
+</script>

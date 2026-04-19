@@ -1,0 +1,60 @@
+---
+interface Props {
+	url: string;
+	title: string;
+}
+
+const { url, title } = Astro.props;
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+---
+
+<div class="share-buttons">
+	<span class="share-label">Share:</span>
+	<a
+		href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
+		target="_blank"
+		rel="noopener noreferrer"
+		class="share-btn share-btn--x"
+		aria-label="Share on X"
+	>𝕏</a>
+	<a
+		href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+		target="_blank"
+		rel="noopener noreferrer"
+		class="share-btn share-btn--li"
+		aria-label="Share on LinkedIn"
+	>in</a>
+	<button
+		class="share-btn share-btn--copy"
+		data-url={url}
+		aria-label="Copy link"
+	>🔗</button>
+</div>
+
+<script data-astro-rerun>
+document.querySelectorAll<HTMLButtonElement>('.share-btn--copy').forEach(btn => {
+	btn.addEventListener('click', async () => {
+		const url = btn.dataset.url!;
+		await navigator.clipboard.writeText(url);
+		const original = btn.textContent;
+		btn.textContent = '✓';
+		setTimeout(() => { btn.textContent = original; }, 1500);
+	});
+});
+</script>
+
+<style>
+	.share-buttons { display: flex; align-items: center; gap: 0.5rem; }
+	.share-label { font-size: 0.78rem; color: rgb(var(--gray)); font-weight: 600; }
+	.share-btn {
+		display: inline-flex; align-items: center; justify-content: center;
+		width: 32px; height: 32px;
+		border: 1px solid var(--border); border-radius: var(--radius);
+		background: var(--bg); color: rgb(var(--gray-dark));
+		font-size: 0.78rem; font-weight: 700;
+		cursor: pointer; transition: all 0.15s;
+		text-decoration: none; line-height: 1;
+	}
+	.share-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+</style>

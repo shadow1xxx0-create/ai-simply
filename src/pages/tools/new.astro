@@ -51,7 +51,7 @@ function timeAgo(date: Date) {
 					<div class="tool-card__top">
 						<div class="tool-logo">
 							<img src={favicon} alt={tool.data.name} width="36" height="36" loading="lazy"
-								onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`} />
+								class="js-favicon" />
 							<span class="tool-logo-fb" style="display:none">{cat?.emoji ?? '🤖'}</span>
 						</div>
 						<div class="tool-meta">
@@ -170,3 +170,13 @@ function timeAgo(date: Date) {
 .added-date { font-size: 0.75rem; color: rgb(var(--gray)); }
 .tool-rating { font-size: 0.78rem; font-weight: 700; color: #f59e0b; }
 </style>
+
+<script data-astro-rerun>
+document.querySelectorAll<HTMLImageElement>('.js-favicon').forEach(img => {
+	img.addEventListener('error', () => {
+		img.style.display = 'none';
+		const fb = img.nextElementSibling as HTMLElement;
+		if (fb) fb.style.display = 'flex';
+	}, { once: true });
+});
+</script>

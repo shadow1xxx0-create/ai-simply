@@ -5,7 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ToolCard from '../components/ToolCard.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, TOOL_CATEGORIES } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, TOOL_CATEGORIES, TOOL_OF_THE_WEEK } from '../consts';
 
 const allTools = (await getCollection('tools'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -13,6 +13,7 @@ const allTools = (await getCollection('tools'))
 const featuredTools = allTools.filter(t => t.data.featured).slice(0, 6);
 const todaysPick = allTools.filter(t => t.data.featured && t.data.rating)[0] ?? allTools.filter(t => t.data.featured)[0] ?? allTools[0];
 const recentTools = allTools.slice(0, 12);
+const toolOfWeek = allTools.find(t => t.id === TOOL_OF_THE_WEEK.slug);
 const totalTools = allTools.length;
 const freeCount = allTools.filter(t => t.data.pricing === 'free').length;
 const freemiumCount = allTools.filter(t => t.data.pricing === 'freemium').length;
@@ -60,7 +61,7 @@ const carouselPosts = allPosts.slice(0, 3);
 <body>
 <Header />
 
-<main>
+<main id="main-content">
 	<!-- Hero Carousel -->
 	<section class="hero-carousel" id="hero-carousel">
 		{carouselPosts.map((post, i) => (
@@ -221,6 +222,25 @@ const carouselPosts = allPosts.slice(0, 3);
 		</section>
 	)}
 
+	<!-- Tool of the Week -->
+	{toolOfWeek && (
+		<section class="section">
+			<div class="container">
+				<div class="totw">
+					<span class="totw-badge">🏆 {TOOL_OF_THE_WEEK.label}</span>
+					<div class="totw-inner">
+						<div class="totw-info">
+							<h2 class="totw-name">{toolOfWeek.data.name}</h2>
+							<p class="totw-desc">{toolOfWeek.data.description}</p>
+							{toolOfWeek.data.rating && <span class="totw-rating">★ {toolOfWeek.data.rating.toFixed(1)}</span>}
+						</div>
+						<a href={`/tools/${toolOfWeek.id}/`} class="btn btn--primary">Learn More →</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	)}
+
 	<!-- Recently Added -->
 	{recentTools.length > 0 && (
 		<section class="section section--alt">
@@ -240,6 +260,8 @@ const carouselPosts = allPosts.slice(0, 3);
 							url={tool.data.url}
 							slug={tool.id}
 							tags={tool.data.tags}
+							sponsored={tool.data.sponsored}
+							verified={tool.data.verified}
 						/>
 					))}
 				</div>
@@ -334,7 +356,7 @@ const carouselPosts = allPosts.slice(0, 3);
 </body>
 </html>
 
-<script>
+<script data-astro-rerun>
 	// Carousel
 	let current = 0;
 	let paused = false;
@@ -360,6 +382,8 @@ const carouselPosts = allPosts.slice(0, 3);
 	const carousel = document.getElementById('hero-carousel');
 	carousel?.addEventListener('mouseenter', () => { paused = true; });
 	carousel?.addEventListener('mouseleave', () => { paused = false; });
+	document.addEventListener('visibilitychange', () => { if (document.hidden) clearInterval(autoplay); });
+	window.addEventListener('beforeunload', () => clearInterval(autoplay));
 
 	const input = document.getElementById('global-search') as HTMLInputElement;
 	if (input) {
@@ -376,29 +400,7 @@ const carouselPosts = allPosts.slice(0, 3);
 		});
 	}
 
-	// ── Scroll-reveal ──────────────────────────────────────────────
-	const revealEls = document.querySelectorAll<HTMLElement>(
-		'.section-heading, .featured-card, .tool-card, .blog-card, .popular-item, .tut-row-card, .hot-card, .cat-tile, .timeline-item, .quiz-cta-inner, .todays-pick-inner'
-	);
-	revealEls.forEach((el, i) => {
-		el.style.opacity = '0';
-		el.style.transform = 'translateY(24px)';
-		el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-		el.style.transitionDelay = `${(i % 6) * 60}ms`;
-	});
-
-	const io = new IntersectionObserver((entries) => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				const el = entry.target as HTMLElement;
-				el.style.opacity = '1';
-				el.style.transform = 'translateY(0)';
-				io.unobserve(el);
-			}
-		});
-	}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-	revealEls.forEach(el => io.observe(el));
+	// Scroll-reveal handled globally by ScrollReveal component in BaseHead.
 
 	// ── Floating orbs (hero background) ───────────────────────────
 	const heroCarousel = document.getElementById('hero-carousel');
@@ -450,8 +452,8 @@ const carouselPosts = allPosts.slice(0, 3);
 	}
 	.featured-card:hover {
 		transform: translateY(-4px) !important;
-		box-shadow: 0 8px 28px rgba(0,135,90,0.14) !important;
-		border-color: rgba(0,135,90,0.3) !important;
+		box-shadow: 0 8px 28px rgba(var(--primary-rgb), 0.22), var(--accent-glow) !important;
+		border-color: rgba(var(--primary-rgb), 0.4) !important;
 	}
 	.blog-card {
 		transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease !important;
@@ -467,7 +469,7 @@ const carouselPosts = allPosts.slice(0, 3);
 	.tut-row-card:hover {
 		transform: translateX(4px) !important;
 		border-color: var(--primary) !important;
-		box-shadow: 0 4px 16px rgba(0,135,90,0.1) !important;
+		box-shadow: 0 4px 16px rgba(var(--primary-rgb), 0.18) !important;
 	}
 	.popular-item {
 		transition: transform 0.2s ease, background 0.15s !important;
@@ -508,8 +510,8 @@ const carouselPosts = allPosts.slice(0, 3);
 		animation: searchFloat 4s ease-in-out infinite;
 	}
 	@keyframes searchFloat {
-		0%, 100% { box-shadow: 0 4px 20px rgba(0,135,90,0.15); }
-		50%       { box-shadow: 0 8px 32px rgba(0,135,90,0.28); }
+		0%, 100% { box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.20); }
+		50%       { box-shadow: 0 8px 32px rgba(var(--primary-rgb), 0.38); }
 	}
 
 	/* ── Cat tile bounce on hover ────────────────────────────────── */
@@ -522,7 +524,7 @@ const carouselPosts = allPosts.slice(0, 3);
 
 	/* Today's Pick */
 	.todays-pick-section {
-		background: linear-gradient(135deg, #f0f4ff 0%, #e8f5f0 100%);
+		background: var(--grad-hero), var(--bg-alt);
 		border-top: 1px solid var(--border);
 		border-bottom: 1px solid var(--border);
 		padding: 1.25rem 0;
@@ -542,15 +544,15 @@ const carouselPosts = allPosts.slice(0, 3);
 		display: flex;
 		align-items: center;
 		gap: 1rem;
-		background: #fff;
+		background: var(--surface-1);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 		padding: 1rem 1.25rem;
 		text-decoration: none;
 		color: inherit;
-		transition: box-shadow 0.15s, border-color 0.15s;
+		transition: box-shadow 0.25s var(--ease-out), border-color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
 	}
-	.todays-pick-card:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+	.todays-pick-card:hover { border-color: var(--primary); box-shadow: var(--accent-glow); transform: translateY(-2px); }
 	.pick-logo { flex-shrink: 0; width: 52px; height: 52px; border-radius: 10px; overflow: hidden; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; }
 	.pick-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
 	.pick-emoji-fallback { font-size: 1.6rem; }
@@ -558,9 +560,9 @@ const carouselPosts = allPosts.slice(0, 3);
 	.pick-meta { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem; }
 	.pick-cat { font-size: 0.72rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
 	.pick-pricing { font-size: 0.65rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 50px; }
-	.pick-pricing--free { background: #E0F5EE; color: #00875A; }
-	.pick-pricing--freemium { background: #EEF3FF; color: #3B5BDB; }
-	.pick-pricing--paid { background: #FFF4E6; color: #E67700; }
+	.pick-pricing--free { background: var(--badge-free-bg); color: var(--badge-free-fg); }
+	.pick-pricing--freemium { background: var(--badge-freemium-bg); color: var(--badge-freemium-fg); }
+	.pick-pricing--paid { background: var(--badge-paid-bg); color: var(--badge-paid-fg); }
 	.pick-name { font-size: 1.05rem; font-weight: 700; margin: 0 0 0.15rem; }
 	.pick-desc { font-size: 0.82rem; color: rgb(var(--gray)); margin: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 	.pick-rating { flex-shrink: 0; text-align: center; }
@@ -627,10 +629,20 @@ const carouselPosts = allPosts.slice(0, 3);
 
 	/* Quiz CTA Banner */
 	.quiz-cta-section {
-		background: linear-gradient(135deg, #0f2d1e 0%, #0a3d2b 50%, #0d3528 100%);
+		background: linear-gradient(135deg, rgba(var(--primary-rgb),0.08) 0%, rgba(var(--primary-rgb),0.18) 50%, rgba(var(--primary-rgb),0.10) 100%), var(--bg-alt);
 		padding: 3rem 0;
 		overflow: hidden;
+		position: relative;
 	}
+	.quiz-cta-section::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(600px 400px at 90% 120%, rgba(var(--primary-rgb),0.18), transparent 60%);
+		pointer-events: none;
+	}
+	.quiz-cta-section > * { position: relative; z-index: 1; }
+	[data-theme="light"] .quiz-cta-section { background: linear-gradient(135deg, #0f2d1e 0%, #0a3d2b 50%, #0d3528 100%); }
 	.quiz-cta-inner {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -685,6 +697,7 @@ const carouselPosts = allPosts.slice(0, 3);
 		border: 1px solid rgba(255,255,255,0.1);
 		border-radius: 16px;
 		padding: 1.4rem;
+		-webkit-backdrop-filter: blur(8px);
 		backdrop-filter: blur(8px);
 	}
 	.qp-step { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #4ade9e; margin-bottom: 0.6rem; }
@@ -794,6 +807,26 @@ const carouselPosts = allPosts.slice(0, 3);
 		text-align: center;
 		margin-top: 2rem;
 	}
+
+	/* Tool of the Week */
+	.totw {
+		border: 2px solid var(--primary);
+		border-radius: var(--radius);
+		padding: 1.5rem 2rem;
+		background: var(--primary-light);
+		position: relative;
+	}
+	.totw-badge {
+		position: absolute; top: -0.75rem; left: 1.5rem;
+		font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+		background: var(--primary); color: #fff;
+		padding: 0.25rem 0.85rem; border-radius: 50px;
+	}
+	.totw-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+	.totw-info { flex: 1; min-width: 200px; }
+	.totw-name { font-size: 1.35rem; color: rgb(var(--black)); margin: 0 0 0.3rem; }
+	.totw-desc { font-size: 0.9rem; color: rgb(var(--gray)); margin: 0 0 0.4rem; }
+	.totw-rating { font-size: 0.85rem; font-weight: 700; color: #f59e0b; }
 
 	/* Featured */
 	.featured-grid {

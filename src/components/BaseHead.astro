@@ -3,6 +3,8 @@ import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/blog-placeholder-1.jpg';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_AUTHOR } from '../consts';
+import { ClientRouter } from 'astro:transitions';
+import ScrollReveal from './ScrollReveal.astro';
 
 interface Props {
 	title: string;
@@ -127,3 +129,9 @@ const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 		"https://youtube.com/@getaibriefs",
 	],
 })} />
+
+<!-- Smooth page transitions (SPA-like navigation) -->
+<ClientRouter />
+
+<!-- Scroll-reveal controller (reacts to astro:page-load) -->
+<ScrollReveal />

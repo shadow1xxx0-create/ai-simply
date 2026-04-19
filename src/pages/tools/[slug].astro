@@ -4,6 +4,7 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ToolCard from '../../components/ToolCard.astro';
+import ShareButtons from '../../components/ShareButtons.astro';
 import { TOOL_CATEGORIES, PRICING_BADGE, SITE_TITLE, SITE_URL } from '../../consts';
 
 export async function getStaticPaths() {
@@ -21,6 +22,8 @@ const category = TOOL_CATEGORIES.find(c => c.slug === tool.data.category);
 const pb = PRICING_BADGE[tool.data.pricing] ?? PRICING_BADGE.freemium;
 const toolDomain = new URL(tool.data.url).hostname;
 const toolFavicon = `https://www.google.com/s2/favicons?domain=${toolDomain}&sz=128`;
+const visitUrl = tool.data.affiliateUrl ?? tool.data.url;
+const isAffiliate = !!tool.data.affiliateUrl;
 
 const allTools = await getCollection('tools');
 const related = allTools
@@ -28,8 +31,20 @@ const related = allTools
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 4);
 
+const allPosts = await getCollection('blog');
+const toolNameLower = tool.data.name.toLowerCase();
+const toolTags = (tool.data.tags ?? []).map((t: string) => t.toLowerCase());
+const relatedPosts = allPosts
+	.filter(p => {
+		const titleMatch = p.data.title.toLowerCase().includes(toolNameLower);
+		const tagOverlap = (p.data.tags ?? []).some((t: string) => toolTags.includes(t.toLowerCase()));
+		return titleMatch || tagOverlap;
+	})
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
 // SEO-optimised title and description
-const year = new Date().getFullYear();
+const year = (tool.data.updatedDate ?? tool.data.pubDate).getFullYear();
 const seoTitle = `${tool.data.name} Review (${year}): Features, Pricing & Alternatives`;
 const pricingLabel = pb.label; // Free / Freemium / Paid
 const subcatLabel = tool.data.subcategory ?? category?.name ?? 'AI Tool';
@@ -131,9 +146,9 @@ const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric',
 					width="64"
 					height="64"
 					loading="eager"
-					onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`}
+					id="tool-hero-favicon"
 				/>
-				<span class="tool-hero__logo-fallback" style="display:none">{category?.emoji ?? '🤖'}</span>
+				<span class="tool-hero__logo-fallback" id="tool-hero-fallback" style="display:none">{category?.emoji ?? '🤖'}</span>
 			</div>
 			<div class="tool-hero__info">
 				<div class="tool-hero__meta">
@@ -175,13 +190,15 @@ const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric',
 				)}
 
 				<p class="tool-hero__updated">Last updated: <time datetime={lastUpdated.toISOString()}>{formattedDate}</time></p>
+				<ShareButtons url={`${SITE_URL}/tools/${tool.id}/`} title={`${tool.data.name} — ${SITE_TITLE}`} />
 			</div>
 			<div class="tool-hero__actions">
 				<a
-					href={tool.data.url}
+					href={visitUrl}
 					target="_blank"
-					rel="noopener noreferrer"
+					rel={`noopener noreferrer${isAffiliate ? ' sponsored' : ''}`}
 					class="btn btn--primary tool-hero__visit"
+					data-track="visit"
 				>
 					Visit {tool.data.name}
 					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -229,9 +246,10 @@ const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric',
 						)}
 					</dl>
 					<a
-						href={tool.data.url}
+						href={visitUrl}
 						target="_blank"
-						rel="noopener noreferrer"
+						rel={`noopener noreferrer${isAffiliate ? ' sponsored' : ''}`}
+						data-track="visit"
 						class="btn btn--primary"
 						style="width:100%;justify-content:center;margin-top:1rem"
 					>
@@ -243,6 +261,12 @@ const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric',
 						style="width:100%;justify-content:center;margin-top:0.5rem"
 					>
 						See Alternatives →
+					</a>
+					<a
+						href={`/contact/?subject=claim&tool=${encodeURIComponent(tool.data.name)}`}
+						class="tool-claim-link"
+					>
+						Are you the owner of this tool?
 					</a>
 				</div>
 
@@ -288,7 +312,27 @@ const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric',
 							url={t.data.url}
 							slug={t.id}
 							tags={t.data.tags}
+							sponsored={t.data.sponsored}
+							verified={t.data.verified}
 						/>
+					))}
+				</div>
+			</div>
+		</section>
+	)}
+
+	<!-- Related Articles -->
+	{relatedPosts.length > 0 && (
+		<section class="section">
+			<div class="container">
+				<h2 class="section-heading" style="margin-bottom:1.25rem">Related Articles</h2>
+				<div class="related-articles">
+					{relatedPosts.map(p => (
+						<a href={`/blog/${p.id}/`} class="ra-card">
+							<span class="ra-badge">📝 {p.data.category.replace(/-/g, ' ')}</span>
+							<h3 class="ra-title">{p.data.title}</h3>
+							<p class="ra-desc">{p.data.description}</p>
+						</a>
 					))}
 				</div>
 			</div>
@@ -551,4 +595,53 @@ const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric',
 		.tool-content__inner { grid-template-columns: 1fr 280px; }
 		.related-grid { grid-template-columns: repeat(4, 1fr); }
 	}
+
+	/* Claim link */
+	.tool-claim-link {
+		display: block; text-align: center; margin-top: 0.75rem;
+		font-size: 0.75rem; color: rgb(var(--gray)); text-decoration: underline;
+	}
+	.tool-claim-link:hover { color: var(--primary); }
+
+	/* Related Articles */
+	.related-articles {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+	@media (min-width: 640px) { .related-articles { grid-template-columns: repeat(2, 1fr); } }
+	@media (min-width: 960px) { .related-articles { grid-template-columns: repeat(3, 1fr); } }
+	.ra-card {
+		display: flex; flex-direction: column; gap: 0.4rem;
+		padding: 1.25rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg);
+		transition: border-color 0.2s, box-shadow 0.2s;
+		color: inherit;
+	}
+	.ra-card:hover { border-color: var(--primary); box-shadow: 0 2px 12px rgba(0,135,90,0.1); }
+	.ra-badge { font-size: 0.7rem; text-transform: capitalize; color: var(--primary); font-weight: 600; }
+	.ra-title { font-size: 0.95rem; font-weight: 700; color: rgb(var(--black)); margin: 0; line-height: 1.35; }
+	.ra-desc { font-size: 0.82rem; color: rgb(var(--gray)); line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 </style>
+
+<script data-astro-rerun>
+const favicon = document.getElementById('tool-hero-favicon') as HTMLImageElement;
+if (favicon) {
+	favicon.addEventListener('error', () => {
+		favicon.style.display = 'none';
+		const fb = document.getElementById('tool-hero-fallback') as HTMLElement;
+		if (fb) fb.style.display = 'flex';
+	}, { once: true });
+}
+
+// Track outbound visit clicks via GA4
+document.querySelectorAll<HTMLAnchorElement>('[data-track="visit"]').forEach(link => {
+	link.addEventListener('click', () => {
+		if (typeof gtag === 'function') {
+			gtag('event', 'outbound_click', { url: link.href });
+		}
+	});
+});
+</script>

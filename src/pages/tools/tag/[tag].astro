@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import ToolCard from '../../../components/ToolCard.astro';
+import { SITE_TITLE } from '../../../consts';
+
+export async function getStaticPaths() {
+	const tools = await getCollection('tools');
+	const tagMap = new Map<string, typeof tools>();
+	for (const tool of tools) {
+		for (const tag of tool.data.tags ?? []) {
+			const slug = tag.toLowerCase().replace(/\s+/g, '-');
+			if (!tagMap.has(slug)) tagMap.set(slug, []);
+			tagMap.get(slug)!.push(tool);
+		}
+	}
+	return [...tagMap.entries()].map(([slug, tools]) => ({
+		params: { tag: slug },
+		props: {
+			tag: tools[0].data.tags?.find(t => t.toLowerCase().replace(/\s+/g, '-') === slug) ?? slug,
+			tools: tools.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+		},
+	}));
+}
+
+const { tag, tools } = Astro.props;
+const title = `AI Tools tagged "${tag}" — ${SITE_TITLE}`;
+const description = `Browse ${tools.length} AI tools tagged with "${tag}". Find the best ${tag} tools — free, freemium, and paid.`;
+---
+
+<html lang="en">
+<head><BaseHead title={title} description={description} /></head>
+<body>
+<Header />
+
+<Breadcrumb crumbs={[
+	{ label: 'Home', href: '/' },
+	{ label: 'AI Tools', href: '/tools/' },
+	{ label: `Tag: ${tag}` },
+]} />
+
+<main class="container tag-page">
+	<div class="tag-header">
+		<span class="tag-badge">🏷️ Tag</span>
+		<h1>{tag}</h1>
+		<p>{tools.length} AI tool{tools.length !== 1 ? 's' : ''} tagged with "{tag}"</p>
+	</div>
+
+	<div class="tag-grid">
+		{tools.map(tool => (
+			<ToolCard
+				name={tool.data.name}
+				description={tool.data.description}
+				category={tool.data.category}
+				subcategory={tool.data.subcategory}
+				pricing={tool.data.pricing}
+				url={tool.data.url}
+				slug={tool.id}
+				tags={tool.data.tags}
+				sponsored={tool.data.sponsored}
+				verified={tool.data.verified}
+			/>
+		))}
+	</div>
+</main>
+
+<Footer />
+</body>
+</html>
+
+<style>
+	.tag-page { padding: 2rem 0 4rem; }
+	.tag-header { margin-bottom: 2rem; }
+	.tag-badge {
+		display: inline-block; font-size: 0.72rem; font-weight: 700;
+		text-transform: uppercase; letter-spacing: 0.08em;
+		background: var(--primary-light); color: var(--primary);
+		padding: 0.25rem 0.75rem; border-radius: 50px; margin-bottom: 0.75rem;
+	}
+	.tag-header h1 { font-size: 1.75rem; text-transform: capitalize; margin-bottom: 0.3rem; color: rgb(var(--black)); }
+	.tag-header p { color: rgb(var(--gray)); font-size: 0.95rem; }
+	.tag-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 1rem;
+	}
+</style>

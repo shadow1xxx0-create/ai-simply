@@ -12,7 +12,7 @@ const freeToolLinks = [
 ];
 ---
 
-<footer class="site-footer" role="contentinfo">
+<footer class="site-footer" role="contentinfo" transition:persist="site-footer">
 	<div class="container">
 		<div class="footer-grid">
 
@@ -73,36 +73,79 @@ const freeToolLinks = [
 					<a href="/terms/">Terms</a>
 					<a href="/sitemap-index.xml">Sitemap</a>
 				</div>
-				<div class="lang-selector">
-					<span class="lang-icon">🌐</span>
-					<select id="lang-select" aria-label="Select language">
-						<option value="en" selected>English</option>
-						<option value="es">Español</option>
-						<option value="fr">Français</option>
-						<option value="de">Deutsch</option>
-						<option value="pt">Português</option>
-						<option value="zh">中文</option>
-						<option value="ja">日本語</option>
-						<option value="ko">한국어</option>
-						<option value="ar">العربية</option>
-						<option value="hi">हिन्दी</option>
-					</select>
-				</div>
 			</div>
 		</div>
 	</div>
 </footer>
 
 <!-- Back to top -->
-<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<button id="back-to-top" aria-label="Back to top" title="Back to top" transition:persist="back-to-top">↑</button>
+
+<!-- Exit-Intent Newsletter -->
+<div id="exit-popup" class="exit-popup" hidden transition:persist="exit-popup">
+	<div class="exit-popup__card">
+		<button class="exit-popup__close" id="exit-close" aria-label="Close">✕</button>
+		<h3>Before you go...</h3>
+		<p>Get the best AI tools and news — delivered free, weekly.</p>
+		<a href={BEEHIIV_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="width:100%;justify-content:center">Subscribe Free →</a>
+		<span class="exit-popup__dismiss" id="exit-dismiss">No thanks</span>
+	</div>
+</div>
 
 <script>
 const btn = document.getElementById('back-to-top')!;
 window.addEventListener('scroll', () => { btn.classList.toggle('visible', window.scrollY > 400); });
 btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Exit-intent popup
+const exitPopup = document.getElementById('exit-popup')!;
+const exitClose = document.getElementById('exit-close')!;
+const exitDismiss = document.getElementById('exit-dismiss')!;
+let exitShown = false;
+
+function showExit() {
+	if (exitShown || sessionStorage.getItem('exit-dismissed')) return;
+	exitShown = true;
+	exitPopup.hidden = false;
+}
+function hideExit() {
+	exitPopup.hidden = true;
+	sessionStorage.setItem('exit-dismissed', '1');
+}
+
+document.addEventListener('mouseleave', (e) => { if (e.clientY < 5) showExit(); });
+exitClose?.addEventListener('click', hideExit);
+exitDismiss?.addEventListener('click', hideExit);
+exitPopup?.addEventListener('click', (e) => { if (e.target === exitPopup) hideExit(); });
 </script>
 
 <style>
+/* Exit-intent popup */
+.exit-popup {
+	position: fixed; inset: 0;
+	background: rgba(0,0,0,0.5); z-index: 10000;
+	display: flex; align-items: center; justify-content: center;
+	padding: 1rem;
+}
+.exit-popup[hidden] { display: none; }
+.exit-popup__card {
+	background: var(--bg); border-radius: 12px; padding: 2rem;
+	max-width: 400px; width: 100%; text-align: center;
+	box-shadow: 0 20px 60px rgba(0,0,0,0.2); position: relative;
+}
+.exit-popup__card h3 { font-size: 1.25rem; color: rgb(var(--black)); margin-bottom: 0.5rem; }
+.exit-popup__card p { font-size: 0.9rem; color: rgb(var(--gray)); margin-bottom: 1.25rem; }
+.exit-popup__close {
+	position: absolute; top: 0.75rem; right: 0.75rem;
+	background: none; border: none; cursor: pointer;
+	font-size: 1.1rem; color: rgb(var(--gray)); padding: 0.25rem;
+}
+.exit-popup__dismiss {
+	display: block; margin-top: 0.75rem;
+	font-size: 0.78rem; color: rgb(var(--gray)); cursor: pointer;
+}
+.exit-popup__dismiss:hover { color: rgb(var(--black)); }
+
 #back-to-top {
 	position: fixed;
 	bottom: 1.5rem;
@@ -131,8 +174,9 @@ btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth'
 
 <style>
 	.site-footer {
-		background: #0f0f0f;
-		color: rgba(255,255,255,0.55);
+		background: var(--bg-alt);
+		color: rgb(var(--gray-dark) / 0.85);
+		border-top: 1px solid var(--border);
 		padding: 3.5rem 0 1.5rem;
 	}
 
@@ -144,7 +188,7 @@ btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth'
 	}
 
 	.site-footer h4 {
-		color: #fff;
+		color: rgb(var(--black));
 		font-size: 0.72rem;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
@@ -157,14 +201,15 @@ btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth'
 		display: inline-block;
 		padding: 0.5rem 1rem;
 		background: var(--primary);
-		color: #fff;
+		color: #0b0f0d;
 		font-size: 0.82rem;
 		font-weight: 700;
 		border-radius: var(--radius);
 		margin-bottom: 1.25rem;
+		transition: background 0.25s var(--ease-out), transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
 	}
 
-	.footer-subscribe-btn:hover { background: var(--primary-dark); color: #fff; }
+	.footer-subscribe-btn:hover { background: var(--primary-dark); color: #0b0f0d; transform: translateY(-1px); box-shadow: var(--accent-glow); }
 
 	.footer-socials {
 		display: flex;
@@ -174,28 +219,28 @@ btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth'
 	.footer-socials a {
 		width: 32px;
 		height: 32px;
-		background: rgba(255,255,255,0.08);
+		background: rgb(var(--black) / 0.08);
 		border-radius: 8px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: rgba(255,255,255,0.6);
-		transition: all 0.15s;
+		color: rgb(var(--gray-dark) / 0.7);
+		transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
 	}
 
-	.footer-socials a:hover { background: var(--primary); color: #fff; }
+	.footer-socials a:hover { background: var(--primary); color: #0b0f0d; transform: translateY(-2px); }
 
 	.site-footer ul { list-style: none; padding: 0; margin: 0; }
 	.site-footer li { margin-bottom: 0.5rem; }
-	.site-footer a { color: rgba(255,255,255,0.55); font-size: 0.85rem; transition: color 0.15s; }
-	.site-footer a:hover { color: #fff; }
+	.site-footer a { color: rgb(var(--gray-dark) / 0.82); font-size: 0.85rem; transition: color 0.2s var(--ease-out); }
+	.site-footer a:hover { color: var(--primary); }
 
 	.footer-newsletter { margin-top: 1.5rem; }
-	.footer-newsletter p { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.35); margin-bottom: 0.4rem; }
+	.footer-newsletter p { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(var(--gray)); margin-bottom: 0.4rem; }
 	.newsletter-link { font-size: 0.82rem; color: var(--primary) !important; font-weight: 600; }
 
 	.footer-bottom {
-		border-top: 1px solid rgba(255,255,255,0.08);
+		border-top: 1px solid var(--border);
 		padding-top: 1.25rem;
 		display: flex;
 		align-items: center;
@@ -211,27 +256,12 @@ btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth'
 		gap: 1rem;
 	}
 
-	.footer-bottom-links a { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
-	.footer-bottom-links a:hover { color: #fff; }
+	.footer-bottom-links a { font-size: 0.78rem; color: rgb(var(--gray)); }
+	.footer-bottom-links a:hover { color: var(--primary); }
 
 	.footer-bottom-right { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
 
-	.lang-selector { display: flex; align-items: center; gap: 0.4rem; }
-	.lang-icon { font-size: 0.85rem; }
-	.lang-selector select {
-		background: transparent;
-		border: 1px solid rgba(255,255,255,0.15);
-		color: rgba(255,255,255,0.5);
-		font-size: 0.75rem;
-		padding: 0.2rem 0.5rem;
-		border-radius: 4px;
-		cursor: pointer;
-		outline: none;
-	}
-	.lang-selector select:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
-	.lang-selector select option { background: #1a1a1a; color: #fff; }
-
-	@media (min-width: 640px) {
+@media (min-width: 640px) {
 		.footer-grid { grid-template-columns: repeat(2, 1fr); }
 	}
 

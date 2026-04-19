@@ -1,9 +1,33 @@
 ---
 import { SITE_TITLE, TOOL_CATEGORIES } from '../consts';
+import { getCollection } from 'astro:content';
 const pathname = Astro.url.pathname;
+
+const allTools = await getCollection('tools');
+const allPosts = await getCollection('blog');
+
+const searchIndex = [
+	...allTools.map(t => ({
+		type: 'tool' as const,
+		name: t.data.name,
+		desc: t.data.description,
+		url: `/tools/${t.id}/`,
+		cat: TOOL_CATEGORIES.find(c => c.slug === t.data.category)?.name ?? '',
+		emoji: TOOL_CATEGORIES.find(c => c.slug === t.data.category)?.emoji ?? '🤖',
+	})),
+	...allPosts.map(p => ({
+		type: 'article' as const,
+		name: p.data.title,
+		desc: p.data.description,
+		url: `/blog/${p.id}/`,
+		cat: p.data.category,
+		emoji: '📝',
+	})),
+];
 ---
 
-<header class="site-header" role="banner">
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header class="site-header" role="banner" transition:persist="site-header">
 	<nav class="site-nav container" aria-label="Main navigation">
 		<a href="/" class="site-logo" aria-label={`${SITE_TITLE} - Home`}>
 			<span class="site-logo__icon" aria-hidden="true">&#129302;</span>
@@ -51,6 +75,12 @@ const pathname = Astro.url.pathname;
 			<li><a href="/pricing/" class:list={[{ active: pathname === '/pricing/' }]}>Pricing</a></li>
 			<li><a href="/proxy/" class:list={[{ active: pathname === '/proxy/' }]}>Proxy</a></li>
 			<li>
+			<button class="nav-theme-btn" id="nav-theme-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+				<svg class="theme-icon-light" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+				<svg class="theme-icon-dark" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
+			</button>
+		</li>
+		<li>
 			<button class="nav-search-btn" id="nav-search-btn" aria-label="Search tools">
 				<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
 			</button>
@@ -61,20 +91,21 @@ const pathname = Astro.url.pathname;
 </header>
 
 <!-- Global Search Modal -->
-<div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search" hidden>
+<div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search" hidden transition:persist="search-overlay">
 	<div class="search-modal">
 		<div class="search-modal__bar">
 			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
 			<input
 				type="search"
 				id="global-search-input"
-				placeholder="Search 200+ AI tools..."
+				placeholder="Search tools, articles..."
 				autocomplete="off"
-				aria-label="Search AI tools"
+				aria-label="Search tools and articles"
 			/>
 			<button class="search-modal__close" id="search-close" aria-label="Close search">✕</button>
 		</div>
-		<div class="search-modal__hints">
+		<div id="search-results" class="search-results" hidden></div>
+		<div id="search-hints" class="search-modal__hints">
 			<span>Try: <a href="/tools/?q=writing">writing</a></span>
 			<span><a href="/tools/?q=free">free tools</a></span>
 			<span><a href="/tools/?q=image">image</a></span>
@@ -83,12 +114,25 @@ const pathname = Astro.url.pathname;
 	</div>
 </div>
 
+<script is:inline>
+// Apply theme immediately to prevent flash — dark by default
+(function() {
+	const saved = localStorage.getItem('theme');
+	document.documentElement.setAttribute('data-theme', saved || 'dark');
+})();
+</script>
+
+<script define:vars={{ searchIndex }}>
+	window.__searchIndex = searchIndex;
+</script>
 <script>
-	// Global search modal
+	const INDEX = (window as any).__searchIndex as Array<{type:string;name:string;desc:string;url:string;cat:string;emoji:string}>;
 	const overlay = document.getElementById('search-overlay')!;
 	const searchInput = document.getElementById('global-search-input') as HTMLInputElement;
 	const openBtn = document.getElementById('nav-search-btn')!;
 	const closeBtn = document.getElementById('search-close')!;
+	const resultsEl = document.getElementById('search-results')!;
+	const hintsEl = document.getElementById('search-hints')!;
 
 	function openSearch() {
 		overlay.hidden = false;
@@ -98,7 +142,39 @@ const pathname = Astro.url.pathname;
 	function closeSearch() {
 		overlay.hidden = true;
 		document.body.style.overflow = '';
+		searchInput.value = '';
+		resultsEl.hidden = true;
+		hintsEl.hidden = false;
 	}
+
+	function esc(s: string) { const d = document.createElement('span'); d.textContent = s; return d.innerHTML; }
+
+	let searchTimer: ReturnType<typeof setTimeout>;
+	searchInput?.addEventListener('input', () => {
+		clearTimeout(searchTimer);
+		searchTimer = setTimeout(() => {
+			const q = searchInput.value.trim().toLowerCase();
+			if (!q) { resultsEl.hidden = true; hintsEl.hidden = false; return; }
+			const matches = INDEX.filter(item =>
+				item.name.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q) || item.cat.toLowerCase().includes(q)
+			).slice(0, 8);
+			if (matches.length === 0) {
+				resultsEl.innerHTML = `<div class="sr-empty">No results for "${esc(q)}"</div>`;
+			} else {
+				resultsEl.innerHTML = matches.map(m => `
+					<a href="${m.url}" class="sr-item">
+						<span class="sr-emoji">${m.emoji}</span>
+						<div class="sr-info">
+							<span class="sr-name">${esc(m.name)}</span>
+							<span class="sr-meta">${m.type === 'tool' ? 'Tool' : 'Article'} · ${esc(m.cat)}</span>
+						</div>
+					</a>
+				`).join('');
+			}
+			resultsEl.hidden = false;
+			hintsEl.hidden = true;
+		}, 150);
+	});
 
 	openBtn?.addEventListener('click', openSearch);
 	closeBtn?.addEventListener('click', closeSearch);
@@ -137,9 +213,29 @@ const pathname = Astro.url.pathname;
 		document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
 		nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNav));
 	}
+
+	// Theme toggle
+	const themeBtn = document.getElementById('nav-theme-btn');
+	themeBtn?.addEventListener('click', () => {
+		const html = document.documentElement;
+		const current = html.getAttribute('data-theme') || 'dark';
+		const next = current === 'dark' ? 'light' : 'dark';
+		html.setAttribute('data-theme', next);
+		localStorage.setItem('theme', next);
+	});
 </script>
 
 <style>
+	/* Skip to content */
+	.skip-link {
+		position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+		background: var(--primary); color: #fff; padding: 0.5rem 1.5rem;
+		border-radius: 0 0 var(--radius) var(--radius);
+		font-weight: 700; font-size: 0.85rem; z-index: 9999;
+		transition: top 0.2s;
+	}
+	.skip-link:focus { top: 0; }
+
 	.site-header {
 		background: var(--bg);
 		border-bottom: 1px solid var(--border);
@@ -227,7 +323,7 @@ const pathname = Astro.url.pathname;
 		left: 50%;
 		transform: translateX(-50%);
 		width: 580px;
-		background: #fff;
+		background: var(--bg);
 		border: 1px solid var(--border);
 		border-radius: 12px;
 		box-shadow: 0 8px 32px rgba(0,0,0,0.12);
@@ -302,6 +398,24 @@ const pathname = Astro.url.pathname;
 	}
 	.nav-search-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
 
+	/* Theme toggle */
+	.nav-theme-btn {
+		display: flex; align-items: center; justify-content: center;
+		width: 36px; height: 36px;
+		background: none; border: 1px solid var(--border);
+		border-radius: var(--radius); cursor: pointer;
+		color: rgb(var(--gray-dark));
+		transition: all 0.15s;
+	}
+	.nav-theme-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+	.theme-icon-dark { display: none; }
+	[data-theme="dark"] .theme-icon-light { display: none; }
+	[data-theme="dark"] .theme-icon-dark { display: block; }
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme="light"]) .theme-icon-light { display: none; }
+		:root:not([data-theme="light"]) .theme-icon-dark { display: block; }
+	}
+
 	/* Search overlay */
 	.search-overlay {
 		position: fixed; inset: 0;
@@ -309,13 +423,14 @@ const pathname = Astro.url.pathname;
 		z-index: 9999;
 		display: flex; align-items: flex-start; justify-content: center;
 		padding-top: 80px;
+		-webkit-backdrop-filter: blur(2px);
 		backdrop-filter: blur(2px);
 	}
 	.search-overlay[hidden] { display: none; }
 
 	.search-modal {
 		width: 100%; max-width: 580px;
-		background: #fff;
+		background: var(--bg);
 		border-radius: 14px;
 		box-shadow: 0 20px 60px rgba(0,0,0,0.2);
 		overflow: hidden;
@@ -351,6 +466,22 @@ const pathname = Astro.url.pathname;
 		padding: 0.2rem 0.6rem; border-radius: 50px;
 	}
 	.search-modal__hints a:hover { background: var(--primary); color: #fff; }
+
+	/* Instant search results */
+	.search-results { max-height: 360px; overflow-y: auto; }
+	.search-results[hidden] { display: none; }
+	.sr-item {
+		display: flex; align-items: center; gap: 0.75rem;
+		padding: 0.65rem 1.25rem;
+		color: rgb(var(--black));
+		transition: background 0.1s;
+	}
+	.sr-item:hover { background: var(--primary-light); }
+	.sr-emoji { font-size: 1.2rem; flex-shrink: 0; width: 28px; text-align: center; }
+	.sr-info { display: flex; flex-direction: column; min-width: 0; }
+	.sr-name { font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+	.sr-meta { font-size: 0.75rem; color: rgb(var(--gray)); }
+	.sr-empty { padding: 1.5rem 1.25rem; text-align: center; font-size: 0.9rem; color: rgb(var(--gray)); }
 
 	@media (min-width: 768px) {
 		.nav-toggle { display: none; }
