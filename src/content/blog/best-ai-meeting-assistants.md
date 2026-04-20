@@ -1,8 +1,8 @@
 ---
 title: "Best AI Meeting Assistants in 2026 (Ranked & Reviewed)"
 description: "The top AI meeting assistants tested and ranked — Fireflies, Fathom, Otter AI, and Mem compared on transcription accuracy, summaries, integrations, and price."
-pubDate: 2026-04-05
-updatedDate: 2026-04-05
+pubDate: 2026-04-10
+updatedDate: 2026-04-10
 heroImage: "../../assets/hero-best-meeting-assistants.svg"
 category: "guides"
 tags: ["AI meeting assistant", "meeting transcription", "AI notetaker", "Fireflies", "Fathom", "Otter AI", "meeting summary"]

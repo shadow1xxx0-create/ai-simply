@@ -1,8 +1,8 @@
 ---
 title: "Best AI Flashcard Apps in 2026 (Ranked & Reviewed)"
 description: "Anki vs Quizlet vs Brainscape — the top AI flashcard apps compared on spaced repetition, ease of use, content library, and price."
-pubDate: 2026-04-05
-updatedDate: 2026-04-05
+pubDate: 2026-04-16
+updatedDate: 2026-04-16
 heroImage: "../../assets/hero-best-flashcard-apps.svg"
 category: "guides"
 tags: ["AI flashcard app", "Anki", "Quizlet", "Brainscape", "spaced repetition", "studying", "memory"]

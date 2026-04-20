@@ -1,8 +1,8 @@
 ---
 title: "Best AI Presentation Makers in 2026 (Ranked & Reviewed)"
 description: "Gamma vs Beautiful.ai — the top AI presentation tools compared on design quality, ease of use, collaboration features, and price."
-pubDate: 2026-04-05
-updatedDate: 2026-04-05
+pubDate: 2026-04-08
+updatedDate: 2026-04-08
 heroImage: "../../assets/hero-best-presentation-makers.svg"
 category: "guides"
 tags: ["AI presentation maker", "AI slides", "Gamma", "Beautiful.ai", "AI PowerPoint", "presentation generator"]

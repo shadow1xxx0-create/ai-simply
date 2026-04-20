@@ -1,8 +1,8 @@
 ---
 title: "Best AI Text-to-Speech Tools in 2026 (Ranked & Reviewed)"
 description: "ElevenLabs vs Murf vs Play.ht vs Speechify vs LOVO — the top AI text-to-speech tools compared on voice quality, languages, pricing, and use cases."
-pubDate: 2026-04-05
-updatedDate: 2026-04-05
+pubDate: 2026-04-12
+updatedDate: 2026-04-12
 heroImage: "../../assets/hero-best-text-to-speech.svg"
 category: "guides"
 tags: ["AI text to speech", "ElevenLabs", "Murf", "Play.ht", "Speechify", "LOVO", "AI voice generator", "TTS"]

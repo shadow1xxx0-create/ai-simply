@@ -1,8 +1,8 @@
 ---
 title: "Best AI Image Generators in 2026 (Ranked & Reviewed)"
 description: "We tested 10 leading AI image generators — here's how Midjourney, DALL-E 3, Stable Diffusion, Flux, and more compare on quality, speed, price, and ease of use."
-pubDate: 2026-04-05
-updatedDate: 2026-04-05
+pubDate: 2026-03-29
+updatedDate: 2026-03-29
 heroImage: "../../assets/hero-best-image-generators.svg"
 category: "guides"
 tags: ["AI image generator", "best AI art tools", "Midjourney", "DALL-E 3", "Stable Diffusion", "Flux AI", "AI art", "text to image"]

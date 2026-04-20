@@ -1,8 +1,8 @@
 ---
 title: "Best AI Video Generators in 2026 (Ranked & Reviewed)"
 description: "Runway vs Kling AI vs Luma Dream Machine vs InVideo — the top AI video generators compared on quality, length, pricing, and ease of use."
-pubDate: 2026-04-05
-updatedDate: 2026-04-05
+pubDate: 2026-04-06
+updatedDate: 2026-04-06
 heroImage: "../../assets/hero-best-video-generators.svg"
 category: "guides"
 tags: ["AI video generator", "text to video", "Runway", "Kling AI", "Luma Dream Machine", "InVideo", "AI video tools"]

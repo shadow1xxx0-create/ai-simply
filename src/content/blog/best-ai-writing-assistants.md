@@ -1,8 +1,8 @@
 ---
 title: "Best AI Writing Assistants in 2026 (Ranked & Reviewed)"
 description: "Jasper vs Rytr vs Copy.ai vs Writesonic — the top AI writing tools compared on content quality, templates, SEO features, and price."
-pubDate: 2026-04-05
-updatedDate: 2026-04-05
+pubDate: 2026-03-26
+updatedDate: 2026-03-26
 heroImage: "../../assets/hero-best-writing-assistants.svg"
 category: "guides"
 tags: ["AI writing assistant", "Jasper AI", "Rytr", "Copy.ai", "Writesonic", "AI content writer", "AI copywriting"]

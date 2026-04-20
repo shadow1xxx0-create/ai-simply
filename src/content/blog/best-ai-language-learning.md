@@ -1,8 +1,8 @@
 ---
 title: "Best AI Language Learning Apps in 2026 (Ranked & Reviewed)"
 description: "Duolingo vs Babbel vs Pimsleur compared — which AI language learning app actually gets you to fluency fastest?"
-pubDate: 2026-04-05
-updatedDate: 2026-04-05
+pubDate: 2026-04-18
+updatedDate: 2026-04-18
 heroImage: "../../assets/hero-best-language-learning.svg"
 category: "guides"
 tags: ["AI language learning", "Duolingo", "Babbel", "Pimsleur", "language app", "learn a language", "AI education"]

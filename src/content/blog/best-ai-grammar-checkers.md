@@ -1,8 +1,8 @@
 ---
 title: "Best AI Grammar Checkers in 2026 (Ranked & Reviewed)"
 description: "Grammarly vs LanguageTool vs ProWritingAid — we compare the top AI grammar checkers on accuracy, features, language support, and price."
-pubDate: 2026-04-05
-updatedDate: 2026-04-05
+pubDate: 2026-04-03
+updatedDate: 2026-04-03
 heroImage: "../../assets/hero-best-grammar-checkers.svg"
 category: "guides"
 tags: ["AI grammar checker", "best grammar checker", "Grammarly", "LanguageTool", "ProWritingAid", "writing tools", "proofreading"]
