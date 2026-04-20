@@ -24,6 +24,7 @@ const articleLastmod = {
 	'/blog/what-is-a-large-language-model-llm-explained/': '2026-03-18',
 	'/blog/what-is-an-ai-reasoning-model-explained/': '2026-03-19',
 	'/blog/what-is-vibe-coding-explained/': '2026-03-21',
+	'/blog/what-is-an-ai-browser-explained/': '2026-04-20',
 	'/blog/best-ai-chatbots/': '2026-04-05',
 	'/blog/best-ai-code-assistants/': '2026-04-05',
 	'/blog/best-ai-flashcard-apps/': '2026-04-05',
