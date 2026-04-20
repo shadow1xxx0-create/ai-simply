@@ -97,23 +97,27 @@ const btn = document.getElementById('back-to-top')!;
 window.addEventListener('scroll', () => { btn.classList.toggle('visible', window.scrollY > 400); });
 btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// Exit-intent popup
+// Recurring subscribe popup — every 2 minutes
 const exitPopup = document.getElementById('exit-popup')!;
 const exitClose = document.getElementById('exit-close')!;
 const exitDismiss = document.getElementById('exit-dismiss')!;
-let exitShown = false;
+
+const POPUP_INTERVAL_MS = 2 * 60 * 1000;
+let popupTimer: number | undefined;
 
 function showExit() {
-	if (exitShown || sessionStorage.getItem('exit-dismissed')) return;
-	exitShown = true;
 	exitPopup.hidden = false;
 }
 function hideExit() {
 	exitPopup.hidden = true;
-	sessionStorage.setItem('exit-dismissed', '1');
+	scheduleNext();
+}
+function scheduleNext() {
+	if (popupTimer) clearTimeout(popupTimer);
+	popupTimer = window.setTimeout(showExit, POPUP_INTERVAL_MS);
 }
 
-document.addEventListener('mouseleave', (e) => { if (e.clientY < 5) showExit(); });
+scheduleNext();
 exitClose?.addEventListener('click', hideExit);
 exitDismiss?.addEventListener('click', hideExit);
 exitPopup?.addEventListener('click', (e) => { if (e.target === exitPopup) hideExit(); });
