@@ -167,7 +167,7 @@ In December 2025, OpenAI's own head of preparedness publicly stated that prompt 
 
 Brave's research team has published multiple vulnerability reports on Comet. Anthropic, OpenAI, and Google are all training their models specifically to resist prompt injection, but no one claims it's eliminated.
 
-**What this means in practice:**
+**What it means in practice:**
 
 - Don't use agent mode on random websites you don't trust
 - Don't let AI browsers handle banking, investment, or healthcare accounts without supervision
@@ -203,9 +203,9 @@ Here's the honest answer: it depends on how you use the web.
 - You mostly use the browser for email, social, and a few known sites
 - You care about maximum compatibility with websites (AI browsers occasionally break on certain pages)
 - You handle sensitive financial or medical work and don't want agent access to it
-- You dislike the feeling of an AI watching everything you browse (understandable)
+- You dislike the feeling of an AI watching everything you browse — understandable, and our piece on [how AI is eroding your privacy](/blog/how-ai-is-eroding-your-privacy) goes deeper on the tradeoffs
 
-A practical middle path: install one AI browser as a secondary browser. Use it for research and multi-step tasks. Keep Chrome or Safari as your default for everything else. That's what most people doing this seriously are actually doing in 2026.
+A practical middle path: install one AI browser as a secondary browser. Use it for research and multi-step tasks. Keep Chrome or Safari as your default for everything else. That's what most early adopters are actually doing in 2026.
 
 ## How to Try an AI Browser Today
 
