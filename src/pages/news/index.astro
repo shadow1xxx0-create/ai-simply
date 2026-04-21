@@ -1,0 +1,89 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_URL } from '../../consts';
+
+interface NewsItem { title: string; link: string; date: string; source: string; }
+interface Snapshot { date: string; fetchedAt?: string; items: NewsItem[]; }
+
+const snapshots = import.meta.glob<Snapshot>('../../data/news/*.json', { eager: true });
+const entries = Object.entries(snapshots)
+	.map(([path, data]) => ({ slug: path.split('/').pop()!.replace(/\.json$/, ''), data }))
+	.sort((a, b) => b.slug.localeCompare(a.slug));
+
+const title = 'AI News Archive';
+const description = `Daily AI news snapshots — deduped headlines from VentureBeat, The Verge, TechCrunch, Ars Technica, Wired, MIT Tech Review, Hugging Face, and IEEE Spectrum. ${entries.length} days archived.`;
+const canonical = `${SITE_URL}/news/`;
+
+function prettyDate(iso: string) {
+	return new Date(iso + 'T00:00:00Z').toLocaleDateString('en-US', {
+		weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+	});
+}
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead title={title} description={description} />
+	<link rel="canonical" href={canonical} />
+</head>
+<body>
+<Header />
+
+<main id="main-content">
+	<section class="section">
+		<div class="container news-index">
+			<h1 class="news-title">AI News Archive</h1>
+			<p class="news-sub">Daily AI news snapshots — deduped headlines from 8 outlets, refreshed every morning.</p>
+
+			{entries.length === 0 ? (
+				<p class="news-empty">No snapshots yet. The daily workflow runs at 07:00 UTC.</p>
+			) : (
+				<ul class="archive-list">
+					{entries.map(entry => (
+						<li class="archive-row">
+							<a href={`/news/${entry.slug}/`} class="archive-link">
+								<div class="archive-date">
+									<span class="archive-date-main">{prettyDate(entry.slug)}</span>
+									<span class="archive-date-iso">{entry.slug}</span>
+								</div>
+								<div class="archive-meta">
+									<span class="archive-count">{entry.data.items.length} headlines</span>
+									<span class="archive-arrow">→</span>
+								</div>
+							</a>
+						</li>
+					))}
+				</ul>
+			)}
+		</div>
+	</section>
+</main>
+
+<Footer />
+
+<style>
+	.news-index { max-width: 760px; }
+	.news-title { font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem; color: rgb(var(--black)); }
+	.news-sub { font-size: 0.95rem; color: rgb(var(--gray)); margin: 0 0 2rem; }
+	.news-empty { padding: 2rem; background: var(--bg-alt); border-radius: var(--radius); text-align: center; color: rgb(var(--gray)); }
+
+	.archive-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+	.archive-row { margin: 0; }
+	.archive-link {
+		display: flex; align-items: center; justify-content: space-between;
+		padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: var(--radius);
+		color: inherit; transition: all 0.15s;
+	}
+	.archive-link:hover { border-color: var(--primary); background: var(--primary-light); }
+	.archive-date { display: flex; flex-direction: column; gap: 0.15rem; }
+	.archive-date-main { font-size: 1rem; font-weight: 700; color: rgb(var(--black)); }
+	.archive-date-iso { font-size: 0.75rem; color: rgb(var(--gray)); font-family: monospace; }
+	.archive-meta { display: flex; align-items: center; gap: 1rem; }
+	.archive-count { font-size: 0.85rem; color: rgb(var(--gray)); font-weight: 600; }
+	.archive-arrow { font-size: 1rem; color: var(--primary); }
+</style>
+</body>
+</html>

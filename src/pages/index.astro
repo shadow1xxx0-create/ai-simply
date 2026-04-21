@@ -24,29 +24,22 @@ for (const t of allTools) {
 	catCounts[t.data.category] = (catCounts[t.data.category] ?? 0) + 1;
 }
 
-// AI News — RSS fetch
+// AI News — RSS fetch. Prefer today's committed snapshot (src/data/news/*.json),
+// fall back to live fetch if no snapshot exists yet for today.
+import { fetchNews } from '../utils/news.mjs';
 interface NewsItem { title: string; link: string; date: string; source: string; }
-const RSS_FEEDS = [
-	{ url: 'https://venturebeat.com/category/ai/feed/', source: 'VentureBeat' },
-	{ url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml', source: 'The Verge' },
-	{ url: 'https://techcrunch.com/category/artificial-intelligence/feed/', source: 'TechCrunch' },
-];
+
 let newsItems: NewsItem[] = [];
-try {
-	const fetched = await Promise.allSettled(RSS_FEEDS.map(f => fetch(f.url, { signal: AbortSignal.timeout(4000) }).then(r => r.text()).then(xml => ({ xml, source: f.source }))));
-	for (const r of fetched) {
-		if (r.status !== 'fulfilled') continue;
-		const { xml, source } = r.value;
-		const items = [...xml.matchAll(/<item[\s\S]*?<\/item>/g)];
-		for (const m of items.slice(0, 4)) {
-			const title = m[0].match(/<title><!\[CDATA\[(.*?)\]\]><\/title>|<title>(.*?)<\/title>/)?.[1] ?? m[0].match(/<title>(.*?)<\/title>/)?.[1] ?? '';
-			const link = m[0].match(/<link>(.*?)<\/link>|<link href="(.*?)"/)?.[1] ?? '';
-			const date = m[0].match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? '';
-			if (title && link) newsItems.push({ title: title.trim(), link: link.trim(), date, source });
-		}
-	}
-	newsItems = newsItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 8);
-} catch {}
+const todayIso = new Date().toISOString().slice(0, 10);
+const snapshots = import.meta.glob<{ date: string; items: NewsItem[] }>('../data/news/*.json', { eager: true });
+const todaySnapshot = Object.entries(snapshots).find(([path]) => path.endsWith(`/${todayIso}.json`))?.[1];
+if (todaySnapshot?.items?.length) {
+	newsItems = todaySnapshot.items.slice(0, 8);
+} else {
+	try {
+		newsItems = (await fetchNews()).slice(0, 8);
+	} catch {}
+}
 
 const allPosts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const recentPosts = allPosts.slice(0, 6);
@@ -114,14 +107,14 @@ const carouselPosts = allPosts.slice(0, 3);
 				<div class="news-timeline">
 					{newsItems.map(item => {
 						const d = item.date ? new Date(item.date) : null;
-						const dateStr = d && !isNaN(d.getTime()) ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+						const iso = d && !isNaN(d.getTime()) ? d.toISOString() : '';
+						const fallback = d && !isNaN(d.getTime()) ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
 						return (
 							<a href={item.link} target="_blank" rel="noopener noreferrer" class="timeline-item">
 								<div class="timeline-dot"></div>
 								<div class="timeline-body">
 									<div class="timeline-meta">
-										<span class="timeline-source">{item.source}</span>
-										{dateStr && <span class="timeline-date">{dateStr}</span>}
+										{iso && <span class="timeline-date" data-date={iso}>{fallback}</span>}
 									</div>
 									<p class="timeline-title">{item.title}</p>
 								</div>
@@ -411,6 +404,22 @@ const carouselPosts = allPosts.slice(0, 3);
 			heroCarousel.appendChild(orb);
 		});
 	}
+
+	// Relative timestamps for AI News timeline
+	function formatRelative(iso) {
+		const date = new Date(iso);
+		if (isNaN(date.getTime())) return '';
+		const diff = (Date.now() - date.getTime()) / 1000;
+		if (diff < 60) return 'just now';
+		if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+		if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+		if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
+		return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+	}
+	document.querySelectorAll('.timeline-date[data-date]').forEach(el => {
+		const iso = el.getAttribute('data-date');
+		if (iso) el.textContent = formatRelative(iso);
+	});
 </script>
 
 <style>
