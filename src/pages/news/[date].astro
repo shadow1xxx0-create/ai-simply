@@ -2,7 +2,6 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_URL } from '../../consts';
 
 interface NewsItem { title: string; link: string; date: string; source: string; }
 interface Snapshot { date: string; fetchedAt?: string; items: NewsItem[]; }
@@ -39,14 +38,12 @@ const displayDate = new Date(date + 'T00:00:00Z').toLocaleDateString('en-US', {
 
 const title = `AI News — ${displayDate}`;
 const description = `${items.length} AI headlines from ${new Set(items.map(i => i.source)).size} outlets on ${displayDate}. Daily snapshot of what's happening in AI.`;
-const canonical = `${SITE_URL}/news/${date}/`;
 ---
 
 <!doctype html>
 <html lang="en">
 <head>
 	<BaseHead title={title} description={description} type="article" publishDate={new Date(date + 'T00:00:00Z')} />
-	<link rel="canonical" href={canonical} />
 </head>
 <body>
 <Header />

@@ -2,7 +2,6 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_URL } from '../../consts';
 
 interface NewsItem { title: string; link: string; date: string; source: string; }
 interface Snapshot { date: string; fetchedAt?: string; items: NewsItem[]; }
@@ -14,7 +13,6 @@ const entries = Object.entries(snapshots)
 
 const title = 'AI News Archive';
 const description = `Daily AI news snapshots — deduped headlines from VentureBeat, The Verge, TechCrunch, Ars Technica, Wired, MIT Tech Review, Hugging Face, and IEEE Spectrum. ${entries.length} days archived.`;
-const canonical = `${SITE_URL}/news/`;
 
 function prettyDate(iso: string) {
 	return new Date(iso + 'T00:00:00Z').toLocaleDateString('en-US', {
@@ -27,7 +25,6 @@ function prettyDate(iso: string) {
 <html lang="en">
 <head>
 	<BaseHead title={title} description={description} />
-	<link rel="canonical" href={canonical} />
 </head>
 <body>
 <Header />

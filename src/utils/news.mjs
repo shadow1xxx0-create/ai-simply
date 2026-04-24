@@ -2,6 +2,20 @@
  * @typedef {{ title: string, link: string, date: string, source: string }} NewsItem
  */
 
+const NAMED_ENTITIES = {
+	amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
+	hellip: '…', mdash: '—', ndash: '–', lsquo: '‘', rsquo: '’',
+	ldquo: '“', rdquo: '”',
+};
+
+/** Decode HTML entities (numeric + common named) found in RSS feed titles. */
+export function decodeEntities(s) {
+	return s
+		.replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+		.replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+		.replace(/&([a-zA-Z]+);/g, (m, n) => NAMED_ENTITIES[n] ?? m);
+}
+
 export const RSS_FEEDS = [
 	{ url: 'https://venturebeat.com/category/ai/feed/', source: 'VentureBeat' },
 	{ url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml', source: 'The Verge' },
@@ -79,7 +93,7 @@ export async function fetchNews() {
 				m[0].match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1] ??
 				m[0].match(/<published>([\s\S]*?)<\/published>/)?.[1] ??
 				m[0].match(/<updated>([\s\S]*?)<\/updated>/)?.[1] ?? '';
-			if (title && link) items.push({ title: title.trim(), link: link.trim(), date, source });
+			if (title && link) items.push({ title: decodeEntities(title.trim()), link: link.trim(), date, source });
 		}
 	}
 	items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

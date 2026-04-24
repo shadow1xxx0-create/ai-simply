@@ -67,7 +67,7 @@ const winner = scoreA > scoreB ? toolA : scoreB > scoreA ? toolB : null;
 <!doctype html>
 <html lang="en">
 <head>
-	<BaseHead title={`${seoTitle} | ${SITE_TITLE}`} description={seoDesc} />
+	<BaseHead title={`${seoTitle} | ${SITE_TITLE}`} description={seoDesc} noindex={true} />
 	<script type="application/ld+json" set:html={JSON.stringify({
 		"@context": "https://schema.org",
 		"@type": "BreadcrumbList",

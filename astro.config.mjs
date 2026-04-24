@@ -44,6 +44,14 @@ export default defineConfig({
 	integrations: [
 		mdx(),
 		sitemap({
+			filter: (page) => {
+				const pathname = new URL(page).pathname;
+				// Exclude noindex'd templated pages — they dilute crawl budget.
+				if (pathname.startsWith('/tools/alternatives/')) return false;
+				if (pathname.startsWith('/tools/vs/')) return false;
+				if (pathname.startsWith('/tools/tag/')) return false;
+				return true;
+			},
 			serialize(item) {
 				const pathname = new URL(item.url).pathname;
 				const lastmod = articleLastmod[pathname];
