@@ -45,8 +45,6 @@ const catsData = TOOL_CATEGORIES.map(c => ({ slug: c.slug, name: c.name, emoji: 
   </div>
 </main>
 <Footer />
-</body>
-</html>
 
 <script define:vars={{ toolsData, catsData }} data-astro-rerun>
 
@@ -598,7 +596,15 @@ function bindEvents() {
 
 /* ─── INIT ────────────────────────────────────────────────────── */
 
-document.addEventListener('DOMContentLoaded', () => {
+function initQuiz() {
+  const app = document.getElementById('quiz-app');
+  if (!app) return;
+  // If a previous mount left content (e.g. on SPA re-entry), clear and reset state.
+  app.innerHTML = '';
+  state.step = 0;
+  state.answers = {};
+  state.results = [];
+
   // Check for shared results in URL
   const params = new URLSearchParams(window.location.search);
   const shared = params.get('r');
@@ -608,28 +614,31 @@ document.addEventListener('DOMContentLoaded', () => {
     state.answers = decoded;
     state.results = scoreTools(decoded);
     state.step = 7;
-    const app = document.getElementById('quiz-app');
-    if (app) {
-      const screen = document.createElement('div');
-      screen.className = 'qz-screen qz-screen--active';
-      screen.innerHTML = renderResults(state.results, decoded);
-      app.appendChild(screen);
-      bindEvents();
-      setTimeout(() => {
-        document.querySelectorAll('.qz-match-bar').forEach(b => b.classList.add('animated'));
-      }, 200);
-    }
+    const screen = document.createElement('div');
+    screen.className = 'qz-screen qz-screen--active';
+    screen.innerHTML = renderResults(state.results, decoded);
+    app.appendChild(screen);
+    bindEvents();
+    setTimeout(() => {
+      document.querySelectorAll('.qz-match-bar').forEach(b => b.classList.add('animated'));
+    }, 200);
   } else {
-    const app = document.getElementById('quiz-app');
-    if (app) {
-      const screen = document.createElement('div');
-      screen.className = 'qz-screen qz-screen--active';
-      screen.innerHTML = renderIntro();
-      app.appendChild(screen);
-      bindEvents();
-    }
+    const screen = document.createElement('div');
+    screen.className = 'qz-screen qz-screen--active';
+    screen.innerHTML = renderIntro();
+    app.appendChild(screen);
+    bindEvents();
   }
-});
+}
+
+// Run now if the DOM is already parsed (true for body-placed scripts on initial
+// load, and true on Astro ClientRouter re-execution since DOMContentLoaded
+// already fired on the original page). Otherwise wait for it.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initQuiz);
+} else {
+  initQuiz();
+}
 
 </script>
 
@@ -1044,3 +1053,6 @@ document.addEventListener('DOMContentLoaded', () => {
   .qz-match-bar { transition: none; }
 }
 </style>
+
+</body>
+</html>
