@@ -477,10 +477,10 @@ function bindEvents() {
   const root = app.lastElementChild || app;
 
   // Favicon error fallback
-  root.querySelectorAll<HTMLImageElement>('.qz-favicon').forEach(img => {
+  root.querySelectorAll('.qz-favicon').forEach(img => {
     img.addEventListener('error', () => {
       img.style.display = 'none';
-      const fb = img.nextElementSibling as HTMLElement;
+      const fb = img.nextElementSibling;
       if (fb) fb.style.display = 'flex';
     }, { once: true });
   });
