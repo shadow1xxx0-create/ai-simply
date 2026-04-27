@@ -16,7 +16,9 @@ const toolsData = allTools.map(t => ({
   pricing: t.data.pricing,
   url: t.data.url,
   rating: t.data.rating ?? null,
+  ratingCount: t.data.ratingCount ?? null,
   featured: t.data.featured,
+  verified: t.data.verified,
   tags: t.data.tags,
 }));
 
@@ -86,8 +88,8 @@ const QUESTIONS = [
     question: "What's your budget?",
     subtitle: "We'll make sure every recommendation fits your spending comfort.",
     options: [
-      { id: 'free',     emoji: '🆓', label: 'Free tools only',            sub: 'No credit card, no subscriptions' },
-      { id: 'freemium', emoji: '💳', label: 'Free to start, pay if good', sub: 'Freemium — upgrade only if it\'s worth it' },
+      { id: 'free',     emoji: '🆓', label: 'Has a free tier',            sub: 'Free or freemium — start without paying' },
+      { id: 'freemium', emoji: '💳', label: 'Open to paying if it\'s worth it', sub: 'Mix of freemium and paid tools' },
       { id: 'any',      emoji: '🚀', label: 'Budget isn\'t the priority', sub: 'Show me the best, whatever the price' },
     ],
   },
@@ -150,8 +152,8 @@ const SCORES = {
 };
 
 const PRICING_FILTER = {
-  free:     ['free'],
-  freemium: ['free', 'freemium'],
+  free:     ['free', 'freemium'],
+  freemium: ['free', 'freemium', 'paid'],
   any:      ['free', 'freemium', 'paid'],
 };
 
@@ -183,22 +185,34 @@ function scoreTools(answers) {
     .filter(t => allowedPricing.includes(t.pricing))
     .map(t => {
       let score = catWeights[t.category] ?? 0;
-      // Bonuses
-      if (t.featured) score += 1;
-      if (t.rating)   score += (t.rating - 4.0) * 0.5; // boost high-rated
-      if (answers.budget === 'free' && t.pricing === 'free') score += 1.5;
-      if (answers.tech === 'dev' && (t.tags?.includes('api') || t.tags?.includes('sdk') || t.category === 'ai-coding')) score += 1;
+      // Quality / curation bonuses (these break ties between tools in the same category)
+      if (t.featured)                              score += 2;
+      if (t.verified)                              score += 0.5;
+      if (t.rating)                                score += (t.rating - 4.0) * 1.5;
+      if (t.ratingCount)                           score += Math.min(1.5, Math.log10(t.ratingCount + 1) * 0.4);
+      // Pricing preference bonus — within "has a free tier", prefer truly free over freemium
+      if (answers.budget === 'free' && t.pricing === 'free') score += 0.75;
+      // Tech-level bonuses
+      if (answers.tech === 'dev'  && (t.tags?.includes('api') || t.tags?.includes('sdk') || t.category === 'ai-coding')) score += 1;
       if (answers.tech === 'easy' && t.rating && t.rating >= 4.5) score += 0.5;
       return { ...t, score };
     })
     .filter(t => t.score > 0)
-    .sort((a, b) => b.score - a.score);
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      // Stable tiebreakers when scores are equal
+      if ((b.featured ? 1 : 0) !== (a.featured ? 1 : 0)) return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+      if ((b.rating ?? 0) !== (a.rating ?? 0))           return (b.rating ?? 0) - (a.rating ?? 0);
+      if ((b.ratingCount ?? 0) !== (a.ratingCount ?? 0)) return (b.ratingCount ?? 0) - (a.ratingCount ?? 0);
+      return a.name.localeCompare(b.name);
+    });
 
-  // Normalize match % — top tool = 98%, floor = 62%
+  // Match % derived from actual score relative to the top match (not rank position).
+  // Tied tools get the same %, which is honest. Floor at 62% so even weaker matches feel reasonable.
   const maxScore = scored[0]?.score ?? 1;
-  return scored.slice(0, 8).map((t, i) => ({
+  return scored.slice(0, 8).map(t => ({
     ...t,
-    matchPct: Math.round(Math.max(62, Math.min(98, 98 - i * (36 / Math.min(scored.length - 1, 7))))),
+    matchPct: Math.round(Math.max(62, Math.min(98, 62 + (t.score / maxScore) * 36))),
   }));
 }
 
