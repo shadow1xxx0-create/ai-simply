@@ -627,17 +627,17 @@ const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric',
 </style>
 
 <script data-astro-rerun>
-const favicon = document.getElementById('tool-hero-favicon') as HTMLImageElement;
+const favicon = document.getElementById('tool-hero-favicon');
 if (favicon) {
 	favicon.addEventListener('error', () => {
 		favicon.style.display = 'none';
-		const fb = document.getElementById('tool-hero-fallback') as HTMLElement;
+		const fb = document.getElementById('tool-hero-fallback');
 		if (fb) fb.style.display = 'flex';
 	}, { once: true });
 }
 
 // Track outbound visit clicks via GA4
-document.querySelectorAll<HTMLAnchorElement>('[data-track="visit"]').forEach(link => {
+document.querySelectorAll('[data-track="visit"]').forEach(link => {
 	link.addEventListener('click', () => {
 		if (typeof gtag === 'function') {
 			gtag('event', 'outbound_click', { url: link.href });

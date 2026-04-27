@@ -81,8 +81,8 @@ const quickLinks = [
 </html>
 
 <script data-astro-rerun>
-const input = document.getElementById('nf-search-input') as HTMLInputElement;
-const btn = document.getElementById('nf-search-btn')!;
+const input = document.getElementById('nf-search-input');
+const btn = document.getElementById('nf-search-btn');
 function doSearch() {
 	const q = input?.value.trim();
 	if (q) window.location.href = `/tools/?q=${encodeURIComponent(q)}`;

@@ -174,8 +174,8 @@ import { SITE_TITLE, TOOL_CATEGORIES } from '../consts';
 
 <script data-astro-rerun>
 // Character counter
-const textarea = document.getElementById('tool-description') as HTMLTextAreaElement;
-const counter = document.getElementById('char-count')!;
+const textarea = document.getElementById('tool-description');
+const counter = document.getElementById('char-count');
 textarea?.addEventListener('input', () => {
 	const len = textarea.value.length;
 	counter.textContent = `${len} / 160`;
@@ -183,15 +183,15 @@ textarea?.addEventListener('input', () => {
 });
 
 // Form submission
-const form = document.getElementById('submit-form') as HTMLFormElement;
-const btn = document.getElementById('submit-btn') as HTMLButtonElement;
-const success = document.getElementById('form-success')!;
-const errorEl = document.getElementById('form-error')!;
+const form = document.getElementById('submit-form');
+const btn = document.getElementById('submit-btn');
+const success = document.getElementById('form-success');
+const errorEl = document.getElementById('form-error');
 
 form?.addEventListener('submit', async (e) => {
 	e.preventDefault();
 	// Basic URL validation
-	const urlInput = document.getElementById('tool-url') as HTMLInputElement;
+	const urlInput = document.getElementById('tool-url');
 	try { new URL(urlInput.value); } catch {
 		urlInput.setCustomValidity('Please enter a valid URL including https://');
 		urlInput.reportValidity();

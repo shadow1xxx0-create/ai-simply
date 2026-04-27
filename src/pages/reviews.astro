@@ -180,13 +180,13 @@ function renderStars(score: number) {
 </html>
 
 <script data-astro-rerun>
-const grid = document.getElementById('reviews-grid')!;
-const label = document.getElementById('results-label')!;
-const noResults = document.getElementById('no-results')!;
-const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+const grid = document.getElementById('reviews-grid');
+const label = document.getElementById('results-label');
+const noResults = document.getElementById('no-results');
+const sortSelect = document.getElementById('sort-select');
 
-function renderGrid(cat: string, sort: string) {
-	const cards = Array.from(grid.querySelectorAll<HTMLElement>('.review-card'));
+function renderGrid(cat, sort) {
+	const cards = Array.from(grid.querySelectorAll('.review-card'));
 	let visible = 0;
 	cards.forEach(c => {
 		const match = !cat || c.dataset.cat === cat;
@@ -202,7 +202,7 @@ function renderGrid(cat: string, sort: string) {
 		if (sort === 'name-asc') return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
 		if (sort === 'free-first') {
 			const order = { free: 0, freemium: 1, paid: 2 };
-			return (order[a.dataset.pricing as keyof typeof order] ?? 3) - (order[b.dataset.pricing as keyof typeof order] ?? 3);
+			return (order[a.dataset.pricing] ?? 3) - (order[b.dataset.pricing] ?? 3);
 		}
 		return 0;
 	});
@@ -213,8 +213,8 @@ function renderGrid(cat: string, sort: string) {
 }
 
 // Category chips
-document.getElementById('cat-filters')!.addEventListener('click', e => {
-	const chip = (e.target as HTMLElement).closest<HTMLElement>('.filter-chip');
+document.getElementById('cat-filters').addEventListener('click', e => {
+	const chip = e.target.closest('.filter-chip');
 	if (!chip) return;
 	document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
 	chip.classList.add('active');
@@ -222,7 +222,7 @@ document.getElementById('cat-filters')!.addEventListener('click', e => {
 });
 
 sortSelect.addEventListener('change', () => {
-	const activeCat = (document.querySelector('.filter-chip.active') as HTMLElement)?.dataset.cat ?? '';
+	const activeCat = document.querySelector('.filter-chip.active')?.dataset.cat ?? '';
 	renderGrid(activeCat, sortSelect.value);
 });
 </script>
@@ -389,10 +389,10 @@ sortSelect.addEventListener('change', () => {
 </style>
 
 <script data-astro-rerun>
-document.querySelectorAll<HTMLImageElement>('.js-favicon').forEach(img => {
+document.querySelectorAll('.js-favicon').forEach(img => {
 	img.addEventListener('error', () => {
 		img.style.display = 'none';
-		const fb = img.nextElementSibling as HTMLElement;
+		const fb = img.nextElementSibling;
 		if (fb) fb.style.display = 'flex';
 	}, { once: true });
 });

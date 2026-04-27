@@ -353,9 +353,9 @@ const carouselPosts = allPosts.slice(0, 3);
 	// Carousel
 	let current = 0;
 	let paused = false;
-	const slides = document.querySelectorAll<HTMLElement>('.carousel-slide');
-	const dots = document.querySelectorAll<HTMLElement>('.carousel-dot');
-	function goTo(n: number) {
+	const slides = document.querySelectorAll('.carousel-slide');
+	const dots = document.querySelectorAll('.carousel-dot');
+	function goTo(n) {
 		slides[current].classList.remove('active');
 		dots[current].classList.remove('active');
 		current = (n + slides.length) % slides.length;
@@ -378,7 +378,7 @@ const carouselPosts = allPosts.slice(0, 3);
 	document.addEventListener('visibilitychange', () => { if (document.hidden) clearInterval(autoplay); });
 	window.addEventListener('beforeunload', () => clearInterval(autoplay));
 
-	const input = document.getElementById('global-search') as HTMLInputElement;
+	const input = document.getElementById('global-search');
 	if (input) {
 		input.addEventListener('keydown', (e) => {
 			if (e.key === 'Enter') {

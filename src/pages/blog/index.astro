@@ -105,10 +105,10 @@ const categories = [
 </html>
 
 <script data-astro-rerun>
-const tabs = document.querySelectorAll<HTMLButtonElement>('.cat-tab');
-const posts = document.querySelectorAll<HTMLElement>('.post-item');
-const label = document.getElementById('results-label')!;
-const noResults = document.getElementById('no-results')!;
+const tabs = document.querySelectorAll('.cat-tab');
+const posts = document.querySelectorAll('.post-item');
+const label = document.getElementById('results-label');
+const noResults = document.getElementById('no-results');
 
 tabs.forEach(tab => {
 	tab.addEventListener('click', () => {

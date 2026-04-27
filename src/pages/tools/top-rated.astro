@@ -157,10 +157,10 @@ function stars(score: number) {
 </style>
 
 <script data-astro-rerun>
-document.querySelectorAll<HTMLImageElement>('.js-favicon').forEach(img => {
+document.querySelectorAll('.js-favicon').forEach(img => {
 	img.addEventListener('error', () => {
 		img.style.display = 'none';
-		const fb = img.nextElementSibling as HTMLElement;
+		const fb = img.nextElementSibling;
 		if (fb) fb.style.display = 'flex';
 	}, { once: true });
 });

@@ -214,10 +214,10 @@ const seoDesc = `Discover the best ${subName.toLowerCase()} tools in ${year}. Co
 	const grid = document.getElementById('tools-grid');
 	const label = document.getElementById('results-label');
 	const noResults = document.getElementById('no-results');
-	const searchInput = document.getElementById('sub-search') as HTMLInputElement | null;
+	const searchInput = document.getElementById('sub-search');
 
 	if (grid && label && noResults) {
-		const cards = Array.from(grid.querySelectorAll<HTMLElement>('.tool-card'));
+		const cards = Array.from(grid.querySelectorAll('.tool-card'));
 
 		function filter() {
 			let count = 0;
@@ -234,7 +234,7 @@ const seoDesc = `Discover the best ${subName.toLowerCase()} tools in ${year}. Co
 			noResults.style.display = count === 0 ? '' : 'none';
 		}
 
-		document.querySelectorAll<HTMLElement>('.price-btn').forEach(btn => {
+		document.querySelectorAll('.price-btn').forEach(btn => {
 			btn.addEventListener('click', () => {
 				document.querySelectorAll('.price-btn').forEach(b => b.classList.remove('active'));
 				btn.classList.add('active');

@@ -62,10 +62,10 @@ const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}
 </article>
 
 <script data-astro-rerun>
-document.querySelectorAll<HTMLImageElement>('.tool-card__favicon').forEach(img => {
+document.querySelectorAll('.tool-card__favicon').forEach(img => {
 	img.addEventListener('error', () => {
 		img.style.display = 'none';
-		const fb = img.nextElementSibling as HTMLElement;
+		const fb = img.nextElementSibling;
 		if (fb) fb.style.display = 'flex';
 	}, { once: true });
 });

@@ -95,15 +95,15 @@ import { SITE_TITLE } from '../consts';
 </html>
 
 <script data-astro-rerun>
-const form = document.getElementById('contact-form') as HTMLFormElement;
-const btn = document.getElementById('submit-btn') as HTMLButtonElement;
-const success = document.getElementById('form-success')!;
-const error = document.getElementById('form-error')!;
+const form = document.getElementById('contact-form');
+const btn = document.getElementById('submit-btn');
+const success = document.getElementById('form-success');
+const error = document.getElementById('form-error');
 
 const params = new URLSearchParams(location.search);
 const pre = params.get('subject');
 if (pre) {
-	const select = document.getElementById('subject') as HTMLSelectElement;
+	const select = document.getElementById('subject');
 	const match = Array.from(select.options).find(
 		o => o.value.toLowerCase() === pre.toLowerCase()
 	);

@@ -158,11 +158,11 @@ const paid = tools.filter(t => t.data.pricing === 'paid').length;
 	let activePrice = 'all';
 	let searchQ = '';
 
-	const grid = document.getElementById('tools-grid')!;
-	const cards = Array.from(grid.querySelectorAll<HTMLElement>('.tool-card'));
-	const label = document.getElementById('results-label')!;
-	const noResults = document.getElementById('no-results')!;
-	const searchInput = document.getElementById('cat-search') as HTMLInputElement;
+	const grid = document.getElementById('tools-grid');
+	const cards = Array.from(grid.querySelectorAll('.tool-card'));
+	const label = document.getElementById('results-label');
+	const noResults = document.getElementById('no-results');
+	const searchInput = document.getElementById('cat-search');
 
 	function filter() {
 		let count = 0;
@@ -183,7 +183,7 @@ const paid = tools.filter(t => t.data.pricing === 'paid').length;
 
 	// Subcategory chips are now <a> links — no JS needed for them.
 
-	document.querySelectorAll<HTMLElement>('.price-btn').forEach(btn => {
+	document.querySelectorAll('.price-btn').forEach(btn => {
 		btn.addEventListener('click', () => {
 			document.querySelectorAll('.price-btn').forEach(b => b.classList.remove('active'));
 			btn.classList.add('active');
