@@ -28,7 +28,7 @@ const searchIndex = [
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <header class="site-header" role="banner">
-	<nav class="site-nav container" aria-label="Main navigation">
+	<nav class="site-nav" aria-label="Main navigation">
 		<a href="/" class="site-logo" aria-label={`${SITE_TITLE} - Home`}>
 			<span class="site-logo__icon" aria-hidden="true">&#129302;</span>
 			<span class="site-logo__text">{SITE_TITLE}</span>
@@ -41,13 +41,17 @@ const searchIndex = [
 		</button>
 
 		<ul class="nav-links">
-			<li><a href="/" class:list={[{ active: pathname === '/' }]}>Home</a></li>
+			<li>
+				<a href="/" class:list={[{ active: pathname === '/' }]}>
+					<span class="nav-icon" aria-hidden="true">🏠</span>
+					<span class="nav-label">Home</span>
+				</a>
+			</li>
 
-			<!-- AI Tools with dropdown -->
 			<li class="nav-dropdown">
 				<a href="/tools/" class:list={[{ active: pathname.startsWith('/tools') }]}>
-					AI Tools
-					<svg class="dropdown-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+					<span class="nav-icon" aria-hidden="true">🛠️</span>
+					<span class="nav-label">AI Tools<svg class="dropdown-caret" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg></span>
 				</a>
 				<div class="dropdown-menu">
 					<div class="dropdown-grid">
@@ -69,24 +73,53 @@ const searchIndex = [
 				</div>
 			</li>
 
-			<li><a href="/reviews/" class:list={[{ active: pathname.startsWith('/reviews') }]}>Reviews</a></li>
-			<li><a href="/tutorials/" class:list={[{ active: pathname.startsWith('/tutorials') }]}>Tutorials</a></li>
-			<li><a href="/blog/" class:list={[{ active: pathname.startsWith('/blog') }]}>Articles</a></li>
-			<li><a href="/news/" class:list={[{ active: pathname.startsWith('/news') }]}>News</a></li>
-			<li><a href="/pricing/" class:list={[{ active: pathname === '/pricing/' }]}>Pricing</a></li>
-			<li><a href="/proxy/" class:list={[{ active: pathname === '/proxy/' }]}>Proxy</a></li>
 			<li>
-			<button class="nav-theme-btn" id="nav-theme-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
-				<svg class="theme-icon-light" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-				<svg class="theme-icon-dark" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
-			</button>
-		</li>
-		<li>
-			<button class="nav-search-btn" id="nav-search-btn" aria-label="Search tools">
-				<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-			</button>
-		</li>
-		<li><a href="/submit/" class="btn btn--primary btn--sm">Submit a Tool</a></li>
+				<a href="/reviews/" class:list={[{ active: pathname.startsWith('/reviews') }]}>
+					<span class="nav-icon" aria-hidden="true">⭐</span>
+					<span class="nav-label">Reviews</span>
+				</a>
+			</li>
+			<li>
+				<a href="/tutorials/" class:list={[{ active: pathname.startsWith('/tutorials') }]}>
+					<span class="nav-icon" aria-hidden="true">🎓</span>
+					<span class="nav-label">Tutorials</span>
+				</a>
+			</li>
+			<li>
+				<a href="/blog/" class:list={[{ active: pathname.startsWith('/blog') }]}>
+					<span class="nav-icon" aria-hidden="true">📝</span>
+					<span class="nav-label">Articles</span>
+				</a>
+			</li>
+			<li>
+				<a href="/news/" class:list={[{ active: pathname.startsWith('/news') }]}>
+					<span class="nav-icon" aria-hidden="true">📰</span>
+					<span class="nav-label">News</span>
+				</a>
+			</li>
+			<li>
+				<a href="/pricing/" class:list={[{ active: pathname === '/pricing/' }]}>
+					<span class="nav-icon" aria-hidden="true">💲</span>
+					<span class="nav-label">Pricing</span>
+				</a>
+			</li>
+			<li>
+				<a href="/proxy/" class:list={[{ active: pathname === '/proxy/' }]}>
+					<span class="nav-icon" aria-hidden="true">🌐</span>
+					<span class="nav-label">Proxy</span>
+				</a>
+			</li>
+
+			<li>
+				<button class="nav-search-btn" id="nav-search-btn" aria-label="Search">
+					<span class="nav-icon" aria-hidden="true">🔍</span>
+					<span class="nav-label">Search</span>
+				</button>
+			</li>
+
+			<li class="nav-submit-item">
+				<a href="/submit/" class="nav-submit-btn">Submit a Tool</a>
+			</li>
 		</ul>
 	</nav>
 </header>
@@ -114,14 +147,6 @@ const searchIndex = [
 		</div>
 	</div>
 </div>
-
-<script is:inline>
-// Apply theme immediately to prevent flash — dark by default
-(function() {
-	const saved = localStorage.getItem('theme');
-	document.documentElement.setAttribute('data-theme', saved || 'dark');
-})();
-</script>
 
 <script define:vars={{ searchIndex }}>
 	window.__searchIndex = searchIndex;
@@ -196,7 +221,7 @@ const searchIndex = [
 		if (e.key === 'Escape') closeSearch();
 	});
 
-	// Nav toggle
+	// Mobile drawer toggle
 	const toggle = document.querySelector('.nav-toggle');
 	const nav = document.querySelector('.nav-links');
 	if (toggle && nav) {
@@ -214,16 +239,6 @@ const searchIndex = [
 		document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
 		nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNav));
 	}
-
-	// Theme toggle
-	const themeBtn = document.getElementById('nav-theme-btn');
-	themeBtn?.addEventListener('click', () => {
-		const html = document.documentElement;
-		const current = html.getAttribute('data-theme') || 'dark';
-		const next = current === 'dark' ? 'light' : 'dark';
-		html.setAttribute('data-theme', next);
-		localStorage.setItem('theme', next);
-	});
 </script>
 
 <style>
@@ -237,6 +252,11 @@ const searchIndex = [
 	}
 	.skip-link:focus { top: 0; }
 
+	/* ============================================================
+	   MOBILE FIRST (< 768px)
+	   Compact top bar with hamburger; nav opens as a left drawer.
+	   ============================================================ */
+
 	.site-header {
 		background: var(--bg);
 		border-bottom: 1px solid var(--border);
@@ -249,14 +269,15 @@ const searchIndex = [
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: 64px;
+		height: 56px;
+		padding: 0 1rem;
 	}
 
 	.site-logo {
 		display: flex;
 		align-items: center;
-		gap: 0.4rem;
-		font-size: 1.25rem;
+		gap: 0.5rem;
+		font-size: 1.1rem;
 		font-weight: 700;
 		color: rgb(var(--black));
 	}
@@ -265,13 +286,14 @@ const searchIndex = [
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 36px;
-		height: 36px;
+		width: 32px;
+		height: 32px;
 		background: var(--accent);
 		color: #fff;
 		border-radius: 50%;
-		font-size: 1.1rem;
+		font-size: 1rem;
 	}
+	.site-logo__text { font-size: 1rem; }
 
 	.nav-toggle {
 		display: flex;
@@ -283,141 +305,279 @@ const searchIndex = [
 		padding: 8px;
 		cursor: pointer;
 	}
-	.nav-toggle__bar { display: block; width: 20px; height: 2px; background: rgb(var(--gray-dark)); border-radius: 2px; }
+	.nav-toggle__bar {
+		display: block;
+		width: 20px;
+		height: 2px;
+		background: rgb(var(--gray-dark));
+		border-radius: 2px;
+	}
 
-	.nav-links { display: none; list-style: none; padding: 0; margin: 0; }
+	.nav-links {
+		display: none;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
 
+	/* Mobile drawer */
 	.nav-links--open {
 		display: flex;
 		flex-direction: column;
-		position: absolute;
-		top: 64px;
+		gap: 4px;
+		position: fixed;
+		top: 56px;
 		left: 0;
-		right: 0;
-		background: var(--bg);
-		border-bottom: 1px solid var(--border);
-		padding: 0.5rem 1.25rem 1rem;
-		box-shadow: var(--shadow-lg);
+		bottom: 0;
+		width: 240px;
+		background: var(--bg-alt);
+		border-right: 1px solid var(--border);
+		padding: 1rem 0.75rem;
+		box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+		overflow-y: auto;
 	}
-
-	.nav-links a {
+	.nav-links--open a,
+	.nav-links--open .nav-search-btn {
 		display: flex;
+		flex-direction: row;
 		align-items: center;
-		gap: 0.3rem;
-		padding: 0.6rem 0.75rem;
+		justify-content: flex-start;
+		gap: 0.85rem;
+		padding: 0.65rem 0.85rem;
 		color: rgb(var(--gray-dark));
 		font-weight: 500;
-		border-radius: var(--radius);
+		font-size: 0.95rem;
+		border-radius: 8px;
+		text-align: left;
+		width: 100%;
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-family: inherit;
 	}
-	.nav-links a:hover, .nav-links a.active { color: var(--primary); background: var(--primary-light); }
-
-	/* Dropdown */
-	.nav-dropdown { position: relative; }
-
-	.dropdown-caret { transition: transform 0.2s; flex-shrink: 0; }
-	.nav-dropdown:hover .dropdown-caret { transform: rotate(180deg); }
-
-	.dropdown-menu {
-		display: none;
-		position: absolute;
-		top: calc(100% + 8px);
-		left: 50%;
-		transform: translateX(-50%);
-		width: 580px;
-		background: var(--bg);
-		border: 1px solid var(--border);
-		border-radius: 12px;
-		box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-		z-index: 300;
-		overflow: hidden;
+	.nav-links--open a:hover,
+	.nav-links--open a.active,
+	.nav-links--open .nav-search-btn:hover {
+		color: var(--primary);
+		background: var(--primary-light);
 	}
-
-	.nav-dropdown:hover .dropdown-menu { display: block; }
-
-	.dropdown-grid {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 2px;
-		padding: 0.75rem;
-	}
-
-	.dropdown-item {
-		display: flex;
+	.nav-links--open .nav-icon { font-size: 1.15rem; line-height: 1; }
+	.nav-links--open .nav-label {
+		font-size: 0.95rem;
+		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
-		padding: 0.5rem 0.65rem;
+	}
+	.nav-links--open .nav-submit-item { margin-top: 0.5rem; }
+	.nav-links--open .nav-submit-btn {
+		display: block;
+		text-align: center;
+		background: var(--primary);
+		color: #fff;
+		padding: 0.65rem 1rem;
 		border-radius: 8px;
-		font-size: 0.82rem;
-		font-weight: 500;
-		color: rgb(var(--gray-dark));
-		background: none !important;
-	}
-	.dropdown-item:hover { background: var(--primary-light) !important; color: var(--primary); }
-	.dropdown-item__emoji { font-size: 1rem; flex-shrink: 0; }
-
-	.dropdown-footer {
-		border-top: 1px solid var(--border);
-		padding: 0.65rem 1.25rem;
-		background: var(--bg-alt);
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-	}
-	.dropdown-footer a {
-		font-size: 0.82rem;
 		font-weight: 700;
-		color: var(--primary);
-		background: none !important;
-		padding: 0;
 	}
-	.dropdown-footer a:hover { background: none !important; color: var(--primary-dark); }
-	.dropdown-footer-links { display: flex; gap: 1rem; }
-	.dropdown-footer-links a { font-weight: 500; color: rgb(var(--gray-dark)); font-size: 0.8rem; }
-	.dropdown-footer-links a:hover { color: var(--primary) !important; background: none !important; }
-	.dropdown-footer-quiz {
-		font-size: 0.82rem !important;
-		font-weight: 700 !important;
-		color: #fff !important;
-		background: var(--primary) !important;
-		padding: 0.3rem 0.85rem !important;
-		border-radius: 99px !important;
-	}
-	.dropdown-footer-quiz:hover { background: var(--primary-dark) !important; color: #fff !important; }
+	.nav-links--open .nav-submit-btn:hover { background: var(--primary-dark); color: #fff; }
 
-	.btn--sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
+	/* ============================================================
+	   DESKTOP (>= 768px)
+	   Fixed left vertical sidebar, icons + labels, near-top, auto-height.
+	   ============================================================ */
+	@media (min-width: 768px) {
+		.site-header {
+			background: transparent;
+			border: none;
+			position: fixed;
+			top: 24px;
+			left: 16px;
+			right: auto;
+			bottom: auto;
+			z-index: 200;
+		}
 
-	/* Search button in nav */
-	.nav-search-btn {
-		display: flex; align-items: center; justify-content: center;
-		width: 36px; height: 36px;
-		background: none; border: 1px solid var(--border);
-		border-radius: var(--radius); cursor: pointer;
-		color: rgb(var(--gray-dark));
-		transition: all 0.15s;
-	}
-	.nav-search-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+		.site-nav {
+			flex-direction: column;
+			align-items: stretch;
+			justify-content: flex-start;
+			width: 144px;
+			height: auto;
+			padding: 14px 8px;
+			gap: 4px;
+			background: var(--surface-1);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+		}
 
-	/* Theme toggle */
-	.nav-theme-btn {
-		display: flex; align-items: center; justify-content: center;
-		width: 36px; height: 36px;
-		background: none; border: 1px solid var(--border);
-		border-radius: var(--radius); cursor: pointer;
-		color: rgb(var(--gray-dark));
-		transition: all 0.15s;
-	}
-	.nav-theme-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
-	.theme-icon-dark { display: none; }
-	[data-theme="dark"] .theme-icon-light { display: none; }
-	[data-theme="dark"] .theme-icon-dark { display: block; }
-	@media (prefers-color-scheme: dark) {
-		:root:not([data-theme="light"]) .theme-icon-light { display: none; }
-		:root:not([data-theme="light"]) .theme-icon-dark { display: block; }
+		.nav-toggle { display: none; }
+
+		.site-logo {
+			flex-direction: column;
+			gap: 4px;
+			padding: 6px 4px 12px;
+			border-bottom: 1px solid var(--border);
+			margin-bottom: 6px;
+			text-align: center;
+			font-size: 0.78rem;
+		}
+		.site-logo__icon { width: 36px; height: 36px; font-size: 1.1rem; }
+		.site-logo__text {
+			font-size: 0.78rem;
+			letter-spacing: 0.02em;
+			line-height: 1.1;
+		}
+
+		.nav-links {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			width: 100%;
+		}
+		.nav-links li { width: 100%; }
+
+		.nav-links a,
+		.nav-links .nav-search-btn {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 4px;
+			padding: 10px 4px;
+			color: rgb(var(--gray-dark));
+			font-weight: 500;
+			border-radius: 10px;
+			text-align: center;
+			width: 100%;
+			background: none;
+			border: none;
+			cursor: pointer;
+			font-family: inherit;
+			transition: background 0.15s, color 0.15s;
+		}
+		.nav-links a:hover,
+		.nav-links a.active,
+		.nav-links .nav-search-btn:hover {
+			color: var(--primary);
+			background: var(--primary-light);
+		}
+		.nav-icon { font-size: 1.3rem; line-height: 1; }
+		.nav-label {
+			font-size: 0.7rem;
+			letter-spacing: 0.01em;
+			display: inline-flex;
+			align-items: center;
+			gap: 3px;
+		}
+
+		.nav-submit-item { margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--border); }
+		.nav-submit-btn {
+			display: block;
+			text-align: center;
+			background: var(--primary);
+			color: #fff !important;
+			padding: 0.55rem 0.5rem;
+			border-radius: 10px;
+			font-weight: 700;
+			font-size: 0.75rem;
+			line-height: 1.2;
+			transition: background 0.15s;
+		}
+		.nav-submit-btn:hover { background: var(--primary-dark); color: #fff !important; }
+
+		/* Caret rotates -90deg so it points right (toward the flyout) */
+		.dropdown-caret { transform: rotate(-90deg); transition: transform 0.2s; flex-shrink: 0; }
+		.nav-dropdown:hover .dropdown-caret { transform: rotate(0deg); }
+
+		/* AI Tools dropdown flies out to the right */
+		.nav-dropdown { position: relative; }
+		.dropdown-menu {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: calc(100% + 12px);
+			width: 580px;
+			background: var(--bg-alt);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+			z-index: 300;
+			overflow: hidden;
+		}
+		/* Invisible bridge so cursor can cross the gap without losing hover */
+		.dropdown-menu::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -12px;
+			width: 12px;
+			height: 100%;
+		}
+		.nav-dropdown:hover .dropdown-menu,
+		.nav-dropdown:focus-within .dropdown-menu { display: block; }
+
+		.dropdown-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 4px;
+			padding: 0.75rem;
+		}
+		.dropdown-item {
+			display: flex;
+			flex-direction: row !important;
+			align-items: center !important;
+			gap: 0.55rem;
+			padding: 0.55rem 0.7rem;
+			border-radius: 8px;
+			font-size: 0.85rem;
+			font-weight: 500;
+			color: rgb(var(--gray-dark));
+			background: none;
+		}
+		.dropdown-item:hover { background: var(--primary-light); color: var(--primary); }
+		.dropdown-item__emoji { font-size: 1rem; flex-shrink: 0; }
+
+		.dropdown-footer {
+			border-top: 1px solid var(--border);
+			padding: 0.65rem 1rem;
+			background: var(--surface-1);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 0.75rem;
+			flex-wrap: wrap;
+		}
+		.dropdown-footer-links { display: flex; gap: 1rem; }
+		.dropdown-footer-links a {
+			font-size: 0.8rem;
+			font-weight: 500;
+			color: rgb(var(--gray-dark));
+			padding: 0;
+			background: none;
+			flex-direction: row !important;
+		}
+		.dropdown-footer-links a:hover { color: var(--primary); background: none; }
+		.dropdown-footer-quiz {
+			font-size: 0.8rem;
+			font-weight: 700;
+			color: #fff !important;
+			background: var(--primary);
+			padding: 0.35rem 0.85rem;
+			border-radius: 99px;
+			flex-direction: row !important;
+		}
+		.dropdown-footer-quiz:hover { background: var(--primary-dark); color: #fff !important; }
 	}
 
-	/* Search overlay */
+	/* On mobile keep dropdown menu hidden — categories are reachable via /tools/ */
+	@media (max-width: 767px) {
+		.dropdown-menu { display: none !important; }
+		.dropdown-caret { display: none; }
+	}
+
+	/* ============================================================
+	   Search overlay (shared)
+	   ============================================================ */
 	.search-overlay {
 		position: fixed; inset: 0;
 		background: rgba(0,0,0,0.55);
@@ -432,8 +592,9 @@ const searchIndex = [
 	.search-modal {
 		width: 100%; max-width: 580px;
 		background: var(--bg);
+		border: 1px solid var(--border);
 		border-radius: 14px;
-		box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+		box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 		overflow: hidden;
 		margin: 0 1rem;
 	}
@@ -468,7 +629,6 @@ const searchIndex = [
 	}
 	.search-modal__hints a:hover { background: var(--primary); color: #fff; }
 
-	/* Instant search results */
 	.search-results { max-height: 360px; overflow-y: auto; }
 	.search-results[hidden] { display: none; }
 	.sr-item {
@@ -483,15 +643,4 @@ const searchIndex = [
 	.sr-name { font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 	.sr-meta { font-size: 0.75rem; color: rgb(var(--gray)); }
 	.sr-empty { padding: 1.5rem 1.25rem; text-align: center; font-size: 0.9rem; color: rgb(var(--gray)); }
-
-	@media (min-width: 768px) {
-		.nav-toggle { display: none; }
-		.nav-links { display: flex; align-items: center; gap: 0.25rem; }
-		.nav-links--open { position: static; flex-direction: row; border: none; padding: 0; box-shadow: none; }
-	}
-
-	@media (max-width: 767px) {
-		.dropdown-menu { display: none !important; }
-		.dropdown-caret { display: none; }
-	}
 </style>

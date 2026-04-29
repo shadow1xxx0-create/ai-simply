@@ -34,37 +34,6 @@
 	color-scheme: dark;
 }
 
-:root[data-theme="light"] {
-	--primary: #00875A;
-	--primary-dark: #006644;
-	--primary-light: #E0F5EE;
-	--primary-rgb: 0, 135, 90;
-	--secondary: #6b7280;
-	--secondary-light: #f3f4f6;
-	--black: 18, 18, 18;
-	--gray: 107, 114, 128;
-	--gray-light: 230, 250, 245;
-	--gray-dark: 35, 35, 40;
-	--bg: #fafafa;
-	--bg-alt: #f4f4f4;
-	--surface-1: #ffffff;
-	--surface-2: #f9f9f9;
-	--border: #e2e2e2;
-	--accent: #00875A;
-	--shadow: 0 1px 4px rgba(0,200,150,0.06);
-	--shadow-lg: 0 4px 16px rgba(0,200,150,0.12);
-	--accent-glow: 0 0 0 1px rgba(0,135,90,0.2), 0 10px 30px rgba(0,135,90,0.15);
-	--grad-hero: radial-gradient(1200px 600px at 15% -10%, rgba(0,135,90,0.12), transparent 60%), radial-gradient(900px 500px at 85% 10%, rgba(59,130,246,0.08), transparent 60%);
-	--grad-card: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0));
-	--badge-free-bg: #E0F5EE;
-	--badge-free-fg: #00875A;
-	--badge-freemium-bg: #EEF3FF;
-	--badge-freemium-fg: #3B5BDB;
-	--badge-paid-bg: #FFF4E6;
-	--badge-paid-fg: #E67700;
-	color-scheme: light;
-}
-
 @font-face {
 	font-family: "Atkinson";
 	src: url("/fonts/atkinson-regular.woff") format("woff");
@@ -112,6 +81,12 @@ body {
 	-webkit-font-smoothing: antialiased;
 	overflow-x: hidden;
 	width: 100%;
+}
+
+/* Reserve space on the left for the fixed vertical sidebar (desktop only).
+   Sidebar is 144px wide + 16px left + ~16px breathing room. */
+@media (min-width: 768px) {
+	body { padding-left: 176px; }
 }
 
 a {
