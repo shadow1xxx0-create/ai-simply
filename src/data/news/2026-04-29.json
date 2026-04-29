@@ -1,0 +1,192 @@
+{
+  "date": "2026-04-29",
+  "fetchedAt": "2026-04-29T09:07:06.954Z",
+  "items": [
+    {
+      "title": "How AI Could Help Combat Antibiotic Resistance",
+      "link": "https://www.wired.com/story/wired-health-2026-tackling-antimicrobial-resistance-ara-darzi/",
+      "date": "Wed, 29 Apr 2026 09:00:00 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "It’s time to make a plan for nuclear waste",
+      "link": "https://www.technologyreview.com/2026/04/29/1136659/plan-nuclear-waste/",
+      "date": "Wed, 29 Apr 2026 08:00:00 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "At his OpenAI trial, Musk relitigates an old friendship",
+      "link": "https://techcrunch.com/2026/04/28/at-his-openai-trial-musk-relitigates-an-old-friendship/",
+      "date": "Wed, 29 Apr 2026 00:40:16 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "OpenAI Really Wants Codex to Shut Up About Goblins",
+      "link": "https://www.wired.com/story/openai-really-wants-codex-to-shut-up-about-goblins/",
+      "date": "Tue, 28 Apr 2026 23:45:05 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "Elon Musk appeared more petty than prepared",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/920191/elon-musk-sam-altman-trial-day-one",
+      "date": "2026-04-28T19:17:12-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "Elon Musk Testifies That He Started OpenAI to Prevent a ‘Terminator Outcome’",
+      "link": "https://www.wired.com/story/model-behavior-elon-musk-testifies-at-musk-v-altman-trial/",
+      "date": "Tue, 28 Apr 2026 21:35:17 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "Elon Musk tells the jury that all he wants to do is save humanity",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/920048/elon-musk-testimony-save-humanity",
+      "date": "2026-04-28T16:46:54-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "Taylor Swift is stepping up the legal war on AI copycats",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/919827/taylor-swift-trademarks-ai-copycats",
+      "date": "2026-04-28T16:30:00-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "Amazon is already offering new OpenAI products on AWS",
+      "link": "https://techcrunch.com/2026/04/28/amazon-is-already-offering-new-openai-products-on-aws/",
+      "date": "Tue, 28 Apr 2026 19:48:02 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Live updates from Elon Musk and Sam Altman’s court battle over the future of OpenAI",
+      "link": "https://www.theverge.com/tech/917225/sam-altman-elon-musk-openai-lawsuit",
+      "date": "2026-04-28T15:27:50-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "Amazon launches an AI-powered audio Q&A experience on product pages",
+      "link": "https://techcrunch.com/2026/04/28/amazon-launches-an-ai-powered-audio-qa-experience-on-product-pages/",
+      "date": "Tue, 28 Apr 2026 18:49:54 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "‘It’s Undignified’: Hundreds of Workers Training Meta’s AI Could Be Laid Off",
+      "link": "https://www.wired.com/story/meta-covalen-ai-workers-layoffs/",
+      "date": "Tue, 28 Apr 2026 18:36:47 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "Google expands Pentagon’s access to its AI after Anthropic’s refusal",
+      "link": "https://techcrunch.com/2026/04/28/google-expands-pentagons-access-to-its-ai-after-anthropics-refusal/",
+      "date": "Tue, 28 Apr 2026 18:15:00 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Better Hardware Could Turn Zeros into AI Heroes",
+      "link": "https://spectrum.ieee.org/sparse-ai",
+      "date": "Tue, 28 Apr 2026 18:03:40 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "Humanoid robots start sorting luggage in Tokyo airport test amid labor shortage",
+      "link": "https://arstechnica.com/ai/2026/04/japan-airlines-tests-having-robots-instead-of-humans-handle-travelers-luggage/",
+      "date": "Tue, 28 Apr 2026 18:01:36 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "Introducing NVIDIA Nemotron 3 Nano Omni: Long-Context Multimodal Intelligence for Documents, Audio and Video Agents",
+      "link": "https://huggingface.co/blog/nvidia/nemotron-3-nano-omni-multimodal-intelligence",
+      "date": "Tue, 28 Apr 2026 15:58:57 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "GitHub will start charging Copilot users based on their actual AI usage",
+      "link": "https://arstechnica.com/ai/2026/04/github-will-start-charging-copilot-users-based-on-their-actual-ai-usage/",
+      "date": "Tue, 28 Apr 2026 15:41:32 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "The great American data center divide",
+      "link": "https://arstechnica.com/ai/2026/04/rural-america-is-resisting-the-surge-in-data-center-construction/",
+      "date": "Tue, 28 Apr 2026 14:15:11 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "“Entanglement: A Brief History of Human Connection”",
+      "link": "https://spectrum.ieee.org/entanglement-poem",
+      "date": "Tue, 28 Apr 2026 14:00:01 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "The Download: Musk and Altman’s legal showdown, and AI’s profit problem",
+      "link": "https://www.technologyreview.com/2026/04/28/1136479/the-download-musk-altman-openai-trial-ai-profit-problem/",
+      "date": "Tue, 28 Apr 2026 12:10:00 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "Musk and Altman face off in trial that will determine OpenAI's future",
+      "link": "https://arstechnica.com/tech-policy/2026/04/musk-and-altman-face-off-in-trial-that-will-determine-openais-future/",
+      "date": "Mon, 27 Apr 2026 20:45:18 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "The missing step between hype and profit",
+      "link": "https://www.technologyreview.com/2026/04/27/1136456/the-missing-step-between-hype-and-profit/",
+      "date": "Mon, 27 Apr 2026 16:13:41 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "Claude Mythos Preview Requires New Ways to Keep Code Secure",
+      "link": "https://spectrum.ieee.org/anthropic-claude-mythos-preview-code",
+      "date": "Mon, 27 Apr 2026 15:18:34 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "Engineering Collisions: How NYU Is Remaking Health Research",
+      "link": "https://spectrum.ieee.org/nyu-health-research",
+      "date": "Mon, 27 Apr 2026 12:45:01 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "How to build scalable web apps with OpenAI's Privacy Filter",
+      "link": "https://huggingface.co/blog/openai-privacy-filter-web-apps",
+      "date": "Mon, 27 Apr 2026 00:00:00 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "DeepSeek-V4: a million-token context that agents can actually use",
+      "link": "https://huggingface.co/blog/deepseekv4",
+      "date": "Fri, 24 Apr 2026 00:00:00 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "How to Use Transformers.js in a Chrome Extension",
+      "link": "https://huggingface.co/blog/transformersjs-chrome-extension",
+      "date": "Thu, 23 Apr 2026 00:00:00 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
+      "link": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+      "date": "Thu, 22 Jan 2026 14:00:00 GMT",
+      "source": "VentureBeat"
+    },
+    {
+      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "link": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+      "date": "Mon, 19 Jan 2026 14:00:00 GMT",
+      "source": "VentureBeat"
+    },
+    {
+      "title": "Listen Labs raises $69M after viral billboard hiring stunt to scale AI customer interviews",
+      "link": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
+      "date": "Fri, 16 Jan 2026 14:01:00 GMT",
+      "source": "VentureBeat"
+    },
+    {
+      "title": "Salesforce rolls out new Slackbot AI agent as it battles Microsoft and Google in workplace AI",
+      "link": "https://venturebeat.com/technology/salesforce-rolls-out-new-slackbot-ai-agent-as-it-battles-microsoft-and",
+      "date": "Tue, 13 Jan 2026 13:00:00 GMT",
+      "source": "VentureBeat"
+    }
+  ]
+}
