@@ -70,7 +70,7 @@ Vibe coding didn't appear from nowhere. Two things had to be true simultaneously
 
 **First: AI coding tools got good enough.**
 
-The [large language models](/blog/what-is-a-large-language-model-llm-explained) powering tools like Cursor, Claude, and GPT-4 are now capable of writing production-quality code across dozens of languages and frameworks. Earlier AI coding tools were glorified autocomplete. Modern ones can hold the entire architecture of your app in context, understand what you're trying to build, and generate hundreds of lines of coherent, working code from a single prompt.
+The [large language models](/blog/what-is-a-large-language-model-llm-explained) powering tools like Cursor, Claude, and GPT-4 are now capable of writing production-quality code across dozens of languages and frameworks. Earlier AI coding tools were glorified autocomplete. Modern ones — especially [reasoning models](/blog/what-is-an-ai-reasoning-model-explained) that work through problems step by step — can hold the entire architecture of your app in context, understand what you're trying to build, and generate hundreds of lines of coherent, working code from a single prompt.
 
 **Second: The interface caught up.**
 

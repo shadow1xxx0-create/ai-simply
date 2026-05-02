@@ -151,7 +151,7 @@ SWE-bench is a benchmark of real GitHub issues: actual bugs from real software p
 | **o1** | **48.9%** | First reasoning model |
 | **o3** | **71.7%** | Current benchmark leader |
 
-Fixing 71% of real GitHub bugs, autonomously, without being told how. That's why [AI agents](/blog/what-is-an-ai-agent-explained-simply) built on reasoning models are increasingly being deployed in software development.
+Fixing 71% of real GitHub bugs, autonomously, without being told how. That's why [AI agents](/blog/what-is-an-ai-agent-explained-simply) built on reasoning models are increasingly being deployed in software development — and why [vibe coding](/blog/what-is-vibe-coding-explained) (building entire apps from plain-English prompts) actually works in 2026.
 
 ### Where Reasoning Models Still Struggle
 
@@ -242,7 +242,7 @@ For most users, the defaults are fine. But knowing the lever exists helps you un
 
 ## What It Means for You
 
-If you use ChatGPT, Claude, or Gemini regularly, reasoning models are already available to you, often for free or at standard subscription tiers.
+If you use [ChatGPT or Claude](/blog/chatgpt-vs-claude-for-beginners) (or Gemini) regularly, reasoning models are already available to you, often for free or at standard subscription tiers.
 
 **In ChatGPT:** You can switch to o3 or o4-mini in the model selector. For math homework, debugging Python, or any problem where you'd otherwise re-prompt multiple times, switching to o3 often gets you there in one shot.
 

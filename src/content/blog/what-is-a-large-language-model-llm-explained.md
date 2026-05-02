@@ -228,7 +228,7 @@ LLMs are the engine behind an enormous range of products and tasks.
 
 **Writing and editing:** drafting emails, articles, marketing copy, legal documents, code comments. The single most common use case, used by **57% of knowledge workers** for productivity tasks.
 
-**Code generation:** tools like GitHub Copilot (used by over 1.8 million developers) use LLMs to suggest code in real time. LLMs trained on code repositories can write, debug, and explain code across dozens of programming languages.
+**Code generation:** tools like GitHub Copilot (used by over 1.8 million developers) use LLMs to suggest code in real time. LLMs trained on code repositories can write, debug, and explain code across dozens of programming languages — and have made [vibe coding](/blog/what-is-vibe-coding-explained) (building apps in plain English) accessible to non-developers.
 
 **Research and summarization:** feeding in long documents and getting structured summaries. **51.7% of knowledge workers** use LLMs for research tasks.
 
@@ -271,7 +271,7 @@ Understanding what LLMs can't do is just as important as knowing what they can.
 
 **Bias:** LLMs learn from human-generated text. Human text contains biases. Those biases are absorbed and reproduced, sometimes subtly, sometimes not.
 
-**Can't truly reason:** LLMs are excellent at *appearing* to reason. Newer models with chain-of-thought capabilities (like OpenAI's o-series and Claude's extended thinking) have improved dramatically. But there's an ongoing debate about whether this is genuine logical reasoning or extremely sophisticated pattern matching.
+**Can't truly reason:** LLMs are excellent at *appearing* to reason. Newer models with chain-of-thought capabilities — known as [AI reasoning models](/blog/what-is-an-ai-reasoning-model-explained) like OpenAI's o-series and Claude's extended thinking — have improved dramatically. But there's an ongoing debate about whether this is genuine logical reasoning or extremely sophisticated pattern matching.
 
 **Size vs. efficiency tradeoff:** Bigger models are generally more capable but slower and more expensive. The Mixture of Experts approach (used in Llama 4 and GPT-4) tries to get the best of both by only activating part of the model at a time.
 
@@ -296,7 +296,7 @@ No. LLMs are one type of AI.
 
 **AI** is a broad field covering any system that performs tasks that normally require human intelligence — from chess engines to spam filters to recommendation algorithms.
 
-**Machine learning** is a subset of AI where systems learn from data rather than being explicitly programmed.
+**[Machine learning](/blog/what-is-machine-learning-explained)** is a subset of AI where systems learn from data rather than being explicitly programmed.
 
 **Deep learning** is a subset of machine learning using neural networks with many layers.
 

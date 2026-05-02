@@ -116,7 +116,7 @@ Dia also has a feature called **Skills** — reusable AI workflows for repetitiv
 
 Neon is Opera's premium subscription browser aimed at people who want AI agents to do real work. Three features stand out:
 
-- **Make** — describe something you want built (a website, a game, a report) and AI agents produce it
+- **Make** — describe something you want built (a website, a game, a report) and AI agents produce it, in the same [vibe coding](/blog/what-is-vibe-coding-explained) style as Lovable or Bolt
 - **Neon Do** — an agent that opens tabs, closes others, and performs actions across them in a coordinated way
 - **ODRA** — a deep research agent that gathers and synthesizes info on complex topics in under a minute, with sources
 

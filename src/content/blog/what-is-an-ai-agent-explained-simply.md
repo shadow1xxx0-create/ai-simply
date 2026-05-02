@@ -125,7 +125,7 @@ Being realistic: agents are genuinely useful for some things and still unreliabl
 
 **Writing first drafts at scale**: Agents can produce 50 personalized outreach emails faster than a human can write one.
 
-**Code**: Agent systems like Devin and GitHub Copilot Workspace can write, test, and debug code for well-defined tasks.
+**Code**: Agent systems like Devin and GitHub Copilot Workspace can write, test, and debug code for well-defined tasks. [Vibe coding](/blog/what-is-vibe-coding-explained/) tools take this further — letting non-developers describe an app in plain English and have an agent build it.
 
 ### Where Agents Still Struggle
 
@@ -150,6 +150,8 @@ The more useful framing: which tasks in your job could you hand off to a well-br
 ## The Terminology You'll Hear (Quickly Explained)
 
 **Multi-agent systems**: Multiple AI agents working together, each specialized in one thing. One agent researches, another writes, another edits. Like a team of specialists.
+
+**[Agentic browsers](/blog/what-is-an-ai-browser-explained/)**: Web browsers like ChatGPT Atlas, Perplexity Comet, and Opera Neon that bake an agent directly into the browser — so it can read pages, fill forms, and complete multi-step tasks across websites for you.
 
 **Autonomous agent**: An agent that runs for a long time with minimal human check-ins. More capable but more risky.
 

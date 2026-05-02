@@ -157,7 +157,7 @@ Neither is better objectively — it depends on what you find useful. Many peopl
 - Are doing a lot of writing (articles, emails, reports)
 - Need to work with long documents
 - Want an AI that gives direct, opinionated responses rather than hedge-everything answers
-- Are asking complex, nuanced questions where depth of reasoning matters
+- Are asking complex, nuanced questions where depth of [reasoning](/blog/what-is-an-ai-reasoning-model-explained/) matters
 - Find ChatGPT's personality a bit too peppy or over-cautious
 
 ### Honestly? Try Both
