@@ -1,0 +1,210 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { SITE_TITLE, SITE_URL, DEFAULT_AUTHOR } from '../../consts';
+
+export async function getStaticPaths() {
+	return [
+		{ params: { slug: DEFAULT_AUTHOR.slug }, props: { author: DEFAULT_AUTHOR } },
+	];
+}
+
+const { author } = Astro.props;
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const authorPosts = allPosts.filter(p => (p.data.author ?? DEFAULT_AUTHOR.name) === author.name);
+const initials = author.name.split(' ').map(p => p[0]).join('').slice(0, 2).toUpperCase();
+
+const personSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: author.name,
+	jobTitle: author.role,
+	description: author.bio,
+	url: `${SITE_URL}/author/${author.slug}/`,
+	image: `${SITE_URL}${author.avatar}`,
+	sameAs: [
+		`https://twitter.com/${author.twitter}`,
+		author.linkedin,
+	].filter(Boolean),
+	worksFor: {
+		'@type': 'Organization',
+		name: SITE_TITLE,
+		url: SITE_URL,
+	},
+};
+
+const breadcrumbSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+		{ '@type': 'ListItem', position: 2, name: 'Authors', item: `${SITE_URL}/author/` },
+		{ '@type': 'ListItem', position: 3, name: author.name, item: `${SITE_URL}/author/${author.slug}/` },
+	],
+};
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title={`${author.name} — ${author.role} at ${SITE_TITLE}`}
+		description={author.bio}
+		type="website"
+	/>
+	<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</head>
+<body>
+	<Header />
+	<main id="main-content">
+		<section class="author-hero">
+			<div class="container">
+				<nav class="breadcrumbs" aria-label="Breadcrumb">
+					<a href="/">Home</a>
+					<span aria-hidden="true">/</span>
+					<span>{author.name}</span>
+				</nav>
+				<div class="author-hero__inner" itemscope itemtype="https://schema.org/Person">
+					<img src={author.avatar} alt={author.name} width="96" height="96" class="author-hero__avatar" itemprop="image" />
+					<div>
+						<h1 itemprop="name">{author.name}</h1>
+						<p class="author-hero__role" itemprop="jobTitle">{author.role} · {SITE_TITLE}</p>
+						<p class="author-hero__bio" itemprop="description">{author.bio}</p>
+						<div class="author-hero__social">
+							{author.twitter && (
+								<a href={`https://twitter.com/${author.twitter}`} target="_blank" rel="noopener me" itemprop="sameAs">@{author.twitter}</a>
+							)}
+							{author.linkedin && (
+								<a href={author.linkedin} target="_blank" rel="noopener me" itemprop="sameAs">LinkedIn</a>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="author-posts container">
+			<h2>Articles by {author.name} ({authorPosts.length})</h2>
+			<ul class="author-posts__list">
+				{authorPosts.map(post => (
+					<li>
+						<a href={`/blog/${post.id}/`}>
+							<h3>{post.data.title}</h3>
+							<p>{post.data.description}</p>
+							<time datetime={post.data.pubDate.toISOString()}>
+								{post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: 'numeric' })}
+							</time>
+						</a>
+					</li>
+				))}
+			</ul>
+		</section>
+
+		<Newsletter />
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.author-hero {
+		padding: 3rem 0 2rem;
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
+	}
+	.breadcrumbs {
+		font-size: 0.85rem;
+		color: rgb(var(--gray));
+		margin-bottom: 1rem;
+	}
+	.breadcrumbs a { color: rgb(var(--gray)); text-decoration: none; }
+	.breadcrumbs a:hover { color: var(--primary); }
+	.breadcrumbs span { margin: 0 0.35rem; }
+
+	.author-hero__inner {
+		display: flex;
+		gap: 1.5rem;
+		align-items: flex-start;
+		max-width: 800px;
+	}
+	.author-hero__avatar {
+		flex-shrink: 0;
+		width: 96px; height: 96px;
+		border-radius: 50%;
+		display: block;
+	}
+	.author-hero h1 {
+		font-size: 2rem;
+		margin: 0 0 0.25rem;
+	}
+	.author-hero__role {
+		color: rgb(var(--gray));
+		font-size: 0.95rem;
+		margin-bottom: 1rem;
+	}
+	.author-hero__bio {
+		font-size: 1rem;
+		line-height: 1.65;
+		margin-bottom: 1rem;
+	}
+	.author-hero__social {
+		display: flex;
+		gap: 1rem;
+		font-size: 0.9rem;
+	}
+	.author-hero__social a {
+		color: var(--primary);
+		text-decoration: none;
+		font-weight: 600;
+	}
+	.author-hero__social a:hover { text-decoration: underline; }
+
+	.author-posts {
+		max-width: 800px;
+		padding: 2.5rem 0 3rem;
+	}
+	.author-posts h2 {
+		font-size: 1.4rem;
+		margin-bottom: 1.5rem;
+	}
+	.author-posts__list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.author-posts__list a {
+		display: block;
+		padding: 1.1rem 1.25rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		text-decoration: none;
+		color: inherit;
+		transition: border-color 0.15s;
+	}
+	.author-posts__list a:hover {
+		border-color: var(--primary);
+	}
+	.author-posts__list h3 {
+		font-size: 1.05rem;
+		margin: 0 0 0.35rem;
+		color: rgb(var(--black));
+	}
+	.author-posts__list p {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+		margin: 0 0 0.5rem;
+	}
+	.author-posts__list time {
+		font-size: 0.8rem;
+		color: rgb(var(--gray));
+	}
+</style>

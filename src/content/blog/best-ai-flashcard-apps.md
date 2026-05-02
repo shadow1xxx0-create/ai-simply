@@ -24,6 +24,12 @@ Here are the three best apps.
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Algorithm | Pricing |
@@ -35,6 +41,8 @@ Here are the three best apps.
 ---
 
 ## 1. Anki — Best for Serious Learners
+
+<img src="/tools/anki-ai.jpg" alt="Anki interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free on desktop and Android · $24.99 iOS one-time
 
@@ -54,6 +62,8 @@ Add-ons extend it significantly — image occlusion for anatomy diagrams, LaTeX 
 
 ## 2. Quizlet — Best for Ease of Use
 
+<img src="/tools/quizlet-ai.jpg" alt="Quizlet interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free · Quizlet Plus $7.99/mo
 
 Quizlet is the most accessible flashcard app — clean design, instant setup, and 500+ million community study sets covering every subject imaginable. Find a set for your exact textbook chapter, your specific professor's terminology, or any standardized exam.
@@ -71,6 +81,8 @@ Multiple study modes — flashcards, learn, write, spell, test, match — keep r
 ---
 
 ## 3. Brainscape — Best for Exam Preparation
+
+<img src="/tools/brainscape.jpg" alt="Brainscape interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free · Pro $9.99/mo
 

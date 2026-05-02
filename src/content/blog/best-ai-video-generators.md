@@ -26,6 +26,12 @@ Here's how the leading tools compare.
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Max Length | Pricing |
@@ -38,6 +44,8 @@ Here's how the leading tools compare.
 ---
 
 ## 1. Runway — Best for Cinematic Quality
+
+<img src="/tools/runway.jpg" alt="Runway interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (125 credits) · Standard $15/mo · Pro $35/mo · Unlimited $95/mo
 
@@ -55,6 +63,8 @@ Beyond generation, Runway has a full suite of video editing AI tools: background
 
 ## 2. Kling AI — Best for Realism and Length
 
+<img src="/tools/kling-ai.jpg" alt="Kling AI interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free (66 credits/mo) · Standard $10/mo · Pro $35/mo
 
 Kling AI, built by Kuaishou (China's second-largest video platform), produces some of the most photorealistic AI video available. Faces are more consistent across frames, physics are more believable, and it supports clips up to 3 minutes long — far beyond most competitors.
@@ -69,6 +79,8 @@ The "Camera Control" feature lets you specify exact camera movements using profe
 
 ## 3. Luma Dream Machine — Best Free Option
 
+<img src="/tools/luma-dream-machine.jpg" alt="Luma Dream Machine interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free (30 generations/mo) · Plus $29.99/mo · Pro $99.99/mo
 
 Luma's Dream Machine is the most impressive free AI video generator. The free tier gives you 30 generations per month — enough to experiment seriously. Quality rivals Runway on cinematic scenes, with particularly strong handling of light and reflections.
@@ -82,6 +94,8 @@ The image-to-video mode is excellent: upload a photo and Dream Machine animates 
 ---
 
 ## 4. InVideo AI — Best for Full Videos
+
+<img src="/tools/invideo-ai.jpg" alt="InVideo AI interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (with watermark) · Plus $25/mo · Max $60/mo
 

@@ -22,6 +22,12 @@ Building a good presentation from scratch takes hours. AI presentation tools cut
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Pricing | Export |
@@ -32,6 +38,8 @@ Building a good presentation from scratch takes hours. AI presentation tools cut
 ---
 
 ## 1. Gamma — Best for Speed
+
+<img src="/tools/gamma-ai.jpg" alt="Gamma interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (400 credits) · Plus $8/mo · Pro $15/mo
 
@@ -50,6 +58,8 @@ The AI chat interface lets you refine after generation — "make this slide shor
 ---
 
 ## 2. Beautiful.ai — Best for Teams
+
+<img src="/tools/beautiful-ai.jpg" alt="Beautiful.ai interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Pro $12/mo · Team $40/user/mo
 

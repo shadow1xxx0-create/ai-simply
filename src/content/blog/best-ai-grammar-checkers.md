@@ -26,6 +26,12 @@ Here are the top three, ranked.
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Pricing | Languages |
@@ -37,6 +43,8 @@ Here are the top three, ranked.
 ---
 
 ## 1. Grammarly — Best All-Round
+
+<img src="/tools/grammarly.jpg" alt="Grammarly interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free · Premium $12/mo (annual) · Business $15/user/mo
 
@@ -56,6 +64,8 @@ GrammarlyGO (the generative AI layer) lets you prompt for rewrites, replies, and
 
 ## 2. LanguageTool — Best for Multilingual Writers
 
+<img src="/tools/languagetool.jpg" alt="LanguageTool interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free · Premium €4.99/mo (annual) · Team plans available
 
 LanguageTool is the best choice if you write in any language other than English. It supports 30+ languages including German, French, Spanish, Portuguese, Dutch, Polish, and more — with genuine grammar awareness, not just spell-check.
@@ -71,6 +81,8 @@ Being open-source means it can be self-hosted by enterprises with data privacy r
 ---
 
 ## 3. ProWritingAid — Best for Long-Form Writing
+
+<img src="/tools/prowritingaid.jpg" alt="ProWritingAid interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (500 words at a time) · Premium $30/mo · Lifetime $399
 

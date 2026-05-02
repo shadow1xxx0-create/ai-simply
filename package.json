@@ -6,7 +6,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "fetch-og": "node scripts/fetch-og-images.mjs",
+    "inject-shots": "node scripts/inject-screenshots.mjs",
+    "check-links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -14,5 +17,8 @@
     "@astrojs/sitemap": "^3.7.0",
     "astro": "^5.17.1",
     "sharp": "^0.34.3"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
   }
 }

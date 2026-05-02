@@ -24,6 +24,12 @@ Here's how the leading tools compare.
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Pricing | Templates |
@@ -36,6 +42,8 @@ Here's how the leading tools compare.
 ---
 
 ## 1. Jasper — Best for Marketing Teams
+
+<img src="/tools/jasper.jpg" alt="Jasper interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Creator $49/mo · Pro $69/mo · Business custom
 
@@ -53,6 +61,8 @@ Jasper Campaigns lets you generate an entire marketing campaign from a brief —
 
 ## 2. Rytr — Best Budget Option
 
+<img src="/tools/rytr.jpg" alt="Rytr interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free (10,000 chars/mo) · Unlimited $9/mo
 
 Rytr is the most affordable AI writing assistant that's still genuinely useful. At $9/mo for unlimited generation, it undercuts every competitor significantly. It covers 40+ use cases (blog sections, email subject lines, product descriptions, social posts) across 30+ languages.
@@ -67,6 +77,8 @@ Quality is solid for short-form content. It won't match Jasper's brand sophistic
 
 ## 3. Copy.ai — Best for Sales Copy
 
+<img src="/tools/copy-ai.jpg" alt="Copy.ai interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free (2,000 words/mo) · Starter $49/mo · Advanced $249/mo
 
 Copy.ai has evolved from a simple copy generator into a sales and marketing automation platform. Its "Workflows" feature lets you build automated pipelines — pull a lead's LinkedIn profile, generate a personalized cold email, then push it to your CRM. For sales teams, it's closer to a workflow automation tool than a writing assistant.
@@ -80,6 +92,8 @@ The 90+ templates cover every sales and marketing format: cold emails, LinkedIn 
 ---
 
 ## 4. Writesonic — Best for SEO Articles
+
+<img src="/tools/writesonic.jpg" alt="Writesonic interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (10,000 words/mo) · Individual $20/mo · Teams $30/user/mo
 

@@ -1,7 +1,17 @@
 export const SITE_TITLE = 'AI Briefs';
-export const SITE_DESCRIPTION = 'Discover the best AI tools. Browse 500+ AI tools across 22 categories — free, freemium, and paid.';
+export const SITE_DESCRIPTION = 'Discover the best AI tools. Browse 200+ AI tools across 21 categories — free, freemium, and paid.';
 export const SITE_URL = 'https://getaibriefs.com';
 export const SITE_AUTHOR = 'AI Briefs';
+
+export const DEFAULT_AUTHOR = {
+	name: 'Jordan Reeves',
+	slug: 'jordan-reeves',
+	role: 'Founding Editor',
+	bio: 'Jordan Reeves is the founding editor of AI Briefs. He has spent the last six years writing about software, machine learning, and consumer tech — testing tools hands-on so readers do not have to. Previously a product manager at two ML startups.',
+	avatar: '/authors/jordan-reeves.svg',
+	twitter: 'getaibriefs',
+	linkedin: 'https://www.linkedin.com/company/getaibriefs',
+};
 export const BEEHIIV_FORM_URL = 'https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9';
 
 export const TOOL_OF_THE_WEEK = { slug: 'chatgpt', label: 'Tool of the Week' };

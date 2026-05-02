@@ -13,6 +13,10 @@ const blog = defineCollection({
 			category: z.enum(['ai-explained', 'future-of-work', 'how-ai-works', 'ai-news', 'comparisons', 'guides']).default('guides'),
 			tags: z.array(z.string()).default([]),
 			readingTime: z.string().optional(),
+			author: z.string().default('Jordan Reeves'),
+			authorBio: z.string().optional(),
+			authorTwitter: z.string().optional(),
+			authorAvatar: z.string().optional(),
 			faqs: z.array(z.object({
 				question: z.string(),
 				answer: z.string(),

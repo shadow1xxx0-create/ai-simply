@@ -26,6 +26,12 @@ In 2026 the tools are genuinely good. The question is which one fits your workfl
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Pricing | Free Tier |
@@ -75,6 +81,8 @@ The AI analysis features go beyond summaries: sentiment tracking, talk-time anal
 
 ## 3. Otter AI — Best for Live Transcription
 
+<img src="/tools/otter-ai.jpg" alt="Otter AI interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free (300 min/mo) · Pro $16.99/mo · Business $30/user/mo
 
 Otter AI's strength is live, real-time transcription. As people speak, words appear on screen instantly — useful for accessibility, for people who think better reading along, and for catching things you missed in the moment.
@@ -92,6 +100,8 @@ Otter has been around longer than most competitors and has the most mature mobil
 ---
 
 ## 4. Mem.ai — Best for Connected Notes
+
+<img src="/tools/mem-ai.jpg" alt="Mem.ai interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Freemium · Mem Pro $14.99/mo
 

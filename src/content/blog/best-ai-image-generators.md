@@ -28,6 +28,12 @@ We tested 10 of the most popular AI image generators and ranked them. Here's wha
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Pricing | Image Quality |
@@ -47,6 +53,8 @@ We tested 10 of the most popular AI image generators and ranked them. Here's wha
 
 ## 1. Midjourney — Best for Artistic Quality
 
+<img src="/tools/midjourney.jpg" alt="Midjourney interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** $10/mo (Basic) · $30/mo (Standard) · $60/mo (Pro)
 
 Midjourney is still the benchmark for pure image quality. When you want something that looks stunning — editorial photography, fantasy art, architectural visualization, fashion — nothing touches it consistently.
@@ -65,6 +73,8 @@ Version 6.1 introduced significantly better text rendering, more accurate anatom
 
 ## 2. DALL-E 3 — Best for Following Complex Prompts
 
+<img src="/tools/dall-e-3.jpg" alt="DALL-E 3 interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free with ChatGPT (limited) · ChatGPT Plus $20/mo for higher limits
 
 DALL-E 3's superpower is prompt adherence. Ask it for "a red ceramic mug on a wooden table with morning light coming from the left" and that's exactly what you get. Other generators interpret prompts loosely; DALL-E 3 treats them as instructions.
@@ -80,6 +90,8 @@ Image quality is excellent across the board, particularly for illustrations and 
 ---
 
 ## 3. Flux AI — Best for Photorealism
+
+<img src="/tools/flux-ai.jpg" alt="Flux AI interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free tier available · Pro from $0.055/image via API
 
@@ -97,6 +109,8 @@ The three model tiers (Schnell, Dev, Pro) let you balance speed vs. quality. Sch
 
 ## 4. Adobe Firefly — Best for Commercial-Safe Images
 
+<img src="/tools/adobe-firefly.jpg" alt="Adobe Firefly interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** 25 free credits/mo · Firefly Premium from $4.99/mo · Included in Creative Cloud
 
 Adobe Firefly is the only major AI image generator trained exclusively on licensed and public domain content. That means every image you generate is legally cleared for commercial use — no copyright uncertainty.
@@ -113,6 +127,8 @@ The tight Creative Cloud integration is a killer feature for existing Adobe user
 
 ## 5. Leonardo.ai — Best Free Tier + Game Assets
 
+<img src="/tools/leonardo-ai.jpg" alt="Leonardo.ai interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free (150 tokens/day) · Apprentice $10/mo · Artisan $24/mo
 
 Leonardo.ai punches well above its price. The free tier gives you 150 tokens daily — enough for serious work. It has a massive library of fine-tuned models, making it particularly strong for game art, character design, and stylized illustration.
@@ -126,6 +142,8 @@ The platform is polished, with a proper web interface, image-to-image tools, inp
 ---
 
 ## 6. Stable Diffusion — Best Open-Source Option
+
+<img src="/tools/stable-diffusion.jpg" alt="Stable Diffusion interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (self-hosted) · DreamStudio credits from $10
 
@@ -141,6 +159,8 @@ ComfyUI and Automatic1111 are the most popular interfaces, offering granular con
 
 ## 7. Ideogram — Best for Text in Images
 
+<img src="/tools/ideogram-image.jpg" alt="Ideogram interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free (10 images/day) · Basic $8/mo · Plus $20/mo
 
 Adding readable text to AI-generated images has been notoriously hard — until Ideogram. It was purpose-built to handle typography and consistently produces images with legible text, logos, signs, and labels embedded in the scene.
@@ -155,6 +175,8 @@ In 2026, other generators have improved their text handling (especially DALL-E 3
 
 ## 8. Bing Image Creator — Best Free Option
 
+<img src="/tools/bing-image-creator.jpg" alt="Bing Image Creator interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free with a Microsoft account
 
 Bing Image Creator runs on DALL-E 3 and is completely free. You get "boosted" credits for fast generation, and unlimited slower generations after that. For casual use, it's hard to beat.
@@ -167,6 +189,8 @@ The interface is basic, there's limited control over style or parameters, and th
 
 ## 9. GetImg.ai — Best for Bulk and API Generation
 
+<img src="/tools/getimg-ai.jpg" alt="GetImg.ai interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free (100 images/mo) · Basic $12/mo
 
 GetImg.ai supports 60+ AI models in one platform — Stable Diffusion variants, SDXL, Flux, and more. It's strong for bulk generation and API integration, making it popular with developers and teams who need to automate image creation at scale.
@@ -176,6 +200,8 @@ GetImg.ai supports 60+ AI models in one platform — Stable Diffusion variants, 
 ---
 
 ## 10. Canva AI Image Generator — Best for Non-Designers
+
+<img src="/tools/canva-ai-image.jpg" alt="Canva AI Image Generator interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free · Canva Pro $15/mo
 

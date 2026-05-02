@@ -26,6 +26,12 @@ The tools have diverged significantly. Some are IDE extensions, some are full ed
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Type | Best For | Pricing |
@@ -38,6 +44,8 @@ The tools have diverged significantly. Some are IDE extensions, some are full ed
 ---
 
 ## 1. Cursor — Best Overall
+
+<img src="/tools/cursor.jpg" alt="Cursor interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (2 weeks Pro trial) · Pro $20/mo · Business $40/user/mo
 
@@ -57,6 +65,8 @@ For developers building complex projects, Cursor is genuinely a step ahead of ex
 
 ## 2. GitHub Copilot — Best for the GitHub Ecosystem
 
+<img src="/tools/github-copilot.jpg" alt="GitHub Copilot interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free (limited) · Pro $10/mo · Business $19/user/mo · Enterprise $39/user/mo
 
 Copilot is the most widely used AI code assistant in the world. It works across every major IDE — VS Code, JetBrains, Neovim, Visual Studio — and has the deepest GitHub integration: it understands your repo's issues, pull requests, and commit history.
@@ -73,6 +83,8 @@ The Enterprise tier adds fine-tuning on your private codebase — Copilot learns
 
 ## 3. Codeium — Best Free Option
 
+<img src="/tools/codeium.jpg" alt="Codeium interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free forever · Teams $12/user/mo · Enterprise custom
 
 Codeium is the strongest free AI code assistant available. No usage caps, no token limits — just free autocomplete, chat, and search across 70+ programming languages in 70+ IDEs. The quality is genuinely competitive with Copilot's autocompletion.
@@ -86,6 +98,8 @@ The free tier includes the Codeium Chat, which lets you ask questions about your
 ---
 
 ## 4. Tabnine — Best for Privacy and Enterprise
+
+<img src="/tools/tabnine.jpg" alt="Tabnine interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free · Pro $12/mo · Enterprise custom
 

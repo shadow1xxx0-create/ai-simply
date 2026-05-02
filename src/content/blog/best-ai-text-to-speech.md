@@ -24,6 +24,12 @@ Here's how the top tools compare.
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Voices | Pricing |
@@ -37,6 +43,8 @@ Here's how the top tools compare.
 ---
 
 ## 1. ElevenLabs — Best Overall Voice Quality
+
+<img src="/tools/elevenlabs.jpg" alt="ElevenLabs interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (10k chars/mo) · Starter $5/mo · Creator $22/mo · Pro $99/mo
 
@@ -54,6 +62,8 @@ The Projects feature lets you produce audiobooks and long-form narration with au
 
 ## 2. Murf — Best for Professional Voiceover
 
+<img src="/tools/murf.jpg" alt="Murf interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free trial · Basic $29/mo · Pro $39/mo · Enterprise custom
 
 Murf is purpose-built for professional voiceover production. The studio interface lets you paste a script, assign voices to different speakers, adjust pacing and pitch, sync to video, and export — all in the browser.
@@ -67,6 +77,8 @@ The 120+ voices are carefully curated for professional quality rather than sheer
 ---
 
 ## 3. Play.ht — Best for Voice Cloning
+
+<img src="/tools/play-ht.jpg" alt="Play.ht interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (limited) · Creator $31.20/mo · Unlimited $49/mo
 
@@ -82,6 +94,8 @@ The API is developer-friendly and latency is low enough for real-time applicatio
 
 ## 4. Speechify — Best for Personal Listening
 
+<img src="/tools/speechify.jpg" alt="Speechify interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free · Premium $139/year
 
 Speechify takes a different angle — it's designed for consumption, not production. It reads any text aloud to you: web pages, PDFs, Google Docs, emails, ebooks. At speeds up to 4.5x normal, speed-readers use it to consume information faster.
@@ -95,6 +109,8 @@ For people with dyslexia, ADHD, or visual impairments, Speechify is transformati
 ---
 
 ## 5. LOVO AI — Best for Video Narration
+
+<img src="/tools/lovo-ai.jpg" alt="LOVO AI interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free (limited) · Basic $24/mo · Pro $48/mo
 

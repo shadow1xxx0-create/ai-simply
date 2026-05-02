@@ -26,6 +26,12 @@ Here's how the leading AI chatbots stack up.
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Free Tier | Paid |
@@ -42,6 +48,8 @@ Here's how the leading AI chatbots stack up.
 
 ## 1. ChatGPT — Most Versatile
 
+<img src="/tools/chatgpt.jpg" alt="ChatGPT interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free · Plus $20/mo · Team $30/user/mo · Enterprise custom
 
 ChatGPT is still the Swiss Army knife of AI assistants. It codes, writes, analyzes data, generates images (DALL-E 3), browses the web, runs Python, processes files, and connects to hundreds of third-party tools via plugins. No other AI has a comparable breadth of capabilities in one interface.
@@ -57,6 +65,8 @@ GPT-4o handles text, images, and audio natively. The Advanced Voice Mode lets yo
 ---
 
 ## 2. Claude — Best for Writing and Reasoning
+
+<img src="/tools/claude.jpg" alt="Claude interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free · Pro $20/mo · Team $30/user/mo
 
@@ -76,6 +86,8 @@ Claude's Constitutional AI training makes it more willing to engage with complex
 
 ## 3. Gemini — Best for Google Users
 
+<img src="/tools/gemini.jpg" alt="Gemini interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free · Advanced $20/mo (Google One AI Premium)
 
 Gemini is Google's answer to ChatGPT and it's genuinely strong, particularly for multimodal tasks — analyzing images, documents, and video. The integration with Google Workspace is its killer feature: it works inside Gmail, Docs, Sheets, and Meet natively.
@@ -90,6 +102,8 @@ Gemini 1.5 Pro has a 1 million token context window — the largest of any major
 
 ## 4. Grok — Best for Real-Time Information
 
+<img src="/tools/grok.jpg" alt="Grok interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Included with X Premium ($8/mo)
 
 Grok from xAI has real-time access to X (Twitter) — giving it something no other AI has: live information from the world's largest real-time conversation platform. For news, market sentiment, trending topics, and current events, Grok is uniquely capable.
@@ -103,6 +117,8 @@ Grok 2 is competitive on reasoning benchmarks and has a notably less filtered pe
 ---
 
 ## 5. DeepSeek — Best Free Technical AI
+
+<img src="/tools/deepseek.jpg" alt="DeepSeek interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free · API from $0.14/million tokens
 
@@ -120,6 +136,8 @@ It's free to use on the web with no subscription required. For developers, the A
 
 ## 6. Mistral — Best Open-Source Option
 
+<img src="/tools/mistral.jpg" alt="Mistral interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Free API tier · Pay-as-you-go API
 
 Mistral is a French AI company building some of the most capable open-source models available. Mixtral and Mistral Large are genuinely competitive with GPT-4 on many tasks, and being open-source means they can be self-hosted with full data control.
@@ -133,6 +151,8 @@ For European companies with data residency requirements, Mistral is the obvious 
 ---
 
 ## 7. Perplexity — Best for Research
+
+<img src="/tools/perplexity.jpg" alt="Perplexity interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free · Pro $20/mo
 

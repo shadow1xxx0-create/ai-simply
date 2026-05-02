@@ -6,11 +6,26 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Newsletter from '../components/Newsletter.astro';
 import ShareButtons from '../components/ShareButtons.astro';
-import { SITE_TITLE, SITE_URL, SITE_AUTHOR } from '../consts';
+import { SITE_TITLE, SITE_URL, DEFAULT_AUTHOR } from '../consts';
+
+const authorSameAs = [
+	DEFAULT_AUTHOR.twitter && `https://twitter.com/${DEFAULT_AUTHOR.twitter}`,
+	DEFAULT_AUTHOR.linkedin,
+].filter(Boolean);
 
 type Props = CollectionEntry<'blog'>['data'] & { body?: string };
 
-const { title, description, pubDate, updatedDate, heroImage, category, readingTime, tags, faqs, body } = Astro.props;
+const {
+	title, description, pubDate, updatedDate, heroImage, category, readingTime, tags, faqs, body,
+	author, authorBio, authorTwitter, authorAvatar,
+} = Astro.props;
+
+const authorName = author ?? DEFAULT_AUTHOR.name;
+const authorBioText = authorBio ?? DEFAULT_AUTHOR.bio;
+const authorAvatarSrc = authorAvatar ?? DEFAULT_AUTHOR.avatar;
+const authorTwitterHandle = authorTwitter ?? DEFAULT_AUTHOR.twitter;
+const authorPageUrl = `${SITE_URL}/author/${DEFAULT_AUTHOR.slug}/`;
+const authorInitials = authorName.split(' ').map(p => p[0]).join('').slice(0, 2).toUpperCase();
 
 function countWords(text: string): number {
 	return text
@@ -39,8 +54,11 @@ const articleSchema = {
 	...(tags && tags.length > 0 && { "keywords": tags.join(", ") }),
 	"author": {
 		"@type": "Person",
-		"name": SITE_AUTHOR,
-		"url": SITE_URL,
+		"name": authorName,
+		"url": authorPageUrl,
+		"image": `${SITE_URL}${authorAvatarSrc}`,
+		"jobTitle": DEFAULT_AUTHOR.role,
+		...(authorSameAs.length && { "sameAs": authorSameAs }),
 	},
 	"publisher": {
 		"@type": "Organization",
@@ -120,6 +138,10 @@ const faqSchema = faqs && faqs.length > 0 ? {
 					<h1 itemprop="headline">{title}</h1>
 					<p class="article-header__desc" itemprop="description">{description}</p>
 					<div class="article-header__meta">
+						<a href={`/author/${DEFAULT_AUTHOR.slug}/`} class="article-byline" rel="author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+							<img src={authorAvatarSrc} alt={authorName} width="26" height="26" class="article-byline__avatar" itemprop="image" />
+							<span class="article-byline__by">By <span itemprop="name">{authorName}</span></span>
+						</a>
 						<time datetime={pubDate.toISOString()} itemprop="datePublished">
 							{pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: 'numeric' })}
 						</time>
@@ -180,11 +202,19 @@ const faqSchema = faqs && faqs.length > 0 ? {
 
 		<!-- Author bio -->
 		<div class="author-bio container">
-			<div class="author-bio__inner">
-				<div class="author-bio__avatar" aria-hidden="true">AB</div>
+			<div class="author-bio__inner" itemscope itemtype="https://schema.org/Person">
+				<img src={authorAvatarSrc} alt={authorName} width="48" height="48" class="author-bio__avatar" itemprop="image" />
 				<div class="author-bio__content">
-					<p class="author-bio__name">Written by the AI Briefs Editorial Team</p>
-					<p class="author-bio__desc">AI Briefs explains artificial intelligence in plain English — no jargon, no hype. We cover the ideas, tools, and implications that matter to everyday people navigating an AI-powered world.</p>
+					<p class="author-bio__name">
+						Written by <a href={`/author/${DEFAULT_AUTHOR.slug}/`} itemprop="url"><span itemprop="name">{authorName}</span></a>
+						<span class="author-bio__role">— {DEFAULT_AUTHOR.role}</span>
+					</p>
+					<p class="author-bio__desc" itemprop="description">{authorBioText}</p>
+					{authorTwitterHandle && (
+						<p class="author-bio__social">
+							<a href={`https://twitter.com/${authorTwitterHandle}`} target="_blank" rel="noopener me" itemprop="sameAs">@{authorTwitterHandle}</a>
+						</p>
+					)}
 				</div>
 			</div>
 		</div>
@@ -236,7 +266,24 @@ const faqSchema = faqs && faqs.length > 0 ? {
 		display: flex;
 		gap: 1.25rem;
 		flex-wrap: wrap;
+		align-items: center;
 	}
+
+	.article-byline {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		text-decoration: none;
+		color: rgb(var(--black));
+		font-weight: 600;
+	}
+	.article-byline:hover { color: var(--primary); }
+	.article-byline__avatar {
+		width: 26px; height: 26px;
+		border-radius: 50%;
+		display: inline-block;
+	}
+	.article-byline__by { font-size: 0.85rem; }
 
 	.article-header__updated {
 		font-style: italic;
@@ -270,6 +317,38 @@ const faqSchema = faqs && faqs.length > 0 ? {
 
 	.article-body :global(p) {
 		margin-bottom: 1.25em;
+	}
+
+	.article-body :global(img.best-of-shot),
+	.article-body :global(img) {
+		max-width: 100%;
+		height: auto;
+		border-radius: var(--radius);
+		border: 1px solid var(--border);
+		margin: 1.25rem 0 1.5rem;
+		display: block;
+	}
+
+	.article-body :global(aside.methodology) {
+		background: var(--bg-alt);
+		border-left: 3px solid var(--primary);
+		padding: 1rem 1.25rem;
+		border-radius: 0 var(--radius) var(--radius) 0;
+		margin: 0 0 2rem;
+		font-size: 0.92rem;
+	}
+	.article-body :global(aside.methodology h2) {
+		font-size: 0.92rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		margin: 0 0 0.5rem;
+		padding: 0;
+		border: 0;
+		color: var(--primary);
+	}
+	.article-body :global(aside.methodology p) {
+		margin: 0;
+		color: rgb(var(--gray));
 	}
 
 	.faq-wrapper {
@@ -353,13 +432,7 @@ const faqSchema = faqs && faqs.length > 0 ? {
 		width: 48px;
 		height: 48px;
 		border-radius: 50%;
-		background: var(--primary);
-		color: #fff;
-		font-weight: 700;
-		font-size: 0.85rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		display: block;
 	}
 
 	.author-bio__name {
@@ -367,12 +440,26 @@ const faqSchema = faqs && faqs.length > 0 ? {
 		font-size: 0.95rem;
 		margin-bottom: 0.35rem !important;
 	}
+	.author-bio__name a { color: var(--primary); text-decoration: none; }
+	.author-bio__name a:hover { text-decoration: underline; }
+	.author-bio__role {
+		font-weight: 400;
+		color: rgb(var(--gray));
+		font-size: 0.85rem;
+	}
 
 	.author-bio__desc {
 		font-size: 0.9rem;
 		color: rgb(var(--gray));
+		margin-bottom: 0.4rem !important;
+	}
+
+	.author-bio__social {
+		font-size: 0.85rem;
 		margin-bottom: 0 !important;
 	}
+	.author-bio__social a { color: var(--primary); text-decoration: none; }
+	.author-bio__social a:hover { text-decoration: underline; }
 
 	.mid-article-nl {
 		background: var(--bg-alt);

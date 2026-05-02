@@ -19,7 +19,7 @@ const freeToolLinks = [
 			<!-- Brand -->
 			<div class="footer-brand">
 				<h4>{SITE_TITLE}</h4>
-				<p>Discover the best AI tools across 22 categories. Curated, categorized, and updated daily.</p>
+				<p>Discover the best AI tools across 21 categories. Curated, categorized, and updated daily.</p>
 				<a href={BEEHIIV_FORM_URL} target="_blank" rel="noopener noreferrer" class="footer-subscribe-btn">Get my newsletter →</a>
 			</div>
 
@@ -81,74 +81,208 @@ const freeToolLinks = [
 <!-- Back to top -->
 <button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
 
-<!-- Exit-Intent Newsletter -->
-<div id="exit-popup" class="exit-popup" hidden>
-	<div class="exit-popup__card">
-		<button class="exit-popup__close" id="exit-close" aria-label="Close">✕</button>
-		<h3>Before you go...</h3>
-		<p>The stories worth your time. Stay ahead without the noise.</p>
-		<a href={BEEHIIV_FORM_URL} target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="width:100%;justify-content:center">Subscribe Free →</a>
-		<span class="exit-popup__dismiss" id="exit-dismiss">No thanks</span>
+<!-- Bottom-left Newsletter Capture -->
+<aside id="nl-toast" class="nl-toast" hidden aria-label="Newsletter signup">
+	<button class="nl-toast__close" id="nl-toast-close" aria-label="Close">✕</button>
+	<div class="nl-toast__body">
+		<div class="nl-toast__icon" aria-hidden="true">📬</div>
+		<div class="nl-toast__copy">
+			<h3>Get the AI brief.</h3>
+			<p>Plain-English AI news. Free. Once a week.</p>
+		</div>
 	</div>
-</div>
+	<form id="nl-toast-form" class="nl-toast__form" action={BEEHIIV_FORM_URL} method="POST" target="_blank" rel="noopener">
+		<input
+			type="email"
+			name="email"
+			required
+			placeholder="you@example.com"
+			aria-label="Email address"
+			class="nl-toast__input"
+			autocomplete="email"
+		/>
+		<button type="submit" class="nl-toast__btn">Subscribe</button>
+	</form>
+	<div id="nl-toast-success" class="nl-toast__success" hidden>Thanks! Check your inbox to confirm. ✨</div>
+</aside>
 
-<script>
-const btn = document.getElementById('back-to-top')!;
-window.addEventListener('scroll', () => { btn.classList.toggle('visible', window.scrollY > 400); });
-btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+<script data-astro-rerun>
+// Back-to-top
+(function () {
+	const btn = document.getElementById('back-to-top');
+	if (!btn) return;
+	const onScroll = () => btn.classList.toggle('visible', window.scrollY > 400);
+	window.addEventListener('scroll', onScroll, { passive: true });
+	btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
 
-// Recurring subscribe popup — every 2 minutes
-const exitPopup = document.getElementById('exit-popup')!;
-const exitClose = document.getElementById('exit-close')!;
-const exitDismiss = document.getElementById('exit-dismiss')!;
+// Bottom-left newsletter capture toast
+(function () {
+	const toast = document.getElementById('nl-toast');
+	const toastClose = document.getElementById('nl-toast-close');
+	const toastForm = document.getElementById('nl-toast-form');
+	const toastSuccess = document.getElementById('nl-toast-success');
+	if (!toast || !toastForm || !toastClose || !toastSuccess) return;
 
-const POPUP_INTERVAL_MS = 2 * 60 * 1000;
-let popupTimer: number | undefined;
+	const STORAGE_KEY = 'nl_toast_state';
+	const SHOW_DELAY_MS = 25 * 1000;
+	const DISMISS_HIDE_DAYS = 7;
+	const SUBSCRIBED_HIDE_DAYS = 365;
 
-function showExit() {
-	exitPopup.hidden = false;
-}
-function hideExit() {
-	exitPopup.hidden = true;
-	scheduleNext();
-}
-function scheduleNext() {
-	if (popupTimer) clearTimeout(popupTimer);
-	popupTimer = window.setTimeout(showExit, POPUP_INTERVAL_MS);
-}
+	function getState() {
+		try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { return {}; }
+	}
+	function setState(next) {
+		try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (e) {}
+	}
+	function shouldShow() {
+		const s = getState();
+		if (s.subscribed) return false;
+		if (s.hideUntil && Date.now() < s.hideUntil) return false;
+		return true;
+	}
+	function showToast() {
+		if (!shouldShow()) return;
+		toast.hidden = false;
+		requestAnimationFrame(() => toast.classList.add('nl-toast--in'));
+	}
+	function hideToast(daysHidden) {
+		toast.classList.remove('nl-toast--in');
+		setTimeout(() => { toast.hidden = true; }, 250);
+		setState(Object.assign(getState(), { hideUntil: Date.now() + daysHidden * 24 * 60 * 60 * 1000 }));
+	}
 
-scheduleNext();
-exitClose?.addEventListener('click', hideExit);
-exitDismiss?.addEventListener('click', hideExit);
-exitPopup?.addEventListener('click', (e) => { if (e.target === exitPopup) hideExit(); });
+	// Single timer across SPA navigations so we don't re-trigger on every page change.
+	if (window.__nlToastTimer) clearTimeout(window.__nlToastTimer);
+	if (shouldShow()) {
+		window.__nlToastTimer = setTimeout(showToast, SHOW_DELAY_MS);
+	}
+
+	toastClose.addEventListener('click', () => hideToast(DISMISS_HIDE_DAYS));
+
+	toastForm.addEventListener('submit', () => {
+		setState({ subscribed: true, hideUntil: Date.now() + SUBSCRIBED_HIDE_DAYS * 24 * 60 * 60 * 1000 });
+		toastForm.hidden = true;
+		toastSuccess.hidden = false;
+		setTimeout(() => hideToast(SUBSCRIBED_HIDE_DAYS), 4000);
+	});
+})();
 </script>
 
 <style>
-/* Exit-intent popup */
-.exit-popup {
-	position: fixed; inset: 0;
-	background: rgba(0,0,0,0.5); z-index: 10000;
-	display: flex; align-items: center; justify-content: center;
-	padding: 1rem;
+/* Bottom-left newsletter toast */
+.nl-toast {
+	position: fixed;
+	bottom: 1.25rem;
+	left: 1.25rem;
+	z-index: 10000;
+	width: min(340px, calc(100vw - 2rem));
+	background: var(--surface-1, var(--bg-alt));
+	color: rgb(var(--gray-dark));
+	border: 1px solid var(--border);
+	border-radius: 14px;
+	box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+	padding: 1rem 1rem 0.9rem;
+	opacity: 0;
+	transform: translateY(16px);
+	transition: opacity 0.25s var(--ease-out, ease), transform 0.25s var(--ease-out, ease);
 }
-.exit-popup[hidden] { display: none; }
-.exit-popup__card {
-	background: var(--bg); border-radius: 12px; padding: 2rem;
-	max-width: 400px; width: 100%; text-align: center;
-	box-shadow: 0 20px 60px rgba(0,0,0,0.2); position: relative;
+.nl-toast[hidden] { display: none; }
+.nl-toast--in { opacity: 1; transform: translateY(0); }
+
+.nl-toast__close {
+	position: absolute;
+	top: 0.4rem;
+	right: 0.5rem;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 0.95rem;
+	color: rgb(var(--gray));
+	padding: 0.25rem 0.4rem;
+	line-height: 1;
+	border-radius: 6px;
 }
-.exit-popup__card h3 { font-size: 1.25rem; color: rgb(var(--black)); margin-bottom: 0.5rem; }
-.exit-popup__card p { font-size: 0.9rem; color: rgb(var(--gray)); margin-bottom: 1.25rem; }
-.exit-popup__close {
-	position: absolute; top: 0.75rem; right: 0.75rem;
-	background: none; border: none; cursor: pointer;
-	font-size: 1.1rem; color: rgb(var(--gray)); padding: 0.25rem;
+.nl-toast__close:hover { color: rgb(var(--black)); background: rgb(var(--gray) / 0.12); }
+
+.nl-toast__body {
+	display: flex;
+	gap: 0.7rem;
+	align-items: flex-start;
+	padding-right: 1.25rem;
+	margin-bottom: 0.75rem;
 }
-.exit-popup__dismiss {
-	display: block; margin-top: 0.75rem;
-	font-size: 0.78rem; color: rgb(var(--gray)); cursor: pointer;
+.nl-toast__icon {
+	font-size: 1.4rem;
+	line-height: 1;
+	flex-shrink: 0;
+	margin-top: 2px;
 }
-.exit-popup__dismiss:hover { color: rgb(var(--black)); }
+.nl-toast__copy h3 {
+	margin: 0 0 0.15rem;
+	font-size: 0.95rem;
+	color: rgb(var(--black));
+	font-weight: 700;
+}
+.nl-toast__copy p {
+	margin: 0;
+	font-size: 0.8rem;
+	color: rgb(var(--gray));
+	line-height: 1.4;
+}
+
+.nl-toast__form {
+	display: flex;
+	gap: 0.4rem;
+}
+.nl-toast__input {
+	flex: 1;
+	min-width: 0;
+	padding: 0.55rem 0.7rem;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	background: var(--bg);
+	color: rgb(var(--black));
+	font-size: 0.85rem;
+	font-family: inherit;
+	outline: none;
+	transition: border-color 0.15s;
+}
+.nl-toast__input:focus { border-color: var(--primary); }
+.nl-toast__input::placeholder { color: rgb(var(--gray) / 0.7); }
+
+.nl-toast__btn {
+	padding: 0.55rem 0.85rem;
+	background: var(--primary);
+	color: #0b0f0d;
+	border: none;
+	border-radius: 8px;
+	font-size: 0.82rem;
+	font-weight: 700;
+	font-family: inherit;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: background 0.15s;
+}
+.nl-toast__btn:hover { background: var(--primary-dark); }
+
+.nl-toast__success {
+	font-size: 0.85rem;
+	color: var(--primary);
+	font-weight: 600;
+	text-align: center;
+	padding: 0.4rem 0;
+}
+
+/* On desktop, sit clear of the left sidebar nav (top-aligned, ~144px wide) */
+@media (min-width: 768px) {
+	.nl-toast { left: 176px; bottom: 1.5rem; }
+}
+
+/* On small mobile, full-width minus margins */
+@media (max-width: 480px) {
+	.nl-toast { left: 0.75rem; right: 0.75rem; bottom: 0.75rem; width: auto; }
+}
 
 #back-to-top {
 	position: fixed;

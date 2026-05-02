@@ -24,6 +24,12 @@ Here's how the leading AI SEO platforms compare.
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Starting Price | Standout Feature |
@@ -36,6 +42,8 @@ Here's how the leading AI SEO platforms compare.
 ---
 
 ## 1. Semrush — Best All-in-One SEO Platform
+
+<img src="/tools/semrush.jpg" alt="Semrush interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Pro $139/mo · Guru $249/mo · Business $499/mo
 
@@ -55,6 +63,8 @@ Site Audit identifies technical SEO issues across your entire domain, and Positi
 
 ## 2. Ahrefs — Best for Backlink Analysis
 
+<img src="/tools/ahrefs.jpg" alt="Ahrefs interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Lite $129/mo · Standard $249/mo · Advanced $449/mo
 
 Ahrefs built its reputation on having the best backlink index in the industry, and it remains the go-to tool for link builders and SEOs obsessed with competitor research. The Site Explorer shows every backlink pointing to any domain — when it was acquired, the authority of the linking domain, and whether it's still live.
@@ -73,6 +83,8 @@ The Keywords Explorer covers 10 search engines including Google, YouTube, Amazon
 
 ## 3. Surfer SEO — Best for Content Optimization
 
+<img src="/tools/surfer-seo.jpg" alt="Surfer SEO interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Essential $89/mo · Scale $129/mo · Scale AI $219/mo
 
 Surfer SEO solves one specific problem better than anyone: telling you exactly how to write content that ranks for a given keyword. It analyzes the top 20 SERP results for your target keyword and extracts the patterns — word count, keyword density, heading structure, number of images, and NLP terms used. Then it scores your content against those benchmarks in real time.
@@ -90,6 +102,8 @@ The AI Writer generates full SEO-optimized articles from a brief, using Surfer's
 ---
 
 ## 4. HubSpot AI — Best Free Option
+
+<img src="/tools/hubspot-ai.jpg" alt="HubSpot AI interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free · Starter $45/mo · Professional $800/mo
 

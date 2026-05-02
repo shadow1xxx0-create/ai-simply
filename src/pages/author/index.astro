@@ -1,0 +1,82 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, DEFAULT_AUTHOR } from '../../consts';
+
+const authors = [DEFAULT_AUTHOR];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead
+		title={`Authors — ${SITE_TITLE}`}
+		description={`Meet the writers behind ${SITE_TITLE}. We test AI tools hands-on and explain them in plain English.`}
+	/>
+</head>
+<body>
+	<Header />
+	<main id="main-content" class="container">
+		<section class="authors-page">
+			<h1>Our Writers</h1>
+			<p class="authors-intro">{SITE_TITLE} is written by people who actually test the tools we cover.</p>
+			<ul class="authors-grid">
+				{authors.map(a => (
+					<li>
+						<a href={`/author/${a.slug}/`}>
+							<img src={a.avatar} alt={a.name} width="56" height="56" class="authors-grid__avatar" />
+							<div>
+								<h2>{a.name}</h2>
+								<p class="authors-grid__role">{a.role}</p>
+								<p class="authors-grid__bio">{a.bio}</p>
+							</div>
+						</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.authors-page { padding: 2.5rem 0 3rem; max-width: 800px; }
+	.authors-page h1 { font-size: 2rem; margin-bottom: 0.35rem; }
+	.authors-intro {
+		color: rgb(var(--gray));
+		font-size: 1rem;
+		margin-bottom: 2rem;
+	}
+	.authors-grid { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+	.authors-grid a {
+		display: flex; gap: 1rem;
+		padding: 1.25rem 1.5rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		text-decoration: none;
+		color: inherit;
+	}
+	.authors-grid a:hover { border-color: var(--primary); }
+	.authors-grid__avatar {
+		flex-shrink: 0;
+		width: 56px; height: 56px;
+		border-radius: 50%;
+		display: block;
+	}
+	.authors-grid h2 {
+		font-size: 1.1rem;
+		margin: 0 0 0.25rem;
+	}
+	.authors-grid__role {
+		color: rgb(var(--gray));
+		font-size: 0.85rem;
+		margin: 0 0 0.5rem;
+	}
+	.authors-grid__bio {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+		margin: 0;
+	}
+</style>

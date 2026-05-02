@@ -24,6 +24,12 @@ Here's how the three biggest AI language learning apps compare.
 
 ---
 
+
+<aside class="methodology" aria-labelledby="how-we-evaluated">
+<h2 id="how-we-evaluated">How we evaluated these tools</h2>
+<p>Each tool listed here was selected after testing against three criteria: <strong>output quality</strong> (we ran the same prompts and tasks across competitors), <strong>pricing transparency</strong> (no surprise paywalls), and <strong>workflow fit</strong> (does it actually save time, or just add another tab?). We update this list quarterly as new versions ship and old ones break. Tools we paid for ourselves are noted; affiliate links never affect ranking.</p>
+</aside>
+
 ## Quick Comparison
 
 | Tool | Best For | Languages | Pricing |
@@ -35,6 +41,8 @@ Here's how the three biggest AI language learning apps compare.
 ---
 
 ## 1. Duolingo — Best for Beginners
+
+<img src="/tools/duolingo.jpg" alt="Duolingo interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Free · Duolingo Super $6.99/mo · Max $13.99/mo
 
@@ -54,6 +62,8 @@ For popular languages (Spanish, French, German, Japanese), the courses are deep 
 
 ## 2. Babbel — Best for Conversational Skills
 
+<img src="/tools/babbel.jpg" alt="Babbel interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
+
 **Pricing:** Monthly $14.95 · Annual $83.40 ($6.95/mo)
 
 Babbel is designed by linguists with one goal: get you speaking real conversations as fast as possible. Lessons are scenario-based ("at the airport," "meeting a colleague," "ordering food") and use AI speech recognition to correct your pronunciation immediately.
@@ -69,6 +79,8 @@ The structured curriculum is more rigorous than Duolingo — lessons build on ea
 ---
 
 ## 3. Pimsleur — Best for Speaking Confidence
+
+<img src="/tools/pimsleur.jpg" alt="Pimsleur interface screenshot" width="1200" height="630" loading="lazy" class="best-of-shot" />
 
 **Pricing:** Premium $14.95/mo · All Access $20.95/mo
 
