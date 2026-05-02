@@ -9,8 +9,7 @@ export const DEFAULT_AUTHOR = {
 	role: 'Founding Editor',
 	bio: 'Jordan Reeves is the founding editor of AI Briefs. He has spent the last six years writing about software, machine learning, and consumer tech — testing tools hands-on so readers do not have to. Previously a product manager at two ML startups.',
 	avatar: '/authors/jordan-reeves.svg',
-	twitter: 'getaibriefs',
-	linkedin: 'https://www.linkedin.com/company/getaibriefs',
+	twitter: 'ovallore',
 };
 export const BEEHIIV_FORM_URL = 'https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9';
 
