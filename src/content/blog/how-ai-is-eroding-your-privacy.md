@@ -135,4 +135,7 @@ The technology can serve humanity. The question is whether humanity will decide 
 
 ---
 
-**Want to go deeper?** Read our follow-up: [Predictive AI: When Surveillance Stops Watching and Starts Deciding](/blog/predictive-ai-surveillance-stops-watching-starts-deciding/) — a detailed look at how AI systems now make life-altering judgments about people based on data they never knowingly shared.
+**Want to go deeper?** Read our follow-ups:
+
+- [Predictive AI: When Surveillance Stops Watching and Starts Deciding](/blog/predictive-ai-surveillance-stops-watching-starts-deciding/) — how AI systems now make life-altering judgments about people based on data they never knowingly shared.
+- [What Are Deepfakes? How AI Fakes Reality (And How to Spot One)](/blog/what-are-deepfakes-how-to-spot-one/) — the flip side of biometric surveillance: the same voice and face data that enables tracking is what fuels AI-generated impersonation scams now costing victims billions.

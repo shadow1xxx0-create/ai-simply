@@ -242,7 +242,7 @@ Being honest here matters, because the hype outpaces the reality in specific way
 
 The risks of generative AI worth taking seriously aren't robots taking over. They're more mundane and more immediate:
 
-**Misinformation at scale.** Anyone can now generate convincing-looking fake news articles, fake photos, fake audio quotes of real people. The cost of production dropped to nearly zero. [How this affects your privacy and information environment](/blog/how-ai-is-eroding-your-privacy/) is already being felt.
+**Misinformation at scale.** Anyone can now generate convincing-looking fake news articles, fake photos, and [deepfakes](/blog/what-are-deepfakes-how-to-spot-one/) — AI-generated video and audio that put real words in real people's mouths. The cost of production dropped to nearly zero. [How this affects your privacy and information environment](/blog/how-ai-is-eroding-your-privacy/) is already being felt.
 
 **Deskilling.** There's growing evidence that using AI heavily for writing, research, and analysis can atrophy those skills. Use a crutch long enough and you start to need it. [The AI deskilling problem is real and worth understanding](/blog/is-ai-making-us-dumber-deskilling-problem/).
 
