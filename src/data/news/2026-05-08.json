@@ -1,0 +1,198 @@
+{
+  "date": "2026-05-08",
+  "fetchedAt": "2026-05-08T08:19:22.314Z",
+  "items": [
+    {
+      "title": "MedQA: Fine-Tuning a Clinical AI on AMD ROCm — No CUDA Required",
+      "link": "https://huggingface.co/blog/lablab-ai-amd-developer-hackathon/medqa",
+      "date": "Fri, 08 May 2026 07:54:18 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "Why you can never get your doctor to call you back",
+      "link": "https://techcrunch.com/2026/05/07/the-back-office-problem-that-explains-why-specialists-never-call-you-back/",
+      "date": "Fri, 08 May 2026 04:42:29 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Musk v. Altman Evidence Shows What Microsoft Executives Thought of OpenAI",
+      "link": "https://www.wired.com/story/microsoft-executives-discuss-openai-sam-altman-2018/",
+      "date": "Fri, 08 May 2026 01:42:14 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "OpenAI launches new voice intelligence features in its API",
+      "link": "https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/",
+      "date": "Thu, 07 May 2026 22:24:50 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Trump Pivots on AI Regulation, Worker Ousted by DOGE Runs for Office, and Hantavirus Explained",
+      "link": "https://www.wired.com/story/uncanny-valley-podcast-trump-pivots-ai-regulation-worker-ousted-by-doge-runs-for-office-hantavirus-explained/",
+      "date": "Thu, 07 May 2026 21:37:20 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "Voi founders’ new AI startup Pit has become the latest rising star out of Stockholm",
+      "link": "https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/",
+      "date": "Thu, 07 May 2026 21:02:11 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "How to Disable Google's Gemini in Chrome",
+      "link": "https://www.wired.com/story/you-can-disable-gemini-in-chrome-if-its-freaking-you-out/",
+      "date": "Thu, 07 May 2026 20:31:57 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "OpenAI introduces new ‘Trusted Contact’ safeguard for cases of possible self-harm",
+      "link": "https://techcrunch.com/2026/05/07/openai-introduces-new-trusted-contact-safeguard-for-cases-of-possible-self-harm/",
+      "date": "Thu, 07 May 2026 20:20:20 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Mira Murati’s deposition pulled back the curtain on Sam Altman’s ouster",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/926383/mira-murati-sam-altman-musk-trial-ouster",
+      "date": "2026-05-07T15:55:22-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "Apple’s AirPods with cameras for AI are apparently close to production",
+      "link": "https://www.theverge.com/tech/926376/apple-airpods-cameras-ai-production",
+      "date": "2026-05-07T15:39:22-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "SpaceX has a $55 billion plan to build AI chips in Texas",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/926356/spacex-terafab-plant-cost-ai-chips",
+      "date": "2026-05-07T15:26:16-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "Mozilla says 271 vulnerabilities found by Mythos have \"almost no false positives\"",
+      "link": "https://arstechnica.com/information-technology/2026/05/mozilla-says-271-vulnerabilities-found-by-mythos-have-almost-no-false-positives/",
+      "date": "Thu, 07 May 2026 19:18:16 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "ChatGPT’s ‘Trusted Contact’ will alert loved ones of safety concerns",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/925874/chatgpt-trusted-contact-emergency-self-harm-notification",
+      "date": "2026-05-07T14:00:00-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "ChatGPT Has ‘Goblin’ Mania in the US. In China It Will ‘Catch You Steadily’",
+      "link": "https://www.wired.com/story/chatgpt-chinese-catch-you-steadily-sycophancy/",
+      "date": "Thu, 07 May 2026 16:25:48 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "Google unveils screenless Fitbit Air and Google Health app to replace Fitbit",
+      "link": "https://arstechnica.com/gadgets/2026/05/google-unveils-screenless-fitbit-air-and-google-health-app-to-replace-fitbit/",
+      "date": "Thu, 07 May 2026 14:00:50 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "Elon Musk tried to hire OpenAI founders to start AI unit inside Tesla",
+      "link": "https://arstechnica.com/tech-policy/2026/05/elon-musk-tried-to-hire-openai-founders-to-start-ai-unit-inside-tesla/",
+      "date": "Thu, 07 May 2026 13:14:01 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "The Download: the tech reshaping IVF and the rise of balcony solar",
+      "link": "https://www.technologyreview.com/2026/05/07/1136956/the-download-ivf-tech-balcony-solar/",
+      "date": "Thu, 07 May 2026 12:10:00 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "AI Is Starting to Build Better AI",
+      "link": "https://spectrum.ieee.org/recursive-self-improvement",
+      "date": "Thu, 07 May 2026 12:00:02 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "The balcony solar boom is coming to the US",
+      "link": "https://www.technologyreview.com/2026/05/07/1136933/balcony-solar-boom/",
+      "date": "Thu, 07 May 2026 10:00:00 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "What’s next for IVF",
+      "link": "https://www.technologyreview.com/2026/05/07/1136946/whats-next-for-ivf-ai-robot-pgt-gene-editing/",
+      "date": "Thu, 07 May 2026 09:04:50 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "Chatbots Need Guardrails to Prevent Delusions and Psychosis",
+      "link": "https://spectrum.ieee.org/mental-health-chatbot-guardrails",
+      "date": "Wed, 06 May 2026 22:11:00 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "Anthropic raises Claude Code usage limits, credits new deal with SpaceX",
+      "link": "https://arstechnica.com/ai/2026/05/anthropic-raises-claude-code-usage-limits-credits-new-deal-with-spacex/",
+      "date": "Wed, 06 May 2026 22:09:14 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "vLLM V0 to V1: Correctness Before Corrections in RL",
+      "link": "https://huggingface.co/blog/ServiceNow-AI/correctness-before-corrections",
+      "date": "Wed, 06 May 2026 19:06:55 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "The Download: seafloor science and military chatbots",
+      "link": "https://www.technologyreview.com/2026/05/06/1136917/the-download-seafloor-science-military-ai-chatbots/",
+      "date": "Wed, 06 May 2026 12:10:00 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "Ten Technology Enablers Shaping the Future of 6G Wireless",
+      "link": "https://content.knowledgehub.wiley.com/ten-key-enablers-for-6g-wireless-communications/",
+      "date": "Wed, 06 May 2026 10:00:02 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "Adding Benchmaxxer Repellant to the Open ASR Leaderboard",
+      "link": "https://huggingface.co/blog/open-asr-leaderboard-private-data",
+      "date": "Wed, 06 May 2026 00:00:00 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "Do We Really Need Smarter AI to Cure Cancer?",
+      "link": "https://spectrum.ieee.org/can-ai-cure-cancer-javorsky",
+      "date": "Tue, 05 May 2026 12:00:01 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "Granite 4.1 LLMs: How They’re Built",
+      "link": "https://huggingface.co/blog/ibm-granite/granite-4-1",
+      "date": "Wed, 29 Apr 2026 15:01:48 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
+      "link": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+      "date": "Thu, 22 Jan 2026 14:00:00 GMT",
+      "source": "VentureBeat"
+    },
+    {
+      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "link": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+      "date": "Mon, 19 Jan 2026 14:00:00 GMT",
+      "source": "VentureBeat"
+    },
+    {
+      "title": "Listen Labs raises $69M after viral billboard hiring stunt to scale AI customer interviews",
+      "link": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
+      "date": "Fri, 16 Jan 2026 14:01:00 GMT",
+      "source": "VentureBeat"
+    },
+    {
+      "title": "Salesforce rolls out new Slackbot AI agent as it battles Microsoft and Google in workplace AI",
+      "link": "https://venturebeat.com/technology/salesforce-rolls-out-new-slackbot-ai-agent-as-it-battles-microsoft-and",
+      "date": "Tue, 13 Jan 2026 13:00:00 GMT",
+      "source": "VentureBeat"
+    }
+  ]
+}
