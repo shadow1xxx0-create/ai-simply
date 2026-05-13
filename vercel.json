@@ -46,7 +46,11 @@
     { "source": "/tools/category/ai-writing/ai-summarizer", "destination": "/tools/category/ai-writing", "statusCode": 301 },
     { "source": "/tools/category/ai-writing/ai-summarizer/", "destination": "/tools/category/ai-writing", "statusCode": 301 },
     { "source": "/blog/best-ai-music-generators", "destination": "/blog", "statusCode": 301 },
-    { "source": "/blog/best-ai-music-generators/", "destination": "/blog", "statusCode": 301 }
+    { "source": "/blog/best-ai-music-generators/", "destination": "/blog", "statusCode": 301 },
+    { "source": "/tools/vs/midjourney-vs-flux-ai", "destination": "/tools/vs/flux-ai-vs-midjourney/", "statusCode": 301 },
+    { "source": "/tools/vs/midjourney-vs-flux-ai/", "destination": "/tools/vs/flux-ai-vs-midjourney/", "statusCode": 301 },
+    { "source": "/newsletter", "destination": "/", "statusCode": 301 },
+    { "source": "/newsletter/", "destination": "/", "statusCode": 301 }
   ],
   "headers": [
     {
