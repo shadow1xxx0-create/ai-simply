@@ -50,7 +50,10 @@
     { "source": "/tools/vs/midjourney-vs-flux-ai", "destination": "/tools/vs/flux-ai-vs-midjourney/", "statusCode": 301 },
     { "source": "/tools/vs/midjourney-vs-flux-ai/", "destination": "/tools/vs/flux-ai-vs-midjourney/", "statusCode": 301 },
     { "source": "/newsletter", "destination": "/", "statusCode": 301 },
-    { "source": "/newsletter/", "destination": "/", "statusCode": 301 }
+    { "source": "/newsletter/", "destination": "/", "statusCode": 301 },
+    { "source": "/author/jordan-reeves", "destination": "/author/ai-briefs/", "statusCode": 301 },
+    { "source": "/author/jordan-reeves/", "destination": "/author/ai-briefs/", "statusCode": 301 },
+    { "source": "/authors/jordan-reeves.svg", "destination": "/favicon.svg", "statusCode": 301 }
   ],
   "headers": [
     {
@@ -79,6 +82,12 @@
       "source": "/favicon.(ico|svg)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/(sitemap-index\\.xml|sitemap-0\\.xml|rss\\.xml)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex" }
       ]
     }
   ]

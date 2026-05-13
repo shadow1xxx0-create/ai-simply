@@ -10,7 +10,6 @@ import { SITE_TITLE, SITE_URL, DEFAULT_AUTHOR } from '../consts';
 
 const authorSameAs = [
 	DEFAULT_AUTHOR.twitter && `https://twitter.com/${DEFAULT_AUTHOR.twitter}`,
-	DEFAULT_AUTHOR.linkedin,
 ].filter(Boolean);
 
 type Props = CollectionEntry<'blog'>['data'] & { body?: string };
@@ -53,11 +52,10 @@ const articleSchema = {
 	...(categoryLabel && { "articleSection": categoryLabel }),
 	...(tags && tags.length > 0 && { "keywords": tags.join(", ") }),
 	"author": {
-		"@type": "Person",
+		"@type": "Organization",
 		"name": authorName,
 		"url": authorPageUrl,
-		"image": `${SITE_URL}${authorAvatarSrc}`,
-		"jobTitle": DEFAULT_AUTHOR.role,
+		"logo": `${SITE_URL}${authorAvatarSrc}`,
 		...(authorSameAs.length && { "sameAs": authorSameAs }),
 	},
 	"publisher": {
@@ -138,8 +136,8 @@ const faqSchema = faqs && faqs.length > 0 ? {
 					<h1 itemprop="headline">{title}</h1>
 					<p class="article-header__desc" itemprop="description">{description}</p>
 					<div class="article-header__meta">
-						<a href={`/author/${DEFAULT_AUTHOR.slug}/`} class="article-byline" rel="author" itemprop="author" itemscope itemtype="https://schema.org/Person">
-							<img src={authorAvatarSrc} alt={authorName} width="26" height="26" class="article-byline__avatar" itemprop="image" />
+						<a href={`/author/${DEFAULT_AUTHOR.slug}/`} class="article-byline" rel="author" itemprop="author" itemscope itemtype="https://schema.org/Organization">
+							<img src={authorAvatarSrc} alt={authorName} width="26" height="26" class="article-byline__avatar" itemprop="logo" />
 							<span class="article-byline__by">By <span itemprop="name">{authorName}</span></span>
 						</a>
 						<time datetime={pubDate.toISOString()} itemprop="datePublished">
@@ -202,8 +200,8 @@ const faqSchema = faqs && faqs.length > 0 ? {
 
 		<!-- Author bio -->
 		<div class="author-bio container">
-			<div class="author-bio__inner" itemscope itemtype="https://schema.org/Person">
-				<img src={authorAvatarSrc} alt={authorName} width="48" height="48" class="author-bio__avatar" itemprop="image" />
+			<div class="author-bio__inner" itemscope itemtype="https://schema.org/Organization">
+				<img src={authorAvatarSrc} alt={authorName} width="48" height="48" class="author-bio__avatar" itemprop="logo" />
 				<div class="author-bio__content">
 					<p class="author-bio__name">
 						Written by <a href={`/author/${DEFAULT_AUTHOR.slug}/`} itemprop="url"><span itemprop="name">{authorName}</span></a>

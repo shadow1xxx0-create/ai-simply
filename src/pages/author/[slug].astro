@@ -22,21 +22,14 @@ const initials = author.name.split(' ').map(p => p[0]).join('').slice(0, 2).toUp
 
 const personSchema = {
 	'@context': 'https://schema.org',
-	'@type': 'Person',
+	'@type': 'Organization',
 	name: author.name,
-	jobTitle: author.role,
 	description: author.bio,
 	url: `${SITE_URL}/author/${author.slug}/`,
-	image: `${SITE_URL}${author.avatar}`,
+	logo: `${SITE_URL}${author.avatar}`,
 	sameAs: [
 		`https://twitter.com/${author.twitter}`,
-		author.linkedin,
 	].filter(Boolean),
-	worksFor: {
-		'@type': 'Organization',
-		name: SITE_TITLE,
-		url: SITE_URL,
-	},
 };
 
 const breadcrumbSchema = {
@@ -71,18 +64,15 @@ const breadcrumbSchema = {
 					<span aria-hidden="true">/</span>
 					<span>{author.name}</span>
 				</nav>
-				<div class="author-hero__inner" itemscope itemtype="https://schema.org/Person">
-					<img src={author.avatar} alt={author.name} width="96" height="96" class="author-hero__avatar" itemprop="image" />
+				<div class="author-hero__inner" itemscope itemtype="https://schema.org/Organization">
+					<img src={author.avatar} alt={author.name} width="96" height="96" class="author-hero__avatar" itemprop="logo" />
 					<div>
 						<h1 itemprop="name">{author.name}</h1>
-						<p class="author-hero__role" itemprop="jobTitle">{author.role} · {SITE_TITLE}</p>
+						<p class="author-hero__role">{author.role} · {SITE_TITLE}</p>
 						<p class="author-hero__bio" itemprop="description">{author.bio}</p>
 						<div class="author-hero__social">
 							{author.twitter && (
 								<a href={`https://twitter.com/${author.twitter}`} target="_blank" rel="noopener me" itemprop="sameAs">@{author.twitter}</a>
-							)}
-							{author.linkedin && (
-								<a href={author.linkedin} target="_blank" rel="noopener me" itemprop="sameAs">LinkedIn</a>
 							)}
 						</div>
 					</div>

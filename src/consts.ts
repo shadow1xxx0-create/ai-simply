@@ -4,12 +4,12 @@ export const SITE_URL = 'https://getaibriefs.com';
 export const SITE_AUTHOR = 'AI Briefs';
 
 export const DEFAULT_AUTHOR = {
-	name: 'Jordan Reeves',
-	slug: 'jordan-reeves',
-	role: 'Founding Editor',
-	bio: 'Jordan Reeves is the founding editor of AI Briefs. He has spent the last six years writing about software, machine learning, and consumer tech — testing tools hands-on so readers do not have to. Previously a product manager at two ML startups.',
-	avatar: '/authors/jordan-reeves.svg',
-	twitter: 'ovallore',
+	name: 'AI Briefs',
+	slug: 'ai-briefs',
+	role: 'Editorial Team',
+	bio: 'AI Briefs is an independent publication that tests AI tools hands-on and explains them in plain English — so readers can get the gist without the hype.',
+	avatar: '/favicon.svg',
+	twitter: 'getaibriefs',
 };
 export const BEEHIIV_FORM_URL = 'https://subscribe-forms.beehiiv.com/fda3e0ad-bcc8-4e4d-8f5b-123db9391be9';
 
