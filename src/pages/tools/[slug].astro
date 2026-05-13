@@ -257,6 +257,7 @@ const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric',
 					</a>
 					<a
 						href={`/tools/alternatives/${tool.id}/`}
+						rel="nofollow"
 						class="btn btn--outline-sm"
 						style="width:100%;justify-content:center;margin-top:0.5rem"
 					>
@@ -264,6 +265,7 @@ const formattedDate = lastUpdated.toLocaleDateString('en-US', { year: 'numeric',
 					</a>
 					<a
 						href={`/contact/?subject=claim&tool=${encodeURIComponent(tool.data.name)}`}
+						rel="nofollow"
 						class="tool-claim-link"
 					>
 						Are you the owner of this tool?

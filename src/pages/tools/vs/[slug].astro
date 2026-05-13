@@ -217,10 +217,10 @@ const winner = scoreA > scoreB ? toolA : scoreB > scoreA ? toolB : null;
 					<div class="also-compare-links">
 						{related.map(r => (
 							<>
-								<a href={`/tools/vs/${toolA.id}-vs-${r.id}/`} class="compare-link">
+								<a href={`/tools/vs/${toolA.id}-vs-${r.id}/`} rel="nofollow" class="compare-link">
 									{toolA.data.name} vs {r.data.name}
 								</a>
-								<a href={`/tools/vs/${toolB.id}-vs-${r.id}/`} class="compare-link">
+								<a href={`/tools/vs/${toolB.id}-vs-${r.id}/`} rel="nofollow" class="compare-link">
 									{toolB.data.name} vs {r.data.name}
 								</a>
 							</>
