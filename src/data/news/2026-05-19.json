@@ -1,0 +1,192 @@
+{
+  "date": "2026-05-19",
+  "fetchedAt": "2026-05-19T10:35:22.732Z",
+  "items": [
+    {
+      "title": "Gemini is in danger of going full Copilot",
+      "link": "https://www.theverge.com/tech/931752/google-io-2026-gemini-icon-docs-workspace",
+      "date": "2026-05-19T06:30:00-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "Here’s why Elon Musk lost his suit against OpenAI",
+      "link": "https://www.technologyreview.com/2026/05/18/1137488/elon-musk-suit-openai-verdict/",
+      "date": "Tue, 19 May 2026 00:53:10 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "SandboxAQ brings its drug discovery models to Claude — no PhD in computing required",
+      "link": "https://techcrunch.com/2026/05/18/sandboxaq-brings-its-drug-discovery-models-to-claude-no-phd-in-computing-required/",
+      "date": "Mon, 18 May 2026 21:29:31 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Legal fail: Don’t use AI to sue Facebook users for calling you a bad date",
+      "link": "https://arstechnica.com/tech-policy/2026/05/legal-fail-dont-use-ai-to-sue-facebook-users-for-calling-you-a-bad-date/",
+      "date": "Mon, 18 May 2026 20:27:15 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "Anthropic has acquired the dev tools startup used by OpenAI, Google, and Cloudflare",
+      "link": "https://techcrunch.com/2026/05/18/anthropic-has-acquired-the-dev-tools-startup-used-by-openai-google-and-cloudflare/",
+      "date": "Mon, 18 May 2026 19:27:52 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Musk v. Altman proved that AI is led by the wrong people",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/932464/musk-v-altman-proved-that-ai-is-led-by-the-wrong-people",
+      "date": "2026-05-18T15:00:00-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "Elon Musk took too long to sue OpenAI, jury unanimously agrees",
+      "link": "https://arstechnica.com/tech-policy/2026/05/elon-musk-loses-trial-accusing-sam-altman-openai-of-stealing-a-charity/",
+      "date": "Mon, 18 May 2026 18:09:41 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "All of the updates from Elon Musk and Sam Altman’s battle over OpenAI",
+      "link": "https://www.theverge.com/tech/917225/sam-altman-elon-musk-openai-lawsuit",
+      "date": "2026-05-18T13:49:49-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "Elon Musk Loses Landmark Lawsuit Against OpenAI",
+      "link": "https://www.wired.com/story/musk-v-altman-jury-verdict/",
+      "date": "Mon, 18 May 2026 17:40:30 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "Elon Musk loses his case against Sam Altman",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/932383/jury-verdict-musk-v-altman-openai-trial",
+      "date": "2026-05-18T13:39:32-04:00",
+      "source": "The Verge"
+    },
+    {
+      "title": "What to expect from Google this week",
+      "link": "https://www.technologyreview.com/2026/05/18/1137439/what-to-expect-from-google-this-week/",
+      "date": "Mon, 18 May 2026 17:35:43 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "The Signals That Matter – MIT Insider’s Panel",
+      "link": "https://www.technologyreview.com/2026/05/18/1137430/the-signals-that-matter-mit-insiders-panel/",
+      "date": "Mon, 18 May 2026 16:57:44 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "Inside Anduril and Meta’s quest to make smart glasses for warfare",
+      "link": "https://www.technologyreview.com/2026/05/18/1137412/inside-anduril-and-metas-quest-to-make-smart-glasses-for-warfare/",
+      "date": "Mon, 18 May 2026 16:01:39 +0000",
+      "source": "MIT Tech Review"
+    },
+    {
+      "title": "Fine-Tuning NVIDIA Cosmos Predict 2.5 with LoRA/DoRA for Robot Video Generation",
+      "link": "https://huggingface.co/blog/nvidia/cosmos-fine-tuning-for-robot-video-generation",
+      "date": "Mon, 18 May 2026 16:00:21 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "PaddleOCR 3.5: Running OCR and Document Parsing Tasks with a Transformers Backend",
+      "link": "https://huggingface.co/blog/PaddlePaddle/paddleocr-transformers",
+      "date": "Mon, 18 May 2026 15:12:46 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "Amazon’s new Alexa+ powered feature can generate podcast episodes",
+      "link": "https://techcrunch.com/2026/05/18/amazons-new-alexa-powered-feature-can-generate-podcast-episodes/",
+      "date": "Mon, 18 May 2026 14:56:47 +0000",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "The Open Agent Leaderboard",
+      "link": "https://huggingface.co/blog/ibm-research/open-agent-leaderboard",
+      "date": "Mon, 18 May 2026 14:12:58 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "Bug bounty businesses bombarded with AI slop",
+      "link": "https://arstechnica.com/ai/2026/05/bug-bounty-businesses-bombarded-with-ai-slop/",
+      "date": "Mon, 18 May 2026 13:23:34 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "How Melbourne’s AI and Data Center Flywheel Is Accelerating Research Innovation",
+      "link": "https://spectrum.ieee.org/melbourne-ai-data-center-innovation",
+      "date": "Mon, 18 May 2026 10:00:01 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "Agentic AI for Robot Teams",
+      "link": "https://events.bizzabo.com/867156",
+      "date": "Mon, 18 May 2026 10:00:01 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "I’m a Normie. Can Normies Really Vibe Code?",
+      "link": "https://www.wired.com/story/normie-vibe-code/",
+      "date": "Mon, 18 May 2026 10:00:00 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "Voice AI Systems Are Vulnerable to Hidden Audio Attacks",
+      "link": "https://spectrum.ieee.org/voice-ai-audio-attacks",
+      "date": "Sun, 17 May 2026 13:00:01 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "AI Rings on Fingers Can Interpret Sign Language",
+      "link": "https://spectrum.ieee.org/sign-language-interpreter",
+      "date": "Sat, 16 May 2026 13:00:01 +0000",
+      "source": "IEEE Spectrum"
+    },
+    {
+      "title": "The US is betting on AI to catch insider trading in prediction markets",
+      "link": "https://arstechnica.com/tech-policy/2026/05/the-us-is-betting-on-ai-to-catch-insider-trading-in-prediction-markets/",
+      "date": "Sat, 16 May 2026 11:00:01 +0000",
+      "source": "Ars Technica"
+    },
+    {
+      "title": "Some Asexuals Are Using AI Companions for Intimacy Without the Sex",
+      "link": "https://www.wired.com/story/some-asexual-people-are-using-ai-companions-for-intimacy-without-the-sex/",
+      "date": "Sat, 16 May 2026 09:30:00 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "Greg Brockman Officially Takes Control of OpenAI’s Products in Latest Shake-Up",
+      "link": "https://www.wired.com/story/openai-reorg-greg-brockman-product/",
+      "date": "Fri, 15 May 2026 17:09:17 +0000",
+      "source": "Wired"
+    },
+    {
+      "title": "Granite Embedding Multilingual R2: Open Apache 2.0 Multilingual Embeddings with 32K Context — Best Sub-100M Retrieval Quality",
+      "link": "https://huggingface.co/blog/ibm-granite/granite-embedding-multilingual-r2",
+      "date": "Thu, 14 May 2026 18:55:01 GMT",
+      "source": "Hugging Face"
+    },
+    {
+      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
+      "link": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+      "date": "Thu, 22 Jan 2026 14:00:00 GMT",
+      "source": "VentureBeat"
+    },
+    {
+      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "link": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+      "date": "Mon, 19 Jan 2026 14:00:00 GMT",
+      "source": "VentureBeat"
+    },
+    {
+      "title": "Listen Labs raises $69M after viral billboard hiring stunt to scale AI customer interviews",
+      "link": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
+      "date": "Fri, 16 Jan 2026 14:01:00 GMT",
+      "source": "VentureBeat"
+    },
+    {
+      "title": "Salesforce rolls out new Slackbot AI agent as it battles Microsoft and Google in workplace AI",
+      "link": "https://venturebeat.com/technology/salesforce-rolls-out-new-slackbot-ai-agent-as-it-battles-microsoft-and",
+      "date": "Tue, 13 Jan 2026 13:00:00 GMT",
+      "source": "VentureBeat"
+    }
+  ]
+}
